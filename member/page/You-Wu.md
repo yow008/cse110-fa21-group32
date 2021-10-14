@@ -4,6 +4,6 @@
 **Sophomore**
 
 Hobbies:
-- Travelling to specific places
+- Travelling
 
 https://github.com/yow008
