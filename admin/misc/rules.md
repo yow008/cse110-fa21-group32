@@ -1,11 +1,11 @@
 # CSE110 Group32 Team Working Agreement
 ### Term: Fall 2021
-### Creation:10/10/2021
+### Creation: 10/10/2021
 <br></br>
 
 ## **1.Group Identification**
 - Group number: 32
-- Team name:
+- Team name: Aces
 - Team Leaders: Zijian Zhang, Esther Qiu
 - Mentor:  Sourabh Raja-murali
 - Manager: Powell, Thomas Allan
