@@ -6,14 +6,14 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ## Meet the Team
 
-[![Eamon](/member/team-cards/eamon.JPG)](https://aalipoure34.github.io/Lab-1-Repo/)
-[![Stuart](/member/team-cards/stuart.JPG)](https://stuartboynton1.github.io/CSE110/)
-[![Martin](/member/team-cards/martin.JPG)](https://martin-flores1023.github.io/GitHub-Pages/)
-[![Hannah](/member/team-cards/hannah.JPG)](https://hannahhui5184.github.io/CSE110-Github-pages/)
-[![Bagrat](/member/team-cards/bagrat.JPG)](https://airbornejaws.github.io/CSE_110_Lab1/)
+[![Eamon](/member/team-cards/eamon.JPG =150x)](https://aalipoure34.github.io/Lab-1-Repo/)
+[![Stuart](/member/team-cards/stuart.JPG =150x)](https://stuartboynton1.github.io/CSE110/)
+[![Martin](/member/team-cards/martin.JPG =150x)](https://martin-flores1023.github.io/GitHub-Pages/)
+[![Hannah](/member/team-cards/hannah.JPG =150x)](https://hannahhui5184.github.io/CSE110-Github-pages/)
+[![Bagrat](/member/team-cards/bagrat.JPG =150x)](https://airbornejaws.github.io/CSE_110_Lab1/)
 
-[![Ke](/member/team-cards/ke.JPG)](https://github.com/ouke025/CSE110-Pages/blob/add-read-me2/index.md#my-homepage)
-[![Esther](/member/team-cards/esther.JPG)](https://c3qiu.github.io/CSE110-Lab1/)
-[![You](/member/team-cards/you.JPG)](https://github.com/yow008)
-[![Zijian](/member/team-cards/zijian.JPG)](https://spikevzzj.github.io/cse110-lab1/)
-[![Tiffany](/member/team-cards/tiffany.JPG)](https://zhongtiff.github.io/CSE110_LAB1/)
+[![Ke](/member/team-cards/ke.JPG =150x)](https://github.com/ouke025/CSE110-Pages/blob/add-read-me2/index.md#my-homepage)
+[![Esther](/member/team-cards/esther.JPG =150x)](https://c3qiu.github.io/CSE110-Lab1/)
+[![You](/member/team-cards/you.JPG =150x)](https://github.com/yow008)
+[![Zijian](/member/team-cards/zijian.JPG =150x)](https://spikevzzj.github.io/cse110-lab1/)
+[![Tiffany](/member/team-cards/tiffany.JPG =150x)](https://zhongtiff.github.io/CSE110_LAB1/)
