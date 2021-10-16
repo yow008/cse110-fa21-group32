@@ -31,3 +31,5 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <a href="https://zhongtiff.github.io/CSE110_LAB1/"><img src="/member/team-cards/tiffany.JPG" width=170 align=left></a>
 </div>
 --->
+
+https://user-images.githubusercontent.com/58986949/115314310-805b2780-a1a7-11eb-8558-648a367ea231.mp4
