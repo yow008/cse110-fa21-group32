@@ -31,5 +31,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 <a href="https://zhongtiff.github.io/CSE110_LAB1/"><img src="/member/team-cards/tiffany.JPG" width=170 align=left></a>
 </div>
 --->
-
-https://github.com/cse110-fa21-group32/cse110-fa21-group32.git
+https://github.com/cse110-fa21-group32/cse110-fa21-group32/blob/main/admin/videos/teamintro.mp4
