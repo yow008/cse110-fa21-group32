@@ -1,5 +1,7 @@
 # Team Aces (Group 32)
 
+**INSERT SLOGAN HERE**
+
 **INSERT LOGO HERE**
 
 ## About Us
