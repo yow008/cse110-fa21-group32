@@ -31,7 +31,7 @@ Our team members come from all over the world which builds diversity to our team
 <div>
 <a href="https://github.com/ouke025/CSE110-Pages/blob/add-read-me2/index.md#my-homepage"><img src="/member/team-cards/ke.JPG" width=170 align=left></a>
 <a href="https://c3qiu.github.io/CSE110-Lab1/"><img src="/member/team-cards/esther.JPG" width=170 align=left></a>
-<a href="https://github.com/yow008"><img src="/member/team-cards/you.JPG" width=170 align=left></a>
+<a href="https://yow008.github.io/yow008/"><img src="/member/team-cards/you.JPG" width=170 align=left></a>
 <a href="https://spikevzzj.github.io/cse110-lab1/"><img src="/member/team-cards/zijian.JPG" width=170 align=left></a>
 <a href="https://zhongtiff.github.io/CSE110_LAB1/"><img src="/member/team-cards/tiffany.JPG" width=170 align=left></a>
 </div>
