@@ -7,4 +7,4 @@ Hobbies:
 - Travelling
 - Visiting gardens
 
-https://github.com/yow008
+https://yow008.github.io/yow008/
