@@ -1,3 +1,3 @@
-# cse110-fa21-group32
+# Repository of Team Aces (Team 32, Fall Quarter CSE 110)
 
-Finish initialization (Zijian Zhang 10/10/2021)
+[Team Page](admin/team.md)
