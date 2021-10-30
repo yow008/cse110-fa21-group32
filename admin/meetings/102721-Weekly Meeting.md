@@ -20,7 +20,7 @@
 ## Today's Topics
 We basically go through each assignment:
 1. **Project Picth**
-- Zijian, You
+- __Zijian, You__
 - we talk about the things that need to include in Project Pitch:
   1. Statement of Purpose
   2. Problem/Solution
@@ -31,18 +31,22 @@ We basically go through each assignment:
   7. Rabbit holes
 - Finishing template before **Weekend**
 2. **ADR**
+- __Esther, Ke__
 - Finishing template before **Weekend**
-3. **User personas**
+4. **User personas**
+- __Stuart, Martin, Bagrat__
 - Think about what users want from the app? Why users need the app?
 - Target users:
   1. Broke college student
   2. Young working professional 
   3. Parents
   4. Whoever have short time and limit cooking skill
-4. **System Diagram**
+6. **System Diagram**
+- __Eamon__
 - use **JSON-ld**(maybe)
 - Finish before **weekend**
-5. **UI design**
+8. **Interface Design**
+- __Tiffany & Hannah__
 - maybe ignore subscription
 - timer(still need to decide)
 - Cooking Mode
@@ -52,6 +56,8 @@ We basically go through each assignment:
 - add meal instantly for the first click
 - can add meal both way: calender -> meal and meal -> calender(No redirect to the ingredient view)
 - where to put the "add recipe" button
+9. **Roadmap**
+- __Zijian Zhang__
 
 ## Future Plan:
 1. Finish Project Pitch and schedule another meeting before Monday to finalize pitch
