@@ -3,7 +3,7 @@
 ### Date: 10/27/2021
 ### Time: 9:30pm - 10:30pm
 ### Location: Zoom
-### Attendence: George, Esther, You, Eamon, Bagrat, Martin, Stewart,Hannah, Tiffany, Ke and Duc.
+### Attendence: George, Esther, You, Eamon, Bagrat, Martin, Stewart,Hannah, Tiffany and Ke.
 ### Absence: none
 <br></br>
 
