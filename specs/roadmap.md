@@ -65,7 +65,7 @@ __Preparation before actual coding__
 - Roadmap
 - ADR
 - Split team into small groups for each assignment
-- 
+
 <br>
 <br>
 
