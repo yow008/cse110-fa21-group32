@@ -11,6 +11,8 @@
 - `/specs`
 - `/test`
 
+## How to build
+
 ## Repo Rules
 
 ### Committing Source Code
