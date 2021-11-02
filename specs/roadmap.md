@@ -52,7 +52,6 @@
 - Brainstorm
 - Background research
 
-
 <br>
 <br>
 
@@ -71,28 +70,45 @@ __Preparation before actual coding__
 
 ### __Week 6__
 __Official start of coding__
-- Start coding on Frontend
-- Backend decides what should we use for database and gather data
-- test checkpoint
+- Get pitch approved
+- CI/CD pipeline unit tests, linting
+- GitHub repo organization & rules
+- Prototypes w/ libraries
+- Style & naming conventions
+- UML/Database design
 
 <br>
 <br>
 
-### __Week 7-8__
-- keep coding on Frontend
-- build database
-- Developing calender features
-- Developing shopping list
-- Developing cooking mode
-- Developing timer
-- test checkpoint
+### __Week 7__
+- Fetch and populate database with JSON LD recipes
+- HTML skeleton (links + buttons)
+- Recipe view custom elements
+- Search by keyword
+- User login/account creation
 
 <br>
 <br>
 
-### __Week 9 - 10__
+### __Week 8__
+- Calendar
+- Shopping list
+- User page gallery
+- Reviews/ratings
+
+<br>
+<br>
+
+### __Week 9__
 __Testing/Reviewing__
-- Overall testing of our app
-- Fix bugs
-- Wrap up any unfinished work
-- Final presentation
+- Favorite, recent history list*
+- Search by tags, filter results by*
+- Add a recipe*
+- Integration testing
+
+<br>
+<br>
+
+### __Week 10__
+- Integration testing
+- Final project assignments
