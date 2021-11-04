@@ -19,7 +19,7 @@
 
 ### __Frontend Developer__
 - You Wu
-- Hannah Hu
+- Hannah Hui
 - Stuart Boynton
 <br>
 <br>
