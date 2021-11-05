@@ -44,7 +44,7 @@ Then, we assigned new assignments for each member in order to follow up the plan
 - Look into the JSnold website that has a bunch of recipes so we could use it to populate the website
 - Finishing template before **Next Meeting**
 6. **DB models**
-- __Ke__
+- __Ke,Eamon__
 - Focus on loading recipes into the SQLite DB and how to structure the DB models.
 - Finishing template before **Next Meeting**
 7. **Getting recipes**
