@@ -38,10 +38,18 @@
     - search by tags
     - List items with highest average rating
     - tags with taste/diet/dish-style/ingredient/etc.
-  - Calender
+  - Calendar
     - Add recipes to a calendar for meal planning
   
-- Decision Outcome:
+- Decision Outcome: 
+  - Nutrition facts
+{Reject | hard to gather data }
+
+  - Customized tags
+{Reject | boss doesnt agree and complain}
+
+  - Meal calendar
+{Good | xxx}
 
 
 
