@@ -1,7 +1,9 @@
-# Team Aces (Group 32) - CSE 110 Fall 2020 Project
+# Team Aces (Group 32) - CSE 110 Fall 2021 Project
 
 ## About Us
 [Team Page](admin/team.md)
+
+Our app can be found here: [https://cse110-fa21-group32.github.io/cse110-fa21-group32/source/home.html](https://cse110-fa21-group32.github.io/cse110-fa21-group32/source/home.html)
 
 ## Repo Structure
 - `/admin` - Meeting notes and team branding
