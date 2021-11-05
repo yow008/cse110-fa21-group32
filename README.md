@@ -1,4 +1,4 @@
-# Team Aces (Group 32) - CSE 110 Fall 2020 Project
+# Team Aces (Group 32) - CSE 110 Fall 2021 Project
 
 ## About Us
 [Team Page](admin/team.md)
