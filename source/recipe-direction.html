@@ -1,20 +1,18 @@
 <html>
     <head>
-
     </head>
     <body>
-        <p>Home Page</p>
+        <p>Recipe Directions</p>
     </body>
-
     <ul>
-        <li><a href="home.html">home</a></li>
-        <li><a href="calendar-month.html">calendar</a></li>
-        <li><a href="grocerylist.html">list</a></li>
-        <li><a href="profilepage.html">profile</a></li>
+        <li><a href="home.html"></a></li>
+        <li><a href="recipe-summary.html">Summary</a></li>
+        <li><a href="recipe-ingredients.html">Ingredients</a></li>
+        <li><a href="recipe-direction.html">Directions</a></li>
     </ul>
+    <button onclick="document.location='cooking-mode.html'">Cook</button>
 
-    <!--Sidepanel-->
-        <!--Add CSS and Javascript-->
+    <!--Add CSS and Javascript-->
     <!--Side Panel-->
     <div id="mySidepanel" class="sidepanel">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -36,16 +34,21 @@
         function closeNav() {
           document.getElementById("mySidepanel").style.width = "0";
         }
-    </script>nel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="favorites.html">Favorite Recipes</a>
-        <a href="profilepage-reviews.html">Previously Cooked</a>
-        <a href="add-recipe-summary.html">Add a Recipe</a>
-        <a href="#">Write a Review</a>
-      </div>
-      
-      <button class="openbtn" onclick="openNav()">&#9776; Toggle Sidepanel</button>
-      <h2>Collapsed Sidepanel</h2>
-      <p>Content...</p>
-      
-    </html>
+    </script>
+
+    <ul>
+        <li><a href="step1">1</a></li>
+        <li><a href="step2">2</a></li>
+        <li><a href="step3">3</a></li>
+        <li><a href="step4">4</a></li>
+    </ul>
+
+    <!--bottom nav bar-->
+    <ul>
+        <li><a href="home.html">home</a></li>
+        <li><a href="calendar-month.html">calendar</a></li>
+        <li><a href="grocerylist.html">list</a></li>
+        <li><a href="profilepage.html">profile</a></li>
+    </ul>
+
+</html>

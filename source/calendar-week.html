@@ -3,18 +3,48 @@
 
     </head>
     <body>
-        <p>Home Page</p>
+        <p>Calendar</p>
     </body>
+    <a href="calendar-month">Month</a>
+    <a href="calendar-week">Week</a>
+    <a href="calendar-day">Day</a>
+    <div class="Week">
+        <ul>
+            <li class="prevweek"></li>
+            <li class="nextweek"></li>
+            <li>Weekly view</li>
+        </ul>
+    </div>
+    
+    <ul class="weekdays">
+        <li>Monday</li>
+        <li>Tuesday</li>
+        <li>Wednesday</li>
+        <li>Thursday</li>
+        <li>Friday</li>
+        <li>Saturday</li>
+        <li>Sunday</li>
+    </ul>
 
+     <!--bottom nav bar-->
     <ul>
         <li><a href="home.html">home</a></li>
         <li><a href="calendar-month.html">calendar</a></li>
         <li><a href="grocerylist.html">list</a></li>
         <li><a href="profilepage.html">profile</a></li>
     </ul>
+    
+    <ul class="weekdays">
+        <li>Monday</li>
+        <li>Tuesday</li>
+        <li>Wednesday</li>
+        <li>Thursday</li>
+        <li>Friday</li>
+        <li>Saturday</li>
+        <li>Sunday</li>
+    </ul>
 
-    <!--Sidepanel-->
-        <!--Add CSS and Javascript-->
+    <!--Add CSS and Javascript-->
     <!--Side Panel-->
     <div id="mySidepanel" class="sidepanel">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -36,16 +66,5 @@
         function closeNav() {
           document.getElementById("mySidepanel").style.width = "0";
         }
-    </script>nel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="favorites.html">Favorite Recipes</a>
-        <a href="profilepage-reviews.html">Previously Cooked</a>
-        <a href="add-recipe-summary.html">Add a Recipe</a>
-        <a href="#">Write a Review</a>
-      </div>
-      
-      <button class="openbtn" onclick="openNav()">&#9776; Toggle Sidepanel</button>
-      <h2>Collapsed Sidepanel</h2>
-      <p>Content...</p>
-      
-    </html>
+    </script>
+</html>
