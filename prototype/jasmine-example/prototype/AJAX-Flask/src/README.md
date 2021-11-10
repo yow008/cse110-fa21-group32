@@ -4,6 +4,24 @@ This repository contains the tutorial code for my article on communicating betwe
 
 <br>
 
+Before putting any code within the .py files we want to make sure we have installed flask by doing the command:
+
+pip install flask 
+
+Do this command within your python terminal.
+
+Also make sure that the top of your .py files includes the following lines :
+
+```
+from flask import Flask, render_template, url_for, request
+app = Flask(__name__)
+@app.route('/')
+def index():
+  return render_template('index.html')
+if __name__ == "__main__":
+  app.run(debug=True)
+```
+
 <br>
 
 ### Via JSON
