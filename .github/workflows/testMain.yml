@@ -54,8 +54,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '>=12.x'
-      - name: Run the unit tests
+      - name: Install Jest
         run: npm install jest --save-dev
+      - name: Run the JS unit tests
         run: npm test
 
   run-eslint:
