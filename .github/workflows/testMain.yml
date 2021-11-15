@@ -47,11 +47,9 @@ jobs:
 
       - name: Install modules
         run: yarn
-      - name: Run tests
-        run: yarn test
 
   # Testing this out because not sure what it should do
-  run-npm-test:
+  run-js-test:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -59,19 +57,13 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '>=12.x'
-      - name: Install Jest
-        run: npm install jest --save-dev
-      - name: Run the JS unit tests
-        run: npm test
+      - name: Run tests
+        run: yarn test
 
   run-eslint:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install ESLint
-        run: npm install eslint --save-dev
       - name: Run ESLint
-        run: |
-          npx eslint /source/assets/scripts/**/*.js
-          npx eslint /test/**/*.js
+        run: eslint . --ext .js,.jsx,.ts,.tsx
