@@ -2,7 +2,9 @@
  * Test file for running Jasmine unit tests
  */
 function helloWorld() {
-  return "hello world";
+    return 'helloworld';
 }
+
+function unused() {}
 
 module.exports = helloWorld;
