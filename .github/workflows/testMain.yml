@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [pipeline-demo]
   pull_request:
-    branches: [ main ]
+    branches: [pipeline-demo]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -34,23 +34,17 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
-      
+
       # Template setup Node.js environment
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.4.1
         with:
           # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
           node-version: '>=12.x'
-          
+
       - name: Install Dependencies
-        run: nmp install
-        
-      # Setup and run ESLint
-      - name: Install modules
-        run: yarn
-      - name: Run ESLint
-        run: eslint . --ext .js,.jsx,.ts,.tsx
-  
+        run: npm install
+
   # Testing this out because not sure what it should do
   run-npm-test:
     needs: build
@@ -59,6 +53,17 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-            node-version: '>=12.x'
+          node-version: '>=12.x'
       - name: Run the unit tests
         run: npm test
+
+  run-eslint:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '>=12.x'
+      - name: Run the unit tests
+        run: eslint "source/assets/scripts/*.js"
