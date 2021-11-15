@@ -1,0 +1,11 @@
+h1 {
+    background-color: grey;
+    border-bottom: 1px;
+    font-family: serif;
+}
+
+p {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 12pt;
+    padding: 1em;
+}
