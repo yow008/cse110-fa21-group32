@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Pipeline Setup Test
 
 # Controls when the workflow will run
 on:
@@ -55,6 +55,7 @@ jobs:
         with:
           node-version: '>=12.x'
       - name: Run the unit tests
+        run: npm install jest --save-dev
         run: npm test
 
   run-eslint:
@@ -66,4 +67,4 @@ jobs:
         with:
           node-version: '>=12.x'
       - name: Run the unit tests
-        run: eslint "source/assets/scripts/*.js"
+        run: npm lint
