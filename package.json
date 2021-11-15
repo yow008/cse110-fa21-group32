@@ -14,5 +14,22 @@
   "jest": {
     "preset": "jest-puppeteer",
     "verbose": true
+  },
+  "prettier": {
+    "tabWidth": 4,
+    "overrides": [
+      {
+        "files": "*.js",
+        "options": {
+          "singleQuote": true
+        }
+      },
+      {
+        "files": "*.json",
+        "options": {
+          "tabWidth": 2
+        }
+      }
+    ]
   }
 }
