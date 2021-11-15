@@ -1,10 +1,8 @@
 /**
- * Test file for running Jasmine unit tests
+ * Test file for running Jest unit tests
  */
 function helloWorld() {
-    return 'helloworld';
+  return 'hello world';
 }
-
-function unused() {}
 
 module.exports = helloWorld;
