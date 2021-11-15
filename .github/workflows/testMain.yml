@@ -25,45 +25,19 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-
       # Template setup Node.js environment
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.4.1
         with:
           # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
           node-version: '>=12.x'
-
-      - name: Install Dependencies
-        run: npm install
+          cache: 'yarn'
 
       - name: Install modules
         run: yarn
 
-  # Testing this out because not sure what it should do
-  run-js-test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '>=12.x'
       - name: Run tests
         run: yarn test
 
-  run-eslint:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
       - name: Run ESLint
         run: eslint . --ext .js,.jsx,.ts,.tsx
