@@ -36,7 +36,7 @@ jobs:
         run: npm install
 
   js-eslint:
-    needs: build, prettier
+    needs: [build, prettier]
     runs-on: ubuntu-latest
 
     steps:
