@@ -45,8 +45,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      steps:
-      - uses: actions/checkout@v2
       - name: Install modules
         run: yarn
       - name: Run tests
