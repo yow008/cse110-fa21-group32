@@ -33,7 +33,7 @@ jobs:
           node-version: '>=12.x'
 
       - name: Install  npm
-          run: npm install
+        run: npm install
 
   run-eslint:
     needs: build
@@ -44,15 +44,15 @@ jobs:
       - uses: actions/setup-node@v2.4.1
 
       - name: npx eslint source/assets/scripts/*.js
-  
-  run-test:
-      runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/checkout@v2
-        
+  run-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
       - name: Install modules
-      run: yarn
+        run: yarn
 
       - name: Run tests
         run: yarn test
