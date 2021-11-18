@@ -1,13 +1,33 @@
-function getUser(user) // A function to get the user 
-	{
-        /* code to get the user */
+/*
+Gets the desired user.
+
+ @param {string} user The desired user to get
+ @return {string} user The desired user returned
+ */
+function getUser(user) 
+{
 		return user;
-	}
-function getUserProfile(user) // A function to get the user profile 
-	{
-        /* code to get the user profile */
+}
+
+/*
+Gets the desired user profile.
+
+@param {string} user The desired user to get
+@return {string} userProfile The desired user profile returned
+*/
+function getUserProfile(user) 
+{
 		return userProfile; 
-	}
+}
+
+/*
+Changes the password 
+
+@param {string} email The email address of the suer
+@param {string} newPassword The new password to be changed to
+@param {function} callback Callback function
+@return {function} callback Callback function returned to call another function
+*/
 function changePassword(email,newPassword,callback) // A function to change the users password gotten from https://auth0.com/docs/connections/database/custom-db/templates/change-password
 	{
   	const bcrypt = require('bcrypt'); // Using the bcrypt npm package which is used for working securey with passwords

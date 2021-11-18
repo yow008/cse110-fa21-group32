@@ -1,31 +1,72 @@
-function getAllRecipes() // A function used to get all the recipes
-	{
-		return recipes; 
-	}
-function getSearchResults() // A function used to get the search results 
-	{
-		return results;
-	}
-function getRecipe(recipe) // A function used to get a singula specific recipe
-	{
-        /* code to get specific recipe */
-		return recipe;
-	}
-function getReviews(recipe) // A function used to get the reviews for a recipe
+/*
+Gets all the recipes available
+
+@return {string} recipes The list of recipes returned
+*/
+function getAllRecipes()
 {
-    /* code to get review for recipe*/
+		return recipes; 
+}
+
+/*
+Gets the search results
+
+@return {string} results The results returned
+*/
+function getSearchResults()
+{
+		return results;
+}
+
+/*
+Gets a specific recipe
+
+@param {string} meal The specific meal we are looking for
+@return {string} recipe The specific recipe for that meal returned
+*/
+function getRecipe(meal)
+{
+		return recipe;
+}
+
+/*
+Gets the reviews for a specific recipe
+
+@param {string} recipe The specific recipe we are looking to get reviews for
+@return {string} reviews The reviews for the recipe returned
+*/
+function getReviews(recipe) 
+{
     return reviews;
 }
-function getIngredients(recipe) // A function used to get the ingredients for a specific recipe
+
+/*
+Gets the ingredients for a specific recipe
+
+@param {string} recipe The specific recipe we want to get the ingredients for 
+@return {string} recipes The list of ingredients returned for the specific recipe
+*/
+function getIngredients(recipe) 
 {
-    /* code to get ingredients for recipe*/
     return ingredients;
 }
-function getDateToday() // A function used to getting todays date
+
+/*
+Gets todays date
+
+@return {string} todayDate Returns todays date
+*/
+function getDateToday()
 {
     return todayDate;
 }
-function getFavorites() // A function used to get the favorite recipes
+
+/*
+Gets all the favorite recipes
+
+@return {string} favorites The list of favorite recipes returned
+*/
+function getFavorites()
 {
     return favorites;
 }
