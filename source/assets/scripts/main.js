@@ -98,6 +98,56 @@ function bindNavIcons() {
 }
 
 /**
+ * Bind the recipe views
+ */
+function bindRecipe(){
+  //Retrieve the different section
+  const summary = document.getElementById('ToSum');
+  const ingredients = document.getElementById('ToIng');
+  const direction = document.getElementById('ToDir');
+
+  //Add click event listeners and proper navigation
+  summary.addEventListener('click', () => {
+    router.navigate('summary');
+  });
+  
+  ingredients.addEventListener('click', () => {
+    router.navigate('ingredients');
+  });
+  
+  direction.addEventListener('click', () => {
+    router.navigate('direction');
+  });
+  
+}
+
+
+/**
+ * Bind the add recipe views
+ */
+
+
+/**
+ * Bind the search-bar from the home page when click "Seach" button
+ */
+
+
+/**
+ * Bind the user profile page
+ */
+
+
+/**
+ * Bind the Cooking Mode page when "Cook" is been click through the recipe page
+ */
+
+
+/**
+ * Bind the Collapased Sidepanel at the side for the appropriate pages
+ * (Favorite Recipes, Previously Cooked, Add a Recipe, Write a Review)
+ */
+
+/**
  * Binds the popstate (back button/forward button) to navigate
  * to the correct page
  * Reference: Lab 7 Implementation

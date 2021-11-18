@@ -2,13 +2,20 @@
 <html lang="en">
 
 <head>
-  <!-- Router -->
-  <!-- <script src="..source/assets/scripts/Router.js" type="module"></script> -->
+  <!--Components-->
+  <!-- <script src="assets/components/Home.js" type="module"></script>
+  <script src="assets/components/Calendar.js" type="module"></script>
+  <script src="assets/components/Grocery.js" type="module"></script>
+  <script src="assets/components/Profile.js" type="module"></script>
+  <script src="assets/components/SearchBar.js" type="module"></script>
+  <script src="assets/components/SidePanel.js" type="module"></script> -->
+
+  <!--Router-->
+  <!-- <script src="assets/scripts/Router.js" type="module"></script> -->
 
   <!-- Main Stylesheet & Scripts -->
-  <link rel="stylesheet" href="../source/assets/main.css" />
-  <script src="../source/assets/scripts/main.js" type="module"></script>
-
+  <link rel="stylesheet" href="assets/styles/main.css" />
+  <script src="assets/scripts/main.js" type="module"></script>
 </head>
 
 <header>
@@ -17,7 +24,7 @@
 
 <body>
   <!--Home-->
-  <section id="homeID" class="home">
+  <section id="#section--home">
     <h1>Home Page</h1>
     <!--ADD RECIPES HERE-->
     <p>Search Bar</p>
@@ -34,7 +41,7 @@
   </section>
 
   <!--Search Bar-->
-  <section id="search-resultID" class="search-result hidden">
+  <section id="search-resultID">
     <h2>Search Results</h2>
     <p>Contents</p>
     <ul>
@@ -46,7 +53,7 @@
 
 
   <!--Calendar-->
-  <section id="calendarID" class="calendar hidden">
+  <section id="calendarID">
     <h2>Calendar</h2>
     <div class=calendar-nav>
       <a href="#monthID">Month</a>
