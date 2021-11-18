@@ -1,0 +1,7 @@
+.hidden {
+  display: none;
+}
+
+section:not(section.shown) {
+  display: none;
+}
