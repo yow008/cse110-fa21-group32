@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Router -->
+  <!-- <script src="..source/assets/scripts/Router.js" type="module"></script> -->
+
+  <!-- Main Stylesheet & Scripts -->
+  <link rel="stylesheet" href="../source/assets/main.css" />
+  <script src="../source/assets/scripts/main.js" type="module"></script>
+
+</head>
+
+<header>
+  <p>Header Content...</p>
+</header>
+
+<body>
+  <!--Home-->
+  <section id="homeID" class="home">
+    <h1>Home Page</h1>
+    <!--ADD RECIPES HERE-->
+    <p>Search Bar</p>
+    <form>
+      <input type="text" placeholder="Search.." name="search">
+      <button id="search-bar">Search</button>
+    </form>
+    <p>Content..</p>
+    <ul>
+      <li> <button id="expRecipe" type="menu">Recipe 1 (click this one)</button></li>
+      <li> <button type="menu">Recipe 2 (not linked)</button></li>
+      <li> <button type="menu">Recipe 3 (not linked)</button></li>
+    </ul>
+  </section>
+
+  <!--Search Bar-->
+  <section id="search-resultID" class="search-result hidden">
+    <h2>Search Results</h2>
+    <p>Contents</p>
+    <ul>
+      <li> <button type="menu">Recipe 1 (not linked)</button></li>
+      <li> <button type="menu">Recipe 2 (not linked)</button></li>
+      <li> <button type="menu">Recipe 3 (not linked)</button></li>
+    </ul>
+  </section>
+
+
+  <!--Calendar-->
+  <section id="calendarID" class="calendar hidden">
+    <h2>Calendar</h2>
+    <div class=calendar-nav>
+      <a href="#monthID">Month</a>
+      <a href="#weekID">Week</a>
+      <a href="#dayID">Day</a>
+    </div>
+
+    <!--Monthly View-->
+    <div id="monthID" class="month">
+      <p>Month</p>
+      <button type="button">Add Recipes</button>
+    </div>
+
+    <!--Weekly View-->
+    <div id="weekID" class="week">
+      <p>Week</p>
+      <button type="button">Add Recipes</button>
+    </div>
+
+    <!--Daily View-->
+    <div id="dayID" class="day">
+      <p>Day</p>
+      <button type="button">Add Recipes</button>
+    </div>
+
+    <button><a href="home.html"> LEAVE </a></button>
+
+  </section>
+
+  <!--Grocery-list-->
+  <section id="grocery-listID" class="grocery-list hidden">
+    <h2>Grocery List</h2>
+    <ul>
+      <input type="checkbox" checked>
+      <label>some item</label>
+      <br>
+      <input type="checkbox">
+      <label>some item</label>
+      <br>
+      <input type="checkbox" checked>
+      <label>some item</label>
+      <br>
+    </ul>
+  </section>
+
+  <!--Recipes-->
+  <section id="recipeID" class="recipe hidden">
+
+    <h2>Recipes</h2>
+
+    <div class="recipe-navbar">
+      <a href="#recipe-summaryID" id="ToSum">Summary</a>
+      <a href="#recipe-ingredientsID" id="ToIng">Ingredients</a>
+      <a href="#recipe-directionID" id="ToDir">Directions</a>
+    </div>
+    <!--Recipe Summary-->
+    <div id="recipe-summaryID" class="recipe-summary hidden">
+      <p>Summary</p>
+      <p>Content...</p>
+      <button type="button">Add to My Favorites</button>
+    </div>
+
+    <!--Recipe Ingredients-->
+    <div id="recipe-ingredientsID" class="recipe-ingredients hidden">
+      <p>Ingredients</p>
+      <!--Add To List Button-->
+      <details>
+        <summary>
+          click here for all Ingredients
+        </summary>
+        <ol>
+          <li>some item</li>
+          <li>some item</li>
+          <li>some item</li>
+        </ol>
+      </details>
+      <br>
+      <button type="button">Add to List</button>
+    </div>
+
+    <!--Recipe Directions-->
+    <div id="recipe-directionID" class="recipe-direction hidden">
+      <p>Direction</p>
+      <ul>
+        <li><a href="step1">1</a></li>
+        <li><a href="step2">2</a></li>
+        <li><a href="step3">3</a></li>
+        <li><a href="step4">4</a></li>
+      </ul>
+      <button><a href="#cooking-modeID" id="LinkToCM"> Cook </a></button>
+    </div>
+
+  </section>
+
+  <!--Cooking Mode-->
+  <section id="cooking-modeID" class="cooking-mode hidden">
+    <h2>Cooking Mode</h2>
+    <!--Cooking Steps-->
+    <div class="cooking-steps">
+      <p>Steps</p>
+      <ul>
+        <li><a href="step1">1</a></li>
+        <li><a href="step2">2</a></li>
+        <li><a href="step3">3</a></li>
+        <li><a href="step4">4</a></li>
+      </ul>
+    </div>
+
+    <!--Cooking Timer-->
+    <div class="cooking-timer">
+      <p>Timer</p>
+      <button type="button">Start</button>
+    </div>
+
+    <!--Back to the Recipe Page-->
+    <div class="back-to-recipe">
+      <p>Back to the Home Page</p>
+      <button><a href="home.html"> LEAVE </a></button>
+    </div>
+  </section>
+
+  <!--Profile Page-->
+  <section id="profile-pageID" class="profile-page hidden">
+    <h2>User Profile</h2>
+
+    <!--Profile Page Navbar-->
+    <div class=profile-page-navbar>
+      <ul>
+        <li><a href="#profile-page-recipeID" id="UserRec">Recipes</a></li>
+        <li><a href="#profile-page-reviewsID" id="UserRev">Reviews</a></li>
+      </ul>
+    </div>
+
+    <!--Profile Page Recipe-->
+    <div id="profile-page-recipeID" class="profile-page-recipe hidden">
+      <p>Recipes</p>
+      <ul>
+        <li> <button type="menu">Recipe 1 (not linked)</button></li>
+        <li> <button type="menu">Recipe 2 (not linked)</button></li>
+        <li> <button type="menu">Recipe 3 (not linked)</button></li>
+      </ul>
+    </div>
+
+    <!--Profile Page Reviews-->
+    <div id="profile-page-reviewsID" class="profile-page-reviews hidden">
+      <p>Reviews</p>
+      <ul>
+        <li> <button type="menu">Recipe 1 (not linked)</button></li>
+        <li> <button type="menu">Recipe 2 (not linked)</button></li>
+        <li> <button type="menu">Recipe 3 (not linked)</button></li>
+      </ul>
+    </div>
+
+  </section>
+
+  <!--Favorites-->
+  <section id="favoritesID" class="favorites hidden">
+    <h2>Favorites</h2>
+    <p>Content...</p>
+    <div class="favorite-recipe-cards-wrapper">
+      <!--ADD RECIPES HERE-->
+    </div>
+
+  </section>
+
+  <!--Add-Recipes-->
+  <section id="add-recipeID" class="add-recipe hidden">
+    <h2>Add Recipe</h2>
+    <div class="add-recipe-navbar">
+      <!-- li><a onclick="navTo('homeID')" href="javascript:void(0)">home</a></li> -->
+      <a href="#add-recipe-summaryID" id="ToAddSum">Summary</a>
+      <a href="#add-recipe-ingredientsID" id="ToAddIng">Ingredients</a>
+      <a href="#add-recipe-directionID" id="ToAddDir">Directions</a>
+    </div>
+
+    <!--Add Recipe Summary-->
+    <div id="add-recipe-summaryID" class="add-recipe-summary hidden">
+      <p>Summary</p>
+      <textarea></textarea>
+      <br>
+      <input type="submit" value="Submit!">
+    </div>
+
+    <!--Add Recipe Ingredients-->
+    <div id="add-recipe-ingredientsID" class="add-recipe-ingredients hidden">
+      <label for="Ingredients">
+        <p>Ingredients:</p>
+      </label>
+      <br>
+      <input type="text"><br>
+      <input type="text"><br>
+      <input type="text"><br>
+      <input type="text"><br>
+      <input type="text"><br>
+      <br>
+      <input type="submit" value="Submit!">
+    </div>
+
+    <!--Add Recipe Directions-->
+    <div id="add-recipe-directionID" class="add-recipe-direction hidden">
+      <p>Direction</p>
+      <ol>
+        <li>Step 1:</li>
+        <textarea></textarea>
+        <li>Step 2:</li>
+        <textarea></textarea>
+        <li>Step 3:</li>
+        <textarea></textarea>
+      </ol>
+      <input type="submit" value="Submit!">
+    </div>
+
+    <button><a href="home.html"> LEAVE </a></button>
+  </section>
+
+  <!--Sidepanel-->
+  <!--Add CSS and Javascript-->
+  <!--Side Panel-->
+  <section class="sidepanel">
+    <div id="sidepanlID" class="sidepanel">
+      <h2>Collapsed Sidepanel</h2>
+      <p>Content...</p>
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a id="LinkToFav" href="#favoritesID">Favorite Recipes</a>
+      <a id="LinkToViewed" href="#profile-page-reviewsID">Previously Cooked</a>
+      <a id="LinkToAdd" href="#add-recipeID">Add a Recipe</a>
+      <a href="#">Write a Review</a>
+    </div>
+
+    <button class="openbtn" onclick="openNav()">&#9776; Toggle Sidepanel</button>
+
+  </section>
+
+
+  <!--Footer bar-->
+  <!--"Reference: https://www.w3schools.com/howto/howto_js_collapse_sidepanel.asp [Collapse Sidepanel]"-->
+  <footer>
+    <h2>Footer</h2>
+    <ul>
+      <li><a href="#homeID" id="LinkToHome">home</a></li>
+      <li><a href="#calendarID" id="LinkToCalender">calendar</a></li>
+      <li><a href="#grocery-listID" id="LinkToList">list</a></li>
+      <li><a href="#profile-pageID" id="LinkToProfile">profile</a></li>
+    </ul>
+  </footer>
+
+</body>
+
+<!--Functions-->
+<script>
+  function navTo(str) {
+    if (document.getElementById(str).classList.contains('hidden'))
+      document.getElementById(str).classList.remove('hidden');
+    else
+      document.getElementById(str).classList.add('hidden');
+  }
+  function openNav() {
+    document.getElementById("sidepanelID").style.width = "250px";
+  }
+
+  function closeNav() {
+    document.getElementById("sidepanelID").style.width = "0";
+  }
+</script>
+
+</html>
