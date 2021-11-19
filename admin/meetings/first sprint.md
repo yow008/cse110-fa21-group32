@@ -28,7 +28,12 @@ First sprint review meeting. Everyone shares their individual progress and contr
   - Developed other functionalities (e.g. adding event(s)) of calendar with Zijian.
   - Explored and decided with Zijian on a specific library for our calendar. 
   - Explored other better ways to delete event(s) containing a link, such as deleting by clicking and deleting by choosing an option in a dropdown menu of that event, and then found them highly impossible since clicking a link always redirects the user to the linked page and dropdown menus are generally only possible as fixed elements on html pages. 
-  - Explored how to do modifications specifically on the layout of the week view of our calendar, but found that too difficult to be implemented considering the library that we are using. 
+  - Explored how to do modifications specifically on the layout of the week view of our calendar, but found that too difficult to be implemented considering the library that we are using.
+  
+
+https://user-images.githubusercontent.com/91357781/142704412-638751d1-9d2c-4d92-9fff-b978cb366cb4.mp4
+
+
   <br></br>
 
 - **Bagrat Mikhaelyan**
@@ -83,6 +88,11 @@ First sprint review meeting. Everyone shares their individual progress and contr
   - Created basic db functionalities such as user registration and PR others’ progress. Finalized login functionality through linking frontend page and backend db. 
   - Helped Esther and Tiffany with routing. 
   - Currently working on linking recipe db, Spoonacular, and frontend for searching by keywords.
+  
+
+https://user-images.githubusercontent.com/91357781/142704473-eafa7b06-5b03-4670-8529-89966bf55613.mp4
+
+
   <br></br>
 
 - **Hannah Hui**
