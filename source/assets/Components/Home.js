@@ -16,7 +16,7 @@ class HomePage extends HTMLElement {
         <!--ADD RECIPES HERE-->
         <p>Content..</p>
         <ul>
-            <li> <button id="expRecipe" type="menu">Recipe 1 (click this one)</button></li>
+            <li> <button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></li>
             <li> <button type="menu">Recipe 2 (not linked)</button></li>
             <li> <button type="menu">Recipe 3 (not linked)</button></li>
         </ul>

@@ -13,6 +13,9 @@ window.addEventListener('DOMContentLoaded', init);
 async function init() {
   addMainPages();
   bindNavIcons();
+  bindHomeFeatures();
+  bindRecipe();
+
 
   bindPopstate();
   router.navigate('home');
@@ -62,6 +65,7 @@ function addMainPages() {
   // Create and add search bar
   const searchBar = document.createElement('search-bar');
   document.getElementById('#section--search-bar').appendChild(searchBar);
+  
 
   // Create and add side panel
   const sidePanel = document.createElement('side-panel');
@@ -98,9 +102,23 @@ function bindNavIcons() {
 }
 
 /**
+ * Show Search result page and Recipe page will at home
+ */
+function bindHomeFeatures(){
+  //Show the recipe page
+  const recipePage = document.getElementById('ExpRecipe');
+
+  //Add click event listeners when click on the example recipe
+  recipePage.addEventListener('click', () => {
+    router.navigate('recipe');
+  });
+}
+
+/**
  * Bind the recipe views
  */
 function bindRecipe(){
+
   //Retrieve the different section
   const summary = document.getElementById('ToSum');
   const ingredients = document.getElementById('ToIng');
@@ -125,6 +143,26 @@ function bindRecipe(){
 /**
  * Bind the add recipe views
  */
+ function bindAddRecipe(){
+  //Retrieve the different section
+  const summary = document.getElementById('ToSum');
+  const ingredients = document.getElementById('ToIng');
+  const direction = document.getElementById('ToDir');
+
+  //Add click event listeners and proper navigation
+  summary.addEventListener('click', () => {
+    router.navigate('summary');
+  });
+  
+  ingredients.addEventListener('click', () => {
+    router.navigate('ingredients');
+  });
+  
+  direction.addEventListener('click', () => {
+    router.navigate('direction');
+  });
+  
+}
 
 
 /**
