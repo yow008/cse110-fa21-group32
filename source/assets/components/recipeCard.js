@@ -1,6 +1,6 @@
 /**
  * This class creates the recipe card elements that will be used to show the recipe search results in
- * the search/home page.
+ * the search/home page. The functions in this file as well as the class are taken from our Lab 7.
  *
  * To use it place this in your html page,
  *
