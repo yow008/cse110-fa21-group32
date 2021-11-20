@@ -112,11 +112,14 @@ jobs:
       - name: Compile with Grunt
         uses: elstudio/actions-js-build/build@v4
 
+      - name: Config GitHub user name
+        run: git config --global user.name hannahhui5184
+
+      - name: Config GitHub user email
+        run: git config --global user.email hannah.hui5184@gmail.com
+
       - name: Run minification
-        run: |
-        git config --global user.name hannahhui5184
-        git config --global user.email hannah.hui5184@gmail.com
-        grunt
+        run: grunt
 
       # - name: Commit changes
       #   uses: elstudio/actions-js-build/commit@v4
