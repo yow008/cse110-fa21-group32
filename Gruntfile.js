@@ -7,7 +7,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     // Resource: https://gruntjs.com/configuring-tasks#building-the-files-object-dynamically
-    uglify: {
+    terser: {
       dynamic_mappings: {
         // Grunt will search for "**/*.js" under "lib/" when the "uglify" task
         // runs and build the appropriate src-dest file mappings then, so you
@@ -60,10 +60,11 @@ module.exports = function (grunt) {
   });
 
   // Load the plugin that provides the "uglify" task.
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  // grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-terser');
 
   // Default task(s).
-  grunt.registerTask('default', ['uglify', 'cssmin', 'htmlmin']);
+  grunt.registerTask('default', ['terser', 'cssmin', 'htmlmin']);
 };
