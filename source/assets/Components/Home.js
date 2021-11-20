@@ -1,4 +1,5 @@
 // HomePage.js
+import { Router } from './Router.js';
 
 class HomePage extends HTMLElement {
     constructor() {
@@ -24,6 +25,11 @@ class HomePage extends HTMLElement {
 
         // Append elements to the shadow root
         this.shadowRoot.append(styles, article);
+        const recipePage = this.document.getElementById('ExpRecipe');
+        recipePage.addEventListener('click', () => {
+            router.navigate('recipe');
+        });
+        
     }
 }
 

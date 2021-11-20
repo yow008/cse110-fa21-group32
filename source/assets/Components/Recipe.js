@@ -1,6 +1,6 @@
 // Recipe.js
 
-class AddRecipePage extends HTMLElement {
+class RecipePage extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });

@@ -13,9 +13,6 @@ window.addEventListener('DOMContentLoaded', init);
 async function init() {
   addMainPages();
   bindNavIcons();
-  bindHomeFeatures();
-  bindRecipe();
-
 
   bindPopstate();
   router.navigate('home');
@@ -101,69 +98,10 @@ function bindNavIcons() {
   });
 }
 
-/**
- * Show Search result page and Recipe page will at home
- */
-function bindHomeFeatures(){
-  //Show the recipe page
-  const recipePage = document.getElementById('ExpRecipe');
-
-  //Add click event listeners when click on the example recipe
-  recipePage.addEventListener('click', () => {
-    router.navigate('recipe');
-  });
-}
 
 /**
  * Bind the recipe views
  */
-function bindRecipe(){
-
-  //Retrieve the different section
-  const summary = document.getElementById('ToSum');
-  const ingredients = document.getElementById('ToIng');
-  const direction = document.getElementById('ToDir');
-
-  //Add click event listeners and proper navigation
-  summary.addEventListener('click', () => {
-    router.navigate('summary');
-  });
-  
-  ingredients.addEventListener('click', () => {
-    router.navigate('ingredients');
-  });
-  
-  direction.addEventListener('click', () => {
-    router.navigate('direction');
-  });
-  
-}
-
-
-/**
- * Bind the add recipe views
- */
- function bindAddRecipe(){
-  //Retrieve the different section
-  const summary = document.getElementById('ToSum');
-  const ingredients = document.getElementById('ToIng');
-  const direction = document.getElementById('ToDir');
-
-  //Add click event listeners and proper navigation
-  summary.addEventListener('click', () => {
-    router.navigate('summary');
-  });
-  
-  ingredients.addEventListener('click', () => {
-    router.navigate('ingredients');
-  });
-  
-  direction.addEventListener('click', () => {
-    router.navigate('direction');
-  });
-  
-}
-
 
 /**
  * Bind the search-bar from the home page when click "Seach" button
@@ -179,11 +117,31 @@ function bindRecipe(){
  * Bind the Cooking Mode page when "Cook" is been click through the recipe page
  */
 
-
 /**
  * Bind the Collapased Sidepanel at the side for the appropriate pages
  * (Favorite Recipes, Previously Cooked, Add a Recipe, Write a Review)
  */
+ function bindSidePanel() {
+  // Retrieve buttons corresponding to icons
+  const favoriteRecipes = document.getElementById('LinkToFav');
+  const prevCooked = document.getElementById('LinkToPrev');
+  const addRecipe = document.getElementById('LinkToAdd');
+  const writeReview = document.getElementById('LinkToWrite');
+
+  // Add click event listeners and proper navigatiorite'n
+  favoriteRecipes.addEventListener('click', () => {
+    router.navigate('favRecipes'); 
+  });
+  prevCooked.addEventListener('click', () => {
+    router.navigate('prevCooked');
+  });
+  addRecipe.addEventListener('click', () => {
+    router.navigate('addRecipe');
+  });
+  writeReview.addEventListener('click', () => {
+    router.navigate('writeReview');
+  });
+}
 
 /**
  * Binds the popstate (back button/forward button) to navigate
