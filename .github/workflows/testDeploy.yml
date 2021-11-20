@@ -101,11 +101,14 @@ jobs:
       - name: Install Grunt
         run: npm install --save-dev grunt
 
-      - name: Install Grunt plugins
-        run: |
-        npm install --save-dev grunt-contrib-cssmin
-        npm install --save-dev grunt-contrib-htmlmin
-        npm install --save-dev grunt-git
+      - name: Install Grunt CSS min
+        run: npm install --save-dev grunt-contrib-cssmin
+
+      - name: Install Grunt HTML min
+        run: npm install --save-dev grunt-contrib-htmlmin
+
+      - name: Install Grunt git
+        run: npm install --save-dev grunt-git
 
       - name: Run minification
         run: grunt
