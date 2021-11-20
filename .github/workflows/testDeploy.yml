@@ -109,9 +109,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
 
-      - name: Install Grunt
-        run: npm install -g grunt-cli
-
       - name: Run minification
         run: grunt
 
