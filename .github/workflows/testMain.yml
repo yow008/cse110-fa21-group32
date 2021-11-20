@@ -62,7 +62,7 @@ jobs:
 
       # Exclude the test.js files due to errors about jest functions
       - name: Run ESLint
-        run: npx eslint source/assets/scripts/*.js
+        run: npx eslint source/**/*.js
 
   js-test:
     needs: prettier
