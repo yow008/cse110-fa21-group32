@@ -120,12 +120,5 @@ module.exports = function (grunt) {
       });
     }
   );
-  grunt.registerTask('default', [
-    'terser',
-    'cssmin',
-    'htmlmin',
-    'gitadd',
-    'gitcommit',
-    'gitpush',
-  ]);
+  grunt.registerTask('default', ['terser', 'cssmin', 'htmlmin']);
 };
