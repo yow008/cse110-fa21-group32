@@ -21,12 +21,28 @@ class SearchBar extends HTMLElement {
         <p>Search Bar</p>
         <form>
             <input type="text" placeholder="Search.." name="search">
-            <button id="search-bar">Search</button>
+            <button id="search-bar"><a>Search</a></button>
         </form>
         `;
 
         // Append elements to the shadow root
         this.shadowRoot.append(styles, article);
+
+        // Add Page for the search result
+        router.addPage('search-results', function() {
+            document.getElementById('#section--home').classList.remove('shown');
+            document.getElementById('#section--search-bar').classList.remove('shown');
+            console.log(document.getElementById('#section--recipe'));
+
+            //document.getElementById('#section--search-results').classList.add('shown');
+            
+        });
+
+        // Click the search to navigate to the new page with updated URL
+        const recipePage = this.shadowRoot.getElementById('search-bar');
+        recipePage.addEventListener('click', () => {
+            router.navigate('search-results');
+        });
     }
 }
 
