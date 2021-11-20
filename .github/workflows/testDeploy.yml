@@ -90,26 +90,18 @@ jobs:
       - name: Run CSS linter
         run: npx stylelint source/**/*.css
 
-  js-minify:
+  minify:
     needs: [build, js-eslint, css-lint, html-validate]
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2.4.1
+      - uses: actions/setup-node@v2
 
-      - name: Install grunt
-        run: npm install grunt
+      - name: Compile with Grunt
+        uses: elstudio/actions-js-build/build@v4
 
-      - name: Install HTML minifier
-        run: npm install grunt-contrib-htmlmin --save-dev
-
-      - name: Install CSS minifier
-        run: npm install grunt-contrib-cssmin --save-dev
-
-      - name: Install uglifyjs
-        run: npm install grunt-contrib-uglify --save-dev
-
-      # Only minifies source files, puts min result into deploy dir
-      - name: Run minifier and remove unnecessary files
-        run: grunt
+      - name: Commit changes
+        uses: elstudio/actions-js-build/commit@v4
+        with:
+          commitMessage: Minified source files for deployment
