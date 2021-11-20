@@ -104,7 +104,8 @@ https://user-images.githubusercontent.com/91357781/142715586-1e5dc19a-823d-47d3-
  (Hannah's video is too large to put in md file. You can check her video in assets!)
   <br></br>
 
-
+## Duration
+Time: 40min
 
 
              
