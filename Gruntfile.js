@@ -2,6 +2,7 @@
  * Setup for Grunt automated testing
  * Resource: https://gruntjs.com/getting-started
  */
+const terser = require('terser');
 module.exports = function (grunt) {
   // Project configuration.
   grunt.initConfig({
@@ -59,12 +60,31 @@ module.exports = function (grunt) {
     },
   });
 
-  // Load the plugin that provides the "uglify" task.
-  // grunt.loadNpmTasks('grunt-contrib-uglify');
+  // Load the plugin that provides the "cssmin" and "htmlmin" tasks.
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
-  grunt.loadNpmTasks('grunt-terser');
 
-  // Default task(s).
+  // Reference: https://github.com/gruntjs/grunt-contrib-uglify/issues/522
+  grunt.registerMultiTask(
+    'terser',
+    'Parse, mangle & compress source code files.',
+    function () {
+      var done = this.async();
+      Promise.all(
+        this.files.map((file) => {
+          return new Promise((resolve, reject) => {
+            let contents = grunt.file.read(file.src);
+            terser.minify(contents, this.options()).then((result) => {
+              grunt.file.write(file.dest, result.code);
+              resolve();
+            }, reject);
+          });
+        })
+      ).then(done, (error) => {
+        console.error(error);
+        done();
+      });
+    }
+  );
   grunt.registerTask('default', ['terser', 'cssmin', 'htmlmin']);
 };
