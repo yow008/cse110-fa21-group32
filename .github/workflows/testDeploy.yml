@@ -113,7 +113,10 @@ jobs:
         uses: elstudio/actions-js-build/build@v4
 
       - name: Run minification
-        run: grunt
+        run: |
+        git config --global user.name hannahhui5184
+        git config --global user.email hannah.hui5184@gmail.com
+        grunt
 
       # - name: Commit changes
       #   uses: elstudio/actions-js-build/commit@v4
