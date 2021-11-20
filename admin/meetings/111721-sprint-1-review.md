@@ -29,6 +29,10 @@ First sprint review meeting. Everyone shares their individual progress and contr
   - Explored and decided with Zijian on a specific library for our calendar. 
   - Explored other better ways to delete event(s) containing a link, such as deleting by clicking and deleting by choosing an option in a dropdown menu of that event, and then found them highly impossible since clicking a link always redirects the user to the linked page and dropdown menus are generally only possible as fixed elements on html pages. 
   - Explored how to do modifications specifically on the layout of the week view of our calendar, but found that too difficult to be implemented considering the library that we are using. 
+  
+
+https://user-images.githubusercontent.com/91357781/142715571-c97e4c23-2f30-48d6-891a-0a030a2fb829.mp4
+
   <br></br>
 
 - **Bagrat Mikhaelyan**
@@ -83,6 +87,11 @@ First sprint review meeting. Everyone shares their individual progress and contr
   - Created basic db functionalities such as user registration and PR others’ progress. Finalized login functionality through linking frontend page and backend db. 
   - Helped Esther and Tiffany with routing. 
   - Currently working on linking recipe db, Spoonacular, and frontend for searching by keywords.
+  
+
+https://user-images.githubusercontent.com/91357781/142715586-1e5dc19a-823d-47d3-8363-ebc7e5f9b53c.mp4
+
+
   <br></br>
 
 - **Hannah Hui**
@@ -91,6 +100,8 @@ First sprint review meeting. Everyone shares their individual progress and contr
   - Finished pipeline for linting, formatting, and JS tests
   - Helped with turning our app into an SPA
   - Researched options for hosting
+  
+ (Hannah's video is too large to put in md file. You can check her video in assets!)
   <br></br>
 
 
