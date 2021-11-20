@@ -98,10 +98,22 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
 
-      - name: Compile with Grunt
-        uses: elstudio/actions-js-build/build@v4
+      - name: Install Grunt
+        run: npm install --save-dev grunt
 
-      - name: Commit changes
-        uses: elstudio/actions-js-build/commit@v4
-        with:
-          commitMessage: Minified source files for deployment
+      - name: Install Grunt plugins
+        run: |
+        npm install --save-dev grunt-contrib-cssmin
+        npm install --save-dev grunt-contrib-htmlmin
+        npm install --save-dev grunt-git
+
+      - name: Run minification
+        run: grunt
+
+      # - name: Compile with Grunt
+      #   uses: elstudio/actions-js-build/build@v4
+
+      # - name: Commit changes
+      #   uses: elstudio/actions-js-build/commit@v4
+      #   with:
+      #     commitMessage: Minified source files for deployment

@@ -58,11 +58,45 @@ module.exports = function (grunt) {
         ],
       },
     },
+    gitadd: {
+      task: {
+        options: {
+          force: true,
+        },
+        files: {
+          cwd: 'deploy/',
+          src: ['**/*'],
+        },
+      },
+    },
+    gitcommit: {
+      your_target: {
+        options: {
+          // Target-specific options go here.
+          message: 'Grunt committed minimized files',
+        },
+        files: {
+          // Specify the files you want to commit
+          cwd: 'deploy/',
+          src: ['**/*'],
+        },
+      },
+    },
+    gitpush: {
+      your_target: {
+        options: {
+          // Target-specific options go here.
+          remote: 'origin',
+          branch: 'deploy',
+        },
+      },
+    },
   });
 
   // Load the plugin that provides the "cssmin" and "htmlmin" tasks.
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-git');
 
   // Reference: https://github.com/gruntjs/grunt-contrib-uglify/issues/522
   grunt.registerMultiTask(
@@ -86,5 +120,12 @@ module.exports = function (grunt) {
       });
     }
   );
-  grunt.registerTask('default', ['terser', 'cssmin', 'htmlmin']);
+  grunt.registerTask('default', [
+    'terser',
+    'cssmin',
+    'htmlmin',
+    'gitadd',
+    'gitcommit',
+    'gitpush',
+  ]);
 };
