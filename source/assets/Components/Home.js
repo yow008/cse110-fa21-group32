@@ -1,5 +1,7 @@
 // HomePage.js
-import { Router } from './Router.js';
+import { Router } from '../scripts/Router.js';
+
+const router = new Router();
 
 class HomePage extends HTMLElement {
     constructor() {
@@ -25,10 +27,25 @@ class HomePage extends HTMLElement {
 
         // Append elements to the shadow root
         this.shadowRoot.append(styles, article);
-        const recipePage = this.document.getElementById('ExpRecipe');
+
+        router.addPage('recipe', function() {
+            document.getElementById('#section--home').classList.remove('shown');
+            document.getElementById('#section--search-bar').classList.remove('shown');
+            console.log(document.getElementById('#section--recipe'));
+
+            document.getElementById('#section--recipe').classList.add('shown');
+                
+        });
+        
+        const recipePage = this.shadowRoot.getElementById('ExpRecipe');
         recipePage.addEventListener('click', () => {
             router.navigate('recipe');
+            
         });
+
+        
+       
+
         
     }
 }

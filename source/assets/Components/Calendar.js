@@ -37,7 +37,7 @@ class CalendarPage extends HTMLElement {
             <button type="button">Add Recipes</button>
         </div>
 
-        <button><a href="home.html"> LEAVE </a></button>
+        <button><a href="index.html"> LEAVE </a></button>
         `;
 
         // Append elements to the shadow root

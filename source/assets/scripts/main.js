@@ -26,13 +26,14 @@ function addMainPages() {
     // Add all of the main pages
     router.addPage(pageNames[i], function () {
       // If modified, also modify global pageNames
-      const pageNames = ['home', 'calendar', 'grocery', 'profile'];
+      //const pageNames = ['home', 'calendar', 'grocery', 'profile'];
       for (let j = 0; j < pageNames.length; j++) {
         // If adding the current page, show. Otherwise hide
         if (pageNames[i] === pageNames[j]) {
           document
             .getElementById('#section--' + pageNames[j])
             .classList.add('shown');
+          console.log(document.getElementById('#section--' + pageNames[j]));
         } else {
           document
             .getElementById('#section--' + pageNames[j])
@@ -101,10 +102,6 @@ function bindNavIcons() {
 
 /**
  * Bind the recipe views
- */
-
-/**
- * Bind the search-bar from the home page when click "Seach" button
  */
 
 

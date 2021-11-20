@@ -1,5 +1,11 @@
 // SearchBar.js
 
+import { Router } from '../scripts/Router.js';
+
+const router = new Router();
+
+const pageNames = ['search-result'];
+
 class SearchBar extends HTMLElement {
     constructor() {
         super();
