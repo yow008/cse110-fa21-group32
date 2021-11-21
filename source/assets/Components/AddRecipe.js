@@ -21,7 +21,7 @@ class AddRecipePage extends HTMLElement {
         </div>
     
         <!--Add Recipe Summary-->
-        <div id="add-recipe-summaryID" class="add-recipe-summary hidden">
+        <div id="add-recipe-summaryID" class="add-recipe-summary">
           <p>Summary</p>
           <textarea></textarea>
           <br>
@@ -62,6 +62,32 @@ class AddRecipePage extends HTMLElement {
 
         // Append elements to the shadow root
         this.shadowRoot.append(styles, article);
+
+        // const addrecipeSumPage = document.getElementById('add-recipe-summaryID');
+        // const addrecipeIngPage = document.getElementById('add-recipe-summaryID');
+        // const addrecipeDirPage = document.getElementById('add-recipe-summaryID');
+
+        // document.querySelector("#ToAddSum").addEventListener("click", e => {
+        //   e.preventDefault();
+        //   addrecipeSumPage.classList.remove('hidden');
+        //   addrecipeIngPage.classList.add('hidden');
+        //   addrecipeDirPage.classList.add('hidden');
+        // });
+
+        // document.querySelector("#ToAddIng").addEventListener("click", e => {
+        //   e.preventDefault();
+        //   addrecipeSumPage.classList.add('hidden');
+        //   addrecipeIngPage.classList.remove('hidden');
+        //   addrecipeDirPage.classList.add('hidden');
+        // });
+
+        // document.querySelector("#ToAddDir").addEventListener("click", e => {
+        //   e.preventDefault();
+        //   addrecipeSumPage.classList.add('hidden');
+        //   addrecipeIngPage.classList.add('hidden');
+        //   addrecipeDirPage.classList.remove('hidden');
+        // });
+
     }
 }
 
