@@ -21,15 +21,16 @@ class RecipePage extends HTMLElement {
         <a href="#recipe-ingredientsID" id="ToIng">Ingredients</a>
         <a href="#recipe-directionID" id="ToDir">Directions</a>
         </div>
+
         <!--Recipe Summary-->
-        <div id="recipe-summaryID" class="recipe-summary hidden">
+        <div id="recipe-summaryID" class="recipe-summary" style="display: block">
         <p>Summary</p>
         <p>Content...</p>
-        <button type="button">Add to My Favorites</button>
+        <button type="button" class="recipe-summmaryButton">Add to My Favorites</button>
         </div>
 
         <!--Recipe Ingredients-->
-        <div id="recipe-ingredientsID" class="recipe-ingredients hidden">
+        <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none">
         <p>Ingredients</p>
         <!--Add To List Button-->
         <details>
@@ -47,7 +48,7 @@ class RecipePage extends HTMLElement {
         </div>
 
         <!--Recipe Directions-->
-        <div id="recipe-directionID" class="recipe-direction hidden">
+        <div id="recipe-directionID" class="recipe-direction" style="display: none">
         <p>Direction</p>
         <ul>
             <li><a href="step1">1</a></li>
@@ -62,12 +63,39 @@ class RecipePage extends HTMLElement {
         // Append elements to the shadow root
         this.shadowRoot.append(styles, article);
 
-        router.addPage('cooking-mode', function() {
-            document.getElementById('#section--recipe').classList.remove('shown');
+    //Summary  
+    this.shadowRoot.getElementById("ToSum").addEventListener("click", e => {
+        e.preventDefault();   
+        this.shadowRoot.getElementById('recipe-summaryID').setAttribute("style", "display: show") ;
+        this.shadowRoot.getElementById('recipe-ingredientsID').setAttribute("style", "display: none") ;
+        this.shadowRoot.getElementById('recipe-directionID').setAttribute("style", "display: none") ;
+     });
 
-            document.getElementById('#section--cooking-mode').classList.add('shown');
+     //Ingredients
+     this.shadowRoot.getElementById("ToIng").addEventListener("click", e => {
+        e.preventDefault();   
+        this.shadowRoot.getElementById('recipe-summaryID').setAttribute("style", "display: none") ;
+        this.shadowRoot.getElementById('recipe-ingredientsID').setAttribute("style", "display: show") ;
+        this.shadowRoot.getElementById('recipe-directionID').setAttribute("style", "display: none") ;
+    });
+
+    //Directions
+    this.shadowRoot.getElementById("ToDir").addEventListener("click", e => {
+        e.preventDefault();   
+        this.shadowRoot.getElementById('recipe-summaryID').setAttribute("style", "display: none") ;
+        this.shadowRoot.getElementById('recipe-ingredientsID').setAttribute("style", "display: none") ;
+        this.shadowRoot.getElementById('recipe-directionID').setAttribute("style", "display: show") ;
+
+    });
+
+
+        router.addPage('cooking-mode', function() {
+            this.shadowRoot.getElementById('#section--recipe').classList.remove('shown');
+
+            this.shadowRoot.getElementById('#section--cooking-mode').classList.add('shown');
                 
         });
+
         
         const CMPage = this.shadowRoot.getElementById('LinkToCM');
         CMPage.addEventListener('click', () => {

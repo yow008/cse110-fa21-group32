@@ -21,7 +21,7 @@ class AddRecipePage extends HTMLElement {
         </div>
     
         <!--Add Recipe Summary-->
-        <div id="add-recipe-summaryID" class="add-recipe-summary">
+        <div id="add-recipe-summaryID" class="add-recipe-summary" style="display: show">
           <p>Summary</p>
           <textarea></textarea>
           <br>
@@ -29,7 +29,7 @@ class AddRecipePage extends HTMLElement {
         </div>
     
         <!--Add Recipe Ingredients-->
-        <div id="add-recipe-ingredientsID" class="add-recipe-ingredients hidden">
+        <div id="add-recipe-ingredientsID" class="add-recipe-ingredients" style="display: none">
           <label for="Ingredients">
             <p>Ingredients:</p>
           </label>
@@ -44,7 +44,7 @@ class AddRecipePage extends HTMLElement {
         </div>
     
         <!--Add Recipe Directions-->
-        <div id="add-recipe-directionID" class="add-recipe-direction hidden">
+        <div id="add-recipe-directionID" class="add-recipe-direction" style="display: none">
           <p>Direction</p>
           <ol>
             <li>Step 1:</li>
@@ -63,30 +63,30 @@ class AddRecipePage extends HTMLElement {
         // Append elements to the shadow root
         this.shadowRoot.append(styles, article);
 
-        // const addrecipeSumPage = document.getElementById('add-recipe-summaryID');
-        // const addrecipeIngPage = document.getElementById('add-recipe-summaryID');
-        // const addrecipeDirPage = document.getElementById('add-recipe-summaryID');
+    //Add Summary  
+    this.shadowRoot.getElementById("ToAddSum").addEventListener("click", e => {
+        e.preventDefault();   
+        this.shadowRoot.getElementById('add-recipe-summaryID').setAttribute("style", "display: show") ;
+        this.shadowRoot.getElementById('add-recipe-ingredientsID').setAttribute("style", "display: none") ;
+        this.shadowRoot.getElementById('add-recipe-directionID').setAttribute("style", "display: none") ;
+    });
 
-        // document.querySelector("#ToAddSum").addEventListener("click", e => {
-        //   e.preventDefault();
-        //   addrecipeSumPage.classList.remove('hidden');
-        //   addrecipeIngPage.classList.add('hidden');
-        //   addrecipeDirPage.classList.add('hidden');
-        // });
+    //Add Ingredients
+    this.shadowRoot.getElementById("ToAddIng").addEventListener("click", e => {
+        e.preventDefault();   
+        this.shadowRoot.getElementById('add-recipe-summaryID').setAttribute("style", "display: none") ;
+        this.shadowRoot.getElementById('add-recipe-ingredientsID').setAttribute("style", "display: show") ;
+        this.shadowRoot.getElementById('add-recipe-directionID').setAttribute("style", "display: none") ;
+    });
 
-        // document.querySelector("#ToAddIng").addEventListener("click", e => {
-        //   e.preventDefault();
-        //   addrecipeSumPage.classList.add('hidden');
-        //   addrecipeIngPage.classList.remove('hidden');
-        //   addrecipeDirPage.classList.add('hidden');
-        // });
+    //Add Directions
+    this.shadowRoot.getElementById("ToAddDir").addEventListener("click", e => {
+        e.preventDefault();   
+        this.shadowRoot.getElementById('add-recipe-summaryID').setAttribute("style", "display: none") ;
+        this.shadowRoot.getElementById('add-recipe-ingredientsID').setAttribute("style", "display: none") ;
+        this.shadowRoot.getElementById('add-recipe-directionID').setAttribute("style", "display: show") ;
 
-        // document.querySelector("#ToAddDir").addEventListener("click", e => {
-        //   e.preventDefault();
-        //   addrecipeSumPage.classList.add('hidden');
-        //   addrecipeIngPage.classList.add('hidden');
-        //   addrecipeDirPage.classList.remove('hidden');
-        // });
+    });
 
     }
 }
