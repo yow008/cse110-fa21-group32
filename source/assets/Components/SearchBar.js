@@ -23,6 +23,7 @@ class SearchBar extends HTMLElement {
 
         // Append elements to the shadow root
         this.shadowRoot.append(styles, article);
+
         router.addPage('search-results', function() {
             document.getElementById('#section--home').classList.remove('shown');
             document.getElementById('#section--search-bar').classList.remove('shown');
@@ -35,7 +36,6 @@ class SearchBar extends HTMLElement {
         const recipePage = this.shadowRoot.getElementById('search-icon');
         recipePage.addEventListener('click', () => {
             router.navigate('search-results');
-            
         });
     }
 }
