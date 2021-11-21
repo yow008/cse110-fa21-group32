@@ -1,10 +1,6 @@
 // SearchResults.js
 
-<<<<<<< HEAD
-class SearchResults extends HTMLElement {
-=======
 class SearchResultsPage extends HTMLElement {
->>>>>>> 5a8e84488f2ac65b999c655fed84e09e5d3ef3cb
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -26,17 +22,8 @@ class SearchResultsPage extends HTMLElement {
         `;
 
         // Append elements to the shadow root
-<<<<<<< HEAD
         this.shadowRoot.append(styles, article);
     }
 }
 
-customElements.define('search-results-page', SearchResults);
-=======
-         this.shadowRoot.append(styles, article);
-
-    }
-}
-
 customElements.define('search-results-page', SearchResultsPage);
->>>>>>> 5a8e84488f2ac65b999c655fed84e09e5d3ef3cb

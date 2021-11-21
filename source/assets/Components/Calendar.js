@@ -41,7 +41,8 @@ class CalendarPage extends HTMLElement {
         `;
 
         // Append elements to the shadow root
-        this.shadowRoot.append(styles, article);
+         this.shadowRoot.append(styles, article);
+
     }
 }
 

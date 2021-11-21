@@ -142,6 +142,39 @@ function bindNavIcons() {
   });
 }
 
+// function bindCalendar(){
+// const monthPage = document.querySelector("#monthID");
+// const weekPage = document.querySelector("#weekID");
+// const dayPage = document.querySelector("#dayID");
+
+// //Calendar Month View
+// document.querySelector("#LinkToMonth").addEventListener("click", e => {
+//     e.preventDefault();
+//     monthPage.classList.remove('hidden');
+//     weekPage.classList.add('hidden');
+//     dayPage.classList.add('hidden');
+//     console.log("hello")
+//   });
+
+//   //Calendar Week View
+//   document.querySelector("#LinkToWeek").addEventListener("click", e => {
+//     e.preventDefault();
+
+//     monthPage.classList.add('hidden');
+//     weekPage.classList.remove('hidden');
+//     dayPage.classList.add('hidden');
+//   });
+
+//   //Calendar Day View
+//   document.querySelector("#LinkToDay").addEventListener("click", e => {
+//     e.preventDefault();
+
+//     monthPage.classList.add('hidden');
+//     weekPage.classList.add('hidden');
+//     dayPage.classList.remove('hidden');
+//   });
+// }
+
 /**
  * Binds the popstate (back button/forward button) to navigate
  * to the correct page
