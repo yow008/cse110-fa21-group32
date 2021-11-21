@@ -1,8 +1,9 @@
 import { Router } from './Router.js';
 
 // If modified, also modify list of page names under addMainPages
-const pageNames = ['home', 'calendar', 'grocery', 'profile'];
-
+const pageNames = ['home', 'calendar', 'grocery', 'profile', 'recipe', 'search-results', 'cooking-mode',
+                   'fav-recipes','add-recipe','write-review'];
+                  //,'prevCooked',
 const router = new Router();
 
 window.addEventListener('DOMContentLoaded', init);
@@ -13,6 +14,7 @@ window.addEventListener('DOMContentLoaded', init);
 async function init() {
   addMainPages();
   bindNavIcons();
+  bindSidePanel();
 
   bindPopstate();
   router.navigate('home');
@@ -121,22 +123,22 @@ function bindNavIcons() {
  function bindSidePanel() {
   // Retrieve buttons corresponding to icons
   const favoriteRecipes = document.getElementById('LinkToFav');
-  const prevCooked = document.getElementById('LinkToPrev');
+  // const prevCooked = document.getElementById('LinkToPrev');
   const addRecipe = document.getElementById('LinkToAdd');
   const writeReview = document.getElementById('LinkToWrite');
 
   // Add click event listeners and proper navigatiorite'n
   favoriteRecipes.addEventListener('click', () => {
-    router.navigate('favRecipes'); 
+    router.navigate('fav-recipes'); 
   });
-  prevCooked.addEventListener('click', () => {
-    router.navigate('prevCooked');
-  });
+  // prevCooked.addEventListener('click', () => {
+  //   router.navigate('prevCooked');
+  // });
   addRecipe.addEventListener('click', () => {
-    router.navigate('addRecipe');
+    router.navigate('add-recipe');
   });
   writeReview.addEventListener('click', () => {
-    router.navigate('writeReview');
+    router.navigate('write-review');
   });
 }
 

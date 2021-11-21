@@ -12,53 +12,52 @@ class AddRecipePage extends HTMLElement {
         // Fill in styles and root element
         styles.innerHTML = ``;
         article.innerHTML = `
-        <!--Add-Recipes-->
         <h2>Add Recipe</h2>
         <div class="add-recipe-navbar">
-        <!-- li><a onclick="navTo('homeID')" href="javascript:void(0)">home</a></li> -->
-        <a href="#add-recipe-summaryID" id="ToAddSum">Summary</a>
-        <a href="#add-recipe-ingredientsID" id="ToAddIng">Ingredients</a>
-        <a href="#add-recipe-directionID" id="ToAddDir">Directions</a>
-        </div>s
+          <!-- li><a onclick="navTo('homeID')" href="javascript:void(0)">home</a></li> -->
+          <a href="#add-recipe-summaryID" id="ToAddSum">Summary</a>
+          <a href="#add-recipe-ingredientsID" id="ToAddIng">Ingredients</a>
+          <a href="#add-recipe-directionID" id="ToAddDir">Directions</a>
+        </div>
     
         <!--Add Recipe Summary-->
         <div id="add-recipe-summaryID" class="add-recipe-summary hidden">
-        <p>Summary</p>
-        <textarea></textarea>
-        <br>
-        <input type="submit" value="Submit!">
+          <p>Summary</p>
+          <textarea></textarea>
+          <br>
+          <input type="submit" value="Submit!">
         </div>
     
         <!--Add Recipe Ingredients-->
         <div id="add-recipe-ingredientsID" class="add-recipe-ingredients hidden">
-        <label for="Ingredients">
+          <label for="Ingredients">
             <p>Ingredients:</p>
-        </label>
-        <br>
-        <input type="text"><br>
-        <input type="text"><br>
-        <input type="text"><br>
-        <input type="text"><br>
-        <input type="text"><br>
-        <br>
-        <input type="submit" value="Submit!">
+          </label>
+          <br>
+          <input type="text"><br>
+          <input type="text"><br>
+          <input type="text"><br>
+          <input type="text"><br>
+          <input type="text"><br>
+          <br>
+          <input type="submit" value="Submit!">
         </div>
     
         <!--Add Recipe Directions-->
         <div id="add-recipe-directionID" class="add-recipe-direction hidden">
-        <p>Direction</p>
-        <ol>
+          <p>Direction</p>
+          <ol>
             <li>Step 1:</li>
             <textarea></textarea>
             <li>Step 2:</li>
             <textarea></textarea>
             <li>Step 3:</li>
             <textarea></textarea>
-        </ol>
-        <input type="submit" value="Submit!">
+          </ol>
+          <input type="submit" value="Submit!">
         </div>
     
-        <button><a href="home.html"> LEAVE </a></button>
+        <button><a href="index.html"> LEAVE </a></button>
         `;
 
         // Append elements to the shadow root
@@ -66,4 +65,4 @@ class AddRecipePage extends HTMLElement {
     }
 }
 
-customElements.define('addrecipe-page', AddRecipePage);
+customElements.define('add-recipe-page', AddRecipePage);

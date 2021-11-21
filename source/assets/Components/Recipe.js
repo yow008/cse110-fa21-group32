@@ -1,5 +1,7 @@
 // Recipe.js
+import { Router } from '../scripts/Router.js';
 
+const router = new Router();
 
 class RecipePage extends HTMLElement {
     constructor() {
@@ -53,12 +55,25 @@ class RecipePage extends HTMLElement {
             <li><a href="step3">3</a></li>
             <li><a href="step4">4</a></li>
         </ul>
-        <button><a href="#cooking-modeID" id="LinkToCM"> Cook </a></button>
+        <button><a id="LinkToCM"> Cook </a></button>
         </div>
         `;
 
         // Append elements to the shadow root
         this.shadowRoot.append(styles, article);
+
+        router.addPage('cooking-mode', function() {
+            document.getElementById('#section--recipe').classList.remove('shown');
+
+            document.getElementById('#section--cooking-mode').classList.add('shown');
+                
+        });
+        
+        const CMPage = this.shadowRoot.getElementById('LinkToCM');
+        CMPage.addEventListener('click', () => {
+            router.navigate('cooking-mode');
+            
+        });
     }
 }
 

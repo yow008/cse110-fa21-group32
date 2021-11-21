@@ -1,6 +1,6 @@
-// SearchResults.js
+// FavoriteRecipes.js
 
-class SearchResults extends HTMLElement {
+class FavRecipesPage extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -12,13 +12,11 @@ class SearchResults extends HTMLElement {
         // Fill in styles and root element
         styles.innerHTML = ``;
         article.innerHTML = `
-        <h2>Search Results</h2>
-        <p>Contents</p>
-        <ul>
-          <li> <button type="menu">Recipe 1 (not linked)</button></li>
-          <li> <button type="menu">Recipe 2 (not linked)</button></li>
-          <li> <button type="menu">Recipe 3 (not linked)</button></li>
-        </ul>
+        <h2>Favorites</h2>
+        <p>Content...</p>
+        <div class="favorite-recipe-cards-wrapper">
+          <!--ADD RECIPES HERE-->
+        </div>
         `;
 
         // Append elements to the shadow root
@@ -26,4 +24,4 @@ class SearchResults extends HTMLElement {
     }
 }
 
-customElements.define('search-results-page', SearchResults);
+customElements.define('fav-recipes-page', FavRecipesPage);

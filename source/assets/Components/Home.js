@@ -31,7 +31,6 @@ class HomePage extends HTMLElement {
         router.addPage('recipe', function() {
             document.getElementById('#section--home').classList.remove('shown');
             document.getElementById('#section--search-bar').classList.remove('shown');
-            console.log(document.getElementById('#section--recipe'));
 
             document.getElementById('#section--recipe').classList.add('shown');
                 
@@ -42,9 +41,6 @@ class HomePage extends HTMLElement {
             router.navigate('recipe');
             
         });
-
-        
-       
 
         
     }

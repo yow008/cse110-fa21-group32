@@ -4,8 +4,6 @@ import { Router } from '../scripts/Router.js';
 
 const router = new Router();
 
-const pageNames = ['search-result'];
-
 class SearchBar extends HTMLElement {
     constructor() {
         super();
@@ -19,14 +17,26 @@ class SearchBar extends HTMLElement {
         styles.innerHTML = ``;
         article.innerHTML = `
         <p>Search Bar</p>
-        <form>
             <input type="text" placeholder="Search.." name="search">
-            <button id="search-bar">Search</button>
-        </form>
+            <button id="search-icon">Search</button>
         `;
 
         // Append elements to the shadow root
         this.shadowRoot.append(styles, article);
+        router.addPage('search-results', function() {
+            document.getElementById('#section--home').classList.remove('shown');
+            document.getElementById('#section--search-bar').classList.remove('shown');
+
+            console.log(document.getElementById('#section--search-results'));
+            document.getElementById('#section--search-results').classList.add('shown');
+                
+        });
+        
+        const recipePage = this.shadowRoot.getElementById('search-icon');
+        recipePage.addEventListener('click', () => {
+            router.navigate('search-results');
+            
+        });
     }
 }
 
