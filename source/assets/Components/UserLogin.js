@@ -107,7 +107,7 @@
 //             color: var(--color-error);
 //         }
         
-//         #form__button {
+//         .form__button {
 //             width: 100%;
 //             padding: 1rem 2rem;
 //             font-weight: bold;
@@ -120,11 +120,11 @@
 //             background-color: var(--color-primary);
 //         }
         
-//         #form__button:hover {
+//         .form__button:hover {
 //             background-color: var(--color-hover);
 //         }
         
-//         #form__button:active {
+//         .form__button:active {
 //             transform: scale(0.98);
 //         }
         
