@@ -1,9 +1,9 @@
 import { Router } from './Router.js';
 
 // If modified, also modify list of page names under addMainPages
-const pageNames = ['home', 'calendar', 'grocery', 'profile', 'recipe', 'search-results', 'cooking-mode',
+const pageNames = ['home', 'grocery', 'profile', 'recipe', 'search-results', 'cooking-mode',
                    'fav-recipes','add-recipe','write-review'];
-                  //,'prevCooked','user-login'v
+                  //,'prevCooked','user-login','calendar',
 const router = new Router();
 
 window.addEventListener('DOMContentLoaded', init);
@@ -86,7 +86,7 @@ function addMainPages() {
 function bindNavIcons() {
   // Retrieve buttons corresponding to icons
   const homeIcon = document.getElementById('LinkToHome');
-  const calendarIcon = document.getElementById('LinkToCalendar');
+  // const calendarIcon = document.getElementById('LinkToCalendar');
   const groceryIcon = document.getElementById('LinkToList');
   const profileIcon = document.getElementById('LinkToProfile');
 
@@ -95,9 +95,9 @@ function bindNavIcons() {
     router.navigate('home');
   });
 
-  calendarIcon.addEventListener('click', () => {
-    router.navigate('calendar');
-  });
+  // calendarIcon.addEventListener('click', () => {
+  //   router.navigate('calendar');
+  // });
 
   groceryIcon.addEventListener('click', () => {
     router.navigate('grocery');
@@ -164,3 +164,5 @@ function bindPopstate() {
     }
   });
 }
+
+

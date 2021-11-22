@@ -1,4 +1,152 @@
-// // UserLogin.js
+// UserLogin.js
+
+function setFormMessage(formElement, type, message) {
+    const messageElement = formElement.querySelector(".form__message");
+    
+    messageElement.textContent = message;
+    messageElement.classList.remove("form__message--success", "form__messgae--error");
+    messageElement.classList.add(`form_message--${type}`);
+
+}
+
+function setInputError(inputElement, message) {
+    inputElement.classList.add("form__input--error");
+    inputElement.parentElement.querySelector(".form__input-error-message").textContent = message;
+}
+
+function clearInputError(inputElement) {
+    inputElement.classList.remove("form__input--error");
+    inputElement.parentElement.querySelector(".form__input-error-message").textContent = "";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const goToHome = document.getElementById("continue");
+    const loginForm = document.querySelector("#login");
+    const createForm = document.querySelector("#creation");
+    const emailForm = document.querySelector("#emailPage");
+    const confirmationForm = document.querySelector("#confirmationPage");
+    const successRegForm = document.querySelector("#successReg");
+
+    goToHome.addEventListener('click', e => {
+        //
+        //TO DO (Backend needed)
+        //
+        //let valid = false;
+        e.preventDefault();
+        // if(!valid) {
+        //     setFormMessage(loginForm, "error", "Invalid username or password!");
+        //     return;
+        // }
+        location.href = 'home.html';
+    });
+
+    document.querySelector("#linkCreation").addEventListener("click", e => {
+        e.preventDefault();
+        emailForm.classList.add("form--hidden");
+        loginForm.classList.add("form--hidden");
+        confirmationForm.classList.add("form--hidden");
+        successRegForm.classList.add("form--hidden");
+        createForm.classList.remove("form--hidden");
+    });
+
+    // Maybe we can simplify this part of the code
+    //--------------------------------------------------------
+    document.querySelector("#linkLogin0").addEventListener("click", e => {
+        e.preventDefault();
+        emailForm.classList.add("form--hidden");
+        createForm.classList.add("form--hidden");
+        confirmationForm.classList.add("form--hidden");
+        successRegForm.classList.add("form--hidden");
+        loginForm.classList.remove("form--hidden");
+    });
+
+    document.querySelector("#linkLogin1").addEventListener("click", e => {
+        e.preventDefault();
+        emailForm.classList.add("form--hidden");
+        createForm.classList.add("form--hidden");
+        confirmationForm.classList.add("form--hidden");
+        successRegForm.classList.add("form--hidden");
+        loginForm.classList.remove("form--hidden");
+    });
+
+    document.querySelector("#linkLogin2").addEventListener("click", e => {
+        e.preventDefault();
+        emailForm.classList.add("form--hidden");
+        createForm.classList.add("form--hidden");
+        confirmationForm.classList.add("form--hidden");
+        successRegForm.classList.add("form--hidden");
+        loginForm.classList.remove("form--hidden");
+    });
+
+    document.querySelector("#linkLogin3").addEventListener("click", e => {
+        e.preventDefault();
+        emailForm.classList.add("form--hidden");
+        createForm.classList.add("form--hidden");
+        confirmationForm.classList.add("form--hidden");
+        successRegForm.classList.add("form--hidden");
+        loginForm.classList.remove("form--hidden");
+    });
+    //---------------------------------------------------------------
+
+    document.querySelector("#linkEmailPage").addEventListener("click", e => {
+        e.preventDefault();
+        loginForm.classList.add("form--hidden");
+        createForm.classList.add("form--hidden");
+        confirmationForm.classList.add("form--hidden");
+        successRegForm.classList.add("form--hidden");
+        emailForm.classList.remove("form--hidden");
+    });
+
+    loginForm.addEventListener("submit", e => {
+        e.preventDefault();
+        
+        //do fetch and check data of users here and return
+        setFormMessage(loginForm, "error", "Invalid username or password!");
+    });
+
+    document.querySelectorAll(".form__input").forEach(inputElement => {
+        inputElement.addEventListener("blur", e => {
+            if(e.target.id === "signUpUsername" && e.target.value.length > 0 && e.target.value.length < 10){
+                setInputError(inputElement, "Username must be at least 10 characters");
+            }
+            else if(e.target.id === "signUpUsername" && e.target.value.length > 16){
+                setInputError(inputElement, "Username must be less than 16 characters");
+            }
+        });
+
+        inputElement.addEventListener("input", e => {
+            clearInputError(inputElement);
+        });
+    });
+    
+    const resetButton = document.querySelector("#reset")
+    resetButton.addEventListener("click", e => {
+        e.preventDefault();
+        emailForm.classList.add("form--hidden");
+        loginForm.classList.add("form--hidden");
+        createForm.classList.add("form--hidden");
+        successRegForm.classList.add("form--hidden");
+        confirmationForm.classList.remove("form--hidden");
+    });
+
+
+    // should show up when users registrate successfully
+    const registrationBtn = document.querySelector("#registration");
+    registrationBtn.addEventListener("click", e => {
+        e.preventDefault();
+        emailForm.classList.add("form--hidden");
+        loginForm.classList.add("form--hidden");
+        createForm.classList.add("form--hidden");
+        confirmationForm.classList.add("form--hidden");
+        successRegForm.classList.remove("form--hidden");
+    });
+
+    createForm.addEventListener("submit", e => {
+        e.preventDefault();
+        setFormMessage(createForm, "error", "wrong information");
+    });
+});
+
 
 // import { Router } from '../scripts/Router.js';
 
@@ -331,117 +479,3 @@
 // }
 
 // customElements.define('user-login-page', UserLogin);
-
-function setFormMessage(formElement, type, message) {
-    const messageElement = formElement.querySelector(".form__message");
-    
-    messageElement.textContent = message;
-    messageElement.classList.remove("form__message--success", "form__messgae--error");
-    messageElement.classList.add(`form_message--${type}`);
-
-}
-
-function setInputError(inputElement, message) {
-    inputElement.classList.add("form__input--error");
-    inputElement.parentElement.querySelector(".form__input-error-message").textContent = message;
-}
-
-function clearInputError(inputElement) {
-    inputElement.classList.remove("form__input--error");
-    inputElement.parentElement.querySelector(".form__input-error-message").textContent = "";
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const goToHome = document.querySelector('#continue');
-    const loginForm = document.querySelector("#login");
-    const createForm = document.querySelector("#creation");
-    const emailForm = document.querySelector("#emailPage");
-    const confirmationForm = document.querySelector("#confirmationPage");
-    const successRegForm = document.querySelector("#successReg");
-
-    goToHome.addEventListener('click', e => {
-        let valid = false;
-        e.preventDefault();
-        if(!valid) {
-            setFormMessage(loginForm, "error", "Invalid username or password!");
-            return;
-        }
-        location.href = 'home.html';
-    });
-
-    document.querySelector("#linkCreation").addEventListener("click", e => {
-        e.preventDefault();
-        emailForm.classList.add("form--hidden");
-        loginForm.classList.add("form--hidden");
-        confirmationForm.classList.add("form--hidden");
-        successRegForm.classList.add("form--hidden");
-        createForm.classList.remove("form--hidden");
-    });
-
-    document.querySelector("#linkLogin").addEventListener("click", e => {
-        e.preventDefault();
-        emailForm.classList.add("form--hidden");
-        createForm.classList.add("form--hidden");
-        confirmationForm.classList.add("form--hidden");
-        successRegForm.classList.add("form--hidden");
-        loginForm.classList.remove("form--hidden");
-    });
-
-    document.querySelector("#linkEmailPage").addEventListener("click", e => {
-        e.preventDefault();
-        loginForm.classList.add("form--hidden");
-        createForm.classList.add("form--hidden");
-        confirmationForm.classList.add("form--hidden");
-        successRegForm.classList.add("form--hidden");
-        emailForm.classList.remove("form--hidden");
-    });
-
-    loginForm.addEventListener("submit", e => {
-        e.preventDefault();
-        
-        //do fetch and check data of users here and return
-        setFormMessage(loginForm, "error", "Invalid username or password!");
-    });
-
-    document.querySelectorAll(".form__input").forEach(inputElement => {
-        inputElement.addEventListener("blur", e => {
-            if(e.target.id === "signUpUsername" && e.target.value.length > 0 && e.target.value.length < 10){
-                setInputError(inputElement, "Username must be at least 10 characters");
-            }
-            else if(e.target.id === "signUpUsername" && e.target.value.length > 16){
-                setInputError(inputElement, "Username must be less than 16 characters");
-            }
-        });
-
-        inputElement.addEventListener("input", e => {
-            clearInputError(inputElement);
-        });
-    });
-    
-    const resetButton = document.querySelector("#reset")
-    resetButton.addEventListener("click", e => {
-        e.preventDefault();
-        emailForm.classList.add("form--hidden");
-        loginForm.classList.add("form--hidden");
-        createForm.classList.add("form--hidden");
-        successRegForm.classList.add("form--hidden");
-        confirmationForm.classList.remove("form--hidden");
-    });
-
-
-    // should show up when users registrate successfully
-    const registrationBtn = document.querySelector("#registration");
-    registrationBtn.addEventListener("click", e => {
-        e.preventDefault();
-        emailForm.classList.add("form--hidden");
-        loginForm.classList.add("form--hidden");
-        createForm.classList.add("form--hidden");
-        confirmationForm.classList.add("form--hidden");
-        successRegForm.classList.remove("form--hidden");
-    });
-
-    createForm.addEventListener("submit", e => {
-        e.preventDefault();
-        setFormMessage(createForm, "error", "wrong information");
-    });
-});
