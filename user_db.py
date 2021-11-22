@@ -110,5 +110,25 @@ class User_DB:
         self.cur.execute("DELETE FROM Users WHERE username = ? AND password = ? ", (username, password))
         self.conn.commit()
         return True
+        def addRecipe(self, username, password, id):
+        self.execute('SELECT Recipes FROM Users WHERE Username = ? AND Password = ?', (username, password))
+        recipes = pickle.loads(self.cur.fetchall[0]) # TODO: Integrity check
+        if recipes is None: recipes = []
+        recipes.append(id)
+        recipes = pickle.dumps(recipes)
+        self.updateUser(self, username, password, {'Recipes': recipes})
+        self.conn.commit()
+
+    def removeRecipe(self, username, password, id):
+        self.execute('SELECT Recipes FROM Users WHERE Username = ? AND Password = ?', (username, password))
+        recipes = pickle.loads(self.cur.fetchall[0]) # TODO: Integrity check
+        if recipes is None: recipes = []
+        try:
+            recipes.remove(id)
+        except ValueError:
+             pass # not exists
+        recipes = pickle.dumps(recipes)
+        self.updateUser(self, username, password, {'Recipes': recipes})
+        self.conn.commit()
 
 new_db = User_DB()
