@@ -1,152 +1,244 @@
 // UserLogin.js
 
-function setFormMessage(formElement, type, message) {
-    const messageElement = formElement.querySelector(".form__message");
-    
-    messageElement.textContent = message;
-    messageElement.classList.remove("form__message--success", "form__messgae--error");
-    messageElement.classList.add(`form_message--${type}`);
+const LOCAL_URL = 'http://127.0.0.1:5000';
 
+function setFormMessage(formElement, type, message) {
+  const messageElement = formElement.querySelector('.form__message');
+
+  messageElement.textContent = message;
+  messageElement.classList.remove(
+    'form__message--success',
+    'form__messgae--error'
+  );
+  messageElement.classList.add(`form_message--${type}`);
 }
 
 function setInputError(inputElement, message) {
-    inputElement.classList.add("form__input--error");
-    inputElement.parentElement.querySelector(".form__input-error-message").textContent = message;
+  inputElement.classList.add('form__input--error');
+  inputElement.parentElement.querySelector(
+    '.form__input-error-message'
+  ).textContent = message;
 }
 
 function clearInputError(inputElement) {
-    inputElement.classList.remove("form__input--error");
-    inputElement.parentElement.querySelector(".form__input-error-message").textContent = "";
+  inputElement.classList.remove('form__input--error');
+  inputElement.parentElement.querySelector(
+    '.form__input-error-message'
+  ).textContent = '';
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const goToHome = document.getElementById("continue");
-    const loginForm = document.querySelector("#login");
-    const createForm = document.querySelector("#creation");
-    const emailForm = document.querySelector("#emailPage");
-    const confirmationForm = document.querySelector("#confirmationPage");
-    const successRegForm = document.querySelector("#successReg");
+document.addEventListener('DOMContentLoaded', () => {
+  const goToHome = document.getElementById('continue');
+  const loginForm = document.querySelector('#login');
+  const createForm = document.querySelector('#creation');
+  const emailForm = document.querySelector('#emailPage');
+  const confirmationForm = document.querySelector('#confirmationPage');
+  const successRegForm = document.querySelector('#successReg');
 
-    goToHome.addEventListener('click', e => {
-        //
-        //TO DO (Backend needed)
-        //
-        //let valid = false;
-        e.preventDefault();
-        // if(!valid) {
-        //     setFormMessage(loginForm, "error", "Invalid username or password!");
-        //     return;
-        // }
-        location.href = 'home.html';
+  //   goToHome.addEventListener('click', (e) => {
+  //     //
+  //     //TO DO (Backend needed)
+  //     //
+  //     //let valid = false;
+  //     e.preventDefault();
+  //     // if(!valid) {
+  //     //     setFormMessage(loginForm, "error", "Invalid username or password!");
+  //     //     return;
+  //     // }
+  //     location.href = 'home.html';
+  //   });
+
+  document.querySelector('#linkCreation').addEventListener('click', (e) => {
+    e.preventDefault();
+    emailForm.classList.add('form--hidden');
+    loginForm.classList.add('form--hidden');
+    confirmationForm.classList.add('form--hidden');
+    successRegForm.classList.add('form--hidden');
+    createForm.classList.remove('form--hidden');
+  });
+
+  // Maybe we can simplify this part of the code
+  //--------------------------------------------------------
+  document.querySelector('#linkLogin0').addEventListener('click', (e) => {
+    e.preventDefault();
+    emailForm.classList.add('form--hidden');
+    createForm.classList.add('form--hidden');
+    confirmationForm.classList.add('form--hidden');
+    successRegForm.classList.add('form--hidden');
+    loginForm.classList.remove('form--hidden');
+  });
+
+  document.querySelector('#linkLogin1').addEventListener('click', (e) => {
+    e.preventDefault();
+    emailForm.classList.add('form--hidden');
+    createForm.classList.add('form--hidden');
+    confirmationForm.classList.add('form--hidden');
+    successRegForm.classList.add('form--hidden');
+    loginForm.classList.remove('form--hidden');
+  });
+
+  document.querySelector('#linkLogin2').addEventListener('click', (e) => {
+    e.preventDefault();
+    emailForm.classList.add('form--hidden');
+    createForm.classList.add('form--hidden');
+    confirmationForm.classList.add('form--hidden');
+    successRegForm.classList.add('form--hidden');
+    loginForm.classList.remove('form--hidden');
+  });
+
+  document.querySelector('#linkLogin3').addEventListener('click', (e) => {
+    e.preventDefault();
+    emailForm.classList.add('form--hidden');
+    createForm.classList.add('form--hidden');
+    confirmationForm.classList.add('form--hidden');
+    successRegForm.classList.add('form--hidden');
+    loginForm.classList.remove('form--hidden');
+  });
+  //---------------------------------------------------------------
+
+  document.querySelector('#linkEmailPage').addEventListener('click', (e) => {
+    e.preventDefault();
+    loginForm.classList.add('form--hidden');
+    createForm.classList.add('form--hidden');
+    confirmationForm.classList.add('form--hidden');
+    successRegForm.classList.add('form--hidden');
+    emailForm.classList.remove('form--hidden');
+  });
+
+  //   loginForm.addEventListener('submit', (e) => {
+  //     e.preventDefault();
+
+  //     //do fetch and check data of users here and return
+  //     setFormMessage(loginForm, 'error', 'Invalid username or password!');
+  //   });
+
+  document.querySelectorAll('.form__input').forEach((inputElement) => {
+    inputElement.addEventListener('blur', (e) => {
+      if (
+        e.target.id === 'signUpUsername' &&
+        e.target.value.length > 0 &&
+        e.target.value.length < 10
+      ) {
+        setInputError(inputElement, 'Username must be at least 10 characters');
+      } else if (
+        e.target.id === 'signUpUsername' &&
+        e.target.value.length > 16
+      ) {
+        setInputError(inputElement, 'Username must be less than 16 characters');
+      }
     });
 
-    document.querySelector("#linkCreation").addEventListener("click", e => {
-        e.preventDefault();
-        emailForm.classList.add("form--hidden");
-        loginForm.classList.add("form--hidden");
-        confirmationForm.classList.add("form--hidden");
-        successRegForm.classList.add("form--hidden");
-        createForm.classList.remove("form--hidden");
+    inputElement.addEventListener('input', (e) => {
+      clearInputError(inputElement);
     });
+  });
 
-    // Maybe we can simplify this part of the code
-    //--------------------------------------------------------
-    document.querySelector("#linkLogin0").addEventListener("click", e => {
-        e.preventDefault();
-        emailForm.classList.add("form--hidden");
-        createForm.classList.add("form--hidden");
-        confirmationForm.classList.add("form--hidden");
-        successRegForm.classList.add("form--hidden");
-        loginForm.classList.remove("form--hidden");
-    });
+  const resetButton = document.querySelector('#reset');
+  resetButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    emailForm.classList.add('form--hidden');
+    loginForm.classList.add('form--hidden');
+    createForm.classList.add('form--hidden');
+    successRegForm.classList.add('form--hidden');
+    confirmationForm.classList.remove('form--hidden');
+  });
 
-    document.querySelector("#linkLogin1").addEventListener("click", e => {
-        e.preventDefault();
-        emailForm.classList.add("form--hidden");
-        createForm.classList.add("form--hidden");
-        confirmationForm.classList.add("form--hidden");
-        successRegForm.classList.add("form--hidden");
-        loginForm.classList.remove("form--hidden");
-    });
+  // Try to create account when info is submitted
+  createForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    setFormMessage(createForm, 'error', 'wrong information');
+    emailForm.classList.add('form--hidden');
+    loginForm.classList.remove('form--hidden');
+    createForm.classList.add('form--hidden');
+    confirmationForm.classList.add('form--hidden');
+    // successRegForm.classList.remove('form--hidden');
 
-    document.querySelector("#linkLogin2").addEventListener("click", e => {
-        e.preventDefault();
-        emailForm.classList.add("form--hidden");
-        createForm.classList.add("form--hidden");
-        confirmationForm.classList.add("form--hidden");
-        successRegForm.classList.add("form--hidden");
-        loginForm.classList.remove("form--hidden");
-    });
+    createAccount(
+      document.forms['create-form']['reg-user'].value,
+      document.forms['create-form']['reg-email'].value,
+      document.forms['create-form']['reg-pass'].value
+    );
+  });
 
-    document.querySelector("#linkLogin3").addEventListener("click", e => {
-        e.preventDefault();
-        emailForm.classList.add("form--hidden");
-        createForm.classList.add("form--hidden");
-        confirmationForm.classList.add("form--hidden");
-        successRegForm.classList.add("form--hidden");
-        loginForm.classList.remove("form--hidden");
-    });
-    //---------------------------------------------------------------
-
-    document.querySelector("#linkEmailPage").addEventListener("click", e => {
-        e.preventDefault();
-        loginForm.classList.add("form--hidden");
-        createForm.classList.add("form--hidden");
-        confirmationForm.classList.add("form--hidden");
-        successRegForm.classList.add("form--hidden");
-        emailForm.classList.remove("form--hidden");
-    });
-
-    loginForm.addEventListener("submit", e => {
-        e.preventDefault();
-        
-        //do fetch and check data of users here and return
-        setFormMessage(loginForm, "error", "Invalid username or password!");
-    });
-
-    document.querySelectorAll(".form__input").forEach(inputElement => {
-        inputElement.addEventListener("blur", e => {
-            if(e.target.id === "signUpUsername" && e.target.value.length > 0 && e.target.value.length < 10){
-                setInputError(inputElement, "Username must be at least 10 characters");
-            }
-            else if(e.target.id === "signUpUsername" && e.target.value.length > 16){
-                setInputError(inputElement, "Username must be less than 16 characters");
-            }
-        });
-
-        inputElement.addEventListener("input", e => {
-            clearInputError(inputElement);
-        });
-    });
-    
-    const resetButton = document.querySelector("#reset")
-    resetButton.addEventListener("click", e => {
-        e.preventDefault();
-        emailForm.classList.add("form--hidden");
-        loginForm.classList.add("form--hidden");
-        createForm.classList.add("form--hidden");
-        successRegForm.classList.add("form--hidden");
-        confirmationForm.classList.remove("form--hidden");
-    });
-
-
-    // should show up when users registrate successfully
-    const registrationBtn = document.querySelector("#registration");
-    registrationBtn.addEventListener("click", e => {
-        e.preventDefault();
-        emailForm.classList.add("form--hidden");
-        loginForm.classList.add("form--hidden");
-        createForm.classList.add("form--hidden");
-        confirmationForm.classList.add("form--hidden");
-        successRegForm.classList.remove("form--hidden");
-    });
-
-    createForm.addEventListener("submit", e => {
-        e.preventDefault();
-        setFormMessage(createForm, "error", "wrong information");
-    });
+  // Try to login when info is submitted
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    console.log(document.forms['login-form']['log-user'].value);
+    login(
+      document.forms['login-form']['log-user'].value,
+      document.forms['login-form']['log-pass'].value,
+      loginForm
+    );
+  });
 });
 
+/**
+ * TODO:
+ * @param {String} username
+ * @param {String} password
+ */
+function login(username, password, loginForm) {
+  fetch(
+    // need to encode with UTF-8 for special characters like ' '
+    `${LOCAL_URL}?type=login&user=${encodeURIComponent(
+      username
+    )}&pass=${encodeURIComponent(password)}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      // populates search results page and redirects there
+      window.location.href = `home.html?user=${data.userInfo[0]}&pass=${data.userInfo[1]}`;
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      setFormMessage(loginForm, 'error', 'Invalid username or password!');
+      console.error('Error:', error);
+    });
+
+  //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+}
+
+/**
+ * TODO:
+ * @param {String} username
+ * @param {String} email
+ * @param {String} password
+ */
+function createAccount(username, email, password) {
+  let msg = {
+    type: 'register',
+    username: username,
+    password: password,
+    email: email,
+  };
+
+  console.log(msg);
+
+  fetch('http://127.0.0.1:5000', {
+    method: 'POST', // or 'PUT'
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(msg),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      //   window.location.href = 'home.html';
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
 
 // import { Router } from '../scripts/Router.js';
 
@@ -170,7 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
 //             --color-error: #cc3333;
 //             --color-success: #4bb544;
 //             --border-radius: 4px;
-        
+
 //             margin: 0;
 //             height: 100vh;
 //             display: flex;
@@ -179,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
 //             font-size: 18px;
 //             background: var(--color-primary);
 //         }
-        
+
 //         .container{
 //             width: 400px;
 //             max-width: 400px;
@@ -189,43 +281,43 @@ document.addEventListener("DOMContentLoaded", () => {
 //             border-radius: var(--border-radius);
 //             background-color: #ffffff;
 //         }
-        
+
 //         .container,
 //         .form__input,
 //         .form__button {
 //             font-family: 400 'Lato', sans-serif;
 //         }
-        
+
 //         .form > *:first-child{
 //             margin-top: 0;
 //         }
-        
+
 //         .form > *:last-child{
 //             margin-bottom: 0;
 //         }
-        
+
 //         .form__title {
 //             margin-bottom: 1rem;
 //             text-align: center;
 //         }
-        
+
 //         .form__message{
 //             text-align: center;
 //             margin-bottom: 1rem;
 //         }
-        
+
 //         .form__message--success{
 //             color: var(--color-success);
 //         }
-        
+
 //         .form__message--error{
 //             color: var(--color-error);
 //         }
-        
+
 //         .form__input-group {
 //             margin-bottom: 0.5rem;
 //         }
-        
+
 //         .form__input {
 //             display: block;
 //             width: 100%;
@@ -237,24 +329,23 @@ document.addEventListener("DOMContentLoaded", () => {
 //             background: #eeeeee;
 //             transition: background 0.2s, border-color 0.2s;
 //         }
-        
+
 //         .form__input:focus {
 //             border-color: var(--color-primary);
 //             background-color: #ffffff;
 //         }
-        
+
 //         .form__input--error {
 //             color: var(--color-error);
 //             border-color: var(--color-error);
 //         }
-        
-        
+
 //         .form__input-error-message {
 //             margin-top: 0.5rem;
 //             font-size: 1rem;
 //             color: var(--color-error);
 //         }
-        
+
 //         .form__button {
 //             width: 100%;
 //             padding: 1rem 2rem;
@@ -267,29 +358,29 @@ document.addEventListener("DOMContentLoaded", () => {
 //             cursor: pointer;
 //             background-color: var(--color-primary);
 //         }
-        
+
 //         .form__button:hover {
 //             background-color: var(--color-hover);
 //         }
-        
+
 //         .form__button:active {
 //             transform: scale(0.98);
 //         }
-        
+
 //         .form__text {
 //             text-align: center;
 //         }
-        
+
 //         .form__link {
 //             color: var(--color-secondary);
 //             text-decoration: none;
 //             cursor: pointer;
 //         }
-        
+
 //         .form__link:hover {
 //             text-decoration: underline;
 //         }
-        
+
 //         .form--hidden {
 //             display: none;
 //         }
@@ -375,30 +466,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //         function setFormMessage(formElement, type, message) {
 //             const messageElement = formElement.querySelector(".form__message");
-            
+
 //             messageElement.textContent = message;
 //             messageElement.classList.remove("form__message--success", "form__messgae--error");
 //             messageElement.classList.add(`form_message--${type}`);
-        
+
 //         }
-        
+
 //         function setInputError(inputElement, message) {
 //             inputElement.classList.add("form__input--error");
 //             inputElement.parentElement.querySelector(".form__input-error-message").textContent = message;
 //         }
-        
+
 //         function clearInputError(inputElement) {
 //             inputElement.classList.remove("form__input--error");
 //             inputElement.parentElement.querySelector(".form__input-error-message").textContent = "";
 //         }
-        
+
 //         this.shadowRoot.addEventListener("DOMContentLoaded", () => {
 //             const loginForm = this.shadowRoot.querySelector("#login");
 //             const createForm = this.shadowRoot.querySelector("#creation");
 //             const emailForm = this.shadowRoot.querySelector("#emailPage");
 //             const confirmationForm = this.shadowRoot.querySelector("#confirmationPage");
 //             const successRegForm = this.shadowRoot.querySelector("#successReg");
-        
+
 //             this.shadowRoot.querySelector("#linkCreation").addEventListener("click", e => {
 //                 e.preventDefault();
 //                 emailForm.classList.add("form--hidden");
@@ -407,7 +498,7 @@ document.addEventListener("DOMContentLoaded", () => {
 //                 successRegForm.classList.add("form--hidden");
 //                 createForm.classList.remove("form--hidden");
 //             });
-        
+
 //             this.shadowRoot.querySelector("#linkLogin").addEventListener("click", e => {
 //                 e.preventDefault();
 //                 emailForm.classList.add("form--hidden");
@@ -416,7 +507,7 @@ document.addEventListener("DOMContentLoaded", () => {
 //                 successRegForm.classList.add("form--hidden");
 //                 loginForm.classList.remove("form--hidden");
 //             });
-        
+
 //             this.shadowRoot.querySelector("#linkEmailPage").addEventListener("click", e => {
 //                 e.preventDefault();
 //                 loginForm.classList.add("form--hidden");
@@ -425,14 +516,14 @@ document.addEventListener("DOMContentLoaded", () => {
 //                 successRegForm.classList.add("form--hidden");
 //                 emailForm.classList.remove("form--hidden");
 //             });
-        
+
 //             loginForm.addEventListener("submit", e => {
 //                 e.preventDefault();
-                
+
 //                 //do fetch and check data of users here and return
 //                 setFormMessage(loginForm, "error", "Invalid username or password!");
 //             });
-        
+
 //             this.shadowRoot.querySelectorAll(".form__input").forEach(inputElement => {
 //                 inputElement.addEventListener("blur", e => {
 //                     if(e.target.id === "signUpUsername" && e.target.value.length > 0 && e.target.value.length < 10){
@@ -442,12 +533,12 @@ document.addEventListener("DOMContentLoaded", () => {
 //                         setInputError(inputElement, "Username must be less than 16 characters");
 //                     }
 //                 });
-        
+
 //                 inputElement.addEventListener("input", e => {
 //                     clearInputError(inputElement);
 //                 });
 //             });
-            
+
 //             const resetButton = this.shadowRoot.querySelector("#reset")
 //             resetButton.addEventListener("click", e => {
 //                 e.preventDefault();
@@ -457,8 +548,7 @@ document.addEventListener("DOMContentLoaded", () => {
 //                 successRegForm.classList.add("form--hidden");
 //                 confirmationForm.classList.remove("form--hidden");
 //             });
-        
-        
+
 //             // should show up when users registrate successfully
 //             const registrationBtn = this.shadowRoot.querySelector("#registration");
 //             registrationBtn.addEventListener("click", e => {
@@ -469,7 +559,7 @@ document.addEventListener("DOMContentLoaded", () => {
 //                 confirmationForm.classList.add("form--hidden");
 //                 successRegForm.classList.remove("form--hidden");
 //             });
-        
+
 //             /*createForm.addEventListener("submit", e => {
 //                 e.preventDefault();
 //                 setFormMessage(createForm, "error", "wrong information");
