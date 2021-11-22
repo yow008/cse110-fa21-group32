@@ -57,7 +57,7 @@ class AddRecipePage extends HTMLElement {
           <input type="submit" value="Submit!">
         </div>
     
-        <button><a href="index.html"> LEAVE </a></button>
+        <button><a href="home.html"> LEAVE </a></button>
         `;
 
         // Append elements to the shadow root
