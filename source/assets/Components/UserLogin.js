@@ -352,11 +352,22 @@ function clearInputError(inputElement) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    const goToHome = document.querySelector('#continue');
     const loginForm = document.querySelector("#login");
     const createForm = document.querySelector("#creation");
     const emailForm = document.querySelector("#emailPage");
     const confirmationForm = document.querySelector("#confirmationPage");
     const successRegForm = document.querySelector("#successReg");
+
+    goToHome.addEventListener('click', e => {
+        let valid = false;
+        e.preventDefault();
+        if(!valid) {
+            setFormMessage(loginForm, "error", "Invalid username or password!");
+            return;
+        }
+        location.href = 'home.html';
+    });
 
     document.querySelector("#linkCreation").addEventListener("click", e => {
         e.preventDefault();
@@ -429,8 +440,8 @@ document.addEventListener("DOMContentLoaded", () => {
         successRegForm.classList.remove("form--hidden");
     });
 
-    /*createForm.addEventListener("submit", e => {
+    createForm.addEventListener("submit", e => {
         e.preventDefault();
         setFormMessage(createForm, "error", "wrong information");
-    });*/
+    });
 });
