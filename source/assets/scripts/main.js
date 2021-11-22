@@ -2,8 +2,8 @@ import { Router } from './Router.js';
 
 // If modified, also modify list of page names under addMainPages
 const pageNames = ['home', 'calendar', 'grocery', 'profile', 'recipe', 'search-results', 'cooking-mode',
-                   'fav-recipes','add-recipe','write-review','user-login'];
-                  //,'prevCooked',
+                   'fav-recipes','add-recipe','write-review'];
+                  //,'prevCooked','user-login'v
 const router = new Router();
 
 window.addEventListener('DOMContentLoaded', init);
@@ -130,7 +130,7 @@ function bindNavIcons() {
  function bindSidePanel() {
   // Retrieve buttons corresponding to icons
   const favoriteRecipes = document.getElementById('LinkToFav');
-  const userLogin = document.getElementById('LinkLogin');
+  //const userLogin = document.getElementById('LinkLogin');
   const addRecipe = document.getElementById('LinkToAdd');
   const writeReview = document.getElementById('LinkToWrite');
 
@@ -138,9 +138,9 @@ function bindNavIcons() {
   favoriteRecipes.addEventListener('click', () => {
     router.navigate('fav-recipes'); 
   });
-  userLogin.addEventListener('click', () => {
-    router.navigate('user-login');
-  });
+  // userLogin.addEventListener('click', () => {
+  //   router.navigate('user-login');
+  // });
   addRecipe.addEventListener('click', () => {
     router.navigate('add-recipe');
   });
@@ -148,39 +148,6 @@ function bindNavIcons() {
     router.navigate('write-review');
   });
 }
-
-// function bindCalendar(){
-// const monthPage = document.querySelector("#monthID");
-// const weekPage = document.querySelector("#weekID");
-// const dayPage = document.querySelector("#dayID");
-
-// //Calendar Month View
-// document.querySelector("#LinkToMonth").addEventListener("click", e => {
-//     e.preventDefault();
-//     monthPage.classList.remove('hidden');
-//     weekPage.classList.add('hidden');
-//     dayPage.classList.add('hidden');
-//     console.log("hello")
-//   });
-
-//   //Calendar Week View
-//   document.querySelector("#LinkToWeek").addEventListener("click", e => {
-//     e.preventDefault();
-
-//     monthPage.classList.add('hidden');
-//     weekPage.classList.remove('hidden');
-//     dayPage.classList.add('hidden');
-//   });
-
-//   //Calendar Day View
-//   document.querySelector("#LinkToDay").addEventListener("click", e => {
-//     e.preventDefault();
-
-//     monthPage.classList.add('hidden');
-//     weekPage.classList.add('hidden');
-//     dayPage.classList.remove('hidden');
-//   });
-// }
 
 /**
  * Binds the popstate (back button/forward button) to navigate
