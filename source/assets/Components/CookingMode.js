@@ -33,7 +33,7 @@ class CookingMode extends HTMLElement {
         <!--Back to the Recipe Page-->
         <div class="back-to-recipe">
             <p>Back to the Home Page</p>
-            <button><a href="index.html"> LEAVE </a></button>
+            <button><a href="home.html"> LEAVE </a></button>
         </div>
         `;
 
