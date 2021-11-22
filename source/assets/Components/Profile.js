@@ -1,17 +1,17 @@
 // Profile.js
 
 class ProfilePage extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
 
-        // Create styles and root element
-        const styles = document.createElement('style');
-        const article = document.createElement('article');
+    // Create styles and root element
+    const styles = document.createElement('style');
+    const article = document.createElement('article');
 
-        // Fill in styles and root element
-        styles.innerHTML = ``;
-        article.innerHTML = `
+    // Fill in styles and root element
+    styles.innerHTML = ``;
+    article.innerHTML = `
         <h2>User Profile</h2>
 
         <!--Profile Page Navbar-->
@@ -19,6 +19,7 @@ class ProfilePage extends HTMLElement {
             <ul>
                 <li><a href="#profile-page-recipeID" id="UserRec">Recipes</a></li>
                 <li><a href="#profile-page-reviewsID" id="UserRev">Reviews</a></li>
+                <li><button id="#delete-user" type="button">Delete User</button></li>
             </ul>
         </div>
 
@@ -43,9 +44,14 @@ class ProfilePage extends HTMLElement {
         </div>
         `;
 
-        // Append elements to the shadow root
-        this.shadowRoot.append(styles, article);
-    }
+    // Append elements to the shadow root
+    this.shadowRoot.append(styles, article);
+
+    const btn = this.shadowRoot.getElementById('#delete-user');
+    btn.addEventListener('click', (e) => {
+      console.log('Clicked');
+    });
+  }
 }
 
 customElements.define('profile-page', ProfilePage);
