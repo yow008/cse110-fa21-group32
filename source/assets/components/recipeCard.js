@@ -72,8 +72,8 @@ class RecipeCard extends HTMLElement {
     //Get Thumbnail
     const img = document.createElement('img');
     const image_link = getImage(data);
-    image.src = image_link;
-    image.alt = titleText;
+    img.src = image_link;
+    img.alt = titleText;
 
     //Add all the elements to the card
     card.appendChild(img);
@@ -127,40 +127,47 @@ function getTitle(data) {
     }
     return null;
   }
+}
 
-  /**
-   * Extract a usable image from the given recipe schema JSON object
-   * @param {Object} data Raw recipe JSON to find the image of
-   * @returns {String} If found, returns the URL of the image as a string, otherwise null
-   */
-  function getImage(data) {
-    if (data.image?.url) {
-      return data.image.url;
-    }
-    if (data.image?.contentUrl) {
-      return data.image.contentUrl;
-    }
-    if (data.image?.thumbnail) {
-      return data.image.thumbnail;
-    }
-    if (data['@graph']) {
-      for (let i = 0; i < data['@graph'].length; i++) {
-        if (data['@graph'][i]['@type'] == 'ImageObject') {
-          if (data['@graph'][i]['url']) {
-            return data['@graph'][i]['url'];
-          }
-          if (data['@graph'][i]['contentUrl']) {
-            return data['@graph'][i]['contentUrl'];
-          }
-          if (data['@graph'][i]['thumbnailUrl']) {
-            return data['@graph'][i]['thumbnailUrl'];
-          }
+/**
+ * Extract a usable image from the given recipe schema JSON object
+ * @param {Object} data Raw recipe JSON to find the image of
+ * @returns {String} If found, returns the URL of the image as a string, otherwise null
+ */
+function getImage(data) {
+  if (data.image?.url) {
+    return data.image.url;
+  }
+  if (data.image?.contentUrl) {
+    return data.image.contentUrl;
+  }
+  if (data.image?.thumbnail) {
+    return data.image.thumbnail;
+  }
+  if (data['@graph']) {
+    for (let i = 0; i < data['@graph'].length; i++) {
+      if (data['@graph'][i]['@type'] == 'ImageObject') {
+        if (data['@graph'][i]['url']) {
+          return data['@graph'][i]['url'];
+        }
+        if (data['@graph'][i]['contentUrl']) {
+          return data['@graph'][i]['contentUrl'];
+        }
+        if (data['@graph'][i]['thumbnailUrl']) {
+          return data['@graph'][i]['thumbnailUrl'];
         }
       }
     }
-    return null;
   }
+  return null;
 }
 
 // Define the Class so you can use it as a custom element
 customElements.define('recipe-card', RecipeCard);
+
+/**
+ * TODO: UNUSED ELEMENTS
+ */
+searchForKey(null);
+getTitle(null);
+getImage(null);

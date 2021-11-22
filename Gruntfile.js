@@ -2,12 +2,13 @@
  * Setup for Grunt automated testing
  * Resource: https://gruntjs.com/getting-started
  */
+const terser = require('terser');
 module.exports = function (grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     // Resource: https://gruntjs.com/configuring-tasks#building-the-files-object-dynamically
-    uglify: {
+    terser: {
       dynamic_mappings: {
         // Grunt will search for "**/*.js" under "lib/" when the "uglify" task
         // runs and build the appropriate src-dest file mappings then, so you
@@ -57,13 +58,67 @@ module.exports = function (grunt) {
         ],
       },
     },
+    gitadd: {
+      task: {
+        options: {
+          force: true,
+        },
+        files: {
+          cwd: 'deploy/',
+          src: ['**/*'],
+        },
+      },
+    },
+    gitcommit: {
+      your_target: {
+        options: {
+          // Target-specific options go here.
+          message: 'Grunt committed minimized files',
+        },
+        files: {
+          // Specify the files you want to commit
+          cwd: 'deploy/',
+          src: ['**/*'],
+        },
+      },
+    },
+    gitpush: {
+      your_target: {
+        options: {
+          // Target-specific options go here.
+          remote: 'origin',
+          branch: 'deploy',
+        },
+      },
+    },
   });
 
-  // Load the plugin that provides the "uglify" task.
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  // Load the plugin that provides the "cssmin" and "htmlmin" tasks.
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-git');
 
-  // Default task(s).
-  grunt.registerTask('default', ['uglify', 'cssmin', 'htmlmin']);
+  // Reference: https://github.com/gruntjs/grunt-contrib-uglify/issues/522
+  grunt.registerMultiTask(
+    'terser',
+    'Parse, mangle & compress source code files.',
+    function () {
+      var done = this.async();
+      Promise.all(
+        this.files.map((file) => {
+          return new Promise((resolve, reject) => {
+            let contents = grunt.file.read(file.src);
+            terser.minify(contents, this.options()).then((result) => {
+              grunt.file.write(file.dest, result.code);
+              resolve();
+            }, reject);
+          });
+        })
+      ).then(done, (error) => {
+        console.error(error);
+        done();
+      });
+    }
+  );
+  grunt.registerTask('default', ['terser', 'cssmin', 'htmlmin']);
 };
