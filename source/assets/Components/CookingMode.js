@@ -10,7 +10,9 @@ class CookingMode extends HTMLElement {
         const article = document.createElement('article');
 
         // Fill in styles and root element
-        styles.innerHTML = ``;
+        styles.innerHTML = `
+        
+        `;
         article.innerHTML = `
         <h2>Cooking Mode</h2>
         <!--Cooking Steps-->
@@ -39,6 +41,7 @@ class CookingMode extends HTMLElement {
 
         // Append elements to the shadow root
         this.shadowRoot.append(styles, article);
+        
     }
 }
 
