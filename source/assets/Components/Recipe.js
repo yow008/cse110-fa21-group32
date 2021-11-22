@@ -62,6 +62,19 @@ class RecipePage extends HTMLElement {
 
         // Append elements to the shadow root
         this.shadowRoot.append(styles, article);
+        router.addPage('cooking-mode', function() {
+            document.getElementById('#section--recipe').classList.remove('shown');
+
+            document.getElementById('#section--cooking-mode').classList.add('shown');
+                
+        });
+
+        
+        const CMPage = this.shadowRoot.getElementById('LinkToCM');
+        CMPage.addEventListener('click', () => {
+            router.navigate('cooking-mode');
+            
+        });
 
     //Summary  
     this.shadowRoot.getElementById("ToSum").addEventListener("click", e => {
@@ -89,19 +102,7 @@ class RecipePage extends HTMLElement {
     });
 
 
-        router.addPage('cooking-mode', function() {
-            this.shadowRoot.getElementById('#section--recipe').classList.remove('shown');
 
-            this.shadowRoot.getElementById('#section--cooking-mode').classList.add('shown');
-                
-        });
-
-        
-        const CMPage = this.shadowRoot.getElementById('LinkToCM');
-        CMPage.addEventListener('click', () => {
-            router.navigate('cooking-mode');
-            
-        });
     }
 }
 
