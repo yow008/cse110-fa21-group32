@@ -39,6 +39,8 @@ class Recipe_DB:
                 image BLOB
             )''')
 
+        self.custom_recipe_count = 1000000  # Spoonacular IDs have 6 digits; custom have one more to avoid collision
+    
     def searchRecipeByKeyword(self,keyword):
         # Search by keyword. Get recipe IDs from spoonacular, update DB, and return results
 
@@ -68,6 +70,33 @@ class Recipe_DB:
             # Cache recipe in DB
 
             pass
+
+
+    def createRecipe(self,recipe):
+        '''
+            Input:
+            - recipe: a json file for the recipe
+            Output:
+            - ID of the recipe
+        '''
+        id = self.custom_recipe_count
+        self.custom_recipe_count += 1
+        name = recipe['name']
+        author = recipe['author']
+        src = pickle.dumps(recipe)
+        self.cur.execute('INSERT INTO Recipes(ID, name, author, src)', (id, name, author, src))
+        self.cur.commit()
+        # TODO: Integrity check
+        return id
+
+    def removeRecipe(self,id):
+        '''
+            Input:
+            - recipe id
+        '''
+        self.cur.execute('DELETE FROM Recipes WHERE ID = ?', (id))
+        self.cur.commit()
+        # TODO: Check if id exists? 
 
 if __name__ == '__main__':
     db = Recipe_DB()

@@ -98,7 +98,6 @@ class AddRecipePage extends HTMLElement {
       <textarea placeholder="Summary"></textarea>
       <br>
       </form>
-      
       </div>
     
       <!--Add Recipe Ingredients-->
@@ -115,19 +114,19 @@ class AddRecipePage extends HTMLElement {
           <td><input type="text"/></td>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
-          <td><button onclick="deleteThisRow(event, this)">Delete Row</button></td>
+          <td><button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button></td>
         </tr>
         <tr>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
-          <td><button onclick="deleteThisRow(event, this)">Delete Row</button></td>
+          <td><button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button></td>
         </tr>
         <tr>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
-          <td><button onclick="deleteThisRow(event, this)">Delete Row</button></td>
+          <td><button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button></td>
         </tr>
       </table>
       <!--When click add more should create another new 'tr' with three new inpurts-->
@@ -161,8 +160,8 @@ class AddRecipePage extends HTMLElement {
       <button><a href="home.html"> LEAVE </a></button>
       `;
 
-        // Append elements to the shadow root
-        this.shadowRoot.append(styles, article);
+    // Append elements to the shadow root
+    this.shadowRoot.append(styles, article);
 
     //Add Summary  
     this.shadowRoot.getElementById("ToAddSum").addEventListener("click", e => {
@@ -193,13 +192,8 @@ class AddRecipePage extends HTMLElement {
     this.shadowRoot.getElementById('addIngredientButton').addEventListener("click", e => {
       e.preventDefault();   
       let ingredientsList = this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table');
-      ingredientsList.innerHTML += '<tr><td><input type="text"/></td><td><input type="text"/></td><td><input type="text"/></td><td><button onclick="deleteThisRow(event, this)">Delete Row</button></td></tr>';
+      ingredientsList.innerHTML += '<tr><td><input type="text"/></td><td><input type="text"/></td><td><input type="text"/></td><td><button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.rowIndex)">Delete Row</button></td></tr>';
     });
-
-    function deleteThisRow(event, row) {
-      event.preventDefault();
-      this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table').deleteRow(row.rowIndex);
-    }
 
 
     //When click "Add More" there should be a new input text area for user to input information
@@ -218,5 +212,48 @@ class AddRecipePage extends HTMLElement {
 
     }
 } 
+function deleteThisRow(row) {
+  console.log(row);
+  this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table').deleteRow(row.rowIndex);
+  console.log("deleteThisRow");
+}
+
+
+/**
+ * TODO:
+ * @param {String} recipeImg
+ * @param {String} recipeForm
+ * @param {RecipePage} RecipePage
+ */
+ function login(recipeImg,recipeForm, RecipePage) {
+  fetch(
+    // need to encode with UTF-8 for special characters like ' '
+    `${LOCAL_URL}?type=login&user=${encodeURIComponent(
+      username
+    )}&pass=${encodeURIComponent(password)}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      // populates search results page and redirects there
+      window.location.href = `home.html?user=${data.userInfo[0]}&pass=${data.userInfo[1]}`;
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      setFormMessage(loginForm, 'error', 'Invalid username or password!');
+      console.error('Error:', error);
+    });
+
+  //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+
+}
 
 customElements.define('add-recipe-page', AddRecipePage);

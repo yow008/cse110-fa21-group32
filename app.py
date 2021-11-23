@@ -23,41 +23,52 @@ def home_page():
         if msg['type'] == 'register':
             user_db.createUser(msg['username'], msg['password'], msg['email'], '', '')
             return {'msg': 'Success!'}, 201
-        if msg['type'] == 'delete':
+        elif msg['type'] == 'deleteUser':
             user_db.deleteUser(msg['username'], msg['password'])
+            return {'msg': 'Success!'}, 201
+        elif msg['type'] == 'addRecipe':
+            recipe = msg['recipe']
+            id = recipe_db.createRecipe(recipe)
+            user_db.addRecipe(msg['username'], msg['password'],id)
+            return {'msg': 'Success!'}, 201
+        elif msg['type'] == 'deleteRecipe':
+            recipe = msg['recipe']
+            recipe_db.removeRecipe(msg['id'])
+            user_db.addRecipe(msg['username'], msg['password'],msg['id'])
             return {'msg': 'Success!'}, 201
 
     if request.method == 'GET':
         msg = request.args
-        if msg['type'] == 'search':
-            keyword = msg['keyword']
-            recipes = recipe_db.searchRecipeByKeyword(keyword)
-            recipes = {i: recipes[i] for i in range(len(recipes))}
-            recipe_json = json.dumps(recipes, indent=2) 
-            # print(recipe_json)
-            response = Response(response=recipe_json, status=200, mimetype='application/json')
-            print(response.response)
-            return response
-        elif msg['type'] == 'login':
-            username = msg['user']
-            password = msg['pass']
-            userInfo = user_db.request(username, password, ['Username', 'Password'])
-            data = {"userInfo": userInfo}
-            data_json = json.dumps(data, indent=2)
-            response = Response(response=data_json, status=200, mimetype='application/json')
-            return response
-        elif msg['type'] == 'request':
-            username = msg['user']
-            password = msg['pass']
-            elem = msg['elem']
-            userInfo = user_db.request(username, password, ['Email'])
-            print(username, password, elem)
-            data = {"userInfo": userInfo}
-            print(userInfo)
-            data_json = json.dumps(data, indent=2)
-            response = Response(response=data_json, status=200, mimetype='application/json')
-            return response
-        
-    return {'msg':'test'}, 200
+        if 'type' in msg:
+            if msg['type'] == 'search':
+                keyword = msg['keyword']
+                recipes = recipe_db.searchRecipeByKeyword(keyword)
+                recipes = {i: recipes[i] for i in range(len(recipes))}
+                recipe_json = json.dumps(recipes, indent=2) 
+                # print(recipe_json)
+                response = Response(response=recipe_json, status=200, mimetype='application/json')
+                print(response.response)
+                return response
+            elif msg['type'] == 'login':
+                username = msg['user']
+                password = msg['pass']
+                userInfo = user_db.request(username, password, ['Username', 'Password'])
+                data = {"userInfo": userInfo}
+                data_json = json.dumps(data, indent=2)
+                response = Response(response=data_json, status=200, mimetype='application/json')
+                return response
+            elif msg['type'] == 'request':
+                username = msg['user']
+                password = msg['pass']
+                elem = msg['elem']
+                userInfo = user_db.request(username, password, ['Email'])
+                print(username, password, elem)
+                data = {"userInfo": userInfo}
+                print(userInfo)
+                data_json = json.dumps(data, indent=2)
+                response = Response(response=data_json, status=200, mimetype='application/json')
+                return response
+            
+    return render_template('home.html')
 
 app.run(debug=True)

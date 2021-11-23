@@ -15,6 +15,7 @@ class RecipePage extends HTMLElement {
     // Fill in styles and root element
     styles.innerHTML = ``;
     article.innerHTML = `
+
         <h2>Recipes</h2>
         <div class="recipe-navbar">
         <a href="#recipe-summaryID" id="ToSum">Summary</a>
@@ -32,7 +33,7 @@ class RecipePage extends HTMLElement {
         <!--Recipe Ingredients-->
         <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none">
         <p>Ingredients</p>
-        <!--Add To List Button-->
+        <!--Add To List Button--> 
         <details>
             <summary>
             click here for all Ingredients
@@ -58,7 +59,8 @@ class RecipePage extends HTMLElement {
         </ul>
         <button><a id="LinkToCM"> Cook </a></button>
         </div>
-        `;
+
+    `;
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
