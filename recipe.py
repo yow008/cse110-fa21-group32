@@ -31,7 +31,7 @@ class Recipe_DB:
         '''
         self.cur.execute('''
             CREATE TABLE IF NOT EXISTS Recipes( 
-                ID TEXT PRIMARY KEY,
+                ID INT PRIMARY KEY,
                 name TEXT,
                 author TEXT,
                 url TEXT,
@@ -47,30 +47,31 @@ class Recipe_DB:
         url = 'https://api.spoonacular.com/recipes/complexSearch?query=%s&apiKey=%s&includeNutrition=false' % (keyword, self.API_KEY)
         # url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/complexSearch?query=%s&number=5' % (keyword)
         recipe = requests.request("GET", url, headers=self.headers).json()
+        for i in range(10):
+            print(recipe['results'][i])
+        
+        url = 'https://api.spoonacular.com/recipes/%s?apiKey=%s' % (recipe['results'][0]['id'], self.API_KEY)
+        src = requests.request("GET", url, headers=self.headers).json() 
+            
         return recipe['results']
-        '''
-        for e in recipe['results']:
-            url = 'https://api.spoonacular.com/recipes/complexSearch?query=%s&apiKey=%s&includeNutrition=false' % (keyword, self.API_KEY)
-            src = requests.request("GET", url, headers=self.headers).json() 
-            cacheRecipe(e['ID'], )
-        '''
+        
 
-    def cacheRecipe(ID, src):
+    def cacheRecipe(self, ID, src):
         pass
 
     def fetchRecipeByID(self, ID):
         # Return user-requested recipe from DB/Spoonacular.
-        self.cur.execute('SELECT * FROM Recipes WHERE ID = ?', ID)
+        self.cur.execute('SELECT * FROM Recipes WHERE ID = %s' % (ID))
         result = self.cur.fetchall()
+        #print(result[0])
         if (len(result) != 0):
-            return result
+            return pickle.loads(result[0])
         else:
             # Call Spoonacular API
             
             # Cache recipe in DB
 
             pass
-
 
     def createRecipe(self,recipe):
         '''
@@ -84,11 +85,36 @@ class Recipe_DB:
         name = recipe['name']
         author = recipe['author']
         src = pickle.dumps(recipe)
-        self.cur.execute('INSERT INTO Recipes(ID, name, author, src)', (id, name, author, src))
-        self.cur.commit()
+        self.cur.execute('INSERT INTO Recipes(ID, author, name, src) VALUES(?, ?, ?, ?)', (id, author, name, src))
+        self.conn.commit()
         # TODO: Integrity check
         return id
 
+    def updateRecipe(self, id, updatedVal):
+        
+        #name = pickle.loads(self.cur.fetchall[0])
+        self.cur.execute('SELECT src FROM Recipes WHERE ID = %d' % (id))
+        result = self.cur.fetchall()
+
+        recipes = pickle.loads(result[0][0])
+        #recipes['name'] = updatedVal['name']
+        for key in updatedVal:
+            if (key == 'author'):
+                self.cur.execute('UPDATE Recipes SET author = ? WHERE ID = ?', (updatedVal['author'], id))
+
+            if (key == 'name'):
+                self.cur.execute('UPDATE Recipes SET name = ? WHERE ID = ?', (updatedVal['name'], id))
+                
+            recipes[key] = updatedVal[key]
+        src = pickle.dumps(recipes)
+        self.cur.execute('UPDATE Recipes SET src = ? WHERE ID = ?', (src, id))
+
+
+        
+        #query = 'UPDATE Recipes SET' + ', '.join(['%s = ?' % (p[1]) for p in updatedVal.items()]) 
+        #self.cur.execute(query, ([p[0] for p in updatedVal.items()]))
+        self.conn.commit()
+        
     def removeRecipe(self,id):
         '''
             Input:
@@ -101,5 +127,8 @@ class Recipe_DB:
 if __name__ == '__main__':
     db = Recipe_DB()
     db.searchRecipeByKeyword('pasta')
-
+#db.fetchRecipeByID("654959")
+    #id = db.createRecipe({'author': 'Chad' , 'name': 'Pasta With Chickpeas and Kale', 'image': 'https://spoonacular.com/recipeImages/654905-312x231.jpg', 'imageType': 'jpg'})
+    db.updateRecipe(1000000, {'author': 'Bagrat'})
+    
     

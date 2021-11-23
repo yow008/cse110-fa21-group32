@@ -7,7 +7,6 @@ import socket
 
 #Instance Variables: conn, cur
 
-
 class User_DB:
     def __init__(self, db = 'users.db'):
         self.conn = sqlite3.connect('users.db', check_same_thread=False) 
@@ -48,7 +47,9 @@ class User_DB:
 
         try:
             # Create users with username, password, email, first & last name. Other stuff will be NULL.
-            self.cur.execute("INSERT INTO Users(Username, Password, Email, fName, lName) VALUES(?, ?, ?, ?, ?);", (username, password, email, fname, lname))
+            recipes = pickle.dumps([])
+
+            self.cur.execute("INSERT INTO Users(Username, Password, Email, fName, lName, Recipes) VALUES(?, ?, ?, ?, ?, ?);", (username, password, email, fname, lname, recipes))
             self.conn.commit()
             return True
         except sqlite3.IntegrityError as er: # username is primary key so no duplicates allowed
@@ -121,7 +122,7 @@ class User_DB:
         self.conn.commit()
 
     def removeRecipe(self, username, password, id):
-        self.execute('SELECT Recipes FROM Users WHERE Username = ? AND Password = ?', (username, password))
+        self.cur.execute('SELECT Recipes FROM Users WHERE Username = ? AND Password = ?', (username, password))
         recipes = pickle.loads(self.cur.fetchall[0]) # TODO: Integrity check
         if recipes is None: recipes = []
         try:

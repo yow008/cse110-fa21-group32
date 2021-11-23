@@ -67,6 +67,7 @@ class SearchBar extends HTMLElement {
  * @param {SearchResultsPage} searchResPage
  */
 function searchRecipes(searchPhrase, searchResPage) {
+  
   fetch(
     // need to encode with UTF-8 for special characters like ' '
     `${LOCAL_URL}?type=search&keyword=${encodeURIComponent(searchPhrase)}`,

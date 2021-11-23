@@ -9,6 +9,7 @@ from flask_cors import CORS
 import json
 import user_db
 import recipe
+import pickle
 
 app = Flask(__name__)
 CORS(app)
@@ -68,7 +69,14 @@ def home_page():
                 data_json = json.dumps(data, indent=2)
                 response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
-            
+            elif msg['type'] == 'fetchRecipe':
+                recipe = recipe_db.fetchRecipeByID(msg['id'])
+                recipe = pickle.loads(recipe)
+                data = {"recipe": recipe}
+                data_json = json.dumps(data, indent=2)
+                response = Response(response=data_json, status=200, mimetype='application/json')
+                return response
+
     return render_template('home.html')
 
 app.run(debug=True)

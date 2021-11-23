@@ -19,40 +19,33 @@ class AddRecipePage extends HTMLElement {
           <a href="#add-recipe-ingredientsID" id="ToAddIng">Ingredients</a>
           <a href="#add-recipe-directionID" id="ToAddDir">Directions</a>
         </div>
-    
+
+        <form id="new-recipe">
         <!--Add Recipe Summary-->
         <div id="add-recipe-summary" style="display: show">
         <br>
 
         <!--Add Image-->
-        <form name="image-form">
+        
         <label for="img"><p><strong>Add Image</strong></p></label>
           <span id="chooseFiles">
-            <input type="file" id="img" name="img" accept="image/*">
+            <input type="file" id="img" name="img" accept="image/*" multiple />
           </span>
           <br>
           <input type="submit">
           <br>
           <br>
           <button id="addImage">Add Another Image</button>
-        </form>
         <br>
 
         <!--Basic Information-->
-        <form name="basic-form">
-        <label>Prep Time:</label>
-        <input type="text" id="#input--prep-time-hour" placeholder="hours..">
-        <input type="text" id="#input--prep-time-mins" placeholder="mins..">
-        <br>
-        <br>
-
         <label>Cooking Time:</label>
         <input type="text" id="#input--cook-time-hour" placeholder="hours..">
         <input type="text" id="#input--cook-time-mins" placeholder="mins..">
         <br>
         <br>
 
-        <label for="servings"> No. of Servings: </label>
+        <label id="servings" for="servings"> No. of Servings: </label>
         <input type="text" id="#input--no-of-serv>
         <br>
 
@@ -94,16 +87,13 @@ class AddRecipePage extends HTMLElement {
       </ul>
 
       <label for="sum"><p><strong>Add Summary: </strong></p></label>
-      <textarea placeholder="Title:"></textarea><br>
-      <textarea placeholder="Summary"></textarea>
+      <textarea id="title" placeholder="Title:"></textarea><br>
+      <textarea id="summary" placeholder="Summary"></textarea>
       <br>
-      </form>
-      
       </div>
     
       <!--Add Recipe Ingredients-->
       <div id="add-recipe-ingredients" style="display: none">
-      <form>
       <label for="ingredients"><p><strong>Add Ingredients</strong></p></label>
       <table>
         <tr>
@@ -115,25 +105,24 @@ class AddRecipePage extends HTMLElement {
           <td><input type="text"/></td>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
-          <td><button onclick="deleteThisRow(event, this)">Delete Row</button></td>
+          <td><button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button></td>
         </tr>
         <tr>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
-          <td><button onclick="deleteThisRow(event, this)">Delete Row</button></td>
+          <td><button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button></td>
         </tr>
         <tr>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
-          <td><button onclick="deleteThisRow(event, this)">Delete Row</button></td>
+          <td><button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button></td>
         </tr>
       </table>
       <!--When click add more should create another new 'tr' with three new inpurts-->
       <button id="addIngredientButton"> Add More </button>
       <br>
-      </form>
       </div>
       <!--TO DO delete ingredients button-->
   
@@ -142,27 +131,24 @@ class AddRecipePage extends HTMLElement {
         <p>Direction</p>
         <ol>
           <li>Step:</li>
-          <textarea></textarea>
-          <li>Step:</li>
-          <textarea></textarea>
-          <li>Step:</li>
-          <textarea></textarea>
+          <textarea name="directionStep"></textarea>
         </ol>
         <br>
         <!--When click add more should create another new textarea for direction-->
         <button id="addDirectionButton"> Add More </button>
       </div>
+      </form>
       <!--TO DO delete Directions button-->
   
       <br>
-      <button type="submit">Save Draft</button>
+      <button type="submit" id="save">Save Draft</button>
       <button><a href="#"> Publish </a></button>
       <button><a href="#"> Delete </a></button>
       <button><a href="home.html"> LEAVE </a></button>
       `;
 
-        // Append elements to the shadow root
-        this.shadowRoot.append(styles, article);
+    // Append elements to the shadow root
+    this.shadowRoot.append(styles, article);
 
     //Add Summary  
     this.shadowRoot.getElementById("ToAddSum").addEventListener("click", e => {
@@ -193,7 +179,7 @@ class AddRecipePage extends HTMLElement {
     this.shadowRoot.getElementById('addIngredientButton').addEventListener("click", e => {
       e.preventDefault();   
       let ingredientsList = this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table');
-      ingredientsList.innerHTML += '<tr><td><input type="text"/></td><td><input type="text"/></td><td><input type="text"/></td><td><button onclick="deleteThisRow(event, this)">Delete Row</button></td></tr>';
+      ingredientsList.innerHTML += '<tr><td><input type="text"/></td><td><input type="text"/></td><td><input type="text"/></td><td><button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.rowIndex)">Delete Row</button></td></tr>';
     });
 
     function deleteThisRow(event, row) {
@@ -205,19 +191,80 @@ class AddRecipePage extends HTMLElement {
     this.shadowRoot.getElementById('addDirectionButton').addEventListener("click", e => {
       e.preventDefault();   
       let directionsList = this.shadowRoot.querySelector('#add-recipe-direction').querySelector('ol');
-      directionsList.innerHTML += '<li>Step:</li><textarea></textarea>';
+      directionsList.innerHTML += '<li>Step:</li><textarea name="directionSteps"></textarea>';
     });
 
     //Add images
     this.shadowRoot.getElementById('addImage').addEventListener("click", e => {
       e.preventDefault();   
       let imagesList = this.shadowRoot.querySelector('#chooseFiles');
-      imagesList.innerHTML += '<input type="file" id="img" name="img" accept="image/*">';
+      imagesList.innerHTML += '<input type="file" id="img" name="img" accept="image/*" multiple />';
     });
+
+    this.shadowRoot.getElementById('save').addEventListener("click", e => {
+      e.preventDefault();   
+      postCreateRecipeData();
+    }
 
 
 
     }
 } 
+function deleteThisRow(row) {
+  console.log(row);
+  this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table').deleteRow(row.rowIndex);
+  console.log("deleteThisRow");
+}
 
+
+
+//listener when a user save the form
+//newRecipe.addEventListener("submit", handleFormSubmit);
+
+
+/**
+ * TODO:
+ * Event handler for a form sumbit event
+ * @param {String} recipeForm
+ * @param {RecipePage} RecipePage
+ */
+ function postCreateRecipeData() {
+
+  const newRecipe = this.shadowRoot.getElementById("new-recipe");
+  const photos = document.querySelector('input[type="file"][multiple]');
+  const data = new FormData();
+
+  data.append('title', this.shadowRoot.getElementById("title"));
+  for (let i = 0; i < photos.files.length; i++) {
+    data.append(`photos_${i}`, photos.files[i]);
+  }
+  data.append('servings', this.shadowRoot.getElementById("servings"));
+  let readyInMinutes = this.shadowRoot.getElementById("#input--cook-time-hour")*60 + this.shadowRoot.getElementById("#input--cook-time-minutes");
+  data.append('readyInMinutes', readyInMinutes);
+  data.append('tagCountry', this.shadowRoot.getElementById("tag1-list"));
+  data.append('tagFoodType', this.shadowRoot.getElementById("tag2-list"));
+  data.append('summary', this.shadowRoot.getElementById("summary"));
+
+  const directionsList= this.shadowRoot.querySelector("textarea[name='directionStep]");
+  for (let i=0; i<directionsList.length; i++) {
+    data.append('instructions', directionsList[i]);
+  }
+  console.log(data);
+
+  fetch('http://127.0.0.1:5500', {
+    method: 'PUT',
+    // headers: {
+    //   'Content-Type': 'application/json',
+    // },
+    body: data
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      //   window.location.href = 'home.html';
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
 customElements.define('add-recipe-page', AddRecipePage);
