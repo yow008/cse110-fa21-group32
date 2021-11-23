@@ -115,16 +115,19 @@ class AddRecipePage extends HTMLElement {
           <td><input type="text"/></td>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
+          <td><button onclick="deleteThisRow(event, this)">Delete Row</button></td>
         </tr>
         <tr>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
+          <td><button onclick="deleteThisRow(event, this)">Delete Row</button></td>
         </tr>
         <tr>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
           <td><input type="text"/></td>
+          <td><button onclick="deleteThisRow(event, this)">Delete Row</button></td>
         </tr>
       </table>
       <!--When click add more should create another new 'tr' with three new inpurts-->
@@ -190,14 +193,14 @@ class AddRecipePage extends HTMLElement {
     this.shadowRoot.getElementById('addIngredientButton').addEventListener("click", e => {
       e.preventDefault();   
       let ingredientsList = this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table');
-      ingredientsList.innerHTML += '<tr><td><input type="text"/></td><td><input type="text"/></td><td><input type="text"/></td><td><input type="checkbox id="delete' + getRowId() +'"></td></tr>';
+      ingredientsList.innerHTML += '<tr><td><input type="text"/></td><td><input type="text"/></td><td><input type="text"/></td><td><button onclick="deleteThisRow(event, this)">Delete Row</button></td></tr>';
     });
 
-    let rowId = 0;
-    function getRowId() {
-      rowId += 1; 
-      return rowId;
+    function deleteThisRow(event, row) {
+      event.preventDefault();
+      this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table').deleteRow(row.rowIndex);
     }
+
 
     //When click "Add More" there should be a new input text area for user to input information
     this.shadowRoot.getElementById('addDirectionButton').addEventListener("click", e => {
