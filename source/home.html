@@ -39,8 +39,8 @@
     <!--Add CSS and Javascript-->
     <!--Side Panel-->
     <!--"Reference: https://www.w3schools.com/howto/howto_js_collapse_sidepanel.asp [Collapse Sidepanel]"-->
-    <section id="#section--side-panel" class="sidepanel">
-      <div id="sidepanlID" class="sidepanel">
+    <section id="#section--side-panel" class="sidepanel" style="background-color: transparent;">
+      <div id="sidepanelID" class="sidepanel">
         <h2>Collapsed Sidepanel</h2>
         <p>Content...</p>
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -50,7 +50,7 @@
         <a id="LinkToAdd" href="javascript:void(0)">Add a Recipe</a>
         <a id="LinkToWrite" href="javascript:void(0)">Write a Review</a>
       </div>
-      <button type="button" class="openbtn" onclick="openNav()">&#9776; Toggle Sidepanel</button>
+      <button type="button" class="openbtn" onclick="openNav()">&#9776;</button>
 
 
     </section>
@@ -102,7 +102,8 @@
     //     document.getElementById(str).classList.add('hidden');
     // }
     function openNav() {
-      document.getElementById("sidepanelID").style.width = "250px";
+      document.getElementById("sidepanelID").style.width = "25%";
+      document.getElementById("sidepanelID").style.height = "100%";
     }
 
     function closeNav() {
@@ -114,7 +115,7 @@
   <!--Footer bar-->
 
   <footer>
-    <h2>Footer</h2>
+    <!--<h2>Footer</h2>-->
     <!-- <ul>
       <li><button type="button" class="home-icon">home</button></li>
       <li><button type="button"  class="calendar-icon">calendar</button></li>
@@ -122,16 +123,16 @@
       <li><button type="button"  class="profile-icon">profile</button></li>
     </ul> -->
     <div class="footer">
-        <button id="LinkToHome" style="background-color:transparent; border-color:transparent;" onclick="window.location.href='home.html'"> 
+        <button id="LinkToHome" fill="var(--svgcolor)" style="background-color:transparent; border-color:transparent;" onclick="window.location.href='home.html'"> 
           <img class="footerImage" src="assets/icons/home.svg" height="35">
         </button>
-        <button id="LinkToCalendar"  style="background-color:transparent; border-color:transparent;" onclick="window.location.href='../source/full calendar/calendar.html'"> 
+        <button id="LinkToCalendar"  fill="var(--svgcolor)" style="background-color:transparent; border-color:transparent;" onclick="window.location.href='../source/full calendar/calendar.html'"> 
           <img class="footerImage"  src="assets/icons/calendar.svg" height="35"/>
         </button>
-        <button  id="LinkToList"  style="background-color:transparent; border-color:transparent;"> 
+        <button  id="LinkToList"  fill="var(--svgcolor)" style="background-color:transparent; border-color:transparent;"> 
           <img class="footerImage"  src="assets/icons/shopping-cart.svg" height="35"/>
         </button>
-        <button id="LinkToProfile"  style="background-color:transparent; border-color:transparent;"> 
+        <button id="LinkToProfile"  fill="var(--svgcolor)" style="background-color:transparent; border-color:transparent;"> 
           <img class="footerImage"  src="assets/icons/user.svg"height="35"/>
         </button>
       </div>
