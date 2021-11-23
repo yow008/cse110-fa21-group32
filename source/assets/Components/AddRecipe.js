@@ -25,7 +25,7 @@ class AddRecipePage extends HTMLElement {
         <br>
 
         <!--Add Image-->
-        <form>
+        <form name="image-form">
         <label for="img"><p><strong>Add Image</strong></p></label>
           <span id="chooseFiles">
             <input type="file" id="img" name="img" accept="image/*">
@@ -39,6 +39,7 @@ class AddRecipePage extends HTMLElement {
         <br>
 
         <!--Basic Information-->
+        <form name="basic-form">
         <label>Prep Time:</label>
         <input type="text" id="#input--prep-time-hour" placeholder="hours..">
         <input type="text" id="#input--prep-time-mins" placeholder="mins..">
@@ -96,6 +97,8 @@ class AddRecipePage extends HTMLElement {
       <textarea placeholder="Title:"></textarea><br>
       <textarea placeholder="Summary"></textarea>
       <br>
+      </form>
+      
       </div>
     
       <!--Add Recipe Ingredients-->
@@ -149,7 +152,7 @@ class AddRecipePage extends HTMLElement {
       <!--TO DO delete Directions button-->
   
       <br>
-      <button><a href="#"> Save Draft </a></button>
+      <button type="submit">Save Draft</button>
       <button><a href="#"> Publish </a></button>
       <button><a href="#"> Delete </a></button>
       <button><a href="home.html"> LEAVE </a></button>
@@ -187,8 +190,14 @@ class AddRecipePage extends HTMLElement {
     this.shadowRoot.getElementById('addIngredientButton').addEventListener("click", e => {
       e.preventDefault();   
       let ingredientsList = this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table');
-      ingredientsList.innerHTML += '<tr><td><input type="text"/></td><td><input type="text"/></td><td><input type="text"/></td><td><button onclick="deleteRow()">Delete</button</td></tr>';
+      ingredientsList.innerHTML += '<tr><td><input type="text"/></td><td><input type="text"/></td><td><input type="text"/></td><td><input type="checkbox id="delete' + getRowId() +'"></td></tr>';
     });
+
+    let rowId = 0;
+    function getRowId() {
+      rowId += 1; 
+      return rowId;
+    }
 
     //When click "Add More" there should be a new input text area for user to input information
     this.shadowRoot.getElementById('addDirectionButton').addEventListener("click", e => {
@@ -205,6 +214,6 @@ class AddRecipePage extends HTMLElement {
     });
 
     }
-}
+} 
 
 customElements.define('add-recipe-page', AddRecipePage);
