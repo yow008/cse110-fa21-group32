@@ -201,7 +201,6 @@ class AddRecipePage extends HTMLElement {
       this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table').deleteRow(row.rowIndex);
     }
 
-
     //When click "Add More" there should be a new input text area for user to input information
     this.shadowRoot.getElementById('addDirectionButton').addEventListener("click", e => {
       e.preventDefault();   
@@ -215,6 +214,8 @@ class AddRecipePage extends HTMLElement {
       let imagesList = this.shadowRoot.querySelector('#chooseFiles');
       imagesList.innerHTML += '<input type="file" id="img" name="img" accept="image/*">';
     });
+
+
 
     }
 } 
