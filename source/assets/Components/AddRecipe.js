@@ -28,14 +28,13 @@ class AddRecipePage extends HTMLElement {
         <!--Add Image-->
         
         <label for="img"><p><strong>Add Image</strong></p></label>
-          <span id="chooseFiles">
-            <input type="file" id="img" name="img" accept="image/*" multiple />
-          </span>
-          <br>
-          <input type="submit">
-          <br>
-          <br>
-          <button id="addImage">Add Another Image</button>
+        <span id="chooseFiles">
+          <input type="file" id="img" name="img" accept="image/*"/>
+        </span>
+        <br>
+        <br>
+        <button id="addImage">Add Another Image</button>
+        <br>
         <br>
 
         <!--Basic Information-->
@@ -198,73 +197,77 @@ class AddRecipePage extends HTMLElement {
     this.shadowRoot.getElementById('addImage').addEventListener("click", e => {
       e.preventDefault();   
       let imagesList = this.shadowRoot.querySelector('#chooseFiles');
-      imagesList.innerHTML += '<input type="file" id="img" name="img" accept="image/*" multiple />';
+      imagesList.innerHTML += '<input type="file" id="img" name="img" accept="image/*"/>';
     });
 
     this.shadowRoot.getElementById('save').addEventListener("click", e => {
       e.preventDefault();   
       postCreateRecipeData();
+    });
+
+    function deleteThisRow(row) {
+      console.log(row);
+      this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table').deleteRow(row.rowIndex);
+      console.log("deleteThisRow");
     }
 
+    //listener when a user save the form
+    //newRecipe.addEventListener("submit", handleFormSubmit)
+
+    /**
+     * TODO:
+     * Event handler for a form sumbit event
+     * @param {String} recipeForm
+     * @param {RecipePage} RecipePage
+     */
+
+     const data = new FormData();
+     const title = this.shadowRoot.getElementById("title");
+
+    function postCreateRecipeData() {
+
+      // const newRecipe = this.shadowRoot.getElementById("new-recipe");
+      // const photos = document.querySelector('input[type="file"]').files;
+
+
+      data.append('title', title);
+      // for (let i = 0; i < photos.files.length; i++) {
+      //   data.append(`photos_${i}`, photos.item(i));
+      // }
+
+      console.log(data);
+      
+      // data.append('servings', this.shadowRoot.getElementById("servings"));
+      // let readyInMinutes = this.shadowRoot.getElementById("#input--cook-time-hour")*60 + this.shadowRoot.getElementById("#input--cook-time-minutes");
+      // data.append('readyInMinutes', readyInMinutes);
+      // data.append('tagCountry', this.shadowRoot.getElementById("tag1-list"));
+      // data.append('tagFoodType', this.shadowRoot.getElementById("tag2-list"));
+      // data.append('summary', this.shadowRoot.getElementById("summary"));
+
+      // const directionsList= this.shadowRoot.querySelector("textarea[name='directionStep]");
+      // for (let i=0; i<directionsList.length; i++) {
+      //   data.append('instructions', directionsList[i]);
+      // }
+      
+      fetch('http://127.0.0.1:5500', {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          //   window.location.href = 'home.html';
+          console.log('Success:', data);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
 
 
     }
 } 
-function deleteThisRow(row) {
-  console.log(row);
-  this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table').deleteRow(row.rowIndex);
-  console.log("deleteThisRow");
-}
 
-
-
-//listener when a user save the form
-//newRecipe.addEventListener("submit", handleFormSubmit);
-
-
-/**
- * TODO:
- * Event handler for a form sumbit event
- * @param {String} recipeForm
- * @param {RecipePage} RecipePage
- */
- function postCreateRecipeData() {
-
-  const newRecipe = this.shadowRoot.getElementById("new-recipe");
-  const photos = document.querySelector('input[type="file"][multiple]');
-  const data = new FormData();
-
-  data.append('title', this.shadowRoot.getElementById("title"));
-  for (let i = 0; i < photos.files.length; i++) {
-    data.append(`photos_${i}`, photos.files[i]);
-  }
-  data.append('servings', this.shadowRoot.getElementById("servings"));
-  let readyInMinutes = this.shadowRoot.getElementById("#input--cook-time-hour")*60 + this.shadowRoot.getElementById("#input--cook-time-minutes");
-  data.append('readyInMinutes', readyInMinutes);
-  data.append('tagCountry', this.shadowRoot.getElementById("tag1-list"));
-  data.append('tagFoodType', this.shadowRoot.getElementById("tag2-list"));
-  data.append('summary', this.shadowRoot.getElementById("summary"));
-
-  const directionsList= this.shadowRoot.querySelector("textarea[name='directionStep]");
-  for (let i=0; i<directionsList.length; i++) {
-    data.append('instructions', directionsList[i]);
-  }
-  console.log(data);
-
-  fetch('http://127.0.0.1:5500', {
-    method: 'PUT',
-    // headers: {
-    //   'Content-Type': 'application/json',
-    // },
-    body: data
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      //   window.location.href = 'home.html';
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-}
 customElements.define('add-recipe-page', AddRecipePage);
