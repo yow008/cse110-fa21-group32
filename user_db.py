@@ -138,3 +138,5 @@ class User_DB:
 
 if __name__ == '__main__':
     new_db = User_DB()
+    #new_db.addRecipe('banana@gmail.com','abc123','123456')
+    #new_db.removeRecipe('banana@gmail.com','abc123','123456')
