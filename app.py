@@ -21,6 +21,7 @@ def home_page():
     print(request)
     if request.method == 'POST':
         msg = request.get_json()
+        print(msg)
         if msg['type'] == 'register':
             user_db.createUser(msg['username'], msg['password'], msg['email'], '', '')
             return {'msg': 'Success!'}, 201
@@ -36,6 +37,8 @@ def home_page():
             recipe = msg['recipe']
             recipe_db.removeRecipe(msg['id'])
             user_db.addRecipe(msg['username'], msg['password'],msg['id'])
+            return {'msg': 'Success!'}, 201
+        elif msg['type'] == 'postRecipe':
             return {'msg': 'Success!'}, 201
 
     if request.method == 'GET':
