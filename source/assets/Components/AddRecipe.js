@@ -93,7 +93,7 @@ class AddRecipePage extends HTMLElement {
       <!--Add Recipe Ingredients-->
       <div id="add-recipe-ingredients" style="display: none">
       <label for="ingredients"><p><strong>Add Ingredients</strong></p></label>
-      <table>
+      <table id="ingredient-table">
         <tr>
           <th>Qty</th>
           <th>Unit</th>
@@ -224,95 +224,87 @@ class AddRecipePage extends HTMLElement {
     const photos = this.shadowRoot.getElementById("chooseFiles");
     const cookintTimeHour = this.shadowRoot.getElementById("#input--cook-time-hour");
     const cookintTimeMin = this.shadowRoot.getElementById("#input--cook-time-mins");
+    const readyInMinutes = 60*cookintTimeHour + cookintTimeMin;
     const servings = this.shadowRoot.getElementById("#input--no-of-serv");
     const title = this.shadowRoot.getElementById("addTitle");
     const summary = this.shadowRoot.getElementById("addSummary");
-
-    const quantity = this.shadowRoot.getElementById("");
-    const unit = this.shadowRoot.getElementById("");
-    const ingredient = this.shadowRoot.getElementById("");
-
-    const directionsList = this.shadowRoot.getElementById('add-recipe-direction').querySelectorAll('textarea');
+    const ingredientList = this.shadowRoot.getElementById("ingredient-table");
+    const directions = this.shadowRoot.getElementById('add-recipe-direction');
     
     
     function postCreateRecipeData() {
+      // Select all ingredients
+      let quantity = ingredientList.querySelectorAll('input[name="quantity"]');
+      let unit = ingredientList.querySelectorAll('input[name="unit"]');
+      let ingredient = ingredientList.querySelectorAll('input[name="ingredientName"]');
+
+      //Select all input from Direction Steps
+      let directionsList = directions.querySelectorAll('textarea[name="directionStep"]');
+      //Select all input from file image
       let imgList = photos.querySelectorAll('input[type="file"]');
       let images = {};
 
-      // // https://www.geeksforgeeks.org/how-to-convert-image-into-base64-string-using-javascript/\
+      // https://www.geeksforgeeks.org/how-to-convert-image-into-base64-string-using-javascript/\
 
-      let fileReader = new FileReader();
-        
-      fileReader.addEventListener("load", function(){
-        for (let i in imgList) {
-          console.log(fileReader.result.length);
-          if (fileReader.result.length > 0) {
-            console.log(i);
-            images['image'+i] = fileReader.result;
-            //alert(fileReader.result);
+      console.log(imgList);
+      // For loop for upload all images
+      for (let i = 0; i < imgList.length; i++) {
+        if(imgList[i].files[0] != null){
+          let fileReader = new FileReader();
+          fileReader.onload = function () {
+            if (fileReader.result.length > 0) {
+              images['image'+i] = fileReader.result;
+              alert(fileReader.result);
+            }
           }
+          fileReader.readAsDataURL(imgList[i].files[0]);
         }
-      }, false);
-      if(images){
-        fileReader.readAsDataURL(imgList[0].files[0]);
       }
-      
-      // for (let i = 0; i < imgList.length; i++) {
-      //   let fileReader = new FileReader();
-      //   fileReader.onload = function () {
-      //     if (fileReader.result.length > 0) {
-      //       images['image'+i] = fileReader.result;
-      //       alert(fileReader.result);
-      //     }
 
-      //   }
-      //   fileReader.readAsDataURL(imgList[i].files[0]);
-      // }
-
-
-
-      setTimeout( function() {
-         console.log(images);
-      }, 1000);
-
-      //Select all input from Direction Steps
-      // console.log(directionsList[0].value);
-      // console.log(directionsList.length);
-      // let instructions = "<ol>";
-      // for (let i=0; i < directionsList.length; i++) {
-      //   if (directionsList[i].value.length !== 0) {
-      //     instructions += "<li>" + directionsList[i].value + "</li>";
-      //   }
-      // }
-      // instructions += "</ol>";
-
-      console.log(directionsList[1].value + "  -directionsList");
-      let data = {
-        type: 'postRecipe',
-        img: images,
-        cookintTimeHour: cookintTimeHour.value,
-        cookintTimeMin: cookintTimeMin.value,
-        serving: servings.value,
-        title: title.value,
-        sum: summary.value,
-        directions: directionsList
+      // For loop for upload all ingredient information
+      let extendedIngredients = []
+      for (let i=0; i < ingredient.length; i++) {
+        if (ingredient[i].value.length !== 0) {
+          let ing = {}
+          ing['name'] = ingredient[i].value;
+          ing['amount'] = quantity[i].value;
+          ing['unit'] = unit[i].value;
+          console.log(ing);
+          extendedIngredients.push(ing);
           
         }
-    
-      //console.log(data);
-      
-      // data.append('servings', this.shadowRoot.getElementById("servings"));
-      // let readyInMinutes = this.shadowRoot.getElementById("#input--cook-time-hour")*60 + this.shadowRoot.getElementById("#input--cook-time-minutes");
-      // data.append('readyInMinutes', readyInMinutes);
-      // data.append('tagCountry', this.shadowRoot.getElementById("tag1-list"));
-      // data.append('tagFoodType', this.shadowRoot.getElementById("tag2-list"));
-      // data.append('summary', this.shadowRoot.getElementById("summary"));
+      }
+      console.log(extendedIngredients);
 
-      // const directionsList= this.shadowRoot.querySelector("textarea[name='directionStep]");
-      // for (let i=0; i<directionsList.length; i++) {
-      //   data.append('instructions', directionsList[i]);
-      // }
-      
+      // For loop for upload all direction steps
+      // console.log(directionsList[0].value);
+      // console.log(directionsList[1].value);
+      let instructions = "<ol>";
+      for (let i=0; i < directionsList.length; i++) {
+        if (directionsList[i].value.length !== 0) {
+          instructions += "<li>" + directionsList[i].value + "</li>";
+        }
+      }
+      instructions += "</ol>";
+      console.log(instructions);
+
+      // console.log(directionsList[0].value + "  -directionsList");
+      let data = {
+        type: 'postRecipe',
+        image: 
+        setTimeout(function() {
+          console.log(images);
+          images;
+        }, 1000),
+        readyInMinutes: readyInMinutes,
+        servings: servings.value,
+        title: title.value,
+        summary: summary.value,
+        extendedIngredients: extendedIngredients,
+        instructions: instructions
+        }
+
+      console.log(data);
 
       fetch('http://127.0.0.1:5000', {
         method: 'POST', // or 'PUT'
@@ -331,7 +323,6 @@ class AddRecipePage extends HTMLElement {
           console.error('Error:', error);
         });
     }
-
 
     }
 } 
