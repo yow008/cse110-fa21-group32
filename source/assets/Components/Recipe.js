@@ -2,6 +2,7 @@
 import { Router } from '../scripts/Router.js';
 
 const router = new Router();
+const LOCAL_URL = 'http://127.0.0.1:5000';
 
 class RecipePage extends HTMLElement {
   constructor() {
@@ -117,6 +118,61 @@ class RecipePage extends HTMLElement {
         .setAttribute('style', 'display: show');
     });
   }
+
+  set data(data) {
+    const title = document.createElement('h3');
+    // title.innerHTML = data.
+    console.log(data);
+    this.shadowRoot.getElementById('recipe-summaryID').appendChild();
+  }
+}
+
+// SUMMARY ELEMENTS
+/**
+ *
+ * @param {JSON} data
+ * @returns
+ */
+function getCookTime(data) {
+  return data;
+}
+
+/**
+ *
+ * @param {JSON} data
+ * @returns
+ */
+function getImage(data) {
+  return data;
+}
+
+/**
+ *
+ * @param {JSON} data
+ * @returns
+ */
+function getTitle(data) {
+  return data;
+}
+
+// INGREDIENTS ELEMENTS
+/**
+ *
+ * @param {JSON} data
+ * @returns
+ */
+function getIngreds(data) {
+  return data;
+}
+
+// DIRECTIONS ELEMENTS
+/**
+ *
+ * @param {JSON} data
+ * @returns
+ */
+function getDirs(data) {
+  return data;
 }
 
 customElements.define('recipe-page', RecipePage);

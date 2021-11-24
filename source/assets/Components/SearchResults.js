@@ -2,6 +2,9 @@
 import { Router } from '../scripts/Router.js';
 const router = new Router();
 
+// TODO: edit the local server URL
+const LOCAL_URL = 'http://127.0.0.1:5000';
+
 class SearchResultsPage extends HTMLElement {
   constructor() {
     super();
@@ -62,24 +65,30 @@ function createRecipeCards(results, section) {
     card.appendChild(image);
     card.appendChild(title);
 
-    // Add all elements inside a link
-    const link = document.createElement('a');
-    link.setAttribute('href', `home.html#recipe${data.id}`);
+    // // Add all elements inside a link
+    // const link = document.createElement('a');
+    // link.setAttribute('href', `home.html#recipe${data.id}`);
 
-    link.appendChild(card);
-    section.appendChild(link);
+    // link.appendChild(card);
+    // section.appendChild(link);
+
+    section.appendChild(card);
 
     // Add the corresponding expand recipe view to router
     addPage(data.id);
+
+    card.addEventListener('click', () => {
+      router.navigate(`recipe_${data.id}`);
+    });
   });
 }
 
 /**
  * TODO:
- * @param {String} recipeID
+ * @param {String} recipeId
  */
-function addPage(recipeID) {
-  router.addPage(`#recipe${recipeID}`, function () {
+function addPage(recipeId) {
+  router.addPage(`recipe_${recipeId}`, function () {
     document.getElementById('#section--home').classList.remove('shown');
     document.getElementById('#section--search-bar').classList.remove('shown');
 
@@ -88,7 +97,44 @@ function addPage(recipeID) {
       .classList.remove('shown');
 
     document.getElementById('#section--recipe').classList.add('shown');
+
+    // Fetch and populate recipe page and add to recipe section
+    const recipePage = document.createElement('recipe-page');
+    // fetchRecipe(recipeId, recipePage); TODO: NEEDS FIXING
+    recipePage.classList.add('shown');
+    document.getElementById('#section--recipe').appendChild(recipePage);
   });
+}
+
+/**
+ * Uses the recipe ID to get the full json details of the recipe. Once
+ * the recipe is found, set the recipe information.
+ * @param {String} recipeId
+ * @param {SearchResultsPage} recipePage
+ */
+function fetchRecipe(recipeId, recipePage) {
+  fetch(
+    // need to encode with UTF-8 for special characters like ' '
+    `${LOCAL_URL}?type=fetchRecipe&id=${encodeURIComponent(recipeId)}`,
+    {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      recipePage.data = data;
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 }
 
 // Define the Class so it can be used as a custom element
