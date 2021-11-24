@@ -114,8 +114,8 @@ class User_DB:
     
     def addRecipe(self, username, password, id):
         self.cur.execute('SELECT Recipes FROM Users WHERE Username = ? AND Password = ?', (username, password))
-        result = self.cur.fetchall
-        recipes = pickle.loads(result[0]) # TODO: Integrity check
+        result = self.cur.fetchall()
+        recipes = pickle.loads(result[0][0]) # TODO: Integrity check
         if recipes is None: recipes = []
         recipes.append(id)
         recipes = pickle.dumps(recipes)
@@ -124,8 +124,8 @@ class User_DB:
 
     def removeRecipe(self, username, password, id):
         self.cur.execute('SELECT Recipes FROM Users WHERE Username = ? AND Password = ?', (username, password))
-        result = self.cur.fetchall
-        recipes = pickle.loads(result[0]) # TODO: Integrity check
+        result = self.cur.fetchall()
+        recipes = pickle.loads(result[0][0]) # TODO: Integrity check
         if recipes is None: recipes = []
         try:
             recipes.remove(id)
