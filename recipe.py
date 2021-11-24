@@ -12,7 +12,7 @@ class Recipe_DB:
     def __init__(self):
         # Spoonacular 
         self.url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/"
-        self.API_KEY = 'a6764a187c4446ecb1ff3d82fc0785aa'
+        self.API_KEY = '59e761926ee542d384a32515dbb2527a'
         self.headers = {
             'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
             'x-rapidapi-key': self.API_KEY
@@ -47,12 +47,13 @@ class Recipe_DB:
         url = 'https://api.spoonacular.com/recipes/complexSearch?query=%s&apiKey=%s&includeNutrition=false' % (keyword, self.API_KEY)
         # url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/complexSearch?query=%s&number=5' % (keyword)
         recipe = requests.request("GET", url, headers=self.headers).json()
-        for i in range(10):        
-            # Can move into the fetchRecipe function instead (fetches recipe by ID)
-            url = 'https://api.spoonacular.com/recipes/%s/information?apiKey=%s' % (recipe['results'][i]['id'], self.API_KEY)
-            src = requests.request("GET", url, headers=self.headers).json()
-            # Probably shouldn't cache here but need to update fetchRecipe to update from Spoonacular and not the db before moving
-            self.cacheRecipe(recipe['results'][i]['id'], src)
+        print(recipe)
+        # for i in range(10):        
+        #     # Can move into the fetchRecipe function instead (fetches recipe by ID)
+        #     url = 'https://api.spoonacular.com/recipes/%s/information?apiKey=%s' % (recipe['results'][i]['id'], self.API_KEY)
+        #     src = requests.request("GET", url, headers=self.headers).json()
+        #     # Probably shouldn't cache here but need to update fetchRecipe to update from Spoonacular and not the db before moving
+        #     self.cacheRecipe(recipe['results'][i]['id'], src)
         return recipe['results']
         
 
@@ -74,18 +75,20 @@ class Recipe_DB:
         pass
 
     def fetchRecipeByID(self, ID):
-        # Return user-requested recipe from DB/Spoonacular.
-        self.cur.execute('SELECT * FROM Recipes WHERE ID = %s' % (ID))
+        # Return user-requested recipe json from DB/Spoonacular.
+        self.cur.execute('SELECT src FROM Recipes WHERE ID = %s' % (ID))
         result = self.cur.fetchall()
-        #print(result[0])
+        # print(result[0])
         if (len(result) != 0):
-            return pickle.loads(result[0])
+            return pickle.loads(result[0][0])
         else:
             # Call Spoonacular API
-            
-            # Cache recipe in DB
+            url = 'https://api.spoonacular.com/recipes/%s/information?apiKey=%s' % (ID, self.API_KEY)
+            src = requests.request("GET", url, headers=self.headers).json()
 
-            pass
+            # Cache recipe in DB
+            self.cacheRecipe(ID, src)
+            return src
 
     def createRecipe(self,recipe):
         '''
@@ -109,6 +112,9 @@ class Recipe_DB:
         #name = pickle.loads(self.cur.fetchall[0])
         self.cur.execute('SELECT src FROM Recipes WHERE ID = %d' % (id))
         result = self.cur.fetchall()
+
+        if (len(result) < 1):
+            return
 
         recipes = pickle.loads(result[0][0])
         #recipes['name'] = updatedVal['name']
@@ -140,8 +146,8 @@ class Recipe_DB:
 
 if __name__ == '__main__':
     db = Recipe_DB()
-    db.searchRecipeByKeyword('pasta')
-#db.fetchRecipeByID("654959")
+    # db.searchRecipeByKeyword('pasta')
+    db.fetchRecipeByID("654959")
     #id = db.createRecipe({'author': 'Chad' , 'name': 'Pasta With Chickpeas and Kale', 'image': 'https://spoonacular.com/recipeImages/654905-312x231.jpg', 'imageType': 'jpg'})
     db.updateRecipe(1000000, {'author': 'Bagrat'})
     
