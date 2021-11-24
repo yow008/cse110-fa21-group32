@@ -10,7 +10,14 @@ class FavRecipesPage extends HTMLElement {
         const article = document.createElement('article');
 
         // Fill in styles and root element
-        styles.innerHTML = ``;
+        styles.innerHTML = `        
+        h2{
+            background-color: #CA676A;
+            background-size: cover;
+            padding: 23.5px;
+            color: white;
+          }
+          `;
         article.innerHTML = `
         <h2>Favorites</h2>
         <p>Content...</p>

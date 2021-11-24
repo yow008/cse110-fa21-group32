@@ -13,9 +13,13 @@ class HomePage extends HTMLElement {
     const article = document.createElement('article');
 
     // Fill in styles and root element
-    styles.innerHTML = ``;
+    styles.innerHTML = `
+    *{
+      clear: both;
+    }
+    `;
     article.innerHTML = `
-        <h1>Home Page</h1>
+        <!--<h1>Home Page</h1>-->
         <!--ADD RECIPES HERE-->
         <p id="#user-status"></p>
         <p id="#user-email"></p>

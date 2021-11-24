@@ -36,7 +36,7 @@ section:not(section.shown) {
   z-index: 1; /* Stay on top */
   top: 0;
   left: 0;
-  background-color: #111; /* Black*/
+  background-color: #609C8B; 
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
@@ -44,10 +44,10 @@ section:not(section.shown) {
 
 /* The sidepanel links */
  .sidepanel a {
-  padding: 8px 8px 8px 32px;
+  padding: 16px 16px 16px 32px;
   text-decoration: none;
   font-size: 25px;
-  color: #818181;
+  color: white;
   display: block;
   transition: 0.3s;
 } 
@@ -64,6 +64,7 @@ section:not(section.shown) {
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
+  background: none;
 }
 
 /* Style the button that is used to open the sidepanel */
@@ -71,14 +72,24 @@ section:not(section.shown) {
   font-size: 20px;
   cursor: pointer;
   /*background-color: #111;*/
-  color: black;
-  padding: 10px 15px;
+  color: white;
+  padding: 26.5px 15px;
   border: none;
+  float: left;
+  background: #CA676A;
 }
 
 /*.openbtn:hover {
   background-color: #444;
 }*/
+
+.header{
+  background: #CA676A;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  background-size: cover;
+}
 
 .footer{
   position: absolute;

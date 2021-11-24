@@ -16,9 +16,19 @@ class SearchBar extends HTMLElement {
     const article = document.createElement('article');
 
     // Fill in styles and root element
-    styles.innerHTML = ``;
+    styles.innerHTML = `
+    *{
+      background-color: #CA676A;
+      background-size: cover;
+      color: white;
+      overflow: hidden;
+      padding: 10px;
+    }
+    input{
+      background-color: white;
+    }
+    `;
     article.innerHTML = `
-        <p>Search Bar</p>
         <form id="searchFormID" name="search-form">
           <input type="text" placeholder="Search..." name="search-phrase">
           <button type="submit" id="search-icon">Submit</button>
