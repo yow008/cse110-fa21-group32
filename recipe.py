@@ -47,16 +47,30 @@ class Recipe_DB:
         url = 'https://api.spoonacular.com/recipes/complexSearch?query=%s&apiKey=%s&includeNutrition=false' % (keyword, self.API_KEY)
         # url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/complexSearch?query=%s&number=5' % (keyword)
         recipe = requests.request("GET", url, headers=self.headers).json()
-        for i in range(10):
-            print(recipe['results'][i])
-        
-        url = 'https://api.spoonacular.com/recipes/%s?apiKey=%s' % (recipe['results'][0]['id'], self.API_KEY)
-        src = requests.request("GET", url, headers=self.headers).json() 
-            
+        for i in range(10):        
+            # Can move into the fetchRecipe function instead (fetches recipe by ID)
+            url = 'https://api.spoonacular.com/recipes/%s/information?apiKey=%s' % (recipe['results'][i]['id'], self.API_KEY)
+            src = requests.request("GET", url, headers=self.headers).json()
+            # Probably shouldn't cache here but need to update fetchRecipe to update from Spoonacular and not the db before moving
+            self.cacheRecipe(recipe['results'][i]['id'], src)
         return recipe['results']
         
 
     def cacheRecipe(self, ID, src):
+        try:
+            # Create recipe with ID, name, author, URL, src, image
+            name = src['title']
+            author = 'Spoonacular'
+            url = src['sourceUrl']
+            source = pickle.dumps(src)
+            image = src['image']
+
+            self.cur.execute("INSERT INTO Recipes(ID, name, author, url, src, image) VALUES(?, ?, ?, ?, ?, ?);", (ID, name, author, url, source, image))
+            self.conn.commit()
+            return True
+        except sqlite3.IntegrityError as er: # username is primary key so no duplicates allowed
+            print('ERROR: Recipe ' + name + ' already exists.')
+            return True ## MUST RETURN TRUE OTHERWISE FRONTEND ERRORS
         pass
 
     def fetchRecipeByID(self, ID):
