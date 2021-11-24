@@ -28,7 +28,7 @@ section:not(section.shown) {
   font-family: "IBM Plex Sans";
 }
 
- The sidepanel menu
+ /*The sidepanel menu*/
  .sidepanel {
   height: 100%; /* Specify a height */
   width: 40%; /* 0 width - change this with JavaScript */
@@ -43,14 +43,14 @@ section:not(section.shown) {
 }
 
 /* The sidepanel links */
-/* .sidepanel a {
+ .sidepanel a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
   color: #818181;
   display: block;
   transition: 0.3s;
-} */
+} 
 
 /* When you mouse over the navigation links, change their color */
 .sidepanel a:hover {
