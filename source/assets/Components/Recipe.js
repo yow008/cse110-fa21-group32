@@ -1,4 +1,5 @@
 // Recipe.js
+
 import { Router } from '../scripts/Router.js';
 
 const router = new Router();
@@ -117,6 +118,10 @@ class RecipePage extends HTMLElement {
         .getElementById('recipe-directionID')
         .setAttribute('style', 'display: show');
     });
+
+    //Grad information
+
+    
   }
 
   set data(data) {

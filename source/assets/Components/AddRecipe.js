@@ -34,9 +34,9 @@ class AddRecipePage extends HTMLElement {
 
         <!--Add Image-->
         <label for="img"><p><strong>Add Image</strong></p></label>
-        <span id="chooseFiles">
-          <input type="file" id="img" name="img" accept="image/*"/>
-        </span>
+        <ul id="chooseFiles">
+          <li><input type="file" id="img" name="img" accept="image/*"/></li>
+        </ul>
         <br>
         <br>
         <button id="addImage">Add Another Image</button>
@@ -51,7 +51,7 @@ class AddRecipePage extends HTMLElement {
         <br>
 
         <label id="servings" for="servings"> No. of Servings: </label>
-        <input type="text" name="numServings" id="#input--no-of-serv>
+        <input type="text" name="numServings" id="#input--no-of-serv">
         <br>
 
       <!--Basic Information (Tags/Summary)-->
@@ -100,7 +100,7 @@ class AddRecipePage extends HTMLElement {
       <!--Add Recipe Ingredients-->
       <div id="add-recipe-ingredients" style="display: none">
       <label for="ingredients"><p><strong>Add Ingredients</strong></p></label>
-      <table>
+      <table id="ingredient-table">
         <tr>
           <th>Qty</th>
           <th>Unit</th>
@@ -112,7 +112,7 @@ class AddRecipePage extends HTMLElement {
           <td><input type="text" name="ingredientName"/></td>
         </tr>
       </table>
-      <!--When click add more should create another new 'tr' with three new inpurts-->
+      <!--When click add more should create another new 'tr' with three new inputs-->
       <button id="addIngredientButton"> Add More </button>
       <br>
       </div>
@@ -123,7 +123,7 @@ class AddRecipePage extends HTMLElement {
         <p>Direction</p>
         <ol>
           <li>Step:</li>
-          <textarea name="directionStep"></textarea>
+          <textarea name="directionStep" id="#input--direction-step"></textarea>
         </ol>
         <br>
         <!--When click add more should create another new textarea for direction-->
@@ -173,34 +173,42 @@ class AddRecipePage extends HTMLElement {
     this.shadowRoot.getElementById('addIngredientButton').addEventListener("click", e => {
       e.preventDefault();   
       let ingredientsList = this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table');
-      ingredientsList.innerHTML += '<tr><td><input type="text" name="quantity"/></td><td><input type="text" name="unit"/></td><td><input type="text" name="ingredientName"/></td><td><button onclick="event.preventDefault();this.parentNode.deleteRow(this.rowIndex)">Delete Row</button></td></tr>';
+      let row = ingredientsList.insertRow(-1);
+      let quantity = row.insertCell(0);
+      quantity.innerHTML = '<input type="text" name="quantity"/>';
+      let unit = row.insertCell(1);
+      unit.innerHTML = '<input type="text" name="unit"/>';
+      let ingredient = row.insertCell(2);
+      ingredient.innerHTML = '<input type="text" name="ingredientName"/>';
+      let deleteButton = row.insertCell(3);
+      deleteButton.innerHTML = '<button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button>';
+      
     });
-
-    function deleteThisRow(event, row) {
-      event.preventDefault();
-      this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table').deleteRow(row.rowIndex);
-    }
 
     //When click "Add More" there should be a new input text area for user to input information
     this.shadowRoot.getElementById('addDirectionButton').addEventListener("click", e => {
       e.preventDefault();   
       let directionsList = this.shadowRoot.querySelector('#add-recipe-direction').querySelector('ol');
-      directionsList.innerHTML += '<li>Step:</li><textarea name="directionSteps"></textarea>';
+      let li = document.createElement('li');
+      li.innerHTML = 'Step:';
+      let input = document.createElement('textarea');
+      input.setAttribute('id', '#input--direction-step');
+      input.setAttribute('name', 'directionStep');
+      directionsList.appendChild(li);
+      directionsList.appendChild(input);
+
     });
 
     //Add images
     this.shadowRoot.getElementById('addImage').addEventListener("click", e => {
-      e.preventDefault();   
-      let imagesList = this.shadowRoot.querySelector('#chooseFiles');
-      imagesList.innerHTML += '<input type="file" id="img" name="img" accept="image/*"/>';
+    e.preventDefault();   
+    let imagesList = this.shadowRoot.querySelector('#chooseFiles');
+    let li = document.createElement('li');
+    li.innerHTML = '<input type="file" id="img" name="img" accept="image/*"/>'
+    imagesList.appendChild(li);
+    
     });
-
-    function deleteThisRow(row) {
-      console.log(row);
-      this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table').deleteRow(row.rowIndex);
-      console.log("deleteThisRow");
-    }
-
+    
     //listener when a user save the form
     //newRecipe.addEventListener("submit", handleFormSubmit)
 
@@ -210,7 +218,6 @@ class AddRecipePage extends HTMLElement {
      * @param {String} recipeForm
      * @param {RecipePage} RecipePage
      */
-
   
     const newRecipe = this.shadowRoot.getElementById("new-recipe");
     newRecipe.addEventListener('submit', (e) => {
@@ -221,63 +228,98 @@ class AddRecipePage extends HTMLElement {
       postCreateRecipeData();
     });
 
-    const title = this.shadowRoot.getElementById("addTitle");
     const photos = this.shadowRoot.getElementById("chooseFiles");
-
+    const cookintTimeHour = this.shadowRoot.getElementById("#input--cook-time-hour");
+    const cookintTimeMin = this.shadowRoot.getElementById("#input--cook-time-mins");
+    const readyInMinutes = 60*cookintTimeHour + cookintTimeMin;
+    const servings = this.shadowRoot.getElementById("#input--no-of-serv");
+    const title = this.shadowRoot.getElementById("addTitle");
+    const summary = this.shadowRoot.getElementById("addSummary");
+    const ingredientList = this.shadowRoot.getElementById("ingredient-table");
+    const directions = this.shadowRoot.getElementById('add-recipe-direction');
+    
     
     function postCreateRecipeData() {
-      
-      
-      // console.log(this.shadowRoot.getElementById("addTitle"))
-      
+      // Select all ingredients
+      let quantity = ingredientList.querySelectorAll('input[name="quantity"]');
+      let unit = ingredientList.querySelectorAll('input[name="unit"]');
+      let ingredient = ingredientList.querySelectorAll('input[name="ingredientName"]');
+
+      //Select all input from Direction Steps
+      let directionsList = directions.querySelectorAll('textarea[name="directionStep"]');
+      //Select all input from file image
       let imgList = photos.querySelectorAll('input[type="file"]');
       let images = {};
 
-      
-      // https://www.geeksforgeeks.org/how-to-convert-image-into-base64-string-using-javascript/
+      // https://www.geeksforgeeks.org/how-to-convert-image-into-base64-string-using-javascript/\
 
+      console.log(imgList);
+      // For loop for upload all images
       for (let i = 0; i < imgList.length; i++) {
-        console.log(imgList[i].files[0])
-        if (imgList[i].files.length > 0) {
-          images[i] = base64string
+        if(imgList[i].files[0] != null){
+          let fileReader = new FileReader();
+          fileReader.onload = function () {
+            if (fileReader.result.length > 0) {
+              images['image'+i] = fileReader.result;
+              alert(fileReader.result);
+            }
+          }
+          fileReader.readAsDataURL(imgList[i].files[0]);
         }
       }
 
+      // For loop for upload all ingredient information
+      let extendedIngredients = []
+      for (let i=0; i < ingredient.length; i++) {
+        if (ingredient[i].value.length !== 0) {
+          let ing = {}
+          ing['name'] = ingredient[i].value;
+          ing['amount'] = quantity[i].value;
+          ing['unit'] = unit[i].value;
+          console.log(ing);
+          extendedIngredients.push(ing);
+          
+        }
+      }
+      console.log(extendedIngredients);
 
+      // For loop for upload all direction steps
+      // console.log(directionsList[0].value);
+      // console.log(directionsList[1].value);
+      let instructions = "<ol>";
+      for (let i=0; i < directionsList.length; i++) {
+        if (directionsList[i].value.length !== 0) {
+          instructions += "<li>" + directionsList[i].value + "</li>";
+        }
+      }
+      instructions += "</ol>";
+      console.log(instructions);
+
+      // console.log(directionsList[0].value + "  -directionsList");
       let data = {
         type: 'postRecipe',
+        image: 
+        setTimeout(function() {
+          console.log(images);
+          images;
+        }, 1000),
+        readyInMinutes: readyInMinutes,
+        servings: servings.value,
         title: title.value,
-        img: images
-          
-        // for (let i = 0; i < photos.files.length; i++) {
-           
-        //  }
+        summary: summary.value,
+        extendedIngredients: extendedIngredients,
+        instructions: instructions
         }
-        
-      
-    
-      //console.log(data);
-      
-      // data.append('servings', this.shadowRoot.getElementById("servings"));
-      // let readyInMinutes = this.shadowRoot.getElementById("#input--cook-time-hour")*60 + this.shadowRoot.getElementById("#input--cook-time-minutes");
-      // data.append('readyInMinutes', readyInMinutes);
-      // data.append('tagCountry', this.shadowRoot.getElementById("tag1-list"));
-      // data.append('tagFoodType', this.shadowRoot.getElementById("tag2-list"));
-      // data.append('summary', this.shadowRoot.getElementById("summary"));
 
-      // const directionsList= this.shadowRoot.querySelector("textarea[name='directionStep]");
-      // for (let i=0; i<directionsList.length; i++) {
-      //   data.append('instructions', directionsList[i]);
-      // }
-      
+      console.log(data);
 
       fetch('http://127.0.0.1:5000', {
         method: 'POST', // or 'PUT'
         headers: {
-          'Content-Type': 'img',
+          'Content-Type': 'application/json',
         },
-        //body: JSON.stringify(data),
-        body: imgList[0].files[0]
+        body: JSON.stringify(data),
+        // body: imgList[0].files[0]
       })
         .then((response) => response.json())
         .then((data) => {
@@ -288,7 +330,6 @@ class AddRecipePage extends HTMLElement {
           console.error('Error:', error);
         });
     }
-
 
     }
 } 
