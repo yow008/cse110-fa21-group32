@@ -1,7 +1,7 @@
 // Recipe.js
 import { Router } from '../scripts/Router.js';
 
-const router = new Router();
+/*const router = new Router();
 const LOCAL_URL = 'http://127.0.0.1:5000';
 const data = {
   vegetarian: false,
@@ -332,7 +332,7 @@ const data = {
   ],
   originalId: null,
   spoonacularSourceUrl: 'https://spoonacular.com/pasta-and-seafood-654812',
-};
+};*/
 
 class RecipePage extends HTMLElement {
   constructor() {
@@ -366,12 +366,7 @@ class RecipePage extends HTMLElement {
         <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none">
         <p>Ingredients</p>
         <!--Add To List Button--> 
-        <details>
-            <summary>
-              click here for all Ingredients
-            </summary>
-            <table></table>
-        </details>
+        <form></form>
         <br>
         <button type="button">Add to List</button>
         </div>
@@ -388,7 +383,7 @@ class RecipePage extends HTMLElement {
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
-    router.addPage('cooking-mode', function () {
+    /*router.addPage('cooking-mode', function () {
       document.getElementById('#section--recipe').classList.remove('shown');
 
       document.getElementById('#section--cooking-mode').classList.add('shown');
@@ -397,7 +392,7 @@ class RecipePage extends HTMLElement {
     const CMPage = this.shadowRoot.getElementById('LinkToCM');
     CMPage.addEventListener('click', () => {
       router.navigate('cooking-mode');
-    });
+    });*/
 
     //Summary
     this.shadowRoot.getElementById('ToSum').addEventListener('click', (e) => {
@@ -414,7 +409,7 @@ class RecipePage extends HTMLElement {
     });
 
     //Add elements to summary
-    let summaryDiv = this.shadowRoot.getElementById('recipe-summaryID');
+    /*let summaryDiv = this.shadowRoot.getElementById('recipe-summaryID');
 
     //Create image
     let image = document.createElement('img');
@@ -440,7 +435,7 @@ class RecipePage extends HTMLElement {
     summaryDiv.appendChild(image);
     summaryDiv.appendChild(cookTime);
     summaryDiv.appendChild(servings);
-    summaryDiv.appendChild(summary);
+    summaryDiv.appendChild(summary);*/
 
     //Ingredients
     this.shadowRoot.getElementById('ToIng').addEventListener('click', (e) => {
@@ -457,7 +452,7 @@ class RecipePage extends HTMLElement {
     });
 
     //Add Ingredients to display
-    let table = this.shadowRoot
+    /*let table = this.shadowRoot
       .getElementById('recipe-ingredientsID')
       .querySelector('table');
     let ingredientsArray = getIngreds(data);
@@ -482,7 +477,7 @@ class RecipePage extends HTMLElement {
       );
       label.appendChild(ingredientString);
       cell2.appendChild(label);
-    }
+    }*/
 
     //Directions
     this.shadowRoot.getElementById('ToDir').addEventListener('click', (e) => {
@@ -499,20 +494,128 @@ class RecipePage extends HTMLElement {
     });
 
     //Add Directions to display
-    let directionsDiv = this.shadowRoot.getElementById('recipe-directionID');
-    console.log(getDirs(data));
+    /*let directionsDiv = this.shadowRoot.getElementById('recipe-directionID');
     let instructions = document.createElement('div');
     instructions.innerHTML = getDirs(data);
-    directionsDiv.appendChild(instructions);
+    directionsDiv.appendChild(instructions);*/
   }
 
-  // set data(data) {
-  //   const title = document.createElement('h3');
-  //   // title.innerHTML = data.
-  //   console.log(data);
-  //   this.shadowRoot.getElementById('recipe-summaryID').appendChild();
-  // }
+  set data(data) {
+    this.json = data;
+    this.shadowRoot.querySelector('article').innerHTML = `
+
+      <h2>Recipes</h2>
+      <div class="recipe-navbar">
+      <a href="#recipe-summaryID" id="ToSum">Summary</a>
+      <a href="#recipe-ingredientsID" id="ToIng">Ingredients</a>
+      <a href="#recipe-directionID" id="ToDir">Directions</a>
+      </div>
+
+      <!--Recipe Summary-->
+      <div id="recipe-summaryID" class="recipe-summary" style="display: block">
+      <p>Summary</p>
+      <p>Content...</p>
+      
+      <button type="button" class="recipe-summmaryButton">Add to My Favorites</button>
+      </div>
+
+      <!--Recipe Ingredients-->
+      <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none">
+        <p>Ingredients</p>
+        <!--Add To List Button--> 
+        <form>
+        </form>
+        <br>
+        <button type="button">Add to List</button>
+      </div>
+
+      <!--Recipe Directions-->
+      <div id="recipe-directionID" class="recipe-direction" style="display: none">
+      <p>Direction</p>
+      <ul>
+      </ul>
+      <button><a id="LinkToCM"> Cook </a></button>
+      </div>
+
+    `;
+    
+    //Set Title
+    const title = getTitle(data).toUpperCase();
+    this.shadowRoot.querySelector('h2').innerHTML = title;
+
+    //Set Summary
+    const summary = getSummary(data);
+    this.shadowRoot.getElementById('recipe-summaryID').innerHTML = summary;
+    
+    //Set Ingredients
+    const form = this.shadowRoot.querySelector('form');
+    const linebreak = document.createElement('br');
+    for(let i = 0; i < data.recipe.extendedIngredients.length; i++){
+      const ingredient = data.recipe.extendedIngredients[i];
+      const currElement = document.createElement('input');
+      currElement.setAttribute('type', 'checkbox');
+      currElement.setAttribute('name', ingredient.name);
+      form.appendChild(currElement);
+      const content = document.createElement('label');
+      content.setAttribute('for', ingredient.name);
+      content.innerHTML = ingredient.original;
+      form.appendChild(content);
+      form.appenChild(linebreak);
+    }
+
+    //Set Directions
+    const list = this.shadowRoot.querySelector('ul');
+    console.log(data.recipe.analyzedInstructions[0].steps[0].step);
+
+
+    this.shadowRoot.getElementById('ToSum').addEventListener('click', (e) => {
+      e.preventDefault();
+      this.shadowRoot
+        .getElementById('recipe-summaryID')
+        .setAttribute('style', 'display: show');
+      this.shadowRoot
+        .getElementById('recipe-ingredientsID')
+        .setAttribute('style', 'display: none');
+      this.shadowRoot
+        .getElementById('recipe-directionID')
+        .setAttribute('style', 'display: none');
+    });
+
+    this.shadowRoot.getElementById('ToDir').addEventListener('click', (e) => {
+      e.preventDefault();
+      this.shadowRoot
+        .getElementById('recipe-summaryID')
+        .setAttribute('style', 'display: none');
+      this.shadowRoot
+        .getElementById('recipe-ingredientsID')
+        .setAttribute('style', 'display: none');
+      this.shadowRoot
+        .getElementById('recipe-directionID')
+        .setAttribute('style', 'display: show');
+    });
+
+    this.shadowRoot.getElementById('ToIng').addEventListener('click', (e) => {
+      e.preventDefault();
+      this.shadowRoot
+        .getElementById('recipe-summaryID')
+        .setAttribute('style', 'display: none');
+      this.shadowRoot
+        .getElementById('recipe-ingredientsID')
+        .setAttribute('style', 'display: show');
+      this.shadowRoot
+        .getElementById('recipe-directionID')
+        .setAttribute('style', 'display: none');
+    });
+  }
+
+  /**
+   * Returns the object of the currect recipe being used.
+   */
+  get data() {
+    return this.json;
+  }
 }
+
 
 // SUMMARY ELEMENTS
 /**
@@ -548,7 +651,7 @@ function getImage(data) {
  * @returns Title of recipe
  */
 function getTitle(data) {
-  return data['title'];
+  return data.recipe.title;
 }
 
 /**
@@ -557,7 +660,7 @@ function getTitle(data) {
  * @returns Summary paragraph of the recipe
  */
 function getSummary(data) {
-  return data['summary'];
+  return data.recipe.summary;
 }
 
 // INGREDIENTS ELEMENTS

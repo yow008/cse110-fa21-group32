@@ -83,7 +83,7 @@ class Recipe_DB:
             return pickle.loads(result[0][0])
         else:
             # Call Spoonacular API
-            url = 'https://api.spoonacular.com/recipes/%s/information?apiKey=%s' % (ID, self.API_KEY)
+            url = 'https://api.spoonacular.com/recipes/%s/information?apiKey=%s&type=fetchRecipe' % (ID, self.API_KEY)
             src = requests.request("GET", url, headers=self.headers).json()
 
             # Cache recipe in DB

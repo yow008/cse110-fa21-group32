@@ -78,6 +78,10 @@ function createRecipeCards(results, section) {
     addPage(data.id);
 
     card.addEventListener('click', () => {
+      /*let children = document.getElementById('#section--recipe').children;
+      for(let i = 0; i < children.length; i++){
+        if()
+      }*/
       router.navigate(`recipe_${data.id}`);
     });
   });
@@ -100,7 +104,7 @@ function addPage(recipeId) {
 
     // Fetch and populate recipe page and add to recipe section
     const recipePage = document.createElement('recipe-page');
-    // fetchRecipe(recipeId, recipePage); TODO: NEEDS FIXING
+    fetchRecipe(recipeId, recipePage);
     recipePage.classList.add('shown');
     document.getElementById('#section--recipe').appendChild(recipePage);
   });
