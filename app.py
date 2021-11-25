@@ -36,9 +36,7 @@ def home_page():
         elif msg['type'] == 'deleteRecipe':
             recipe = msg['recipe']
             recipe_db.removeRecipe(msg['id'])
-            user_db.addRecipe(msg['username'], msg['password'],msg['id'])
-            return {'msg': 'Success!'}, 201
-        elif msg['type'] == 'postRecipe':
+            user_db.removeRecipe(msg['username'], msg['password'],msg['id'])
             return {'msg': 'Success!'}, 201
 
     if request.method == 'GET':
@@ -74,10 +72,31 @@ def home_page():
                 return response
             elif msg['type'] == 'fetchRecipe':
                 recipe = recipe_db.fetchRecipeByID(msg['id'])
-                recipe = pickle.loads(recipe)
                 data = {"recipe": recipe}
                 data_json = json.dumps(data, indent=2)
                 response = Response(response=data_json, status=200, mimetype='application/json')
+                return response
+            elif msg['type'] == 'getCustomizedRecipeIDs':
+                username = msg['user']
+                password = msg['pass']
+                keys = ['Recipes']
+                result = user_db.request(username, password, keys)
+                recipes = pickle.loads(result[0])
+                data = {"ID": recipes}
+                data_json = json.dumps(data, indent=2)
+                response = Response(response=data_json, status=200, mimetype='application/json')
+                return response
+            elif msg['type'] == 'getUserInfo':
+                username = msg['user']
+                password = msg['pass']
+                elem = msg['elem']
+                if(elem == "keys"):
+                    userInfo = user_db.request(username, password, ['keys'])
+                    print(username, password, elem)
+                    data = {"userInfo": userInfo}
+                    print(userInfo)
+                    data_json = json.dumps(data, indent=2)
+                    response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
 
     return render_template('home.html')

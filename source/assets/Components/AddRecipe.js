@@ -1,16 +1,16 @@
 // AddRecipe.js
 
 class AddRecipePage extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
 
-        // Create styles and root element
-        const styles = document.createElement('style');
-        const article = document.createElement('article');
+    // Create styles and root element
+    const styles = document.createElement('style');
+    const article = document.createElement('article');
 
-        // Fill in styles and root element
-        styles.innerHTML = `
+    // Fill in styles and root element
+    styles.innerHTML = `
         h2{
           background-color: #CA676A;
           background-size: cover;
@@ -18,7 +18,7 @@ class AddRecipePage extends HTMLElement {
           color: white;
         }
         `;
-        article.innerHTML = `
+    article.innerHTML = `
         <h2>Add Recipe</h2>
         <div class="add-recipe-navbar">
           <!-- li><a onclick="navTo('homeID')" href="javascript:void(0)">home</a></li> -->
@@ -144,71 +144,103 @@ class AddRecipePage extends HTMLElement {
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
 
-    //Add Summary  
-    this.shadowRoot.getElementById("ToAddSum").addEventListener("click", e => {
-        e.preventDefault();   
-        this.shadowRoot.getElementById('add-recipe-summary').setAttribute("style", "display: show") ;
-        this.shadowRoot.getElementById('add-recipe-ingredients').setAttribute("style", "display: none") ;
-        this.shadowRoot.getElementById('add-recipe-direction').setAttribute("style", "display: none") ;
-    });
+    //Add Summary
+    this.shadowRoot
+      .getElementById('ToAddSum')
+      .addEventListener('click', (e) => {
+        e.preventDefault();
+        this.shadowRoot
+          .getElementById('add-recipe-summary')
+          .setAttribute('style', 'display: show');
+        this.shadowRoot
+          .getElementById('add-recipe-ingredients')
+          .setAttribute('style', 'display: none');
+        this.shadowRoot
+          .getElementById('add-recipe-direction')
+          .setAttribute('style', 'display: none');
+      });
 
     //Add Ingredients
-    this.shadowRoot.getElementById("ToAddIng").addEventListener("click", e => {
-        e.preventDefault();   
-        this.shadowRoot.getElementById('add-recipe-summary').setAttribute("style", "display: none") ;
-        this.shadowRoot.getElementById('add-recipe-ingredients').setAttribute("style", "display: show") ;
-        this.shadowRoot.getElementById('add-recipe-direction').setAttribute("style", "display: none") ;
-    });
+    this.shadowRoot
+      .getElementById('ToAddIng')
+      .addEventListener('click', (e) => {
+        e.preventDefault();
+        this.shadowRoot
+          .getElementById('add-recipe-summary')
+          .setAttribute('style', 'display: none');
+        this.shadowRoot
+          .getElementById('add-recipe-ingredients')
+          .setAttribute('style', 'display: show');
+        this.shadowRoot
+          .getElementById('add-recipe-direction')
+          .setAttribute('style', 'display: none');
+      });
 
     //Add Directions
-    this.shadowRoot.getElementById("ToAddDir").addEventListener("click", e => {
-        e.preventDefault();   
-        this.shadowRoot.getElementById('add-recipe-summary').setAttribute("style", "display: none") ;
-        this.shadowRoot.getElementById('add-recipe-ingredients').setAttribute("style", "display: none") ;
-        this.shadowRoot.getElementById('add-recipe-direction').setAttribute("style", "display: show") ;
-
-    });
+    this.shadowRoot
+      .getElementById('ToAddDir')
+      .addEventListener('click', (e) => {
+        e.preventDefault();
+        this.shadowRoot
+          .getElementById('add-recipe-summary')
+          .setAttribute('style', 'display: none');
+        this.shadowRoot
+          .getElementById('add-recipe-ingredients')
+          .setAttribute('style', 'display: none');
+        this.shadowRoot
+          .getElementById('add-recipe-direction')
+          .setAttribute('style', 'display: show');
+      });
 
     //Add ingredient to ingredients page
-    this.shadowRoot.getElementById('addIngredientButton').addEventListener("click", e => {
-      e.preventDefault();   
-      let ingredientsList = this.shadowRoot.querySelector('#add-recipe-ingredients').querySelector('table');
-      let row = ingredientsList.insertRow(-1);
-      let quantity = row.insertCell(0);
-      quantity.innerHTML = '<input type="text" name="quantity"/>';
-      let unit = row.insertCell(1);
-      unit.innerHTML = '<input type="text" name="unit"/>';
-      let ingredient = row.insertCell(2);
-      ingredient.innerHTML = '<input type="text" name="ingredientName"/>';
-      let deleteButton = row.insertCell(3);
-      deleteButton.innerHTML = '<button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button>';
-      
-    });
+    this.shadowRoot
+      .getElementById('addIngredientButton')
+      .addEventListener('click', (e) => {
+        e.preventDefault();
+        let ingredientsList = this.shadowRoot
+          .querySelector('#add-recipe-ingredients')
+          .querySelector('table');
+        let row = ingredientsList.insertRow(-1);
+        let quantity = row.insertCell(0);
+        quantity.innerHTML = '<input type="text" name="quantity"/>';
+        let unit = row.insertCell(1);
+        unit.innerHTML = '<input type="text" name="unit"/>';
+        let ingredient = row.insertCell(2);
+        ingredient.innerHTML = '<input type="text" name="ingredientName"/>';
+        let deleteButton = row.insertCell(3);
+        deleteButton.innerHTML =
+          '<button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button>';
+      });
 
     //When click "Add More" there should be a new input text area for user to input information
-    this.shadowRoot.getElementById('addDirectionButton').addEventListener("click", e => {
-      e.preventDefault();   
-      let directionsList = this.shadowRoot.querySelector('#add-recipe-direction').querySelector('ol');
-      let li = document.createElement('li');
-      li.innerHTML = 'Step:';
-      let input = document.createElement('textarea');
-      input.setAttribute('id', '#input--direction-step');
-      input.setAttribute('name', 'directionStep');
-      directionsList.appendChild(li);
-      directionsList.appendChild(input);
-
-    });
+    this.shadowRoot
+      .getElementById('addDirectionButton')
+      .addEventListener('click', (e) => {
+        e.preventDefault();
+        let directionsList = this.shadowRoot
+          .querySelector('#add-recipe-direction')
+          .querySelector('ol');
+        let li = document.createElement('li');
+        li.innerHTML = 'Step:';
+        let input = document.createElement('textarea');
+        input.setAttribute('id', '#input--direction-step');
+        input.setAttribute('name', 'directionStep');
+        directionsList.appendChild(li);
+        directionsList.appendChild(input);
+      });
 
     //Add images
-    this.shadowRoot.getElementById('addImage').addEventListener("click", e => {
-    e.preventDefault();   
-    let imagesList = this.shadowRoot.querySelector('#chooseFiles');
-    let li = document.createElement('li');
-    li.innerHTML = '<input type="file" id="img" name="img" accept="image/*"/>'
-    imagesList.appendChild(li);
-    
-    });
-    
+    this.shadowRoot
+      .getElementById('addImage')
+      .addEventListener('click', (e) => {
+        e.preventDefault();
+        let imagesList = this.shadowRoot.querySelector('#chooseFiles');
+        let li = document.createElement('li');
+        li.innerHTML =
+          '<input type="file" id="img" name="img" accept="image/*"/>';
+        imagesList.appendChild(li);
+      });
+
     //listener when a user save the form
     //newRecipe.addEventListener("submit", handleFormSubmit)
 
@@ -218,8 +250,8 @@ class AddRecipePage extends HTMLElement {
      * @param {String} recipeForm
      * @param {RecipePage} RecipePage
      */
-  
-    const newRecipe = this.shadowRoot.getElementById("new-recipe");
+
+    const newRecipe = this.shadowRoot.getElementById('new-recipe');
     newRecipe.addEventListener('submit', (e) => {
       e.preventDefault();
       // console.log(e.target);
@@ -228,25 +260,35 @@ class AddRecipePage extends HTMLElement {
       postCreateRecipeData();
     });
 
-    const photos = this.shadowRoot.getElementById("chooseFiles");
-    const cookintTimeHour = this.shadowRoot.getElementById("#input--cook-time-hour");
-    const cookintTimeMin = this.shadowRoot.getElementById("#input--cook-time-mins");
-    const readyInMinutes = 60*cookintTimeHour + cookintTimeMin;
-    const servings = this.shadowRoot.getElementById("#input--no-of-serv");
-    const title = this.shadowRoot.getElementById("addTitle");
-    const summary = this.shadowRoot.getElementById("addSummary");
-    const ingredientList = this.shadowRoot.getElementById("ingredient-table");
+    const photos = this.shadowRoot.getElementById('chooseFiles');
+    const cookingTimeHour = this.shadowRoot.getElementById(
+      '#input--cook-time-hour'
+    );
+    const cookingTimeMin = this.shadowRoot.getElementById(
+      '#input--cook-time-mins'
+    );
+    const readyInMinutes =
+      60 * parseInt(cookingTimeHour.value) + parseInt(cookingTimeMin.value);
+    console.log(cookingTimeMin.value);
+    console.log(readyInMinutes);
+    const servings = this.shadowRoot.getElementById('#input--no-of-serv');
+    const title = this.shadowRoot.getElementById('addTitle');
+    const summary = this.shadowRoot.getElementById('addSummary');
+    const ingredientList = this.shadowRoot.getElementById('ingredient-table');
     const directions = this.shadowRoot.getElementById('add-recipe-direction');
-    
-    
+
     function postCreateRecipeData() {
       // Select all ingredients
       let quantity = ingredientList.querySelectorAll('input[name="quantity"]');
       let unit = ingredientList.querySelectorAll('input[name="unit"]');
-      let ingredient = ingredientList.querySelectorAll('input[name="ingredientName"]');
+      let ingredient = ingredientList.querySelectorAll(
+        'input[name="ingredientName"]'
+      );
 
       //Select all input from Direction Steps
-      let directionsList = directions.querySelectorAll('textarea[name="directionStep"]');
+      let directionsList = directions.querySelectorAll(
+        'textarea[name="directionStep"]'
+      );
       //Select all input from file image
       let imgList = photos.querySelectorAll('input[type="file"]');
       let images = {};
@@ -256,29 +298,28 @@ class AddRecipePage extends HTMLElement {
       console.log(imgList);
       // For loop for upload all images
       for (let i = 0; i < imgList.length; i++) {
-        if(imgList[i].files[0] != null){
+        if (imgList[i].files[0] != null) {
           let fileReader = new FileReader();
           fileReader.onload = function () {
             if (fileReader.result.length > 0) {
-              images['image'+i] = fileReader.result;
+              images['image' + i] = fileReader.result;
               alert(fileReader.result);
             }
-          }
+          };
           fileReader.readAsDataURL(imgList[i].files[0]);
         }
       }
 
       // For loop for upload all ingredient information
-      let extendedIngredients = []
-      for (let i=0; i < ingredient.length; i++) {
+      let extendedIngredients = [];
+      for (let i = 0; i < ingredient.length; i++) {
         if (ingredient[i].value.length !== 0) {
-          let ing = {}
+          let ing = {};
           ing['name'] = ingredient[i].value;
           ing['amount'] = quantity[i].value;
           ing['unit'] = unit[i].value;
           console.log(ing);
           extendedIngredients.push(ing);
-          
         }
       }
       console.log(extendedIngredients);
@@ -286,30 +327,37 @@ class AddRecipePage extends HTMLElement {
       // For loop for upload all direction steps
       // console.log(directionsList[0].value);
       // console.log(directionsList[1].value);
-      let instructions = "<ol>";
-      for (let i=0; i < directionsList.length; i++) {
+      let instructions = '<ol>';
+      for (let i = 0; i < directionsList.length; i++) {
         if (directionsList[i].value.length !== 0) {
-          instructions += "<li>" + directionsList[i].value + "</li>";
+          instructions += '<li>' + directionsList[i].value + '</li>';
         }
       }
-      instructions += "</ol>";
+      instructions += '</ol>';
       console.log(instructions);
 
       // console.log(directionsList[0].value + "  -directionsList");
-      let data = {
-        type: 'postRecipe',
-        image: 
-        setTimeout(function() {
+      let recipe = {
+        image: setTimeout(function () {
           console.log(images);
           images;
         }, 1000),
         readyInMinutes: readyInMinutes,
         servings: servings.value,
-        title: title.value,
+        name: title.value,
         summary: summary.value,
         extendedIngredients: extendedIngredients,
-        instructions: instructions
-        }
+        instructions: instructions,
+        author: 'Martin1234',
+      };
+
+      let data = {
+        type: 'addRecipe',
+        username: 'Martin1234',
+        password: '1234',
+        recipe: recipe,
+        name: title.value,
+      };
 
       console.log(data);
 
@@ -330,8 +378,7 @@ class AddRecipePage extends HTMLElement {
           console.error('Error:', error);
         });
     }
-
-    }
-} 
+  }
+}
 
 customElements.define('add-recipe-page', AddRecipePage);

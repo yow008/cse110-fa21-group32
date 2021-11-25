@@ -24,6 +24,9 @@ class HomePage extends HTMLElement {
         <p id="#user-status"></p>
         <p id="#user-email"></p>
         <button id="#btn-delete" type="button">Delete User</button>
+        <button id="#btn-recipe" type="button">See Added Recipes</button>
+        <div id="#recipeDiv">
+        </div>
         <ul>
             <li> <button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></li>
             <li> <button type="menu">Recipe 2 (not linked)</button></li>
@@ -61,6 +64,13 @@ class HomePage extends HTMLElement {
     deleteBtn.addEventListener('click', () => {
       console.log('DELETE');
       deleteUser(user, pass);
+    });
+
+    const ownRecipes = this.shadowRoot.getElementById('#btn-recipe');
+    ownRecipes.addEventListener('click', () => {
+      console.log('SHOW USERS');
+      const divElem = this.shadowRoot.getElementById('#recipeDiv');
+      getOwnRecipes(user, pass);
     });
   }
 }
@@ -132,4 +142,93 @@ function deleteUser(username, password) {
     });
 
   //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+}
+
+/**
+ *
+ * @param {*} username
+ * @param {*} password
+ */
+function getOwnRecipes(username, password) {
+  fetch(
+    // need to encode with UTF-8 for special characters like ' '
+    `${LOCAL_URL}?type=getCustomizedRecipeIDs&user=${encodeURIComponent(
+      username
+    )}&pass=${encodeURIComponent(password)}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      // populates search results page and redirects there
+      Object.keys(data).forEach(function (key) {
+        const btn = document.createElement('button');
+        console.log(data[key]);
+        router.addPage(`recipe_${data[key]}`, function () {
+          document.getElementById('#section--home').classList.remove('shown');
+          document
+            .getElementById('#section--search-bar')
+            .classList.remove('shown');
+
+          document.getElementById('#section--recipe').classList.add('shown');
+
+          // Fetch and populate recipe page and add to recipe section
+          const recipePage = document.createElement('recipe-page');
+          fetchRecipe(data[key], recipePage); //TODO: NEEDS FIXING
+          recipePage.classList.add('shown');
+          document.getElementById('#section--recipe').appendChild(recipePage);
+        });
+
+        btn.addEventListener('click', () => {
+          router.navigate(`recipe_${data[key]}`);
+        });
+        btn.innerHTML = data[key];
+        console.log(document.getElementById('#section--home'));
+        document.getElementById('#section--home').appendChild(btn);
+      });
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+
+  //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+}
+
+/**
+ * Uses the recipe ID to get the full json details of the recipe. Once
+ * the recipe is found, set the recipe information.
+ * @param {String} recipeId
+ * @param {SearchResultsPage} recipePage
+ */
+function fetchRecipe(recipeId, recipePage) {
+  fetch(
+    // need to encode with UTF-8 for special characters like ' '
+    `${LOCAL_URL}?type=fetchRecipe&id=${encodeURIComponent(recipeId)}`,
+    {
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      recipePage.data = data;
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 }
