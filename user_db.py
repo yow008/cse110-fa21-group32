@@ -47,9 +47,7 @@ class User_DB:
 
         try:
             # Create users with username, password, email, first & last name. Other stuff will be NULL.
-            recipes = pickle.dumps([])
-
-            self.cur.execute("INSERT INTO Users(Username, Password, Email, fName, lName, Recipes) VALUES(?, ?, ?, ?, ?, ?);", (username, password, email, fname, lname, recipes))
+            self.cur.execute("INSERT INTO Users(Username, Password, Email, fName, lName) VALUES(?, ?, ?, ?, ?)", (username, password, email, fname, lname))
             self.conn.commit()
             return True
         except sqlite3.IntegrityError as er: # username is primary key so no duplicates allowed
@@ -68,7 +66,6 @@ class User_DB:
         '''
         self.cur.execute('SELECT %s FROM Users WHERE Username = ? AND Password = ?' % (', '.join(keys)), (username, password))
         profile = self.cur.fetchall() # fetchall returns all matched records, i.e. correct username & password
-        print(profile)
         if len(profile) > 1: # since no duplicate allowed, should have only one profile
             print('ERROR: Duplicate users found.')
             return None
@@ -102,11 +99,10 @@ class User_DB:
     def updateUser(self, username, password, updateVals):
         #Check to see if the sought updated columns exist in the database at all
         query = 'UPDATE Users SET ' + ', '.join(['%s = ?' % (p[0]) for p in updateVals.items()]) + ' WHERE username = ? AND password = ?'
-        self.cur.execute(query, (*[p[1] for p in updateVals.items()], username, password))
+        self.cur.execute(query, [p[1] for p in updateVals.items()] + [username, password])
         self.conn.commit()
     
     def deleteUser(self,username,password):
-        print("HERE")
         # Updates users with username, password, email, first & last name. Other stuff will be NULL.
         self.cur.execute("DELETE FROM Users WHERE username = ? AND password = ? ", (username, password))
         self.conn.commit()
@@ -115,28 +111,49 @@ class User_DB:
     def addRecipe(self, username, password, id):
         self.cur.execute('SELECT Recipes FROM Users WHERE Username = ? AND Password = ?', (username, password))
         result = self.cur.fetchall()
-        recipes = pickle.loads(result[0][0]) # TODO: Integrity check
-        if recipes is None: recipes = []
-        recipes.append(id)
-        recipes = pickle.dumps(recipes)
-        self.updateUser(self, username, password, {'Recipes': recipes})
+        if len(result) == 0: return # no user found
+        if result[0][0] is None : 
+            recipes = pickle.dumps([id])
+        else:
+            recipes = pickle.loads(result[0][0]) # TODO: Integrity check
+            if id not in recipes: recipes.append(id)
+            recipes = pickle.dumps(recipes)
+        self.updateUser(username, password, {'Recipes': recipes})
         self.conn.commit()
 
     def removeRecipe(self, username, password, id):
         self.cur.execute('SELECT Recipes FROM Users WHERE Username = ? AND Password = ?', (username, password))
         result = self.cur.fetchall()
-        recipes = pickle.loads(result[0][0]) # TODO: Integrity check
-        if recipes is None: recipes = []
-        try:
-            recipes.remove(id)
-        except ValueError:
-             pass # not exists
-        recipes = pickle.dumps(recipes)
-        self.updateUser(self, username, password, {'Recipes': recipes})
+        if len(result) == 0: return # no user found
+        if result[0][0] is None: 
+            recipes = pickle.dumps([])
+        else:
+            try:
+                recipes = pickle.loads(result[0][0]) 
+                recipes.remove(id)
+            except ValueError:
+                pass # not exists
+            finally:
+                recipes = pickle.dumps(recipes)
+        self.updateUser(username, password, {'Recipes': recipes})
         self.conn.commit()
 
 
 if __name__ == '__main__':
     new_db = User_DB()
-    #new_db.addRecipe('banana@gmail.com','abc123','123456')
-    #new_db.removeRecipe('banana@gmail.com','abc123','123456')
+    recipes = """(lp0
+I123456
+aI4567
+aI329012
+a."""
+    #print(pickle.loads(recipes))
+    new_db.createUser("MartinF123", "456", "mare@gmail.com", "Martin", "Flores")
+#     shit = pickle.dumps([123456])
+#    # print(pickle.loads(shit))
+    new_db.addRecipe('MartinF123','456',123456)
+    new_db.addRecipe('MartinF123','456',4567)
+    new_db.addRecipe('MartinF123','456',329012)
+    
+    new_db.removeRecipe('MartinF123','456',123456)
+    new_db.removeRecipe('MartinF123','456',4567)
+    
