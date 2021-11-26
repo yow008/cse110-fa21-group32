@@ -1,16 +1,24 @@
 // FavoriteRecipes.js
 
+// IMPORTS
+import { router } from '../scripts/main.js';
+import { GET, POST } from '../scripts/request.js';
+
+/**
+ * Class: FavRecipesPage
+ * TODO:
+ */
 class FavRecipesPage extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
 
-        // Create styles and root element
-        const styles = document.createElement('style');
-        const article = document.createElement('article');
+    // Create styles and root element
+    const styles = document.createElement('style');
+    const article = document.createElement('article');
 
-        // Fill in styles and root element
-        styles.innerHTML = `        
+    // Fill in styles and root element
+    styles.innerHTML = `        
         h2{
             background-color: #CA676A;
             background-size: cover;
@@ -18,7 +26,7 @@ class FavRecipesPage extends HTMLElement {
             color: white;
           }
           `;
-        article.innerHTML = `
+    article.innerHTML = `
         <h2>Favorites</h2>
         <p>Content...</p>
         <div class="favorite-recipe-cards-wrapper">
@@ -26,9 +34,9 @@ class FavRecipesPage extends HTMLElement {
         </div>
         `;
 
-        // Append elements to the shadow root
-        this.shadowRoot.append(styles, article);
-    }
+    // Append elements to the shadow root
+    this.shadowRoot.append(styles, article);
+  }
 }
 
 customElements.define('fav-recipes-page', FavRecipesPage);

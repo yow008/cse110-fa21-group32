@@ -1,5 +1,15 @@
 // AddRecipe.js
 
+// IMPORTS
+import { router } from '../scripts/main.js';
+import { GET, POST } from '../scripts/request.js';
+
+/**
+ * Class: AddRecipePage
+ * Whenever the user tries to add a recipe, they will be taken to this page
+ * where there is a form (split into 3 sidepanel displays). Upon clicking the
+ * publish button, the newly added recipe will be added to the database.
+ */
 class AddRecipePage extends HTMLElement {
   constructor() {
     super();
@@ -144,7 +154,7 @@ class AddRecipePage extends HTMLElement {
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
 
-    //Add Summary
+    // Add Summary
     this.shadowRoot
       .getElementById('ToAddSum')
       .addEventListener('click', (e) => {
@@ -160,7 +170,7 @@ class AddRecipePage extends HTMLElement {
           .setAttribute('style', 'display: none');
       });
 
-    //Add Ingredients
+    // Add Ingredients
     this.shadowRoot
       .getElementById('ToAddIng')
       .addEventListener('click', (e) => {
@@ -176,7 +186,7 @@ class AddRecipePage extends HTMLElement {
           .setAttribute('style', 'display: none');
       });
 
-    //Add Directions
+    // Add Directions
     this.shadowRoot
       .getElementById('ToAddDir')
       .addEventListener('click', (e) => {
@@ -192,7 +202,7 @@ class AddRecipePage extends HTMLElement {
           .setAttribute('style', 'display: show');
       });
 
-    //Add ingredient to ingredients page
+    // Add ingredient to ingredients page
     this.shadowRoot
       .getElementById('addIngredientButton')
       .addEventListener('click', (e) => {
@@ -212,7 +222,7 @@ class AddRecipePage extends HTMLElement {
           '<button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button>';
       });
 
-    //When click "Add More" there should be a new input text area for user to input information
+    // When click "Add More" there should be a new input text area for user to input information
     this.shadowRoot
       .getElementById('addDirectionButton')
       .addEventListener('click', (e) => {
@@ -229,7 +239,7 @@ class AddRecipePage extends HTMLElement {
         directionsList.appendChild(input);
       });
 
-    //Add images
+    // Add images
     this.shadowRoot
       .getElementById('addImage')
       .addEventListener('click', (e) => {
@@ -241,25 +251,17 @@ class AddRecipePage extends HTMLElement {
         imagesList.appendChild(li);
       });
 
-    //listener when a user save the form
-    //newRecipe.addEventListener("submit", handleFormSubmit)
+    // TODO: listener when a user save a draft of the form
+    // newRecipe.addEventListener("submit", handleFormSubmit)
 
-    /**
-     * TODO:
-     * Event handler for a form sumbit event
-     * @param {String} recipeForm
-     * @param {RecipePage} RecipePage
-     */
-
+    // Event handler for a form submit event
     const newRecipe = this.shadowRoot.getElementById('new-recipe');
     newRecipe.addEventListener('submit', (e) => {
       e.preventDefault();
-      // console.log(e.target);
-      // const data = new FormData(e.target);
-      // console.log(data);
       postCreateRecipeData();
     });
 
+    // Get elements of the form
     const photos = this.shadowRoot.getElementById('chooseFiles');
     const cookingTimeHour = this.shadowRoot.getElementById(
       '#input--cook-time-hour'
@@ -269,14 +271,17 @@ class AddRecipePage extends HTMLElement {
     );
     const readyInMinutes =
       60 * parseInt(cookingTimeHour.value) + parseInt(cookingTimeMin.value);
-    console.log(cookingTimeMin.value);
-    console.log(readyInMinutes);
     const servings = this.shadowRoot.getElementById('#input--no-of-serv');
     const title = this.shadowRoot.getElementById('addTitle');
     const summary = this.shadowRoot.getElementById('addSummary');
     const ingredientList = this.shadowRoot.getElementById('ingredient-table');
     const directions = this.shadowRoot.getElementById('add-recipe-direction');
 
+    /**
+     * Upon submitting the form, form input is processed and sent to
+     * the backend.
+     * Resource for images: https://www.geeksforgeeks.org/how-to-convert-image-into-base64-string-using-javascript/
+     */
     function postCreateRecipeData() {
       // Select all ingredients
       let quantity = ingredientList.querySelectorAll('input[name="quantity"]');
@@ -285,17 +290,15 @@ class AddRecipePage extends HTMLElement {
         'input[name="ingredientName"]'
       );
 
-      //Select all input from Direction Steps
+      // Select all input from Direction Steps
       let directionsList = directions.querySelectorAll(
         'textarea[name="directionStep"]'
       );
-      //Select all input from file image
+
+      // Select all input from file image
       let imgList = photos.querySelectorAll('input[type="file"]');
       let images = {};
 
-      // https://www.geeksforgeeks.org/how-to-convert-image-into-base64-string-using-javascript/\
-
-      console.log(imgList);
       // For loop for upload all images
       for (let i = 0; i < imgList.length; i++) {
         if (imgList[i].files[0] != null) {
@@ -318,15 +321,11 @@ class AddRecipePage extends HTMLElement {
           ing['name'] = ingredient[i].value;
           ing['amount'] = quantity[i].value;
           ing['unit'] = unit[i].value;
-          console.log(ing);
           extendedIngredients.push(ing);
         }
       }
-      console.log(extendedIngredients);
 
       // For loop for upload all direction steps
-      // console.log(directionsList[0].value);
-      // console.log(directionsList[1].value);
       let instructions = '<ol>';
       for (let i = 0; i < directionsList.length; i++) {
         if (directionsList[i].value.length !== 0) {
@@ -334,9 +333,8 @@ class AddRecipePage extends HTMLElement {
         }
       }
       instructions += '</ol>';
-      console.log(instructions);
 
-      // console.log(directionsList[0].value + "  -directionsList");
+      // Create recipe JSON to send to the backend
       let recipe = {
         image: setTimeout(function () {
           console.log(images);
@@ -348,30 +346,29 @@ class AddRecipePage extends HTMLElement {
         summary: summary.value,
         extendedIngredients: extendedIngredients,
         instructions: instructions,
-        author: 'Martin1234',
+        author: 'Martin1234', // TODO: Need to update with curr user
       };
 
+      // Create the POST message to send to the backend
       let data = {
         type: 'addRecipe',
-        username: 'Martin1234',
-        password: '1234',
+        username: 'Martin1234', // TODO: Need to update with curr user
+        password: '1234', // TODO: Need to update with curr password
         recipe: recipe,
         name: title.value,
       };
 
-      console.log(data);
-
+      // POST request to send recipe data
       fetch('http://127.0.0.1:5000', {
         method: 'POST', // or 'PUT'
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-        // body: imgList[0].files[0]
       })
         .then((response) => response.json())
         .then((data) => {
-          //   window.location.href = 'home.html';
+          router.navigate('home');
           console.log('Success:', data);
         })
         .catch((error) => {
@@ -382,3 +379,5 @@ class AddRecipePage extends HTMLElement {
 }
 
 customElements.define('add-recipe-page', AddRecipePage);
+
+// EXPORTS

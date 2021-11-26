@@ -1,19 +1,27 @@
 // CookingMode.js
 
+// IMPORTS
+import { router } from '../scripts/main.js';
+import { GET, POST } from '../scripts/request.js';
+
+/**
+ * Class: CookingMode
+ * TODO:
+ */
 class CookingMode extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
 
-        // Create styles and root element
-        const styles = document.createElement('style');
-        const article = document.createElement('article');
+    // Create styles and root element
+    const styles = document.createElement('style');
+    const article = document.createElement('article');
 
-        // Fill in styles and root element
-        styles.innerHTML = `
+    // Fill in styles and root element
+    styles.innerHTML = `
         
         `;
-        article.innerHTML = `
+    article.innerHTML = `
         <h2>Cooking Mode</h2>
         <!--Cooking Steps-->
         <div class="cooking-steps">
@@ -39,10 +47,9 @@ class CookingMode extends HTMLElement {
         </div>
         `;
 
-        // Append elements to the shadow root
-        this.shadowRoot.append(styles, article);
-        
-    }
+    // Append elements to the shadow root
+    this.shadowRoot.append(styles, article);
+  }
 }
 
 customElements.define('cooking-mode-page', CookingMode);

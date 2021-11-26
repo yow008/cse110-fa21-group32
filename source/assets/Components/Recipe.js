@@ -1,10 +1,13 @@
 // Recipe.js
 
-import { Router } from '../scripts/Router.js';
+// IMPORTS
+import { router } from '../scripts/main.js';
+import { GET, POST } from '../scripts/request.js';
 
-const router = new Router();
-const LOCAL_URL = 'http://127.0.0.1:5000';
-
+/**
+ * Class: RecipePage
+ * TODO:
+ */
 class RecipePage extends HTMLElement {
   constructor() {
     super();
@@ -120,8 +123,6 @@ class RecipePage extends HTMLElement {
     });
 
     //Grad information
-
-    
   }
 
   set data(data) {

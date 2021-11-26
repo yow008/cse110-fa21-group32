@@ -1,8 +1,13 @@
 // HomePage.js
-import { Router } from '../scripts/Router.js';
-const LOCAL_URL = 'http://127.0.0.1:5000';
-const router = new Router();
 
+// IMPORTS
+import { router } from '../scripts/main.js';
+import { GET, POST } from '../scripts/request.js';
+
+/**
+ * Class: HomePage
+ * TODO:
+ */
 class HomePage extends HTMLElement {
   constructor() {
     super();
@@ -49,7 +54,7 @@ class HomePage extends HTMLElement {
       router.navigate('recipe');
     });
 
-    // Display current user info
+    // Display current user info TODO: move to other Profile.js
     const urlParams = new URLSearchParams(window.location.search);
     const user = urlParams.get('user');
     const pass = urlParams.get('pass');
@@ -66,6 +71,7 @@ class HomePage extends HTMLElement {
       deleteUser(user, pass);
     });
 
+    // TODO: delete this and show recipes Profile.js (this was a demo hack)
     const ownRecipes = this.shadowRoot.getElementById('#btn-recipe');
     ownRecipes.addEventListener('click', () => {
       console.log('SHOW USERS');
@@ -83,32 +89,20 @@ customElements.define('home-page', HomePage);
  * @param {String} password
  */
 function getEmail(username, password, userEmail) {
-  fetch(
-    // need to encode with UTF-8 for special characters like ' '
-    `${LOCAL_URL}?type=request&elem=email&user=${encodeURIComponent(
-      username
-    )}&pass=${encodeURIComponent(password)}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    }
-  )
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      // populates search results page and redirects there
-      userEmail.innerHTML = `User email: ${data.userInfo[0]}`;
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+  const emailReq = `type=request&elem=email&user=${encodeURIComponent(
+    username
+  )}&pass=${encodeURIComponent(password)}`;
 
-  //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+  /**
+   * TODO:
+   * @param {*} data
+   */
+  function getFn(data) {
+    userEmail.innerHTML = `User email: ${data.userInfo[0]}`;
+    //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+  }
+
+  GET(emailReq, getFn);
 }
 
 /**
@@ -123,25 +117,15 @@ function deleteUser(username, password) {
     password: password,
   };
 
-  console.log(msg);
+  /**
+   * TODO:
+   */
+  function afterDelete() {
+    window.location.href = 'userLogin.html';
+    //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+  }
 
-  fetch('http://127.0.0.1:5000', {
-    method: 'POST', // or 'PUT'
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(msg),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      window.location.href = 'userLogin.html';
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-
-  //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+  POST(msg, afterDelete);
 }
 
 /**
@@ -150,56 +134,44 @@ function deleteUser(username, password) {
  * @param {*} password
  */
 function getOwnRecipes(username, password) {
-  fetch(
-    // need to encode with UTF-8 for special characters like ' '
-    `${LOCAL_URL}?type=getCustomizedRecipeIDs&user=${encodeURIComponent(
-      username
-    )}&pass=${encodeURIComponent(password)}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    }
-  )
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      // populates search results page and redirects there
-      Object.keys(data).forEach(function (key) {
-        const btn = document.createElement('button');
-        console.log(data[key]);
-        router.addPage(`recipe_${data[key]}`, function () {
-          document.getElementById('#section--home').classList.remove('shown');
-          document
-            .getElementById('#section--search-bar')
-            .classList.remove('shown');
+  const getOwnReq = `type=getCustomizedRecipeIDs&user=${encodeURIComponent(
+    username
+  )}&pass=${encodeURIComponent(password)}`;
 
-          document.getElementById('#section--recipe').classList.add('shown');
+  /**
+   *
+   * @param {*} data
+   */
+  function getFn(data) {
+    Object.keys(data).forEach(function (key) {
+      const btn = document.createElement('button');
+      console.log(data[key]);
+      router.addPage(`recipe_${data[key]}`, function () {
+        document.getElementById('#section--home').classList.remove('shown');
+        document
+          .getElementById('#section--search-bar')
+          .classList.remove('shown');
 
-          // Fetch and populate recipe page and add to recipe section
-          const recipePage = document.createElement('recipe-page');
-          fetchRecipe(data[key], recipePage); //TODO: NEEDS FIXING
-          recipePage.classList.add('shown');
-          document.getElementById('#section--recipe').appendChild(recipePage);
-        });
+        document.getElementById('#section--recipe').classList.add('shown');
 
-        btn.addEventListener('click', () => {
-          router.navigate(`recipe_${data[key]}`);
-        });
-        btn.innerHTML = data[key];
-        console.log(document.getElementById('#section--home'));
-        document.getElementById('#section--home').appendChild(btn);
+        // Fetch and populate recipe page and add to recipe section
+        const recipePage = document.createElement('recipe-page');
+        fetchRecipe(data[key], recipePage); //TODO: NEEDS FIXING
+        recipePage.classList.add('shown');
+        document.getElementById('#section--recipe').appendChild(recipePage);
       });
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
 
-  //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+      btn.addEventListener('click', () => {
+        router.navigate(`recipe_${data[key]}`);
+      });
+      btn.innerHTML = data[key];
+      console.log(document.getElementById('#section--home'));
+      document.getElementById('#section--home').appendChild(btn);
+    });
+    //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+  }
+
+  GET(getOwnReq, getFn);
 }
 
 /**
@@ -209,26 +181,15 @@ function getOwnRecipes(username, password) {
  * @param {SearchResultsPage} recipePage
  */
 function fetchRecipe(recipeId, recipePage) {
-  fetch(
-    // need to encode with UTF-8 for special characters like ' '
-    `${LOCAL_URL}?type=fetchRecipe&id=${encodeURIComponent(recipeId)}`,
-    {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    }
-  )
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      recipePage.data = data;
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+  const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
+
+  /**
+   * TODO:
+   * @param {*} data
+   */
+  function afterFetch(data) {
+    recipePage.data = data;
+  }
+
+  POST(fetchReq, afterFetch);
 }

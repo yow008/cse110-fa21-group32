@@ -1,11 +1,15 @@
 // SearchBar.js
 
-import { Router } from '../scripts/Router.js';
+// IMPORTS
+import { router } from '../scripts/main.js';
+import { GET, POST } from '../scripts/request.js';
 
-// TODO: edit the local server URL
-const LOCAL_URL = 'http://127.0.0.1:5000';
-const router = new Router();
+// GLOBALS
 
+/**
+ * Class: SearchBar
+ * TODO:
+ */
 class SearchBar extends HTMLElement {
   constructor() {
     super();
@@ -73,34 +77,24 @@ class SearchBar extends HTMLElement {
 /**
  * Uses a search phrase to search through Spoonacular recipes. After
  * recipes are found, populate the search results page and redirect there.
- * @param {String} searchPhrase
- * @param {SearchResultsPage} searchResPage
+ * @param {String} searchPhrase search phrase entered by user
+ * @param {SearchResultsPage} searchResPage search-results-page element
  */
 function searchRecipes(searchPhrase, searchResPage) {
-  fetch(
-    // need to encode with UTF-8 for special characters like ' '
-    `${LOCAL_URL}?type=search&keyword=${encodeURIComponent(searchPhrase)}`,
-    {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    }
-  )
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      // populates search results page and redirects there
-      searchResPage.results = data;
-      router.navigate('search-results');
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+  const searchReq = `type=search&keyword=${encodeURIComponent(searchPhrase)}`;
+
+  /**
+   *
+   * @param {*} data
+   */
+  function afterSearch(data) {
+    searchResPage.results = data;
+    router.navigate('search-results');
+  }
+
+  GET(searchReq, afterSearch);
 }
 
 customElements.define('search-bar', SearchBar);
+
+// EXPORTS

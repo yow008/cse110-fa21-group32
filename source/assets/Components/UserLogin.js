@@ -1,7 +1,17 @@
 // UserLogin.js
 
-const LOCAL_URL = 'http://127.0.0.1:5000';
+// IMPORTS
 
+// GLOBALS
+// TODO: edit the local server URL to hosted server
+const SERVER_URL = 'http://127.0.0.1:5000';
+
+/**
+ * TODO:
+ * @param {*} formElement
+ * @param {*} type
+ * @param {*} message
+ */
 function setFormMessage(formElement, type, message) {
   const messageElement = formElement.querySelector('.form__message');
 
@@ -13,6 +23,11 @@ function setFormMessage(formElement, type, message) {
   messageElement.classList.add(`form_message--${type}`);
 }
 
+/**
+ * TODO:
+ * @param {*} inputElement
+ * @param {*} message
+ */
 function setInputError(inputElement, message) {
   inputElement.classList.add('form__input--error');
   inputElement.parentElement.querySelector(
@@ -20,6 +35,10 @@ function setInputError(inputElement, message) {
   ).textContent = message;
 }
 
+/**
+ * TODO:
+ * @param {*} inputElement
+ */
 function clearInputError(inputElement) {
   inputElement.classList.remove('form__input--error');
   inputElement.parentElement.querySelector(
@@ -28,25 +47,11 @@ function clearInputError(inputElement) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const goToHome = document.getElementById('continue');
   const loginForm = document.querySelector('#login');
   const createForm = document.querySelector('#creation');
   const emailForm = document.querySelector('#emailPage');
   const confirmationForm = document.querySelector('#confirmationPage');
   const successRegForm = document.querySelector('#successReg');
-
-  //   goToHome.addEventListener('click', (e) => {
-  //     //
-  //     //TO DO (Backend needed)
-  //     //
-  //     //let valid = false;
-  //     e.preventDefault();
-  //     // if(!valid) {
-  //     //     setFormMessage(loginForm, "error", "Invalid username or password!");
-  //     //     return;
-  //     // }
-  //     location.href = 'home.html';
-  //   });
 
   document.querySelector('#linkCreation').addEventListener('click', (e) => {
     e.preventDefault();
@@ -180,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function login(username, password, loginForm) {
   fetch(
     // need to encode with UTF-8 for special characters like ' '
-    `${LOCAL_URL}?type=login&user=${encodeURIComponent(
+    `${SERVER_URL}?type=login&user=${encodeURIComponent(
       username
     )}&pass=${encodeURIComponent(password)}`,
     {
@@ -195,7 +200,7 @@ function login(username, password, loginForm) {
       return response.json();
     })
     .then((data) => {
-      // populates search results page and redirects there
+      // TODO: passes user information to home.html but need to update with more secure way
       window.location.href = `home.html?user=${data.userInfo[0]}&pass=${data.userInfo[1]}`;
       console.log('Success:', data);
     })
@@ -208,10 +213,10 @@ function login(username, password, loginForm) {
 }
 
 /**
- * TODO:
- * @param {String} username
- * @param {String} email
- * @param {String} password
+ * Sends new user information to the database to store
+ * @param {String} username user's username
+ * @param {String} email user's email
+ * @param {String} password user's password
  */
 function createAccount(username, email, password) {
   let msg = {
@@ -221,10 +226,8 @@ function createAccount(username, email, password) {
     email: email,
   };
 
-  console.log(msg);
-
-  fetch('http://127.0.0.1:5000', {
-    method: 'POST', // or 'PUT'
+  fetch(SERVER_URL, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -232,7 +235,7 @@ function createAccount(username, email, password) {
   })
     .then((response) => response.json())
     .then((data) => {
-      //   window.location.href = 'home.html';
+      // TODO: redirect to the login form here
       console.log('Success:', data);
     })
     .catch((error) => {
@@ -240,6 +243,7 @@ function createAccount(username, email, password) {
     });
 }
 
+// TODO: Revive if converting to SPA
 // import { Router } from '../scripts/Router.js';
 
 // const router = new Router();
