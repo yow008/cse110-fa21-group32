@@ -1,9 +1,18 @@
 import { Router } from './Router.js';
 
 // If modified, also modify list of page names under addMainPages
-const pageNames = ['home', 'grocery', 'profile', 'recipe', 'search-results', 'cooking-mode',
-                   'fav-recipes','add-recipe','write-review'];
-                  //,'prevCooked','user-login','calendar',
+const pageNames = [
+  'home',
+  'grocery',
+  'profile',
+  'recipe',
+  'search-results',
+  'cooking-mode',
+  'fav-recipes',
+  'add-recipe',
+  'write-review',
+];
+//,'prevCooked','user-login','calendar',
 const router = new Router();
 
 window.addEventListener('DOMContentLoaded', init);
@@ -55,11 +64,11 @@ function addMainPages() {
       document.getElementById('#section--side-panel').classList.add('shown');
 
       // Show Login Page
-      if  (pageNames[i] === 'user-login') {
-        document.getElementById('#section--side-panel').classList.remove('shown');
+      if (pageNames[i] === 'user-login') {
+        document
+          .getElementById('#section--side-panel')
+          .classList.remove('shown');
       }
-
-
     });
 
     // Create the element with the specific page's content and add to section
@@ -72,7 +81,6 @@ function addMainPages() {
   // Create and add search bar
   const searchBar = document.createElement('search-bar');
   document.getElementById('#section--search-bar').appendChild(searchBar);
-  
 
   // Create and add side panel
   const sidePanel = document.createElement('side-panel');
@@ -108,16 +116,13 @@ function bindNavIcons() {
   });
 }
 
-
 /**
  * Bind the recipe views
  */
 
-
 /**
  * Bind the user profile page
  */
-
 
 /**
  * Bind the Cooking Mode page when "Cook" is been click through the recipe page
@@ -127,7 +132,7 @@ function bindNavIcons() {
  * Bind the Collapased Sidepanel at the side for the appropriate pages
  * (Favorite Recipes, Previously Cooked, Add a Recipe, Write a Review)
  */
- function bindSidePanel() {
+function bindSidePanel() {
   // Retrieve buttons corresponding to icons
   const favoriteRecipes = document.getElementById('LinkToFav');
   //const userLogin = document.getElementById('LinkLogin');
@@ -136,7 +141,7 @@ function bindNavIcons() {
 
   // Add click event listeners and proper navigatiorite'n
   favoriteRecipes.addEventListener('click', () => {
-    router.navigate('fav-recipes'); 
+    router.navigate('fav-recipes');
   });
   // userLogin.addEventListener('click', () => {
   //   router.navigate('user-login');
@@ -165,4 +170,4 @@ function bindPopstate() {
   });
 }
 
-
+export { router };

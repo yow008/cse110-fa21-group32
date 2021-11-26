@@ -1,10 +1,15 @@
 // SearchResults.js
-import { Router } from '../scripts/Router.js';
-const router = new Router();
 
-// TODO: edit the local server URL
-const LOCAL_URL = 'http://127.0.0.1:5000';
+// IMPORTS
+import { router } from '../scripts/main.js';
+import { GET, POST } from '../scripts/request.js';
 
+// GLOBALS
+
+/**
+ * Class: SearchResultsPage
+ * TODO:
+ */
 class SearchResultsPage extends HTMLElement {
   constructor() {
     super();
@@ -113,29 +118,20 @@ function addPage(recipeId) {
  * @param {SearchResultsPage} recipePage
  */
 function fetchRecipe(recipeId, recipePage) {
-  fetch(
-    // need to encode with UTF-8 for special characters like ' '
-    `${LOCAL_URL}?type=fetchRecipe&id=${encodeURIComponent(recipeId)}`,
-    {
-      method: 'GET',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    }
-  )
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      recipePage.data = data;
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+  const fetchReq = `?type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
+
+  /**
+   * TODO:
+   * @param {JSON} data
+   */
+  function afterFetch(data) {
+    recipePage.data = data;
+  }
+
+  GET(fetchReq, afterFetch);
 }
 
 // Define the Class so it can be used as a custom element
 customElements.define('search-results-page', SearchResultsPage);
+
+// EXPORTS
