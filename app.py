@@ -72,6 +72,7 @@ def home_page():
                 return response
             elif msg['type'] == 'fetchRecipe':
                 recipe = recipe_db.fetchRecipeByID(msg['id'])
+                #recipe = pickle.dumps(recipe)
                 data = {"recipe": recipe}
                 data_json = json.dumps(data, indent=2)
                 response = Response(response=data_json, status=200, mimetype='application/json')

@@ -19,188 +19,157 @@ class UpdateRecipePage extends HTMLElement {
         }
         `;
     article.innerHTML = `
-        <h2>Update Recipe</h2>
-        <div class="add-recipe-navbar">
-          <!-- li><a onclick="navTo('homeID')" href="javascript:void(0)">home</a></li> -->
-          <a href="#add-recipe-summaryID" id="ToAddSum">Summary</a>
-          <a href="#add-recipe-ingredientsID" id="ToAddIng">Ingredients</a>
-          <a href="#add-recipe-directionID" id="ToAddDir">Directions</a>
+          <h2>Update Recipe</h2>
+          <div class="update-recipe-navbar">
+            <!-- li><a onclick="navTo('homeID')" href="javascript:void(0)">home</a></li> -->
+            <a href="#update-recipe-summaryID" id="ToUpdateSum">Summary</a>
+            <a href="#update-recipe-ingredientsID" id="ToUpdateIng">Ingredients</a>
+            <a href="#update-recipe-directionID" id="ToUpdateDir">Directions</a>
+          </div>
+  
+          <form id="update-recipe">
+          <!--Update Recipe Summary-->
+          <div id="update-recipe-summary" style="display: show">
+          <br>
+  
+          <!--Update Image-->
+          <label for="img"><p><strong>Update Image</strong></p></label>
+          <ul id="chooseFiles">
+            <li><input type="file" id="img" name="img" accept="image/*"/></li>
+          </ul>
+          <br>
+          <br>
+          <button id="updateImage">Add Another Image</button>
+          <br>
+          <br>
+  
+          <!--Update Basic Information-->
+          <label>Cooking Time:</label>
+          <input type="text" name="cookingTimeHour" id="#input--cook-time-hour" placeholder="hours..">
+          <input type="text" name="cookintTimeMin" id="#input--cook-time-mins" placeholder="mins..">
+          <br>
+          <br>
+  
+          <label id="servings" for="servings"> No. of Servings: </label>
+          <input type="text" name="numServings" id="#input--no-of-serv">
+          <br>
+  
+        <!--Update Basic Information (Summary)-->
+        <label for="sum"><p><strong>Add Summary: </strong></p></label>
+        <textarea id="updateTitle" name="recipeTitle" placeholder="Title:"></textarea><br>
+        <textarea id="updateSummary" name="recipeSummary" placeholder="Summary"></textarea>
+        <br>
         </div>
-
-        <form id="new-recipe">
-        <!--Add Recipe Summary-->
-        <div id="add-recipe-summary" style="display: show">
+      
+        <!--Update Recipe Ingredients-->
+        <div id="update-recipe-ingredients" style="display: none">
+        <label for="ingredients"><p><strong>Add Ingredients</strong></p></label>
+        <table id="ingredient-table">
+          <tr>
+            <th>Qty</th>
+            <th>Unit</th>
+            <th>Ingredient</th>
+          </tr>
+        </table>
+        <!--When click add more should create another new 'tr' with three new inputs-->
+        <button id="addIngredientButton"> Add More </button>
         <br>
-
-        <!--Add Image-->
-        <label for="img"><p><strong>Add Image</strong></p></label>
-        <ul id="chooseFiles">
-          <li><input type="file" id="img" name="img" accept="image/*"/></li>
-        </ul>
+        </div>
+        <!--TO DO delete ingredients button-->
+    
+        <!--Update Recipe Directions-->
+        <div id="update-recipe-direction" style="display: none">
+          <p>Direction</p>
+          <ol>
+          </ol>
+          <br>
+          <!--When click add more should create another new textarea for direction-->
+          <button id="addDirectionButton"> Add More </button>
+        </div>
         <br>
-        <br>
-        <button id="addImage">Add Another Image</button>
-        <br>
-        <br>
-
-        <!--Basic Information-->
-        <label>Cooking Time:</label>
-        <input type="text" name="cookingTimeHour" id="#input--cook-time-hour" placeholder="hours..">
-        <input type="text" name="cookintTimeMin" id="#input--cook-time-mins" placeholder="mins..">
-        <br>
-        <br>
-
-        <label id="servings" for="servings"> No. of Servings: </label>
-        <input type="text" name="numServings" id="#input--no-of-serv">
-        <br>
-
-      <!--Basic Information (Tags/Summary)-->
-      <label for="sum"><p><strong>Add Tags from the list: </strong></p></label>
-      <ul>
-        <li>
-        <label for="tags">Tag 1 (Country): </label><br>
-        <select id="tag1-list">
-          <option value="Italian">Italian</option>
-          <option value="French">French</option>
-          <option value="Mexican">Mexican</option>
-          <option value="American">American</option>
-          <option value="Chinese">Chinese</option>
-          <option value="Japanese">Japanese</option>
-          <option value="Korean">Korean</option>
-          <option value="Vietnamese">Korean</option>
-          <option value="Others">Others</option>
-        </select>
-        </li>
-
-        <li>
-        <label for="tags">Tag 2(Type of Food): </label><br>
-        <select id="tag2-list">
-          <option value="Pizza">Pizza</option>
-          <option value="Seafood">Seafood</option>
-          <option value="Burgers">Burgers</option>
-          <option value="Vegetarian">Vegetarian</option>
-          <option value="Sandwiches">Sandwiches</option>
-          <option value="Steakhouses">Steakhouses</option>
-          <option value="Desserts">Desserts</option>
-          <option value="Drinks">Drinks</option>
-          <option value="Breakfast">Breakfast</option>
-          <option value="Lunch">Lunch</option>
-          <option value="Dinner">Dinner</option>
-          <option value="Others">Others</option>
-        </select>
-        </li>
-      </ul>
-
-      <label for="sum"><p><strong>Update Summary: </strong></p></label>
-      <textarea id="addTitle" name="recipeTitle" placeholder="Title:"></textarea><br>
-      <textarea id="addSummary" name="recipeSummary" placeholder="Summary"></textarea>
-      <br>
-      </div>
-
-      <!--Add Recipe Ingredients-->
-      <div id="add-recipe-ingredients" style="display: none">
-      <label for="ingredients"><p><strong>Update Ingredients</strong></p></label>
-      <table id="ingredient-table">
-        <tr>
-          <th>Qty</th>
-          <th>Unit</th>
-          <th>Ingredient</th>
-        </tr>
-      </table>
-      <!--When click add more should create another new 'tr' with three new inputs-->
-      <button id="addIngredientButton"> Add More </button>
-      <br>
-      </div>
-      <!--TO DO delete ingredients button-->
-
-      <!--Add Recipe Directions-->
-      <div id="add-recipe-direction" style="display: none">
-        <p>Direction</p>
-        <ol>
-          <!-- <li>Step:</li> -->
-          <!-- <textarea name="directionStep" id="#input--direction-step"></textarea> -->
-        </ol>
-        <br>
-        <!--When click add more should create another new textarea for direction-->
-        <button id="addDirectionButton"> Add More </button>
-      </div>
-      <br>
-      <input type="submit" value="Update Recipe">
-      </form>
-      <!--TO DO delete Directions button-->
-
-      <button id="save">Save Draft</button>
-
-      <button><a href="#"> Delete </a></button>
-      <button><a href="home.html"> LEAVE </a></button>
-      `;
+        <input type="submit" value="Publish">
+        </form>
+        <!--TO DO delete Directions button-->
+    
+        
+        <button id="save">Save Draft</button>
+        
+        <button><a href="#"> Delete </a></button>
+        <button><a href="home.html"> LEAVE </a></button>
+        `;
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
 
-    //Add Summary
+    // Display Update Summary
     this.shadowRoot
-      .getElementById('ToAddSum')
-      .addEventListener('click', (e) => {
-        e.preventDefault();
-        this.shadowRoot
-          .getElementById('add-recipe-summary')
-          .setAttribute('style', 'display: show');
-        this.shadowRoot
-          .getElementById('add-recipe-ingredients')
-          .setAttribute('style', 'display: none');
-        this.shadowRoot
-          .getElementById('add-recipe-direction')
-          .setAttribute('style', 'display: none');
-      });
+    .getElementById('ToUpdateSum')
+    .addEventListener('click', (e) => {
+      e.preventDefault();
+      this.shadowRoot
+        .getElementById('update-recipe-summary')
+        .setAttribute('style', 'display: show');
+      this.shadowRoot
+        .getElementById('update-recipe-ingredients')
+        .setAttribute('style', 'display: none');
+      this.shadowRoot
+        .getElementById('update-recipe-direction')
+        .setAttribute('style', 'display: none');
+    });
 
-    //Add Ingredients
-    this.shadowRoot
-      .getElementById('ToAddIng')
-      .addEventListener('click', (e) => {
-        e.preventDefault();
-        this.shadowRoot
-          .getElementById('add-recipe-summary')
-          .setAttribute('style', 'display: none');
-        this.shadowRoot
-          .getElementById('add-recipe-ingredients')
-          .setAttribute('style', 'display: show');
-        this.shadowRoot
-          .getElementById('add-recipe-direction')
-          .setAttribute('style', 'display: none');
-      });
+  // Update Ingredients
+  this.shadowRoot
+    .getElementById('ToUpdateIng')
+    .addEventListener('click', (e) => {
+      e.preventDefault();
+      this.shadowRoot
+        .getElementById('update-recipe-summary')
+        .setAttribute('style', 'display: none');
+      this.shadowRoot
+        .getElementById('update-recipe-ingredients')
+        .setAttribute('style', 'display: show');
+      this.shadowRoot
+        .getElementById('update-recipe-direction')
+        .setAttribute('style', 'display: none');
+    });
 
-    //Add Directions
-    this.shadowRoot
-      .getElementById('ToAddDir')
-      .addEventListener('click', (e) => {
-        e.preventDefault();
-        this.shadowRoot
-          .getElementById('add-recipe-summary')
-          .setAttribute('style', 'display: none');
-        this.shadowRoot
-          .getElementById('add-recipe-ingredients')
-          .setAttribute('style', 'display: none');
-        this.shadowRoot
-          .getElementById('add-recipe-direction')
-          .setAttribute('style', 'display: show');
-      });
+  // Update Directions
+  this.shadowRoot
+    .getElementById('ToUpdateDir')
+    .addEventListener('click', (e) => {
+      e.preventDefault();
+      this.shadowRoot
+        .getElementById('update-recipe-summary')
+        .setAttribute('style', 'display: none');
+      this.shadowRoot
+        .getElementById('update-recipe-ingredients')
+        .setAttribute('style', 'display: none');
+      this.shadowRoot
+        .getElementById('update-recipe-direction')
+        .setAttribute('style', 'display: show');
+    });
+  }
 
     // Fill in form with current recipe data
 
+    set data(data) {
+      this.json = data;
+      console.log(data);
     //Summary
-    let cookTimeHourPrev = Math.floor(parseInt(data['readyInMinutes'])/60);
-    let cookTimeMinPrev = parseInt(data['readyInMinutes'])%60;
-    this.shadowRoot.getElementById('#input--cook-time-hour').setAttribute('placeholder' = cookTimeHourPrev);
-    this.shadowRoot.getElementById('#input--cook-time-min').setAttribute('placeholder' = cookTimeMinPrev);
+    //this.shadowRoot.getElementById()
 
-    this.shadowRoot.getElementById('#input--no-of-serv').setAttribute('placeholder', data['servings']);
-    this.shadowRoot.getElementById('addTitle').setAttribute('placeholder', data['title']);
-    this.shadowRoot.getElementById('addSummary').setAttribute('placeholder', data['summary']);
+    let cookTimeHourPrev = Math.floor(parseInt(data.recipe['readyInMinutes'])/60);
+    let cookTimeMinPrev = parseInt(data.recipe['readyInMinutes'])%60;
+    this.shadowRoot.getElementById('#input--cook-time-hour').setAttribute('value', cookTimeHourPrev);
+    this.shadowRoot.getElementById('#input--cook-time-mins').setAttribute('value', cookTimeMinPrev);
+
+    this.shadowRoot.getElementById('#input--no-of-serv').setAttribute('value', data.recipe['servings']);
+    this.shadowRoot.getElementById('updateTitle').innerHTML = data.recipe['title'];
+    this.shadowRoot.getElementById('updateSummary').innerHTML = data.recipe['summary'];
 
     //Ingredients
     let ingredientTable = this.shadowRoot.getElementById('ingredient-table');
-    let ingredientsPrev = data['extendedIngredients'];
+    let ingredientsPrev = data.recipe['extendedIngredients'];
 
     for (let i=0; i<ingredientsPrev.length; i++) {
         let row = ingredientTable.insertRow(i+1);
@@ -216,43 +185,34 @@ class UpdateRecipePage extends HTMLElement {
           '<button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button>';
     }
 
-
     //Directions
-    let instructionsList = this.shadowRoot.getElementById('add-recipe-direction').querySelector('ol');
-    let temporaryInstructions = document.createElement('div');
-    temporaryInstructions.innerHTML = data['instructions'];
-    let instructionsItems = temporaryInstructions.querySelectorAll('li');
+    let instructionsList = this.shadowRoot.getElementById('update-recipe-direction').querySelector('ol');
 
+    for(let i = 0; i < data.recipe.analyzedInstructions[0].steps.length; i++){
+      const step = data.recipe.analyzedInstructions[0].steps[i];
 
-    for (let i=0; i<instructionsItems.length; i++) {
-        let step = document.createElement('li');
-        step.innerHTML = "Step:";
-        instructionsList.appendChild(step);
-        let stepTextArea = document.createElement('textarea');
-        stepTextArea.innerHTML = instructionsItems[i];
-        stepTextArea.setAttribute('id', '#input--direction-step');
-        stepTextArea.setAttribute('name', 'directionStep');
-        instructionsList.appendChild(stepTextArea);
+      let div = document.createElement('div');
+      let stepName = document.createElement('li');
+      stepName.innerHTML = "Step:";
+      
+
+      let button = document.createElement('button');
+      button.innerHTML = 'Delete';
+
+      let stepTextArea = document.createElement('textarea');
+      stepTextArea.setAttribute('name', 'directionStep');
+      stepTextArea.innerHTML = step.step;
+
+      div.appendChild(stepName);
+      div.appendChild(stepTextArea);
+      div.appendChild(button);
+      
+      instructionsList.appendChild(div);
+
+      button.addEventListener('click', function(){
+        this.parentNode.remove();
+      });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     //Add ingredient to ingredients page
     this.shadowRoot
@@ -260,7 +220,7 @@ class UpdateRecipePage extends HTMLElement {
       .addEventListener('click', (e) => {
         e.preventDefault();
         let ingredientsList = this.shadowRoot
-          .querySelector('#add-recipe-ingredients')
+          .querySelector('#update-recipe-ingredients')
           .querySelector('table');
         let row = ingredientsList.insertRow(-1);
         let quantity = row.insertCell(0);
@@ -280,20 +240,30 @@ class UpdateRecipePage extends HTMLElement {
       .addEventListener('click', (e) => {
         e.preventDefault();
         let directionsList = this.shadowRoot
-          .querySelector('#add-recipe-direction')
+          .querySelector('#update-recipe-direction')
           .querySelector('ol');
+        let div = document.createElement('div');
         let li = document.createElement('li');
         li.innerHTML = 'Step:';
+        let button = document.createElement('button');
+        button.innerHTML = 'Delete';
         let input = document.createElement('textarea');
-        input.setAttribute('id', '#input--direction-step');
         input.setAttribute('name', 'directionStep');
-        directionsList.appendChild(li);
-        directionsList.appendChild(input);
+        
+        div.appendChild(li);
+        div.appendChild(input);
+        div.appendChild(button);
+
+        directionsList.appendChild(div);
+
+        button.addEventListener('click', function(){
+          this.parentNode.remove();
+        });
       });
 
     //Add images
     this.shadowRoot
-      .getElementById('addImage')
+      .getElementById('updateImage')
       .addEventListener('click', (e) => {
         e.preventDefault();
         let imagesList = this.shadowRoot.querySelector('#chooseFiles');
@@ -303,102 +273,7 @@ class UpdateRecipePage extends HTMLElement {
         imagesList.appendChild(li);
       });
 
-    //listener when a user save the form
-    //newRecipe.addEventListener("submit", handleFormSubmit)
-
-    /**
-     * TODO:
-     * Event handler for a form submit event
-     * @param {String} recipeForm
-     * @param {RecipePage} RecipePage
-     */
-
-    const newRecipe = this.shadowRoot.getElementById('new-recipe');
-    newRecipe.addEventListener('submit', (e) => {
-      e.preventDefault();
-      // console.log(e.target);
-      // const data = new FormData(e.target);
-      // console.log(data);
-      postCreateRecipeData();
-    });
-
-    const photos = this.shadowRoot.getElementById('chooseFiles');
-    const cookingTimeHour = this.shadowRoot.getElementById(
-      '#input--cook-time-hour'
-    );
-    const cookingTimeMin = this.shadowRoot.getElementById(
-      '#input--cook-time-mins'
-    );
-    const readyInMinutes =
-      60 * parseInt(cookingTimeHour.value) + parseInt(cookingTimeMin.value);
-    console.log(cookingTimeMin.value);
-    console.log(readyInMinutes);
-    const servings = this.shadowRoot.getElementById('#input--no-of-serv');
-    const title = this.shadowRoot.getElementById('addTitle');
-    const summary = this.shadowRoot.getElementById('addSummary');
-    const ingredientList = this.shadowRoot.getElementById('ingredient-table');
-    const directions = this.shadowRoot.getElementById('add-recipe-direction');
-
-    function postCreateRecipeData() {
-      // Select all ingredients
-      let quantity = ingredientList.querySelectorAll('input[name="quantity"]');
-      let unit = ingredientList.querySelectorAll('input[name="unit"]');
-      let ingredient = ingredientList.querySelectorAll(
-        'input[name="ingredientName"]'
-      );
-
-      //Select all input from Direction Steps
-      let directionsList = directions.querySelectorAll(
-        'textarea[name="directionStep"]'
-      );
-      //Select all input from file image
-      let imgList = photos.querySelectorAll('input[type="file"]');
-      let images = {};
-
-      // https://www.geeksforgeeks.org/how-to-convert-image-into-base64-string-using-javascript/\
-
-      console.log(imgList);
-      // For loop for upload all images
-      for (let i = 0; i < imgList.length; i++) {
-        if (imgList[i].files[0] != null) {
-          let fileReader = new FileReader();
-          fileReader.onload = function () {
-            if (fileReader.result.length > 0) {
-              images['image' + i] = fileReader.result;
-              alert(fileReader.result);
-            }
-          };
-          fileReader.readAsDataURL(imgList[i].files[0]);
-        }
-      }
-
-      // For loop for upload all ingredient information
-      let extendedIngredients = [];
-      for (let i = 0; i < ingredient.length; i++) {
-        if (ingredient[i].value.length !== 0) {
-          let ing = {};
-          ing['name'] = ingredient[i].value;
-          ing['amount'] = quantity[i].value;
-          ing['unit'] = unit[i].value;
-          console.log(ing);
-          extendedIngredients.push(ing);
-        }
-      }
-      console.log(extendedIngredients);
-
-      // For loop for upload all direction steps
-      // console.log(directionsList[0].value);
-      // console.log(directionsList[1].value);
-      let instructions = '<ol>';
-      for (let i = 0; i < directionsList.length; i++) {
-        if (directionsList[i].value.length !== 0) {
-          instructions += '<li>' + directionsList[i].value + '</li>';
-        }
-      }
-      instructions += '</ol>';
-      console.log(instructions);
-
-      // console.log(directionsList[0].value + "  -directionsList");
+      //Send Data
       setTimeout(function () {
         let data = {
           type: 'postRecipe',
@@ -429,29 +304,14 @@ class UpdateRecipePage extends HTMLElement {
             console.error('Error:', error);
           });
       });
+
+      //TODO
+      //0. Display the image, Delete Image, upload image ***
+      //1. Delete Recipe Button
+      //2. Check with the backend if the recipe has successfully receive it
+      //3. Check with Recipe.js to have the correct recipe to edit
     }
-  }
-
-  set prevData(data) {
-    this.prevData = data;
-  }
-
-  set updatedData(data) {
-    Object.keys(data).forEach(function (key) {
-      console.log(key, data[key]);
-      if (key !== 'type' && data[key] !== '' && data[key] !== NaN) {
-        if (key === 'instructions') {
-          if (key !== '<ol></ol>') {
-            this.prevData.instructions = data[key];
-          }
-        } else if (key === 'extendedIngredients') {
-          if (data[key] !== []) {
-            this.prevData.extendedIngredients = data[key];
-          }
-        }
-      }
-    });
-  }
+  
 }
 
 customElements.define('update-recipe-page', UpdateRecipePage);
