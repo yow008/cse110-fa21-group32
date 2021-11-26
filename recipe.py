@@ -12,7 +12,7 @@ class Recipe_DB:
     def __init__(self):
         # Spoonacular 
         self.url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/"
-        self.API_KEY = '4f1ffcfc75434032a0fbe8e32a91f561'
+        self.API_KEY = '59e761926ee542d384a32515dbb2527a'
         self.headers = {
             'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
             'x-rapidapi-key': self.API_KEY
@@ -42,7 +42,7 @@ class Recipe_DB:
         self.custom_recipe_count = 10000000  # Spoonacular IDs have 7 digits; custom have one more to avoid collision
         self.cur.execute('SELECT MAX(ID) FROM Recipes')
         result = self.cur.fetchone()
-        if result[0] != None and result[0] > self.custom_recipe_count: self.custom_recipe_count = result[0] + 1
+        if result > self.custom_recipe_count: self.custom_recipe_count = result + 1
 
     def searchRecipeByKeyword(self,keyword):
         # Search by keyword. Get recipe IDs from spoonacular, update DB, and return results
@@ -86,7 +86,7 @@ class Recipe_DB:
             return pickle.loads(result[0][0])
         else:
             # Call Spoonacular API
-            url = 'https://api.spoonacular.com/recipes/%s/information?apiKey=%s&type=fetchRecipe' % (ID, self.API_KEY)
+            url = 'https://api.spoonacular.com/recipes/%s/information?apiKey=%s' % (ID, self.API_KEY)
             src = requests.request("GET", url, headers=self.headers).json()
 
             # Cache recipe in DB

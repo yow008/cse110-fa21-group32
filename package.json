@@ -46,7 +46,9 @@
           ],
           "disableFix": true
         }
-      ]
+      ],
+      "comment-empty-line-before": null,
+      "color-hex-length": null
     }
   },
   "dependencies": {}
