@@ -2,7 +2,6 @@
 
 //TODO
 
-
 // IMPORTS
 import { router } from '../scripts/main.js';
 import { GET, POST } from '../scripts/request.js';
@@ -240,14 +239,14 @@ class AddRecipePage extends HTMLElement {
         button.innerHTML = 'Delete';
         let input = document.createElement('textarea');
         input.setAttribute('name', 'directionStep');
-        
+
         div.appendChild(li);
         div.appendChild(input);
         div.appendChild(button);
 
         directionsList.appendChild(div);
 
-        button.addEventListener('click', function(){
+        button.addEventListener('click', function () {
           this.parentNode.remove();
         });
       });
@@ -319,7 +318,6 @@ class AddRecipePage extends HTMLElement {
           fileReader.onload = function () {
             if (fileReader.result.length > 0) {
               images['image' + i] = fileReader.result;
-              alert(fileReader.result);
             }
           };
           fileReader.readAsDataURL(imgList[i].files[0]);
@@ -348,45 +346,44 @@ class AddRecipePage extends HTMLElement {
       instructions += '</ol>';
 
       // Create recipe JSON to send to the backend
-      let recipe = {
-        image: setTimeout(function () {
-          console.log(images);
-          images;
-        }, 1000),
-        readyInMinutes: readyInMinutes,
-        servings: servings.value,
-        name: title.value,
-        summary: summary.value,
-        extendedIngredients: extendedIngredients,
-        analyzedInstructions: instructions,
-        author: 'Martin1234', // TODO: Need to update with curr user
-      };
+      setTimeout(function () {
+        let recipe = {
+          image: images,
+          readyInMinutes: readyInMinutes,
+          servings: servings.value,
+          name: title.value,
+          summary: summary.value,
+          extendedIngredients: extendedIngredients,
+          analyzedInstructions: instructions,
+          author: 'Martin1234', // TODO: Need to update with curr user
+        };
 
-      // Create the POST message to send to the backend
-      let data = {
-        type: 'addRecipe',
-        username: 'Martin1234', // TODO: Need to update with curr user
-        password: '1234', // TODO: Need to update with curr password
-        recipe: recipe,
-        name: title.value,
-      };
+        // Create the POST message to send to the backend
+        let data = {
+          type: 'addRecipe',
+          username: 'Martin1234', // TODO: Need to update with curr user
+          password: '1234', // TODO: Need to update with curr password
+          recipe: recipe,
+          name: title.value,
+        };
 
-      // POST request to send recipe data
-      fetch('http://127.0.0.1:5000', {
-        method: 'POST', // or 'PUT'
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          router.navigate('home');
-          console.log('Success:', data);
+        // POST request to send recipe data
+        fetch('http://127.0.0.1:5000', {
+          method: 'POST', // or 'PUT'
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
         })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
+          .then((response) => response.json())
+          .then((data) => {
+            router.navigate('home');
+            console.log('Success:', data);
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      });
     }
   }
 }
