@@ -12,7 +12,7 @@ class Recipe_DB:
     def __init__(self):
         # Spoonacular 
         self.url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/"
-        self.API_KEY = '59e761926ee542d384a32515dbb2527a'
+        self.API_KEY = '4f1ffcfc75434032a0fbe8e32a91f561'
         self.headers = {
             'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
             'x-rapidapi-key': self.API_KEY
@@ -86,7 +86,7 @@ class Recipe_DB:
             return pickle.loads(result[0][0])
         else:
             # Call Spoonacular API
-            url = 'https://api.spoonacular.com/recipes/%s/information?apiKey=%s' % (ID, self.API_KEY)
+            url = 'https://api.spoonacular.com/recipes/%s/information?apiKey=%s&type=fetchRecipe' % (ID, self.API_KEY)
             src = requests.request("GET", url, headers=self.headers).json()
 
             # Cache recipe in DB

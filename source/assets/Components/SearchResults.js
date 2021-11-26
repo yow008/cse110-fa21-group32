@@ -82,7 +82,11 @@ function createRecipeCards(results, section) {
     // Add the corresponding expand recipe view to router
     addPage(data.id);
 
-    card.addEventListener('click', () => {
+    card.addEventListener('click', e => {
+      let recipeView = document.getElementById('#section--recipe');
+      while(recipeView.firstChild){
+        recipeView.removeChild(recipeView.firstChild);
+      }
       router.navigate(`recipe_${data.id}`);
     });
   });
@@ -105,7 +109,7 @@ function addPage(recipeId) {
 
     // Fetch and populate recipe page and add to recipe section
     const recipePage = document.createElement('recipe-page');
-    // fetchRecipe(recipeId, recipePage); TODO: NEEDS FIXING
+    fetchRecipe(recipeId, recipePage);
     recipePage.classList.add('shown');
     document.getElementById('#section--recipe').appendChild(recipePage);
   });
