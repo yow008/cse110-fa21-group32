@@ -549,23 +549,27 @@ class RecipePage extends HTMLElement {
     
     //Set Ingredients
     const form = this.shadowRoot.querySelector('form');
-    const linebreak = document.createElement('br');
     for(let i = 0; i < data.recipe.extendedIngredients.length; i++){
       const ingredient = data.recipe.extendedIngredients[i];
       const currElement = document.createElement('input');
       currElement.setAttribute('type', 'checkbox');
       currElement.setAttribute('name', ingredient.name);
-      form.appendChild(currElement);
+      form.append(currElement);
       const content = document.createElement('label');
       content.setAttribute('for', ingredient.name);
       content.innerHTML = ingredient.original;
-      form.appendChild(content);
-      form.appenChild(linebreak);
+      form.append(content);
     }
 
     //Set Directions
     const list = this.shadowRoot.querySelector('ul');
-    console.log(data.recipe.analyzedInstructions[0].steps[0].step);
+    for(let i = 0; i < data.recipe.analyzedInstructions[0].steps.length; i++){
+      const step = data.recipe.analyzedInstructions[0].steps[i];
+      const currStep = document.createElement('li');
+      currStep.innerHTML = step.step;
+      list.appendChild(currStep);
+    }
+    
 
 
     this.shadowRoot.getElementById('ToSum').addEventListener('click', (e) => {
