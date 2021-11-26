@@ -62,7 +62,7 @@ class ProfilePage extends HTMLElement {
     const urlParams = new URLSearchParams(window.location.search);
     const user = urlParams.get('user');
     const pass = urlParams.get('pass');
-    //getRecipes(user,pass);
+    getRecipes('esther12345','12345');
     
   }  
 }
@@ -73,8 +73,8 @@ function getRecipes(username, password) {
   fetch(
     // need to encode with UTF-8 for special characters like ' '
     `${LOCAL_URL}?type=getCustomizedRecipeIDs&user=${encodeURIComponent(
-      username
-    )}&pass=${encodeURIComponent(password)}`,
+      'esther12345'
+    )}&pass=${encodeURIComponent('12345')}`,
     {
       method: 'GET',
       headers: {
@@ -87,7 +87,8 @@ function getRecipes(username, password) {
       return response.json();
     })
     .then((data) => {
-      document.getElementById('but1').classList.add('shown');
+      console.log(data);
+      this.shadowRoot.getElementById('but1').classList.add('shown');
       document.getElementById('but2').classList.add('shown');
       document.getElementById('but3').classList.add('shown');
       
