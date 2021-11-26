@@ -34,9 +34,9 @@ class ProfilePage extends HTMLElement {
         <div id="profile-page-recipeID" class="profile-page-recipe hidden">
             <p>Recipes</p>
             <ul>
-                <li> <button type="menu">Recipe 1 (not linked)</button></li>
-                <li> <button type="menu">Recipe 2 (not linked)</button></li>
-                <li> <button type="menu">Recipe 3 (not linked)</button></li>
+                <li id="but1"> <button type="menu">Recipe 1 (not linked)</button></li>
+                <li id="but2"> <button type="menu">Recipe 2 (not linked)</button></li>
+                <li id="but3"> <button type="menu">Recipe 3 (not linked)</button></li>
             </ul>
         </div>
 
@@ -58,7 +58,74 @@ class ProfilePage extends HTMLElement {
     btn.addEventListener('click', (e) => {
       console.log('Clicked');
     });
-  }
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const user = urlParams.get('user');
+    const pass = urlParams.get('pass');
+    //getRecipes(user,pass);
+    
+  }  
 }
 
 customElements.define('profile-page', ProfilePage);
+
+function getRecipes(username, password) {
+  fetch(
+    // need to encode with UTF-8 for special characters like ' '
+    `${LOCAL_URL}?type=getCustomizedRecipeIDs&user=${encodeURIComponent(
+      username
+    )}&pass=${encodeURIComponent(password)}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      document.getElementById('but1').classList.add('shown');
+      document.getElementById('but2').classList.add('shown');
+      document.getElementById('but3').classList.add('shown');
+      
+        btn.addEventListener('click', () => {
+          router.navigate(`recipe_${data[key]}`);
+        });
+        btn.innerHTML = data[key];
+        console.log(document.getElementById('#profile-page-recipeID'));
+        document.getElementById('#profile-page-recipeID').appendChild(btn);
+        
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+     
+  function fetchRecipe(recipeId, recipePage) {
+    fetch(
+      // need to encode with UTF-8 for special characters like ' '
+      `${LOCAL_URL}?type=fetchRecipe&id=${encodeURIComponent(recipeId)}`,
+      {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      }
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        recipePage.data = data;
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+  ``});
+  }
+}
