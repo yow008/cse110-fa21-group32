@@ -111,8 +111,9 @@ function addPage(recipeId) {
     const recipePage = document.createElement('recipe-page');
     fetchRecipe(recipeId, recipePage);
     recipePage.classList.add('shown');
+    document.getElementById('#section--recipe').innerHTML='';
     document.getElementById('#section--recipe').appendChild(recipePage);
-  });
+  }); 
 }
 
 /**
@@ -122,7 +123,7 @@ function addPage(recipeId) {
  * @param {SearchResultsPage} recipePage
  */
 function fetchRecipe(recipeId, recipePage) {
-  const fetchReq = `?type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
+  const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
 
   /**
    * TODO:

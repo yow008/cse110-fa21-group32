@@ -10,6 +10,7 @@ const pageNames = [
   'cooking-mode',
   'fav-recipes',
   'add-recipe',
+  'update-recipe',
   'write-review',
 ];
 //,'prevCooked','user-login','calendar',

@@ -1,5 +1,8 @@
 // AddRecipe.js
 
+//TODO
+
+
 // IMPORTS
 import { router } from '../scripts/main.js';
 import { GET, POST } from '../scripts/request.js';
@@ -230,13 +233,23 @@ class AddRecipePage extends HTMLElement {
         let directionsList = this.shadowRoot
           .querySelector('#add-recipe-direction')
           .querySelector('ol');
+        let div = document.createElement('div');
         let li = document.createElement('li');
         li.innerHTML = 'Step:';
+        let button = document.createElement('button');
+        button.innerHTML = 'Delete';
         let input = document.createElement('textarea');
-        input.setAttribute('id', '#input--direction-step');
         input.setAttribute('name', 'directionStep');
-        directionsList.appendChild(li);
-        directionsList.appendChild(input);
+        
+        div.appendChild(li);
+        div.appendChild(input);
+        div.appendChild(button);
+
+        directionsList.appendChild(div);
+
+        button.addEventListener('click', function(){
+          this.parentNode.remove();
+        });
       });
 
     // Add images
@@ -345,7 +358,7 @@ class AddRecipePage extends HTMLElement {
         name: title.value,
         summary: summary.value,
         extendedIngredients: extendedIngredients,
-        instructions: instructions,
+        analyzedInstructions: instructions,
         author: 'Martin1234', // TODO: Need to update with curr user
       };
 
