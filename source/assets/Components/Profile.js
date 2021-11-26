@@ -3,6 +3,7 @@
 // IMPORTS
 import { router } from '../scripts/main.js';
 import { GET, POST } from '../scripts/request.js';
+const SERVER_URL = 'http://127.0.0.1:5000';
 
 /**
  * Class: ProfilePage
@@ -41,11 +42,9 @@ class ProfilePage extends HTMLElement {
         <!--Profile Page Recipe-->
         <div id="profile-page-recipeID" class="profile-page-recipe hidden">
             <p>Recipes</p>
-            <ul>
-                <li id="but1"> <button type="menu">Recipe 1 (not linked)</button></li>
-                <li id="but2"> <button type="menu">Recipe 2 (not linked)</button></li>
-                <li id="but3"> <button type="menu">Recipe 3 (not linked)</button></li>
-            </ul>
+            <div id = "recipe-view">
+                
+            </div>
         </div>
 
         <!--Profile Page Reviews-->
@@ -78,63 +77,63 @@ class ProfilePage extends HTMLElement {
 customElements.define('profile-page', ProfilePage);
 
 function getRecipes(username, password) {
-  fetch(
-    // need to encode with UTF-8 for special characters like ' '
-    `${LOCAL_URL}?type=getCustomizedRecipeIDs&user=${encodeURIComponent(
-      'esther12345'
-    )}&pass=${encodeURIComponent('12345')}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    }
-  )
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-      this.shadowRoot.getElementById('but1').classList.add('shown');
-      document.getElementById('but2').classList.add('shown');
-      document.getElementById('but3').classList.add('shown');
+  const listId = [];
+
+  const searchReq = `type=getCustomizedRecipeIDs&user=${encodeURIComponent(username
+  )}&pass=${encodeURIComponent(password)}`;
+
+  /**
+   *
+   * @param {*} data
+   */
+  function atFetch(data) {
+
+    for (let i=0; i<data.ID.length;i++){
+      // const div = document.createElement('recipe-view');
+      // const image = fetchRecipe(data[i],div);//id
+      // div.classList.add('shown');
+      listId.push(data.ID[i]);
+      // this.shadowRoot.getElementById('recipe-view').appendChild(image);
       
-        btn.addEventListener('click', () => {
-          router.navigate(`recipe_${data[key]}`);
-        });
-        btn.innerHTML = data[key];
-        console.log(document.getElementById('#profile-page-recipeID'));
-        document.getElementById('#profile-page-recipeID').appendChild(btn);
-        
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-     
-  function fetchRecipe(recipeId, recipePage) {
-    fetch(
-      // need to encode with UTF-8 for special characters like ' '
-      `${LOCAL_URL}?type=fetchRecipe&id=${encodeURIComponent(recipeId)}`,
-      {
-        method: 'GET',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      }
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        recipePage.data = data;
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-  ``});
+    }
+
+    // function fetchRecipe(recipeId, recipePage) {
+    //     const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
+      
+    //     /**
+    //      * TODO:
+    //      * @param {JSON} data
+    //      */
+    //     function afterFetch(data) {
+    //       recipePage.data = data;
+    //       console.log("HERE")
+    //     }
+      
+    //     fetch(
+    //       // need to encode with UTF-8 for special characters like ' '
+    //       `${SERVER_URL}?${fetchReq}`,
+    //       {
+    //         method: 'GET',
+    //         mode: 'cors',
+    //         headers: {
+    //           'Content-Type': 'application/json',
+    //           Accept: 'application/json',
+    //         },
+    //       }
+    //     )
+    //       .then((response) => {
+    //         return response.json();
+    //       })
+    //       .then((data) => {
+    //         afterFetch(data);
+    //         console.log('Success:', data);
+    //       })
+    //       .catch((error) => {
+    //         console.error('Error:', error);
+    //       });
+      // }
   }
+  
+  GET(searchReq, atFetch);
+      
 }
