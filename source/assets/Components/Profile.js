@@ -95,7 +95,7 @@ class ProfilePage extends HTMLElement {
         </div>
         <div id="profile-page-recipeID" class="profile-page-recipe">
             <p>Recipe Gallery Should Be Displayed Here.</p>
-            <button>REMOVE ME 1</button>
+            
             <br>
         </div>
 
@@ -136,16 +136,23 @@ class ProfilePage extends HTMLElement {
     const urlParams = new URLSearchParams(window.location.search);
     const user = urlParams.get('user');
     const pass = urlParams.get('pass');
-    getRecipes('esther12345','12345');
+    getRecipes('Martin1234','1234', this.shadowRoot);
+
+  }
+  
+  set recipes(recipes) {
     
-  }  
+  }
+  
+  set reviews(reviews) {
+    
+  }
 }
 
 customElements.define('profile-page', ProfilePage);
 
-function getRecipes(username, password) {
-  const listId = [];
-
+// GET RECIPES
+function getRecipes(username, password, shadowRoot) {
   const searchReq = `type=getCustomizedRecipeIDs&user=${encodeURIComponent(username
   )}&pass=${encodeURIComponent(password)}`;
 
@@ -156,51 +163,95 @@ function getRecipes(username, password) {
   function atFetch(data) {
 
     for (let i=0; i<data.ID.length;i++){
-      // const div = document.createElement('recipe-view');
-      // const image = fetchRecipe(data[i],div);//id
-      // div.classList.add('shown');
-      listId.push(data.ID[i]);
-      // this.shadowRoot.getElementById('recipe-view').appendChild(image);
+      const image = fetchRecipe(data.ID[i], shadowRoot);//id
+       //div.classList.add('shown');
+      // listId.push(data.ID[i]);
+      //this.shadowRoot.getElementById('recipe-view').appendChild(image);
       
     }
 
-    // function fetchRecipe(recipeId, recipePage) {
-    //     const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
+    function fetchRecipe(recipeId, shadowRoot) {
+        const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
       
-    //     /**
-    //      * TODO:
-    //      * @param {JSON} data
-    //      */
-    //     function afterFetch(data) {
-    //       recipePage.data = data;
-    //       console.log("HERE")
-    //     }
-      
-    //     fetch(
-    //       // need to encode with UTF-8 for special characters like ' '
-    //       `${SERVER_URL}?${fetchReq}`,
-    //       {
-    //         method: 'GET',
-    //         mode: 'cors',
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //           Accept: 'application/json',
-    //         },
-    //       }
-    //     )
-    //       .then((response) => {
-    //         return response.json();
-    //       })
-    //       .then((data) => {
-    //         afterFetch(data);
-    //         console.log('Success:', data);
-    //       })
-    //       .catch((error) => {
-    //         console.error('Error:', error);
-    //       });
-      // }
+        /**
+         * TODO:
+         * @param {JSON} data
+         */
+        function afterFetch(data) {
+          //javscript to display
+          //console.log(data.recipe.title) // the title 
+
+          // Create title element
+          const title = document.createElement('h3');
+          title.innerText = data.recipe.title;
+          //console.log(shadowRoot);
+          shadowRoot.getElementById('profile-page-recipeID').appendChild(title);
+          //console.log(shadowRoot);
+          // Add page to router so navigate works
+          router.addPage(`recipe_${recipeId}`, function () {
+        
+            document
+              .getElementById('#section--profile')
+              .classList.remove('shown');
+        
+            document.getElementById('#section--recipe').classList.add('shown');
+        
+            // Fetch and populate recipe page and add to recipe section
+            const recipePage = document.createElement('recipe-page');
+            // fetchRecipe(recipeId, recipePage);
+            recipePage.data = data;
+            recipePage.classList.add('shown');
+            document.getElementById('#section--recipe').innerHTML = '';
+            document.getElementById('#section--recipe').appendChild(recipePage);
+          });
+
+          // Add click listener to title element -> navigates to recipe card page
+          title.addEventListener('click', (e) => {
+            // let recipeView = document.getElementById('#profile-page-recipeID');
+            // while (recipeView.firstChild) {
+            //   recipeView.removeChild(recipeView.firstChild);
+            // }
+            router.navigate(`recipe_${recipeId}`);
+          });
+          
+        }
+
+        GET(fetchReq, afterFetch);
+      }
   }
   
   GET(searchReq, atFetch);
-      
 }
+/**
+ *     // Add the corresponding expand recipe view to router
+    addPage(data.id);
+
+    card.addEventListener('click', (e) => {
+      let recipeView = document.getElementById('#section--recipe');
+      while (recipeView.firstChild) {
+        recipeView.removeChild(recipeView.firstChild);
+      }
+      router.navigate(`recipe_${data.id}`);
+    });
+  });
+}
+function addPage(recipeId) {
+  router.addPage(`recipe_${recipeId}`, function () {
+    document.getElementById('#section--home').classList.remove('shown');
+    document.getElementById('#section--search-bar').classList.remove('shown');
+
+    document
+      .getElementById('#section--search-results')
+      .classList.remove('shown');
+
+    document.getElementById('#section--recipe').classList.add('shown');
+
+    // Fetch and populate recipe page and add to recipe section
+    const recipePage = document.createElement('recipe-page');
+    fetchRecipe(recipeId, recipePage);
+    recipePage.classList.add('shown');
+    document.getElementById('#section--recipe').innerHTML = '';
+    document.getElementById('#section--recipe').appendChild(recipePage);
+  });
+}
+ */

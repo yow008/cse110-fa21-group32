@@ -42,7 +42,9 @@ class Recipe_DB:
         self.custom_recipe_count = 10000000  # Spoonacular IDs have 7 digits; custom have one more to avoid collision
         self.cur.execute('SELECT MAX(ID) FROM Recipes')
         result = self.cur.fetchone()
-        if result > self.custom_recipe_count: self.custom_recipe_count = result + 1
+        if result[0] != None and result[0] >= self.custom_recipe_count: self.custom_recipe_count = result[0] + 1
+        print(result[0])
+        print(self.custom_recipe_count)
 
     def searchRecipeByKeyword(self,keyword):
         # Search by keyword. Get recipe IDs from spoonacular, update DB, and return results
@@ -102,7 +104,7 @@ class Recipe_DB:
         '''
         id = self.custom_recipe_count
         self.custom_recipe_count += 1
-        name = recipe['name']
+        name = recipe['title']
         author = recipe['author']
         src = pickle.dumps(recipe)
         self.cur.execute('INSERT INTO Recipes(ID, author, name, src) VALUES(?, ?, ?, ?)', (id, author, name, src))
