@@ -39,7 +39,10 @@ class Recipe_DB:
                 image BLOB
             )''')
 
-        self.custom_recipe_count = 1000000  # Spoonacular IDs have 6 digits; custom have one more to avoid collision
+        self.custom_recipe_count = 10000000  # Spoonacular IDs have 7 digits; custom have one more to avoid collision
+        self.cur.execute('SELECT MAX(ID) FROM Recipes')
+        result = self.cur.fetchone()
+        if result > self.custom_recipe_count: self.custom_recipe_count = result + 1
 
     def searchRecipeByKeyword(self,keyword):
         # Search by keyword. Get recipe IDs from spoonacular, update DB, and return results
