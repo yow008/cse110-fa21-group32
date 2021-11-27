@@ -326,8 +326,8 @@ class AddRecipePage extends HTMLElement {
           image = fileReader.result;
         }
       };
-      console.log(photo.files[0]);
-      fileReader.readAsDataURL(photo.files[0]);
+      // console.log(photo.files[0]);
+      // fileReader.readAsDataURL(photo.files[0]);
 
       // For loop for upload all ingredient information
       let extendedIngredients = [];

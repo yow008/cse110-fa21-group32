@@ -1,5 +1,6 @@
 // UpdateRecipe.js
 import { router } from '../scripts/main.js';
+import { GET, POST } from '../scripts/request.js';
 
 class UpdateRecipePage extends HTMLElement {
   constructor() {
@@ -300,7 +301,7 @@ class UpdateRecipePage extends HTMLElement {
       .getElementById('deleteRecipe')
       .addEventListener('click', (e) => {
         let recipe = {
-          id: data['id'],
+          id: this.json['recipe']['id'],
         };
         let data = {
           type: 'deleteRecipe',
@@ -323,6 +324,20 @@ class UpdateRecipePage extends HTMLElement {
         e.preventDefault();
         updateData();
       });
+
+    // Get elements of the form
+    const photo = this.shadowRoot.getElementById('img');
+    const cookingTimeHour = this.shadowRoot.getElementById(
+      '#input--cook-time-hour'
+    );
+    const cookingTimeMin = this.shadowRoot.getElementById(
+      '#input--cook-time-mins'
+    );
+    const servings = this.shadowRoot.getElementById('#input--no-of-serv');
+    const title = this.shadowRoot.getElementById('addTitle');
+    const summary = this.shadowRoot.getElementById('addSummary');
+    const ingredientList = this.shadowRoot.getElementById('ingredient-table');
+    const directions = this.shadowRoot.getElementById('add-recipe-direction');
 
     function updateData() {
       // Select all ingredients
@@ -407,22 +422,23 @@ class UpdateRecipePage extends HTMLElement {
 
         console.log(data);
 
+        /**
+         * TODO:
+         */
         function afterFetch() {
-          router.addPage(`recipe_${recipe['id']}`, function () {
-            document
-              .getElementById('#section--update-recipe')
-              .classList.remove('shown');
-
-            document.getElementById('#section--recipe').classList.add('shown');
-
-            // Fetch and populate recipe page and add to recipe section
-            const recipePage = document.createElement('recipe-page');
-            recipePage.data = data;
-            recipePage.classList.add('shown');
-            document.getElementById('#section--recipe').innerHTML = '';
-            document.getElementById('#section--recipe').appendChild(recipePage);
-          });
-          navigate(`recipe_${recipe['id']}`);
+          // router.addPage(`recipe_${recipe['id']}`, function () {
+          //   document
+          //     .getElementById('#section--update-recipe')
+          //     .classList.remove('shown');
+          //   document.getElementById('#section--recipe').classList.add('shown');
+          //   // Fetch and populate recipe page and add to recipe section
+          //   const recipePage = document.createElement('recipe-page');
+          //   recipePage.data = data;
+          //   recipePage.classList.add('shown');
+          //   document.getElementById('#section--recipe').innerHTML = '';
+          //   document.getElementById('#section--recipe').appendChild(recipePage);
+          // });
+          // router.navigate(`recipe_${recipe['id']}`);
         }
 
         POST(data, afterFetch);
