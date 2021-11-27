@@ -117,7 +117,7 @@ class UpdateRecipePage extends HTMLElement {
     //   }
     // }
 
-    //Nav Bar for "Summary", "Ingredients", and "Direcitons"
+    //Nav Bar for "Summary", "Ingredients", and "Directons"
     //----------------------------------------------------------------
     // Display Update Summary
     this.shadowRoot
@@ -171,9 +171,12 @@ class UpdateRecipePage extends HTMLElement {
 
   // Fill in form with current recipe data
 
+  /**
+   * Sets all the elements of the update recipe page to the recipes current data
+   * @param data Previous recipe data to set the placeholder values
+   */
   set data(data) {
     this.json = data;
-    console.log(data);
     //Set Image
     // let oldimage = data.recipe.image;
     // this.shadowRoot.getElementById('recipeImage').setAttribute('src', oldimage);
@@ -211,8 +214,13 @@ class UpdateRecipePage extends HTMLElement {
       let deleteButton = row.insertCell(3);
 
       cell1.innerHTML = ingredientsPrev[i]['amount'];
+
+      cell1.setAttribute('name', 'quantity');
+      console.log(cell1);
       cell2.innerHTML = ingredientsPrev[i]['unit'];
+      cell1.setAttribute('name', 'unit');
       cell3.innerHTML = ingredientsPrev[i]['name'];
+      cell1.setAttribute('name', 'ingredientName');
       deleteButton.innerHTML =
         '<button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button>';
     }
@@ -320,10 +328,7 @@ class UpdateRecipePage extends HTMLElement {
     this.shadowRoot
       .getElementById('publishBtn')
       .addEventListener('click', (e) => {
-        console.log('Before preventDefault()');
         e.preventDefault();
-
-        console.log('Before updateData()');
         updateData(title);
       });
     // Get elements of the form
@@ -343,8 +348,10 @@ class UpdateRecipePage extends HTMLElement {
       'update-recipe-direction'
     );
 
-    function updateData(title) {
-      console.log('Title value:   ' + title.value);
+    /**
+     * This function is called when the publish button is clicked and it sends the new inputted data to the database
+     */
+    function updateData() {
       // Select all ingredients
       //let ingredientList = this.shadowRoot.getElementById()
       let quantity = ingredientList.querySelectorAll('input[name="quantity"]');
@@ -424,13 +431,8 @@ class UpdateRecipePage extends HTMLElement {
         title: recipe['title'],
       };
 
-      console.log('New data: ---' + newData.recipe);
-
-      /**
-       * TODO:
-       */
+      //Moves back to home page once POST is called
       function afterFetch() {
-        console.log('IN afterFetch()');
         router.addPage(`recipe_${recipe['id']}`, function () {
           document
             .getElementById('#section--update-recipe')
@@ -446,12 +448,8 @@ class UpdateRecipePage extends HTMLElement {
         router.navigate(`recipe_${recipe['id']}`);
       }
 
+      //Sends data to database
       POST(newData, afterFetch);
-
-      //TODO
-      //1. Delete Recipe Button
-      //2. Check with the backend if the recipe has successfully receive it
-      //3. Check with Recipe.js to have the correct recipe to edit
     }
   }
 }
