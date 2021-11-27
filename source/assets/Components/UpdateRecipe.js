@@ -98,24 +98,24 @@ class UpdateRecipePage extends HTMLElement {
     this.shadowRoot.append(styles, article);
 
     //Display Image form the data
-    var img = this.shadowRoot.getElementById('recipeImage');
-    var imgFile = this.shadowRoot.querySelector('input[type="file"]');
+    // let img = this.shadowRoot.getElementById('recipeImage');
+    // let imgFile = this.shadowRoot.querySelector('input[type="file"]');
 
-    imgFile.addEventListener('change', function () {
-      imageDisplay(this);
-    });
+    // imgFile.addEventListener('change', function () {
+    //   imageDisplay(this);
+    // });
 
-    function imageDisplay(input) {
-      var reader;
-      if (input.files && input.files[0]) {
-        reader = new FileReader();
-        reader.onload = function (e) {
-          img.setAttribute('src', e.target.result);
-        };
+    // function imageDisplay(input) {
+    //   var reader;
+    //   if (input.files && input.files[0]) {
+    //     reader = new FileReader();
+    //     reader.onload = function (e) {
+    //       img.setAttribute('src', e.target.result);
+    //     };
 
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
+    //     reader.readAsDataURL(input.files[0]);
+    //   }
+    // }
 
     //Nav Bar for "Summary", "Ingredients", and "Direcitons"
     //----------------------------------------------------------------
@@ -175,20 +175,18 @@ class UpdateRecipePage extends HTMLElement {
     this.json = data;
     console.log(data);
     //Set Image
-    let oldimage = data.recipe.image;
-    this.shadowRoot.getElementById('recipeImage').setAttribute('src', oldimage);
+    // let oldimage = data.recipe.image;
+    // this.shadowRoot.getElementById('recipeImage').setAttribute('src', oldimage);
 
     //Set Cooking Hour and Mins
     let cookTimeHourPrev = Math.floor(
       parseInt(data.recipe['readyInMinutes']) / 60
     );
     let cookTimeMinPrev = parseInt(data.recipe['readyInMinutes']) % 60;
-    this.shadowRoot
-      .getElementById('#input--cook-time-hour')
-      .setAttribute('value', cookTimeHourPrev);
-    this.shadowRoot
-      .getElementById('#input--cook-time-mins')
-      .setAttribute('value', cookTimeMinPrev);
+    let cookTimeHour = this.shadowRoot.getElementById('#input--cook-time-hour');
+    cookTimeHour.setAttribute('value', cookTimeHourPrev);
+    let cookTimeMin = this.shadowRoot.getElementById('#input--cook-time-mins');
+    cookTimeMin.setAttribute('value', cookTimeMinPrev);
 
     //Set No. of Servings
     this.shadowRoot
@@ -196,10 +194,10 @@ class UpdateRecipePage extends HTMLElement {
       .setAttribute('value', data.recipe['servings']);
 
     //Set the Title and Summery
-    this.shadowRoot.getElementById('updateTitle').innerHTML =
-      data.recipe['title'];
-    this.shadowRoot.getElementById('updateSummary').innerHTML =
-      data.recipe['summary'];
+    let updatedTitle = this.shadowRoot.getElementById('updateTitle');
+    updatedTitle.innerHTML = data.recipe['title'];
+    let updatedSummary = this.shadowRoot.getElementById('updateSummary');
+    updatedSummary.innerHTML = data.recipe['summary'];
 
     //Set Ingredients
     let ingredientTable = this.shadowRoot.getElementById('ingredient-table');
@@ -318,28 +316,35 @@ class UpdateRecipePage extends HTMLElement {
         POST(data, afterDelete);
       });
 
+    console.log('Before publish button');
     this.shadowRoot
       .getElementById('publishBtn')
-      .addEventListener('submit', (e) => {
+      .addEventListener('click', (e) => {
+        console.log('Before preventDefault()');
         e.preventDefault();
-        updateData();
-      });
 
+        console.log('Before updateData()');
+        updateData(title);
+      });
     // Get elements of the form
-    const photo = this.shadowRoot.getElementById('img');
+    //const photo = this.shadowRoot.getElementById('img');
     const cookingTimeHour = this.shadowRoot.getElementById(
       '#input--cook-time-hour'
     );
     const cookingTimeMin = this.shadowRoot.getElementById(
       '#input--cook-time-mins'
     );
-    const servings = this.shadowRoot.getElementById('#input--no-of-serv');
-    const title = this.shadowRoot.getElementById('addTitle');
-    const summary = this.shadowRoot.getElementById('addSummary');
-    const ingredientList = this.shadowRoot.getElementById('ingredient-table');
-    const directions = this.shadowRoot.getElementById('add-recipe-direction');
 
-    function updateData() {
+    const servings = this.shadowRoot.getElementById('#input--no-of-serv');
+    const title = this.shadowRoot.getElementById('updateTitle');
+    const summary = this.shadowRoot.getElementById('updateSummary');
+    const ingredientList = this.shadowRoot.getElementById('ingredient-table');
+    const directions = this.shadowRoot.getElementById(
+      'update-recipe-direction'
+    );
+
+    function updateData(title) {
+      console.log('Title value:   ' + title.value);
       // Select all ingredients
       //let ingredientList = this.shadowRoot.getElementById()
       let quantity = ingredientList.querySelectorAll('input[name="quantity"]');
@@ -353,15 +358,15 @@ class UpdateRecipePage extends HTMLElement {
         'textarea[name="directionStep"]'
       );
 
-      let image = '';
-      let fileReader = new FileReader();
-      fileReader.onload = function () {
-        if (fileReader.result.length > 0) {
-          image = fileReader.result;
-        }
-      };
-      console.log(photo.files[0]);
-      fileReader.readAsDataURL(photo.files[0]);
+      //let image = '';
+      // let fileReader = new FileReader();
+      // fileReader.onload = function () {
+      //   if (fileReader.result.length > 0) {
+      //     image = fileReader.result;
+      //   }
+      // };
+      // console.log(photo.files[0]);
+      // fileReader.readAsDataURL(photo.files[0]);
 
       // For loop for upload all ingredient information
       let extendedIngredients = [];
@@ -396,54 +401,52 @@ class UpdateRecipePage extends HTMLElement {
       const readyInMinutes =
         60 * parseInt(cookingTimeHour.value) + parseInt(cookingTimeMin.value);
 
-      let recipe = {};
       // Send Data
-      setTimeout(function () {
-        recipe = {
-          image: image,
-          readyInMinutes: readyInMinutes,
-          servings: servings.value,
-          title: title.value,
-          summary: summary.value,
-          extendedIngredients: extendedIngredients,
-          analyzedInstructions: instructions,
-          author: 'Martin1234', // TODO: Need to update with curr user
-          id: data['id'],
-        };
+      let recipe = {
+        //image: image,
+        readyInMinutes: readyInMinutes,
+        servings: servings.value,
+        title: title.value,
+        summary: summary.value,
+        extendedIngredients: extendedIngredients,
+        analyzedInstructions: instructions,
+        author: 'Martin1234', // TODO: Need to update with curr user
+        id: data.recipe['id'],
+      };
 
-        // in 'submit' event, call page.updateData = <>
-        // Create the POST message to send to the backend
-        let data = {
-          type: 'updateRecipe',
-          username: 'Martin1234', // TODO: Need to update with curr user
-          password: '1234', // TODO: Need to update with curr password
-          recipe: recipe,
-          title: recipe['title'],
-        };
+      // in 'submit' event, call page.updateData = <>
+      // Create the POST message to send to the backend
+      let newData = {
+        type: 'updateRecipe',
+        username: 'Martin1234', // TODO: Need to update with curr user
+        password: '1234', // TODO: Need to update with curr password
+        recipe: recipe,
+        title: recipe['title'],
+      };
 
-        console.log(data);
+      console.log('New data: ---' + newData.recipe);
 
-        /**
-         * TODO:
-         */
-        function afterFetch() {
-          // router.addPage(`recipe_${recipe['id']}`, function () {
-          //   document
-          //     .getElementById('#section--update-recipe')
-          //     .classList.remove('shown');
-          //   document.getElementById('#section--recipe').classList.add('shown');
-          //   // Fetch and populate recipe page and add to recipe section
-          //   const recipePage = document.createElement('recipe-page');
-          //   recipePage.data = data;
-          //   recipePage.classList.add('shown');
-          //   document.getElementById('#section--recipe').innerHTML = '';
-          //   document.getElementById('#section--recipe').appendChild(recipePage);
-          // });
-          // router.navigate(`recipe_${recipe['id']}`);
-        }
+      /**
+       * TODO:
+       */
+      function afterFetch() {
+        console.log('IN afterFetch()');
+        router.addPage(`recipe_${recipe['id']}`, function () {
+          document
+            .getElementById('#section--update-recipe')
+            .classList.remove('shown');
+          document.getElementById('#section--recipe').classList.add('shown');
+          // Fetch and populate recipe page and add to recipe section
+          const recipePage = document.createElement('recipe-page');
+          recipePage.data = data;
+          recipePage.classList.add('shown');
+          document.getElementById('#section--recipe').innerHTML = '';
+          document.getElementById('#section--recipe').appendChild(recipePage);
+        });
+        router.navigate(`recipe_${recipe['id']}`);
+      }
 
-        POST(data, afterFetch);
-      });
+      POST(newData, afterFetch);
 
       //TODO
       //1. Delete Recipe Button
