@@ -106,6 +106,7 @@ class Recipe_DB:
         self.custom_recipe_count += 1
         name = recipe['title']
         author = recipe['author']
+        recipe['id'] = id
         src = pickle.dumps(recipe)
         self.cur.execute('INSERT INTO Recipes(ID, author, name, src) VALUES(?, ?, ?, ?)', (id, author, name, src))
         self.conn.commit()

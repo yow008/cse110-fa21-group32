@@ -33,9 +33,13 @@ def home_page():
             id = recipe_db.createRecipe(recipe)
             user_db.addRecipe(msg['username'], msg['password'],id)
             return {'msg': 'Success!'}, 201
+        elif msg['type'] == 'updateRecipe':
+            recipe = msg['recipe']
+            user_db.updateRecipe(recipe['id'], recipe)
+            return {'msg': 'Success!'}, 201
         elif msg['type'] == 'deleteRecipe':
             recipe = msg['recipe']
-            recipe_db.removeRecipe(msg['id'])
+            recipe_db.removeRecipe(recipe['id'])
             user_db.removeRecipe(msg['username'], msg['password'],msg['id'])
             return {'msg': 'Success!'}, 201
 
