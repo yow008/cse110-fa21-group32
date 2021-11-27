@@ -341,6 +341,7 @@ class UpdateRecipePage extends HTMLElement {
 
     function updateData() {
       // Select all ingredients
+      //let ingredientList = this.shadowRoot.getElementById()
       let quantity = ingredientList.querySelectorAll('input[name="quantity"]');
       let unit = ingredientList.querySelectorAll('input[name="unit"]');
       let ingredient = ingredientList.querySelectorAll(

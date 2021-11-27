@@ -189,6 +189,10 @@ class RecipePage extends HTMLElement {
       <!--Recipe Summary-->
       <div id="recipe-summaryID" class="recipe-summary" style="display: block">
       <button type="button" class="recipe-summmaryButton">Add to My Favorites</button>
+      <div id="recipe-servingsID" class="recipe-servings">Servings: </div>
+      <div id="recipe-cooktimeID" class="recipe-cooktime">Cooktime: </div>
+      Summary:
+      
       </div>
 
       <!--Recipe Ingredients-->
@@ -245,6 +249,17 @@ class RecipePage extends HTMLElement {
     image.setAttribute('src', getImage(data));
     this.shadowRoot.getElementById('recipe-summaryID').appendChild(image);
     this.shadowRoot.getElementById('recipe-summaryID').appendChild(summary);
+
+    //Set Servings
+     const servings = document.createElement('p');
+     servings.innerHTML = getServings(data);
+     this.shadowRoot.getElementById('recipe-servingsID').appendChild(servings);
+
+    //Set cooktime
+    const cooktime = document.createElement('p');
+    cooktime.innerHTML = timeConvert(getCookTime(data));
+    this.shadowRoot.getElementById('recipe-cooktimeID').appendChild(cooktime);
+ 
 
     //Set Ingredients
     const form = this.shadowRoot.querySelector('form');
@@ -324,8 +339,23 @@ class RecipePage extends HTMLElement {
  * @returns Number of minutes it takes to cook this recipe
  */
 function getCookTime(data) {
-  return data['readyInMinutes'];
+  return data.recipe['readyInMinutes'];
 }
+
+// TIME CONVERT
+/**
+ *
+ * @param {int} n
+ * @returns Number of minutes, hours, and minutes it takes to cook this recipe
+ */
+function timeConvert(n) {
+  var num = n;
+  var hours = (num / 60);
+  var rhours = Math.floor(hours);
+  var minutes = (hours - rhours) * 60;
+  var rminutes = Math.round(minutes);
+  return num + " minutes = " + rhours + " hour(s) and " + rminutes + " minute(s).";
+  }
 
 /**
  *
@@ -333,7 +363,7 @@ function getCookTime(data) {
  * @returns Number of servings this recipe creates
  */
 function getServings(data) {
-  return data['servings'];
+  return data.recipe['servings'];
 }
 
 /**
