@@ -3,7 +3,6 @@
 // IMPORTS
 import { router } from '../scripts/main.js';
 import { GET, POST } from '../scripts/request.js';
-const SERVER_URL = 'http://127.0.0.1:5000';
 
 /**
  * Class: ProfilePage
@@ -109,51 +108,55 @@ class ProfilePage extends HTMLElement {
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
-    
+
     /* Functions for the layout of profile page */
-    var recipesInProfileButton = this.shadowRoot.getElementById('recipe-in-profile-button');
-    var recipesInProfile = this.shadowRoot.getElementById('profile-page-recipeID');
-    var reviewsInProfileButton = this.shadowRoot.getElementById('review-in-profile-button');
-    var reviewsInProfile = this.shadowRoot.getElementById('profile-page-reviewID');
-    recipesInProfileButton.addEventListener('click', e => {
-      recipesInProfileButton.style.color="blue"
-      reviewsInProfileButton.style.color="grey"
-      reviewsInProfile.style.display="none"
-      recipesInProfile.style.display="contents"
+    var recipesInProfileButton = this.shadowRoot.getElementById(
+      'recipe-in-profile-button'
+    );
+    var recipesInProfile = this.shadowRoot.getElementById(
+      'profile-page-recipeID'
+    );
+    var reviewsInProfileButton = this.shadowRoot.getElementById(
+      'review-in-profile-button'
+    );
+    var reviewsInProfile = this.shadowRoot.getElementById(
+      'profile-page-reviewID'
+    );
+    recipesInProfileButton.addEventListener('click', (e) => {
+      recipesInProfileButton.style.color = 'blue';
+      reviewsInProfileButton.style.color = 'grey';
+      reviewsInProfile.style.display = 'none';
+      recipesInProfile.style.display = 'contents';
     });
-    reviewsInProfileButton.addEventListener('click', e => {
-      reviewsInProfileButton.style.color="blue"
-      recipesInProfileButton.style.color="grey"
-      recipesInProfile.style.display="none"
-      reviewsInProfile.style.display="contents"
+    reviewsInProfileButton.addEventListener('click', (e) => {
+      reviewsInProfileButton.style.color = 'blue';
+      recipesInProfileButton.style.color = 'grey';
+      recipesInProfile.style.display = 'none';
+      reviewsInProfile.style.display = 'contents';
     });
 
     const btn = this.shadowRoot.getElementById('#delete-user');
     btn.addEventListener('click', (e) => {
       console.log('Clicked');
     });
-    
+
     const urlParams = new URLSearchParams(window.location.search);
     const user = urlParams.get('user');
     const pass = urlParams.get('pass');
-    getRecipes('Martin1234','1234', this.shadowRoot);
+    getRecipes('Martin1234', '1234', this.shadowRoot);
+  }
 
-  }
-  
-  set recipes(recipes) {
-    
-  }
-  
-  set reviews(reviews) {
-    
-  }
+  set recipes(recipes) {}
+
+  set reviews(reviews) {}
 }
 
 customElements.define('profile-page', ProfilePage);
 
 // GET RECIPES
 function getRecipes(username, password, shadowRoot) {
-  const searchReq = `type=getCustomizedRecipeIDs&user=${encodeURIComponent(username
+  const searchReq = `type=getCustomizedRecipeIDs&user=${encodeURIComponent(
+    username
   )}&pass=${encodeURIComponent(password)}`;
 
   /**
@@ -161,65 +164,61 @@ function getRecipes(username, password, shadowRoot) {
    * @param {*} data
    */
   function atFetch(data) {
-
-    for (let i=0; i<data.ID.length;i++){
-      const image = fetchRecipe(data.ID[i], shadowRoot);//id
-       //div.classList.add('shown');
+    for (let i = 0; i < data.ID.length; i++) {
+      const image = fetchRecipe(data.ID[i], shadowRoot); //id
+      //div.classList.add('shown');
       // listId.push(data.ID[i]);
       //this.shadowRoot.getElementById('recipe-view').appendChild(image);
-      
     }
 
     function fetchRecipe(recipeId, shadowRoot) {
-        const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
-      
-        /**
-         * TODO:
-         * @param {JSON} data
-         */
-        function afterFetch(data) {
-          //javscript to display
-          //console.log(data.recipe.title) // the title 
+      const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
 
-          // Create title element
-          const title = document.createElement('h3');
-          title.innerText = data.recipe.title;
-          //console.log(shadowRoot);
-          shadowRoot.getElementById('profile-page-recipeID').appendChild(title);
-          //console.log(shadowRoot);
-          // Add page to router so navigate works
-          router.addPage(`recipe_${recipeId}`, function () {
-        
-            document
-              .getElementById('#section--profile')
-              .classList.remove('shown');
-        
-            document.getElementById('#section--recipe').classList.add('shown');
-        
-            // Fetch and populate recipe page and add to recipe section
-            const recipePage = document.createElement('recipe-page');
-            // fetchRecipe(recipeId, recipePage);
-            recipePage.data = data;
-            recipePage.classList.add('shown');
-            document.getElementById('#section--recipe').innerHTML = '';
-            document.getElementById('#section--recipe').appendChild(recipePage);
-          });
+      /**
+       * TODO:
+       * @param {JSON} data
+       */
+      function afterFetch(data) {
+        //javscript to display
+        //console.log(data.recipe.title) // the title
 
-          // Add click listener to title element -> navigates to recipe card page
-          title.addEventListener('click', (e) => {
-            // let recipeView = document.getElementById('#profile-page-recipeID');
-            // while (recipeView.firstChild) {
-            //   recipeView.removeChild(recipeView.firstChild);
-            // }
-            router.navigate(`recipe_${recipeId}`);
-          });
-          
-        }
+        // Create title element
+        const title = document.createElement('h3');
+        title.innerText = data.recipe.title;
+        //console.log(shadowRoot);
+        shadowRoot.getElementById('profile-page-recipeID').appendChild(title);
+        //console.log(shadowRoot);
+        // Add page to router so navigate works
+        router.addPage(`recipe_${recipeId}`, function () {
+          document
+            .getElementById('#section--profile')
+            .classList.remove('shown');
 
-        GET(fetchReq, afterFetch);
+          document.getElementById('#section--recipe').classList.add('shown');
+
+          // Fetch and populate recipe page and add to recipe section
+          const recipePage = document.createElement('recipe-page');
+          // fetchRecipe(recipeId, recipePage);
+          recipePage.data = data;
+          recipePage.classList.add('shown');
+          document.getElementById('#section--recipe').innerHTML = '';
+          document.getElementById('#section--recipe').appendChild(recipePage);
+        });
+
+        // Add click listener to title element -> navigates to recipe card page
+        title.addEventListener('click', (e) => {
+          // let recipeView = document.getElementById('#profile-page-recipeID');
+          // while (recipeView.firstChild) {
+          //   recipeView.removeChild(recipeView.firstChild);
+          // }
+          router.navigate(`recipe_${recipeId}`);
+        });
       }
+
+      GET(fetchReq, afterFetch);
+    }
   }
-  
+
   GET(searchReq, atFetch);
 }
 /**
