@@ -65,6 +65,7 @@ class Recipe_DB:
     def cacheRecipe(self, ID, src):
         try:
             # Create recipe with ID, name, author, URL, src, image
+            print(src)
             name = src['title']
             author = 'Spoonacular'
             url = src['sourceUrl']
@@ -146,8 +147,8 @@ class Recipe_DB:
             Input:
             - recipe id
         '''
-        self.cur.execute('DELETE FROM Recipes WHERE ID = ?', (id))
-        self.cur.commit()
+        self.cur.execute('DELETE FROM Recipes WHERE ID = %d' % (id))
+        self.conn.commit()
         # TODO: Check if id exists? 
 
 if __name__ == '__main__':
