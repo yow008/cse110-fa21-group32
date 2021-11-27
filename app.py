@@ -35,12 +35,13 @@ def home_page():
             return {'msg': 'Success!'}, 201
         elif msg['type'] == 'updateRecipe':
             recipe = msg['recipe']
+            recipe_db.updateRecipe(recipe['id'], recipe)
             user_db.updateRecipe(recipe['id'], recipe)
             return {'msg': 'Success!'}, 201
         elif msg['type'] == 'deleteRecipe':
             recipe = msg['recipe']
             recipe_db.removeRecipe(recipe['id'])
-            user_db.removeRecipe(msg['username'], msg['password'],msg['id'])
+            user_db.removeRecipe(msg['username'], msg['password'],recipe['id'])
             return {'msg': 'Success!'}, 201
 
     if request.method == 'GET':
