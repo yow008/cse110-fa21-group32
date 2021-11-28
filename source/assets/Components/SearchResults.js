@@ -2,7 +2,7 @@
 
 // IMPORTS
 import { router } from '../scripts/main.js';
-import { GET, POST } from '../scripts/request.js';
+import { GET } from '../scripts/request.js';
 
 // GLOBALS
 
@@ -82,9 +82,9 @@ function createRecipeCards(results, section) {
     // Add the corresponding expand recipe view to router
     addPage(data.id);
 
-    card.addEventListener('click', e => {
+    card.addEventListener('click', () => {
       let recipeView = document.getElementById('#section--recipe');
-      while(recipeView.firstChild){
+      while (recipeView.firstChild) {
         recipeView.removeChild(recipeView.firstChild);
       }
       router.navigate(`recipe_${data.id}`);
@@ -111,9 +111,9 @@ function addPage(recipeId) {
     const recipePage = document.createElement('recipe-page');
     fetchRecipe(recipeId, recipePage);
     recipePage.classList.add('shown');
-    document.getElementById('#section--recipe').innerHTML='';
+    document.getElementById('#section--recipe').innerHTML = '';
     document.getElementById('#section--recipe').appendChild(recipePage);
-  }); 
+  });
 }
 
 /**

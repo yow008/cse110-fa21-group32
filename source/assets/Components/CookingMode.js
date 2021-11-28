@@ -1,8 +1,8 @@
 // CookingMode.js
 
 // IMPORTS
-import { router } from '../scripts/main.js';
-import { GET, POST } from '../scripts/request.js';
+// import { router } from '../scripts/main.js';
+// import { GET, POST } from '../scripts/request.js';
 
 /**
  * Class: CookingMode

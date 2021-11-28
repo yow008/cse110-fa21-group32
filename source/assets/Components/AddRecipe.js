@@ -4,7 +4,7 @@
 
 // IMPORTS
 import { router } from '../scripts/main.js';
-import { GET, POST } from '../scripts/request.js';
+import { POST } from '../scripts/request.js';
 
 /**
  * Class: AddRecipePage
@@ -286,7 +286,7 @@ class AddRecipePage extends HTMLElement {
     });
 
     // Get elements of the form
-    const photo = this.shadowRoot.getElementById('img');
+    // const photo = this.shadowRoot.getElementById('img'); TODO: photo issue needs to be resolved
     const cookingTimeHour = this.shadowRoot.getElementById(
       '#input--cook-time-hour'
     );
