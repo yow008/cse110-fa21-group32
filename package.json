@@ -22,7 +22,10 @@
   },
   "jest": {
     "preset": "jest-puppeteer",
-    "verbose": true
+    "verbose": true,
+    "roots": [
+      "./test"
+    ]
   },
   "prettier": {
     "tabWidth": 2,
