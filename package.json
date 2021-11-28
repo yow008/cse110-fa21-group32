@@ -48,7 +48,8 @@
         }
       ],
       "comment-empty-line-before": null,
-      "color-hex-length": null
+      "color-hex-length": null,
+      "selector-class-pattern": null
     }
   },
   "dependencies": {}

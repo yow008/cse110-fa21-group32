@@ -3,6 +3,7 @@
 
   "rules": {
     "close-order": "error",
-    "void": ["warn", { "style": "omit" }]
+    "void": ["warn", { "style": "omit" }],
+    "no-inline-style": "warn"
   }
 }
