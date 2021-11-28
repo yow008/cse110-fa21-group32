@@ -63,7 +63,7 @@ jobs:
         uses: creyD/prettier_action@v4.0
         with:
           # This part is also where you can pass other options, for example:
-          prettier_options: --write **/*.{js,json,html,css}
+          prettier_options: --write source/assets/**/*.{js,css} --write source/*.html
           only_changed: True
 
   js-eslint:
@@ -76,7 +76,10 @@ jobs:
 
       # Exclude the test.js files due to errors about jest functions
       - name: Run ESLint
-        run: npx eslint source/**/*.js
+        run: npx eslint source/assets/scripts/*.js
+
+      - name: Run ESLint
+        run: npx eslint source/assets/Components/*.js
 
   js-test:
     needs: prettier
@@ -102,7 +105,7 @@ jobs:
 
       # Only validates source .html files, can generalize if desired
       - name: Run HTML linter
-        run: npx html-validate source/**/*.html
+        run: npx html-validate source/*.html
 
   css-lint:
     needs: [build, prettier]
@@ -117,4 +120,4 @@ jobs:
 
       # Only validates source .css files, can generalize if desired
       - name: Run CSS linter
-        run: npx stylelint source/**/*.css
+        run: npx stylelint source/assets/styles/*.css

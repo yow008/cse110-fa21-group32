@@ -22,7 +22,10 @@
   },
   "jest": {
     "preset": "jest-puppeteer",
-    "verbose": true
+    "verbose": true,
+    "roots": [
+      "./test"
+    ]
   },
   "prettier": {
     "tabWidth": 2,
@@ -46,7 +49,10 @@
           ],
           "disableFix": true
         }
-      ]
+      ],
+      "comment-empty-line-before": null,
+      "color-hex-length": null,
+      "selector-class-pattern": null
     }
   },
   "dependencies": {}

@@ -28,3 +28,7 @@ Our app can be found here: [https://cse110-fa21-group32.github.io/cse110-fa21-gr
 ### CI/CD Pipeline Overview
 
 ## Issue Labels
+
+## Work On
+- saving the history, going back and forth
+- updating the url when traveling through the pages
