@@ -63,7 +63,7 @@ jobs:
         uses: creyD/prettier_action@v4.0
         with:
           # This part is also where you can pass other options, for example:
-          prettier_options: --write **/*.{js,json,html,css}
+          prettier_options: --write **/*.{js,json,html,css} --ignore-path source/assets/'full calendar'
           only_changed: True
 
   js-eslint:
