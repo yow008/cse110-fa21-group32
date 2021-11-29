@@ -1,6 +1,10 @@
 // Recipe.js
 import { router } from '../scripts/main.js';
 
+/**
+ * Class: RecipePage
+ * TODO:
+ */
 class RecipePage extends HTMLElement {
   constructor() {
     super();
@@ -10,7 +14,7 @@ class RecipePage extends HTMLElement {
     const styles = document.createElement('style');
     const article = document.createElement('article');
 
-    // Fill in styles and root element
+    // Styles and root element
     styles.innerHTML = ``;
     article.innerHTML = `
 
@@ -75,35 +79,6 @@ class RecipePage extends HTMLElement {
         .setAttribute('style', 'display: none');
     });
 
-    //Add elements to summary
-    /*let summaryDiv = this.shadowRoot.getElementById('recipe-summaryID');
-
-    //Create image
-    let image = document.createElement('img');
-    image.src = getImage(data);
-    image.alt = 'No Image to Display';
-    image.id = 'summaryImage';
-
-    //Create Coook Time
-    let cookTime = document.createElement('p');
-    cookTime.innerHTML = 'Cook Time ' + getCookTime(data) + ' minutes';
-    cookTime.id = 'summaryCookTime';
-
-    //Create Servings
-    let servings = document.createElement('p');
-    servings.innerHTML = 'Servings ' + getServings(data);
-    servings.id = 'summaryServings';
-
-    //Create Summary
-    let summary = document.createElement('p');
-    summary.innerHTML = getSummary(data);
-    summary.id = 'summarySummary';
-
-    summaryDiv.appendChild(image);
-    summaryDiv.appendChild(cookTime);
-    summaryDiv.appendChild(servings);
-    summaryDiv.appendChild(summary);*/
-
     //Ingredients
     this.shadowRoot.getElementById('ToIng').addEventListener('click', (e) => {
       e.preventDefault();
@@ -118,34 +93,6 @@ class RecipePage extends HTMLElement {
         .setAttribute('style', 'display: none');
     });
 
-    //Add Ingredients to display
-    /*let table = this.shadowRoot
-      .getElementById('recipe-ingredientsID')
-      .querySelector('table');
-    let ingredientsArray = getIngreds(data);
-    for (let i = 0; i < ingredientsArray.length; i++) {
-      let row = table.insertRow(i);
-      let cell1 = row.insertCell(0);
-      let cell2 = row.insertCell(1);
-
-      let checkBox = document.createElement('input');
-      checkBox.type = 'checkbox';
-      checkBox.name = 'checkbox' + i;
-      cell1.appendChild(checkBox);
-
-      let ingredient = ingredientsArray[i];
-      let label = document.createElement('label');
-      let ingredientString = document.createTextNode(
-        ingredient['amount'] +
-          ' ' +
-          ingredient['unit'] +
-          ' of ' +
-          ingredient['name']
-      );
-      label.appendChild(ingredientString);
-      cell2.appendChild(label);
-    }*/
-
     //Directions
     this.shadowRoot.getElementById('ToDir').addEventListener('click', (e) => {
       e.preventDefault();
@@ -159,12 +106,6 @@ class RecipePage extends HTMLElement {
         .getElementById('recipe-directionID')
         .setAttribute('style', 'display: show');
     });
-
-    //Add Directions to display
-    /*let directionsDiv = this.shadowRoot.getElementById('recipe-directionID');
-    let instructions = document.createElement('div');
-    instructions.innerHTML = getDirs(data);
-    directionsDiv.appendChild(instructions);*/
   }
 
   set data(data) {
@@ -235,13 +176,12 @@ class RecipePage extends HTMLElement {
       recipeUpdatePage.data = this.json;
       router.navigate('update-recipe');
     });
-    //-----------------------------------------------------------------------------
 
-    //Set Title
+    // Set Title
     const title = getTitle(data).toUpperCase();
     this.shadowRoot.querySelector('h2').innerHTML = title;
 
-    //Set Summary
+    // Set Summary
     const summary = document.createElement('p');
     const image = document.createElement('img');
     summary.innerHTML = getSummary(data);
@@ -249,12 +189,12 @@ class RecipePage extends HTMLElement {
     this.shadowRoot.getElementById('recipe-summaryID').appendChild(image);
     this.shadowRoot.getElementById('recipe-summaryID').appendChild(summary);
 
-    //Set Servings
-     const servings = document.createElement('p');
-     servings.innerHTML = getServings(data);
-     this.shadowRoot.getElementById('recipe-servingsID').appendChild(servings);
+    // Set Servings
+    const servings = document.createElement('p');
+    servings.innerHTML = getServings(data);
+    this.shadowRoot.getElementById('recipe-servingsID').appendChild(servings);
 
-    //Set cooktime
+    // Set cooktime
     const cooktime = document.createElement('p');
     cooktime.innerHTML = timeConvert(getCookTime(data));
     this.shadowRoot.getElementById('recipe-cooktimeID').appendChild(cooktime);
@@ -276,7 +216,7 @@ class RecipePage extends HTMLElement {
       form.append(div);
     }
 
-    //Set Directions
+    // Set Directions
     const list = this.shadowRoot.querySelector('ol');
     for (let i = 0; i < data.recipe.analyzedInstructions[0].steps.length; i++) {
       const step = data.recipe.analyzedInstructions[0].steps[i];
@@ -376,12 +316,14 @@ function getCookTime(data) {
  */
 function timeConvert(n) {
   var num = n;
-  var hours = (num / 60);
+  var hours = num / 60;
   var rhours = Math.floor(hours);
   var minutes = (hours - rhours) * 60;
   var rminutes = Math.round(minutes);
-  return num + " minutes = " + rhours + " hour(s) and " + rminutes + " minute(s).";
-  }
+  return (
+    num + ' minutes = ' + rhours + ' hour(s) and ' + rminutes + ' minute(s).'
+  );
+}
 
 /**
  *
@@ -419,25 +361,26 @@ function getSummary(data) {
   return data.recipe.summary;
 }
 
-// INGREDIENTS ELEMENTS
-/**
- *
- * @param {JSON} data
- * @returns Array of objects where each object contains an ingredient summary,
- * the ingredient summary object looks like, {name:"", unit:"", amount:""}
- */
-function getIngreds(data) {
-  return data['extendedIngredients'];
-}
+// TODO: remove if remains unused
+// // INGREDIENTS ELEMENTS
+// /**
+//  *
+//  * @param {JSON} data
+//  * @returns Array of objects where each object contains an ingredient summary,
+//  * the ingredient summary object looks like, {name:"", unit:"", amount:""}
+//  */
+// function getIngreds(data) {
+//   return data['extendedIngredients'];
+// }
 
-// DIRECTIONS ELEMENTS
-/**
- *
- * @param {JSON} data
- * @returns An ordered list <ol> with each step in its own list element <li>
- */
-function getDirs(data) {
-  return data['instructions'];
-}
+// // DIRECTIONS ELEMENTS
+// /**
+//  *
+//  * @param {JSON} data
+//  * @returns An ordered list <ol> with each step in its own list element <li>
+//  */
+// function getDirs(data) {
+//   return data['instructions'];
+// }
 
 customElements.define('recipe-page', RecipePage);
