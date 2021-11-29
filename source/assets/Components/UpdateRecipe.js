@@ -208,19 +208,38 @@ class UpdateRecipePage extends HTMLElement {
 
     for (let i = 0; i < ingredientsPrev.length; i++) {
       let row = ingredientTable.insertRow(i + 1);
-      let cell1 = row.insertCell(0);
-      let cell2 = row.insertCell(1);
-      let cell3 = row.insertCell(2);
+      let quantity = row.insertCell(0);
+      let unit = row.insertCell(1);
+      let ingredient = row.insertCell(2);
       let deleteButton = row.insertCell(3);
 
-      cell1.innerHTML = ingredientsPrev[i]['amount'];
+      let quantityTextArea = document.createElement('input');
+      quantityTextArea.setAttribute('type', 'text');
+      quantityTextArea.setAttribute('name', 'quantity');
+      quantityTextArea.setAttribute('value', ingredientsPrev[i]['amount']);
+      quantity.appendChild(quantityTextArea);
 
-      cell1.setAttribute('name', 'quantity');
-      console.log(cell1);
-      cell2.innerHTML = ingredientsPrev[i]['unit'];
-      cell1.setAttribute('name', 'unit');
-      cell3.innerHTML = ingredientsPrev[i]['name'];
-      cell1.setAttribute('name', 'ingredientName');
+      let unitTextArea = document.createElement('input');
+      unitTextArea.setAttribute('type', 'text');
+      unitTextArea.setAttribute('name', 'unit');
+      unitTextArea.setAttribute('value', ingredientsPrev[i]['unit']);
+      unit.appendChild(unitTextArea);
+
+      let ingredientTextArea = document.createElement('input');
+      ingredientTextArea.setAttribute('type', 'text');
+      ingredientTextArea.setAttribute('name', 'ingredientName');
+      ingredientTextArea.setAttribute('value', ingredientsPrev[i]['name']);
+      ingredient.appendChild(ingredientTextArea);
+
+      // '<input type="text" name="quantity"/>'
+
+      // quantity.innerHTML = ingredientsPrev[i]['amount'];
+      // quantity.setAttribute('name', 'quantity');
+      // unit.innerHTML = ingredientsPrev[i]['unit'];
+      // unit.setAttribute('name', 'unit');
+      // ingredient.innerHTML = ingredientsPrev[i]['name'];
+      // ingredient.setAttribute('name', 'ingredientName');
+
       deleteButton.innerHTML =
         '<button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button>';
     }
