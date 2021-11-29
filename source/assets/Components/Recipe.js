@@ -286,6 +286,7 @@ class RecipePage extends HTMLElement {
     //"Add to list" button -> send the data to Grocery list
     const checklist = this.shadowRoot.getElementById('addToList');
     checklist.addEventListener('click', e => {
+      e.preventDefault();
       getCheckedIngredient();
     });
   }
