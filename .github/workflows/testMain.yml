@@ -122,23 +122,23 @@ jobs:
       - name: Run CSS linter
         run: npx stylelint source/assets/styles/*.css
 
-  py-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-      - name: Install Python dependencies
-        run: |
-          pip install pipenv
-          pipenv install --deploy --dev --system
-      - uses: wearerequired/lint-action@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          black: true
-          auto_fix: true
+  # py-lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-python@v2
+  #     - name: Install Python dependencies
+  #       run: |
+  #         pip install pipenv
+  #         pipenv install --deploy --dev --system
+  #     - uses: wearerequired/lint-action@v1
+  #       with:
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
+  #         black: true
+  #         auto_fix: true
 
-  py-lint2:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: ricardochaves/python-lint@v1.4.0
+  # py-lint2:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: ricardochaves/python-lint@v1.4.0
