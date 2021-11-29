@@ -32,6 +32,20 @@ jobs:
           # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
           node-version: ">=12.x"
 
+      # Resource: https://dev.to/github/caching-dependencies-to-speed-up-workflows-in-github-actions-3efl
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
       - name: Install npm
         run: npm install
 
@@ -49,7 +63,7 @@ jobs:
         uses: creyD/prettier_action@v4.0
         with:
           # This part is also where you can pass other options, for example:
-          prettier_options: --write **/*.{js,json,html,css}
+          prettier_options: --write source/assets/**/*.{js,css} --write source/*.html
           only_changed: True
 
   js-eslint:
@@ -63,6 +77,9 @@ jobs:
       # Exclude the test.js files due to errors about jest functions
       - name: Run ESLint
         run: npx eslint source/assets/scripts/*.js
+
+      - name: Run ESLint
+        run: npx eslint source/assets/Components/*.js
 
   js-test:
     needs: prettier
@@ -86,12 +103,9 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2.4.1
 
-      - name: Install HTML validator
-        run: npm install --save-dev html-validate
-
       # Only validates source .html files, can generalize if desired
       - name: Run HTML linter
-        run: npx html-validate source/**/*.html
+        run: npx html-validate source/*.html
 
   css-lint:
     needs: [build, prettier]
@@ -106,4 +120,25 @@ jobs:
 
       # Only validates source .css files, can generalize if desired
       - name: Run CSS linter
-        run: npx stylelint source/**/*.css
+        run: npx stylelint source/assets/styles/*.css
+
+  # py-lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-python@v2
+  #     - name: Install Python dependencies
+  #       run: |
+  #         pip install pipenv
+  #         pipenv install --deploy --dev --system
+  #     - uses: wearerequired/lint-action@v1
+  #       with:
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
+  #         black: true
+  #         auto_fix: true
+
+  # py-lint2:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v1
+  #     - uses: ricardochaves/python-lint@v1.4.0
