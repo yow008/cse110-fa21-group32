@@ -279,13 +279,13 @@ class RecipePage extends HTMLElement {
           //TODO: Nasty Array with Recipe Name, ID, and Checked ingredients
           listAll['name'] = title;
           listAll['id'] = data.recipe.id;
-          listAll['ingredients'] =ingredientsSelect;
+          listAll['ingredients'] = ingredientsSelect;
 
         }
       }
       console.log(ingredientsSelect);
       console.log(listAll);
-      return ingredientsSelect;
+      return listAll;
     }
 
     //"Add to list" button -> send the data to Grocery list
