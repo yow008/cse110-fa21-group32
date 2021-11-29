@@ -325,10 +325,10 @@ class AddRecipePage extends HTMLElement {
       //let image = photo.querySelector('input[type="file"]');
       //console.log(image);
       //console.log(photo);
-      console.log(imgFile.files[0]);
-      let imageData = new FormData();
-      imageData.append('file', imgFile.files[0]);
-      console.log(imageData);
+      // console.log(imgFile.files[0]);
+      // let imageData = new FormData();
+      // imageData.append('file', imgFile.files[0]);
+      // console.log(imageData);
 
       // let fileReader = new FileReader();
       // fileReader.onload = function () {
@@ -373,7 +373,7 @@ class AddRecipePage extends HTMLElement {
       // Create recipe JSON to send to the backend
       setTimeout(function () {
         let recipe = {
-          image: imageData,
+          // image: imageData,
           readyInMinutes: readyInMinutes,
           servings: servings.value,
           title: title.value,
