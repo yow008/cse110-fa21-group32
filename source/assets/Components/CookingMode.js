@@ -1,12 +1,9 @@
 // CookingMode.js
 
-// IMPORTS
-//import { router } from '../scripts/main.js';
-//import { GET, POST } from '../scripts/request.js';
+// TODO: IMPORTS (i don't know if we need this but it works for now without import)
 
 /**
  * Class: CookingMode
- * TODO:
  */
 class CookingMode extends HTMLElement {
   constructor() {
