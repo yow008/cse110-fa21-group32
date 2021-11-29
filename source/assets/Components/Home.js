@@ -32,11 +32,28 @@ class HomePage extends HTMLElement {
         <button id="#btn-recipe" type="button">See Added Recipes</button>
         <div id="#recipeDiv">
         </div>
-        <ul>
-            <li> <button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></li>
-            <li> <button type="menu">Recipe 2 (not linked)</button></li>
-            <li> <button type="menu">Recipe 3 (not linked)</button></li>
-        </ul>
+        <div id=#todayMeals>
+        <h3>Today's Meals</h3>
+          <ul>
+              <li> <button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></li>
+              <li> <button type="menu">Recipe 2 (not linked)</button></li>
+              <li> <button type="menu">Recipe 3 (not linked)</button></li>
+          </ul>
+
+          <h3>Recently Visited</h3>
+          <ul>
+              <li> <button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></li>
+              <li> <button type="menu">Recipe 2 (not linked)</button></li>
+              <li> <button type="menu">Recipe 3 (not linked)</button></li>
+          </ul>
+
+          <h3>Favorites</h3>
+          <ul>
+              <li> <button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></li>
+              <li> <button type="menu">Recipe 2 (not linked)</button></li>
+              <li> <button type="menu">Recipe 3 (not linked)</button></li>
+          </ul>
+        </div>
         `;
 
     // Append elements to the shadow root
