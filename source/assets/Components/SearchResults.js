@@ -101,6 +101,7 @@ function addPage(recipeId) {
     document.getElementById('#section--home').classList.remove('shown');
     document.getElementById('#section--search-bar').classList.remove('shown');
     document.getElementById('#section--grocery').classList.remove('shown');
+    document.getElementById('#section--cooking-mode').classList.remove('shown');
 
     document
       .getElementById('#section--search-results')
