@@ -2,7 +2,7 @@
 
 // IMPORTS
 import { router } from '../scripts/main.js';
-import { GET, POST } from '../scripts/request.js';
+import { GET /*, POST*/ } from '../scripts/request.js';
 
 /**
  * Class: ProfilePage
@@ -17,7 +17,7 @@ class ProfilePage extends HTMLElement {
     const styles = document.createElement('style');
     const article = document.createElement('article');
 
-    /* Added styles */
+    // Added styles
     styles.innerHTML = `
     h2{
         background-color: #CA676A;
@@ -67,7 +67,6 @@ class ProfilePage extends HTMLElement {
     .profile-page-review {
       display: none;
     }
-    
     `;
 
     /* Added article */
@@ -109,7 +108,7 @@ class ProfilePage extends HTMLElement {
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
 
-    /* Functions for the layout of profile page */
+    // Functions for the layout of profile page
     var recipesInProfileButton = this.shadowRoot.getElementById(
       'recipe-in-profile-button'
     );
@@ -122,13 +121,13 @@ class ProfilePage extends HTMLElement {
     var reviewsInProfile = this.shadowRoot.getElementById(
       'profile-page-reviewID'
     );
-    recipesInProfileButton.addEventListener('click', (e) => {
+    recipesInProfileButton.addEventListener('click', () => {
       recipesInProfileButton.style.color = 'blue';
       reviewsInProfileButton.style.color = 'grey';
       reviewsInProfile.style.display = 'none';
       recipesInProfile.style.display = 'contents';
     });
-    reviewsInProfileButton.addEventListener('click', (e) => {
+    reviewsInProfileButton.addEventListener('click', () => {
       reviewsInProfileButton.style.color = 'blue';
       recipesInProfileButton.style.color = 'grey';
       recipesInProfile.style.display = 'none';
@@ -136,14 +135,11 @@ class ProfilePage extends HTMLElement {
     });
 
     const btn = this.shadowRoot.getElementById('#delete-user');
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', () => {
       console.log('Clicked');
     });
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const user = urlParams.get('user');
-    const pass = urlParams.get('pass');
-    getRecipes('Martin1234', '1234', this.shadowRoot);
+    getRecipes('Martin1234', '1234', this.shadowRoot); // TODO: change user/pass
   }
 
   set recipes(recipes) {}
@@ -151,9 +147,12 @@ class ProfilePage extends HTMLElement {
   set reviews(reviews) {}
 }
 
-customElements.define('profile-page', ProfilePage);
-
-// GET RECIPES
+/**
+ *
+ * @param {*} username
+ * @param {*} password
+ * @param {*} shadowRoot
+ */
 function getRecipes(username, password, shadowRoot) {
   const searchReq = `type=getCustomizedRecipeIDs&user=${encodeURIComponent(
     username
@@ -165,10 +164,7 @@ function getRecipes(username, password, shadowRoot) {
    */
   function atFetch(data) {
     for (let i = 0; i < data.ID.length; i++) {
-      const image = fetchRecipe(data.ID[i], shadowRoot); //id
-      //div.classList.add('shown');
-      // listId.push(data.ID[i]);
-      //this.shadowRoot.getElementById('recipe-view').appendChild(image);
+      fetchRecipe(data.ID[i], shadowRoot);
     }
 
     function fetchRecipe(recipeId, shadowRoot) {
@@ -179,15 +175,11 @@ function getRecipes(username, password, shadowRoot) {
        * @param {JSON} data
        */
       function afterFetch(data) {
-        //javscript to display
-        //console.log(data.recipe.title) // the title
-
         // Create title element
         const title = document.createElement('h3');
         title.innerText = data.recipe.title;
-        //console.log(shadowRoot);
         shadowRoot.getElementById('profile-page-recipeID').appendChild(title);
-        //console.log(shadowRoot);
+
         // Add page to router so navigate works
         router.addPage(`recipe_${recipeId}`, function () {
           document
@@ -198,7 +190,6 @@ function getRecipes(username, password, shadowRoot) {
 
           // Fetch and populate recipe page and add to recipe section
           const recipePage = document.createElement('recipe-page');
-          // fetchRecipe(recipeId, recipePage);
           recipePage.data = data;
           recipePage.classList.add('shown');
           document.getElementById('#section--recipe').innerHTML = '';
@@ -206,7 +197,7 @@ function getRecipes(username, password, shadowRoot) {
         });
 
         // Add click listener to title element -> navigates to recipe card page
-        title.addEventListener('click', (e) => {
+        title.addEventListener('click', () => {
           // let recipeView = document.getElementById('#profile-page-recipeID');
           // while (recipeView.firstChild) {
           //   recipeView.removeChild(recipeView.firstChild);
@@ -221,36 +212,5 @@ function getRecipes(username, password, shadowRoot) {
 
   GET(searchReq, atFetch);
 }
-/**
- *     // Add the corresponding expand recipe view to router
-    addPage(data.id);
 
-    card.addEventListener('click', (e) => {
-      let recipeView = document.getElementById('#section--recipe');
-      while (recipeView.firstChild) {
-        recipeView.removeChild(recipeView.firstChild);
-      }
-      router.navigate(`recipe_${data.id}`);
-    });
-  });
-}
-function addPage(recipeId) {
-  router.addPage(`recipe_${recipeId}`, function () {
-    document.getElementById('#section--home').classList.remove('shown');
-    document.getElementById('#section--search-bar').classList.remove('shown');
-
-    document
-      .getElementById('#section--search-results')
-      .classList.remove('shown');
-
-    document.getElementById('#section--recipe').classList.add('shown');
-
-    // Fetch and populate recipe page and add to recipe section
-    const recipePage = document.createElement('recipe-page');
-    fetchRecipe(recipeId, recipePage);
-    recipePage.classList.add('shown');
-    document.getElementById('#section--recipe').innerHTML = '';
-    document.getElementById('#section--recipe').appendChild(recipePage);
-  });
-}
- */
+customElements.define('profile-page', ProfilePage);

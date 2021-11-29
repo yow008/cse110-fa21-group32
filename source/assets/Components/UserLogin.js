@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    inputElement.addEventListener('input', (e) => {
+    inputElement.addEventListener('input', () => {
       clearInputError(inputElement);
     });
   });

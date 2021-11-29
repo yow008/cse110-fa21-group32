@@ -1,6 +1,6 @@
 // UpdateRecipe.js
 import { router } from '../scripts/main.js';
-import { GET, POST } from '../scripts/request.js';
+import { POST } from '../scripts/request.js';
 
 class UpdateRecipePage extends HTMLElement {
   constructor() {
@@ -317,7 +317,7 @@ class UpdateRecipePage extends HTMLElement {
     //Delete Recipe
     this.shadowRoot
       .getElementById('deleteRecipe')
-      .addEventListener('click', (e) => {
+      .addEventListener('click', () => {
         let recipe = {
           id: this.json['recipe']['id'],
         };

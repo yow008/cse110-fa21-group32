@@ -5,7 +5,7 @@
 // IMPORTS
 // import { formatters } from 'stylelint';
 import { router } from '../scripts/main.js';
-import { GET, POST } from '../scripts/request.js';
+import { POST } from '../scripts/request.js';
 
 /**
  * Class: AddRecipePage
@@ -288,9 +288,14 @@ class AddRecipePage extends HTMLElement {
     });
 
     // Get elements of the form
-    //const photo = this.shadowRoot.getElementById('imgfile');
-    const cookingTimeHour = this.shadowRoot.getElementById('#input--cook-time-hour');
-    const cookingTimeMin = this.shadowRoot.getElementById('#input--cook-time-mins');
+
+    // const photo = this.shadowRoot.getElementById('img'); TODO: photo issue needs to be resolved
+    const cookingTimeHour = this.shadowRoot.getElementById(
+      '#input--cook-time-hour'
+    );
+    const cookingTimeMin = this.shadowRoot.getElementById(
+      '#input--cook-time-mins'
+    );
 
     const servings = this.shadowRoot.getElementById('#input--no-of-serv');
     const title = this.shadowRoot.getElementById('addTitle');

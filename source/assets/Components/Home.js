@@ -70,14 +70,6 @@ class HomePage extends HTMLElement {
       console.log('DELETE');
       deleteUser(user, pass);
     });
-
-    // TODO: delete this and show recipes Profile.js (this was a demo hack)
-    const ownRecipes = this.shadowRoot.getElementById('#btn-recipe');
-    ownRecipes.addEventListener('click', () => {
-      console.log('SHOW USERS');
-      const divElem = this.shadowRoot.getElementById('#recipeDiv');
-      getOwnRecipes(user, pass);
-    });
   }
 }
 
@@ -126,70 +118,4 @@ function deleteUser(username, password) {
   }
 
   POST(msg, afterDelete);
-}
-
-/**
- *
- * @param {*} username
- * @param {*} password
- */
-function getOwnRecipes(username, password) {
-  const getOwnReq = `type=getCustomizedRecipeIDs&user=${encodeURIComponent(
-    username
-  )}&pass=${encodeURIComponent(password)}`;
-
-  /**
-   *
-   * @param {*} data
-   */
-  function getFn(data) {
-    Object.keys(data).forEach(function (key) {
-      const btn = document.createElement('button');
-      console.log(data[key]);
-      router.addPage(`recipe_${data[key]}`, function () {
-        document.getElementById('#section--home').classList.remove('shown');
-        document
-          .getElementById('#section--search-bar')
-          .classList.remove('shown');
-
-        document.getElementById('#section--recipe').classList.add('shown');
-
-        // Fetch and populate recipe page and add to recipe section
-        const recipePage = document.createElement('recipe-page');
-        fetchRecipe(data[key], recipePage); //TODO: NEEDS FIXING
-        recipePage.classList.add('shown');
-        document.getElementById('#section--recipe').appendChild(recipePage);
-      });
-
-      btn.addEventListener('click', () => {
-        router.navigate(`recipe_${data[key]}`);
-      });
-      btn.innerHTML = data[key];
-      console.log(document.getElementById('#section--home'));
-      document.getElementById('#section--home').appendChild(btn);
-    });
-    //setFormMessage(loginForm, 'error', 'Invalid username or password!');
-  }
-
-  GET(getOwnReq, getFn);
-}
-
-/**
- * Uses the recipe ID to get the full json details of the recipe. Once
- * the recipe is found, set the recipe information.
- * @param {String} recipeId
- * @param {SearchResultsPage} recipePage
- */
-function fetchRecipe(recipeId, recipePage) {
-  const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
-
-  /**
-   * TODO:
-   * @param {*} data
-   */
-  function afterFetch(data) {
-    recipePage.data = data;
-  }
-
-  POST(fetchReq, afterFetch);
 }

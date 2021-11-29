@@ -2,7 +2,7 @@
 
 // IMPORTS
 import { router } from '../scripts/main.js';
-import { GET, POST } from '../scripts/request.js';
+import { GET } from '../scripts/request.js';
 
 // GLOBALS
 
