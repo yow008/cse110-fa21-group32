@@ -181,8 +181,8 @@ class UpdateRecipePage extends HTMLElement {
     }
 
     // Select input file image
-    const imageData = new FormData();
-    const image = document
+    // const imageData = new FormData();
+    // const image = document
     // let image = '';
     // let fileReader = new FileReader();
     // fileReader.onload = function () {
@@ -364,10 +364,10 @@ class UpdateRecipePage extends HTMLElement {
     function updateData() {
       // Select all ingredients
       //let ingredientList = this.shadowRoot.getElementById()
-      console.log(imgFile.files[0]);
-      let imageData = new FormData();
-      imageData.append('file', imgFile.files[0]);
-      console.log(imageData);
+      // console.log(imgFile.files[0]);
+      // let imageData = new FormData();
+      // imageData.append('file', imgFile.files[0]);
+      // console.log(imageData);
       let quantity = ingredientList.querySelectorAll('input[name="quantity"]');
       let unit = ingredientList.querySelectorAll('input[name="unit"]');
       let ingredient = ingredientList.querySelectorAll('input[name="ingredientName"]');
@@ -412,7 +412,7 @@ class UpdateRecipePage extends HTMLElement {
 
       // Send Data
       let recipe = {
-        image: photo.files[0],
+        image: imgFile.files[0],
         readyInMinutes: readyInMinutes,
         servings: servings.value,
         title: title.value,

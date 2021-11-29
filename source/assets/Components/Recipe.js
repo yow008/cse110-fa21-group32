@@ -285,7 +285,7 @@ class RecipePage extends HTMLElement {
       list.appendChild(currStep);
     }
 
-    this.shadowRoot.getElementById('ToSum').addEventListener('click', (e) => {
+    this.shadowRoot.getElementById('ToSum').addEventListener('click', e => {
       e.preventDefault();
       this.shadowRoot
         .getElementById('recipe-summaryID')
@@ -298,7 +298,7 @@ class RecipePage extends HTMLElement {
         .setAttribute('style', 'display: none');
     });
 
-    this.shadowRoot.getElementById('ToDir').addEventListener('click', (e) => {
+    this.shadowRoot.getElementById('ToDir').addEventListener('click', e => {
       e.preventDefault();
       this.shadowRoot
         .getElementById('recipe-summaryID')
@@ -311,7 +311,7 @@ class RecipePage extends HTMLElement {
         .setAttribute('style', 'display: show');
     });
 
-    this.shadowRoot.getElementById('ToIng').addEventListener('click', (e) => {
+    this.shadowRoot.getElementById('ToIng').addEventListener('click', e => {
       e.preventDefault();
       this.shadowRoot
         .getElementById('recipe-summaryID')
@@ -328,7 +328,7 @@ class RecipePage extends HTMLElement {
     //Add Ingredients to an Array "ingredientsSelect" List if they are been checked
     function getCheckedIngredient() {
       //console.log(checkedIng);
-      let listAll = [];
+      //let listAll = [];
       let ingredientsSelect = [];
       for(let i = 0; i < checkedIng.length; i++)
       {
