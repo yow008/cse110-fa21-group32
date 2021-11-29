@@ -120,6 +120,28 @@ class GroceryPage extends HTMLElement {
       }
     }
 
+    // //Delete Recipe
+    // this.shadowRoot
+    // .getElementById('deleteRecipe')
+    // .addEventListener('click', () => {
+    //   let recipe = {
+    //     id: this.json['recipe']['id'],
+    //   };
+    //   let data = {
+    //     type: 'deleteRecipe',
+    //     username: 'Martin1234', // TODO: Need to update with curr user
+    //     password: '1234', // TODO: Need to update with curr password
+    //     recipe: recipe,
+    //   };
+
+    //   function afterDelete() {
+    //     //Going Back to the Home Pgae
+    //     router.navigate('home');
+    //   }
+
+    //   POST(data, afterDelete);
+    // });
+
     //line through ingredients when user clicked Checked Button 
     const checkedButton = this.shadowRoot.getElementById('checked');
     checkedButton.addEventListener('click', e => {

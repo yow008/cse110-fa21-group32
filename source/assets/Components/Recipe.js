@@ -268,18 +268,23 @@ class RecipePage extends HTMLElement {
     //Add Ingredients to an Array "ingredientsSelect" List if they are been checked
     function getCheckedIngredient() {
       //console.log(checkedIng);
-      //let listAll = [];
+      let listAll = [];
       let ingredientsSelect = [];
       for(let i = 0; i < checkedIng.length; i++)
       {
         //console.log(checkedIng[i].value);
         if(checkedIng[i].checked == true){
           //console.log(checkedIng[i].value);
-          //TODO: Nasty Array with Recipe Name, ID, and Checked ingredients
           ingredientsSelect.push(checkedIng[i].value);
+          //TODO: Nasty Array with Recipe Name, ID, and Checked ingredients
+          listAll['name'] = title;
+          listAll['id'] = data.recipe.id;
+          listAll['ingredients'] =ingredientsSelect;
+
         }
       }
       console.log(ingredientsSelect);
+      console.log(listAll);
       return ingredientsSelect;
     }
 
