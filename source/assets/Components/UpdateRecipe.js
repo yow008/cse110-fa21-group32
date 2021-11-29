@@ -231,15 +231,6 @@ class UpdateRecipePage extends HTMLElement {
       ingredientTextArea.setAttribute('value', ingredientsPrev[i]['name']);
       ingredient.appendChild(ingredientTextArea);
 
-      // '<input type="text" name="quantity"/>'
-
-      // quantity.innerHTML = ingredientsPrev[i]['amount'];
-      // quantity.setAttribute('name', 'quantity');
-      // unit.innerHTML = ingredientsPrev[i]['unit'];
-      // unit.setAttribute('name', 'unit');
-      // ingredient.innerHTML = ingredientsPrev[i]['name'];
-      // ingredient.setAttribute('name', 'ingredientName');
-
       deleteButton.innerHTML =
         '<button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button>';
     }
