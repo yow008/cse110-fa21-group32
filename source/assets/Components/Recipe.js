@@ -47,7 +47,7 @@ class RecipePage extends HTMLElement {
         <p>Direction</p>
         <ul>
         </ul>
-        <button><a id="LinkToCM"> Cook </a></button>
+        <button type ="button" id="LinkToCM"> Cook </button>
         </div>
 
     `;
@@ -62,6 +62,15 @@ class RecipePage extends HTMLElement {
 
     const CMPage = this.shadowRoot.getElementById('LinkToCM');
     CMPage.addEventListener('click', () => {
+      const cookingPage = document.createElement('cooking-mode-page');
+      console.log(cookingPage);
+      cookingPage.classList.add('shown');
+      document.getElementById('#section--cooking-mode').innerHTML = '';
+      document
+        .getElementById('#section--cooking-mode')
+        .appendChild(recipeUpdatePage);
+      //recipeUpdatePage.data = this.json;
+      console.log('it should work');
       router.navigate('cooking-mode');
     });*/
 
@@ -151,7 +160,7 @@ class RecipePage extends HTMLElement {
       <p>Direction</p>
       <ol>
       </ol>
-      <button><a id="LinkToCM"> Cook </a></button>
+      <button type ="button" id="LinkToCM"> Cook </button>
       </div>
 
     `;
@@ -176,6 +185,24 @@ class RecipePage extends HTMLElement {
         .appendChild(recipeUpdatePage);
       recipeUpdatePage.data = this.json;
       router.navigate('update-recipe');
+    });
+
+    router.addPage('cooking-mode', function () {
+      document.getElementById('#section--recipe').classList.remove('shown');
+
+      document.getElementById('#section--cooking-mode').classList.add('shown');
+    });
+
+    const CMPage = this.shadowRoot.getElementById('LinkToCM');
+    CMPage.addEventListener('click', () => {
+      const cookingPage = document.createElement('cooking-mode-page');
+      cookingPage.classList.add('shown');
+      document.getElementById('#section--cooking-mode').innerHTML = '';
+      document
+        .getElementById('#section--cooking-mode')
+        .appendChild(cookingPage);
+      cookingPage.data = this.json;
+      router.navigate('cooking-mode');
     });
 
     // Set Title
