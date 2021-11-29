@@ -97,7 +97,7 @@ class User_DB:
     # TODO: Finalize CRUD functions
 
     def updateUser(self, username, password, updateVals):
-        #Check to see if the sought updated columns exist in the database at all
+        # Check to see if the sought updated columns exist in the database at all
         query = 'UPDATE Users SET ' + ', '.join(['%s = ?' % (p[0]) for p in updateVals.items()]) + ' WHERE username = ? AND password = ?'
         self.cur.execute(query, [p[1] for p in updateVals.items()] + [username, password])
         self.conn.commit()
@@ -137,6 +137,71 @@ class User_DB:
                 recipes = pickle.dumps(recipes)
         self.updateUser(username, password, {'Recipes': recipes})
         self.conn.commit()
+    
+    def updateGrocery(self, username, password, grocery):
+        self.cur.execute('SELECT Shopping_list FROM Users WHERE Username = ? AND Password = ?', (username, password))
+        result = self.cur.fetchall()
+        if len(result) == 0: return # no user found
+        if result[0][0] is None: 
+            grocery = pickle.dumps([])
+        else:
+            try:
+                grocery = pickle.loads(result[0][0]) 
+            except ValueError:
+                pass # not exists
+            finally:
+                grocery = pickle.dumps(grocery)
+        self.updateUser(username, password, {'Shopping_list': grocery})
+        self.conn.commit()
+    
+    def addIndIngred(self, username, password, section_id, ingred):
+        '''
+        Adds the ingredient <ingred> to the recipe section of the shopping list
+        that has an ID matching <section_id> under the username/password user.
+        '''
+        grocery = self.request(username, password, ['Shopping_list'])
+        for i in range(0, len(grocery)):
+            if (grocery[i].id == section_id):
+                grocery[i].ingredients.append(ingred)
+                break
+        self.updateGrocery(username, password, grocery)
+        
+    def removeIndIngred(self, username, password, section_id, ingred):
+        '''
+        Removes the ingredient <ingred> from the recipe section of the shopping list
+        that has an ID matching <section_id> under the username/password user.
+        '''
+        grocery = self.request(username, password, ['Shopping_list'])
+        for i in range(0, len(grocery)):
+            if (grocery[i].id == section_id):
+                for j in range(0, len(grocery[i].ingredients)):
+                    if (grocery[i].ingredients[j] == ingred):
+                        grocery[i].ingredients.remove(j)
+                        break
+        self.updateGrocery(username, password, grocery)
+
+    def addRecIngred(self, username, password, recipe_data):
+        '''
+        Adds the ingredients for recipe via <recipe_data> under the username/password user.
+        Creates a new recipe section within list and populate with given ingredients.
+        '''
+        grocery = self.request(username, password, ['Shopping_list'])
+        # TODO: add a check for this recipe being mistakenly in the db already, if it is
+        # already there then replace it? update it?
+        self.updateGrocery(username, password, grocery.append(recipe_data))
+
+    def removeRecIngred(self, username, password, recipe_id):
+        '''
+        Remove all ingredients associated with the given <recipe_id> under the
+        username/password user
+        '''
+        grocery = self.request(username, password, ['Shopping_list'])
+        for i in range(0, len(grocery)):
+            if (grocery[i].id == recipe_id):
+                grocery.remove(i)
+                break
+        self.updateGrocery(username, password, grocery)
+
 
 
 if __name__ == '__main__':

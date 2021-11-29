@@ -100,6 +100,7 @@ function addPage(recipeId) {
   router.addPage(`recipe_${recipeId}`, function () {
     document.getElementById('#section--home').classList.remove('shown');
     document.getElementById('#section--search-bar').classList.remove('shown');
+    document.getElementById('#section--grocery').classList.remove('shown');
 
     document
       .getElementById('#section--search-results')
