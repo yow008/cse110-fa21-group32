@@ -168,26 +168,37 @@ class RecipePage extends HTMLElement {
 
     // Set Ingredients
     const form = this.shadowRoot.querySelector('form');
-    for (let i = 0; i < data.recipe.extendedIngredients.length; i++) {
-      const ingredient = data.recipe.extendedIngredients[i];
-      const currElement = document.createElement('input');
-      currElement.setAttribute('type', 'checkbox');
-      currElement.setAttribute('name', ingredient.name);
-      form.append(currElement);
-      const content = document.createElement('label');
-      content.setAttribute('for', ingredient.name);
-      content.innerHTML = ingredient.original;
-      form.append(content);
+    if(!data.recipe.extendedIngredients || data.recipe.extendedIngredients.length == 0){
+      form.innerHTML = 'There are no ingredients(need to be fixed)';
+    }
+    else{
+      for(let i = 0; i < data.recipe.extendedIngredients.length; i++){
+        const ingredient = data.recipe.extendedIngredients[i];
+        const currElement = document.createElement('input');
+        currElement.setAttribute('type', 'checkbox');
+        currElement.setAttribute('name', ingredient.name);
+        form.append(currElement);
+        const content = document.createElement('label');
+        content.setAttribute('for', ingredient.name);
+        content.innerHTML = ingredient.original;
+        form.append(content);
+      }
     }
 
     // Set Directions
     const list = this.shadowRoot.querySelector('ol');
-    for (let i = 0; i < data.recipe.analyzedInstructions[0].steps.length; i++) {
-      const step = data.recipe.analyzedInstructions[0].steps[i];
-      const currStep = document.createElement('li');
-      currStep.innerHTML = step.step;
-      list.appendChild(currStep);
+    if(!data.recipe.analyzedInstructions || data.recipe.analyzedInstructions.length == 0){
+      list.innerHTML = 'there are no directions(need to be fixed)';
     }
+    else{
+      for(let i = 0; i < data.recipe.analyzedInstructions[0].steps.length; i++){
+        const step = data.recipe.analyzedInstructions[0].steps[i];
+        const currStep = document.createElement('li');
+        currStep.innerHTML = step.step;
+        list.appendChild(currStep);
+      }
+    }
+
 
     this.shadowRoot.getElementById('ToSum').addEventListener('click', (e) => {
       e.preventDefault();
