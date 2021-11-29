@@ -12,7 +12,7 @@ class Recipe_DB:
     def __init__(self):
         # Spoonacular 
         self.url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/"
-        self.API_KEY = '59e761926ee542d384a32515dbb2527a'
+        self.API_KEY = '1414109596ee45759cfec0f52917cc31'
         self.headers = {
             'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
             'x-rapidapi-key': self.API_KEY

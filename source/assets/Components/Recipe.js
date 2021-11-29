@@ -39,7 +39,7 @@ class RecipePage extends HTMLElement {
         <!--Add To List Button--> 
         <form></form>
         <br>
-        <button type="button">Add to List</button>
+        <button type="button" id="addToList">Add to List</button>
         </div>
 
         <!--Recipe Directions-->
@@ -91,7 +91,7 @@ class RecipePage extends HTMLElement {
         <form>
         </form>
         <br>
-        <button type="button">Add to List</button>
+        <button type="button" id="addToList">Add to List</button>
       </div>
 
       <!--Recipe Directions-->
@@ -103,7 +103,6 @@ class RecipePage extends HTMLElement {
       </div>
 
     `;
-
     //Edit button nav to UpdateRecipe.js
     //TODO: Have ONLY the USER recipe been send to update-recipe
     //----------------------------------------------------------------------------
@@ -165,19 +164,22 @@ class RecipePage extends HTMLElement {
     const cooktime = document.createElement('p');
     cooktime.innerHTML = timeConvert(getCookTime(data));
     this.shadowRoot.getElementById('recipe-cooktimeID').appendChild(cooktime);
-
-    // Set Ingredients
+ 
+    //Set Ingredients
     const form = this.shadowRoot.querySelector('form');
     for (let i = 0; i < data.recipe.extendedIngredients.length; i++) {
       const ingredient = data.recipe.extendedIngredients[i];
+      const div = document.createElement('div');
       const currElement = document.createElement('input');
       currElement.setAttribute('type', 'checkbox');
       currElement.setAttribute('name', ingredient.name);
-      form.append(currElement);
+      currElement.setAttribute('value', ingredient.original);
+      div.append(currElement);
       const content = document.createElement('label');
       content.setAttribute('for', ingredient.name);
       content.innerHTML = ingredient.original;
-      form.append(content);
+      div.append(content);
+      form.append(div);
     }
 
     // Set Directions
@@ -189,7 +191,7 @@ class RecipePage extends HTMLElement {
       list.appendChild(currStep);
     }
 
-    this.shadowRoot.getElementById('ToSum').addEventListener('click', (e) => {
+    this.shadowRoot.getElementById('ToSum').addEventListener('click', e => {
       e.preventDefault();
       this.shadowRoot
         .getElementById('recipe-summaryID')
@@ -202,7 +204,7 @@ class RecipePage extends HTMLElement {
         .setAttribute('style', 'display: none');
     });
 
-    this.shadowRoot.getElementById('ToDir').addEventListener('click', (e) => {
+    this.shadowRoot.getElementById('ToDir').addEventListener('click', e => {
       e.preventDefault();
       this.shadowRoot
         .getElementById('recipe-summaryID')
@@ -215,7 +217,7 @@ class RecipePage extends HTMLElement {
         .setAttribute('style', 'display: show');
     });
 
-    this.shadowRoot.getElementById('ToIng').addEventListener('click', (e) => {
+    this.shadowRoot.getElementById('ToIng').addEventListener('click', e => {
       e.preventDefault();
       this.shadowRoot
         .getElementById('recipe-summaryID')
@@ -226,6 +228,37 @@ class RecipePage extends HTMLElement {
       this.shadowRoot
         .getElementById('recipe-directionID')
         .setAttribute('style', 'display: none');
+    });
+
+    const checkedIng = this.shadowRoot.querySelectorAll('input[type="checkbox"]');
+    //Add Ingredients to an Array "ingredientsSelect" List if they are been checked
+    function getCheckedIngredient() {
+      //console.log(checkedIng);
+      let listAll = [];
+      let ingredientsSelect = [];
+      for(let i = 0; i < checkedIng.length; i++)
+      {
+        //console.log(checkedIng[i].value);
+        if(checkedIng[i].checked == true){
+          //console.log(checkedIng[i].value);
+          ingredientsSelect.push(checkedIng[i].value);
+          //TODO: Nasty Array with Recipe Name, ID, and Checked ingredients
+          listAll['name'] = title;
+          listAll['id'] = data.recipe.id;
+          listAll['ingredients'] = ingredientsSelect;
+
+        }
+      }
+      console.log(ingredientsSelect);
+      console.log(listAll);
+      return listAll;
+    }
+
+    //"Add to list" button -> send the data to Grocery list
+    const checklist = this.shadowRoot.getElementById('addToList');
+    checklist.addEventListener('click', e => {
+      e.preventDefault();
+      getCheckedIngredient();
     });
   }
 
