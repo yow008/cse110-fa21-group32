@@ -80,7 +80,7 @@ class ProfilePage extends HTMLElement {
             <ul>
                 <li><a href="#profile-page-recipeID" id="UserRec">Recipes</a></li><br>
                 <li><a href="#profile-page-reviewsID" id="UserRev">Reviews</a></li><br>
-                <li><button id="#delete-user" type="button">Delete User</button></li>
+                <li><button id="#button-edit-profile" type="button">Update User Info</button></li>
             </ul>
         </th>
         </table>
@@ -134,15 +134,31 @@ class ProfilePage extends HTMLElement {
       reviewsInProfile.style.display = 'contents';
     });
 
-    const btn = this.shadowRoot.getElementById('#delete-user');
-    btn.addEventListener('click', () => {
-      console.log('Clicked');
-    });
-
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
     getRecipes(user, token, this.shadowRoot);
 
+    const editProfileBtn = this.shadowRoot.getElementById(
+      '#button-edit-profile'
+    );
+
+    router.addPage('update-user-page', function () {
+      document.getElementById('#section--profile').classList.remove('shown');
+      document.getElementById('#section--update-user').classList.add('shown');
+      console.log(document.getElementById('#section--update-user'));
+    });
+
+    editProfileBtn.addEventListener('click', () => {
+      const updateUserPage = document.createElement('update-user-page');
+
+      updateUserPage.classList.add('shown');
+      document.getElementById('#section--update-user').innerHTML = '';
+      document
+        .getElementById('#section--update-user')
+        .appendChild(updateUserPage);
+      updateUserPage.data = this.json;
+      router.navigate('update-user-page');
+    });
   }
 
   set recipes(recipes) {}
