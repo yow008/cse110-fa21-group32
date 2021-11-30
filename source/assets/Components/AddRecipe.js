@@ -30,6 +30,27 @@ class AddRecipePage extends HTMLElement {
           padding: 23.5px;
           color: white;
         }
+        div {
+          margin-left: 5%;
+        }
+        .publish-button {
+          background-color: white;
+          border-radius: 9px;
+          border: 1.5px solid #ca676a;
+          text-align: center;
+          min-width: 8%;
+          height: 16pt;
+          margin-left: 5%;
+        }
+        button {
+          background-color: white;
+          border-radius: 9px;
+          border: 1.5px solid #ca676a;
+          text-align: center;
+          min-width: 8%;
+          height: 16pt;
+          margin-left: 5%;
+        }
         `;
     article.innerHTML = `
         <h2>Add Recipe</h2>
@@ -140,7 +161,7 @@ class AddRecipePage extends HTMLElement {
         <button id="addDirectionButton"> Add More </button>
       </div>
       <br>
-      <input type="submit" value="Publish">
+      <input class="publish-button" type="submit" value="Publish">
       </form>
       <!--TO DO delete Directions button-->
 
@@ -325,10 +346,10 @@ class AddRecipePage extends HTMLElement {
       //let image = photo.querySelector('input[type="file"]');
       //console.log(image);
       //console.log(photo);
-      console.log(imgFile.files[0]);
-      let imageData = new FormData();
-      imageData.append('file', imgFile.files[0]);
-      console.log(imageData);
+      // console.log(imgFile.files[0]);
+      // let imageData = new FormData();
+      // imageData.append('file', imgFile.files[0]);
+      // console.log(imageData);
 
       // let fileReader = new FileReader();
       // fileReader.onload = function () {
@@ -373,7 +394,7 @@ class AddRecipePage extends HTMLElement {
       // Create recipe JSON to send to the backend
       setTimeout(function () {
         let recipe = {
-          image: imageData,
+          // image: imageData,
           readyInMinutes: readyInMinutes,
           servings: servings.value,
           title: title.value,

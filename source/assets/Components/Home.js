@@ -22,12 +22,68 @@ class HomePage extends HTMLElement {
     *{
       clear: both;
     }
+    .recipe-grid {
+      margin-left: 5%;
+      display: grid;
+      grid-template-columns: auto auto auto;
+      grid-column-gap: 3%;
+      grid-row-gap: 3%;
+      margin-right: 5%;
+    }
+    .recipe-picture {
+      max-width: 100%;
+    }
+    button {
+      background-color: white;
+      border-radius: 9px;
+      border: 1.5px solid #ca676a;
+      text-align: center;
+      min-width: 8%;
+      height: 16pt;
+    }
     `;
     article.innerHTML = `
         <!--<h1>Home Page</h1>-->
         <!--ADD RECIPES HERE-->
         <p id="#user-status"></p>
         <p id="#user-email"></p>
+        <div class="recipe-grid">
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634559-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634629-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624889-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624779-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634229-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624449-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634769-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634779-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624569-556x370.jpg"/>
+        </div>
+        </div>
         <button id="#btn-delete" type="button">Delete User</button>
         <button id="#btn-recipe" type="button">See Added Recipes</button>
         <div id="#recipeDiv">
