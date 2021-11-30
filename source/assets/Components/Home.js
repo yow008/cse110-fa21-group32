@@ -111,20 +111,22 @@ class HomePage extends HTMLElement {
     });
 
     // Display current user info TODO: move to other Profile.js
-    const urlParams = new URLSearchParams(window.location.search);
-    const user = urlParams.get('user');
-    const pass = urlParams.get('pass');
+    //const urlParams = new URLSearchParams(window.location.search); Old way of URL searching (bad for security)
+
+    //Looks in LocalStorage to get username and token.
+    const user = localStorage.getItem('username');
+    const token = localStorage.getItem('token');
 
     const userStatus = this.shadowRoot.getElementById('#user-status');
     userStatus.innerHTML = `Currently logged in as ${user}`;
 
     const userEmail = this.shadowRoot.getElementById('#user-email');
-    getEmail(user, pass, userEmail);
+    getEmail(user, token, userEmail);
 
     const deleteBtn = this.shadowRoot.getElementById('#btn-delete');
     deleteBtn.addEventListener('click', () => {
       console.log('DELETE');
-      deleteUser(user, pass);
+      deleteUser(user, token);
     });
   }
 }
@@ -134,12 +136,12 @@ customElements.define('home-page', HomePage);
 /**
  * TODO:
  * @param {String} username
- * @param {String} password
+ * @param {String} token
  */
-function getEmail(username, password, userEmail) {
+function getEmail(username, token, userEmail) {
   const emailReq = `type=request&elem=email&user=${encodeURIComponent(
     username
-  )}&pass=${encodeURIComponent(password)}`;
+  )}&token=${encodeURIComponent(token)}`;
 
   /**
    * TODO:
@@ -156,13 +158,13 @@ function getEmail(username, password, userEmail) {
 /**
  * TODO:
  * @param {String} username
- * @param {String} password
+ * @param {String} token
  */
-function deleteUser(username, password) {
+function deleteUser(username, token) {
   let msg = {
-    type: 'delete',
+    type: 'deleteUser',
     username: username,
-    password: password,
+    token: token,
   };
 
   /**
