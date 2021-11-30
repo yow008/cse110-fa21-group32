@@ -22,6 +22,22 @@ class HomePage extends HTMLElement {
     *{
       clear: both;
     }
+
+    .todayMeals{
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .recentlyVisited{
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .favorites{
+      display: flex;
+      justify-content: space-between;
+    }
+
     `;
     article.innerHTML = `
         <!--<h1>Home Page</h1>-->
@@ -31,28 +47,27 @@ class HomePage extends HTMLElement {
         <button id="#btn-delete" type="button">Delete User</button>
         <button id="#btn-recipe" type="button">See Added Recipes</button>
         <div id="#recipeDiv">
-        </div>
-        <div id=#todayMeals>
+
         <h3>Today's Meals</h3>
-          <ul>
-              <li> <button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></li>
-              <li> <button type="menu">Recipe 2 (not linked)</button></li>
-              <li> <button type="menu">Recipe 3 (not linked)</button></li>
-          </ul>
+        <div id=#todayMeals class="todayMeals">
+            <div><button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></div>
+            <div><button type="menu">Recipe 2 (not linked)</button></div>
+            <div><button type="menu">Recipe 3 (not linked)</button></div>
+        </div>
 
-          <h3>Recently Visited</h3>
-          <ul>
-              <li> <button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></li>
-              <li> <button type="menu">Recipe 2 (not linked)</button></li>
-              <li> <button type="menu">Recipe 3 (not linked)</button></li>
-          </ul>
-
-          <h3>Favorites</h3>
-          <ul>
-              <li> <button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></li>
-              <li> <button type="menu">Recipe 2 (not linked)</button></li>
-              <li> <button type="menu">Recipe 3 (not linked)</button></li>
-          </ul>
+        <h3>Recently Visited</h3>
+        <div id=#recentlyVisited class="recentlyVisited">
+              <div><button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></div>
+              <div><button type="menu">Recipe 2 (not linked)</button></div>
+              <div><button type="menu">Recipe 3 (not linked)</button></div>
+        </div>
+        
+        <h3>Favorites</h3>
+        <div id=#favorites class="favorites">
+              <div> <button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></div>
+              <div> <button type="menu">Recipe 2 (not linked)</button></div>
+              <div> <button type="menu">Recipe 3 (not linked)</button></div>
+        </div>
         </div>
         `;
 

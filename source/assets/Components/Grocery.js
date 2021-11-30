@@ -54,29 +54,34 @@ class GroceryPage extends HTMLElement {
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
-    
+
     /* ADDED */
-     /* Dummy Test. Delete this after integration with backend. */
-    var name = "Ingredient name";
+    /* Dummy Test. Delete this after integration with backend. */
+    var name = 'Ingredient name';
     var amount = 3;
-    var unit = "mg";
-    this.shadowRoot.querySelector("button").addEventListener("click", e => {
-        e.preventDefault();   
-        let ingredientsList = this.shadowRoot.querySelector('table');
-        ingredientsList.innerHTML += '<tr><td><input type="checkbox"></td><td>' + name + '</td><td>' + amount + unit + '</td></tr>'
-        //ingredientsList.innerHTML += ingredient;
+    var unit = 'mg';
+    this.shadowRoot.querySelector('button').addEventListener('click', (e) => {
+      e.preventDefault();
+      let ingredientsList = this.shadowRoot.querySelector('table');
+      ingredientsList.innerHTML +=
+        '<tr><td><input type="checkbox"></td><td>' +
+        amount +
+        unit +
+        '</td><td>' +
+        name +
+        '</td></tr>';
+      //ingredientsList.innerHTML += ingredient;
     });
 
     /* Integration Test. Modify this. */
-    this.shadowRoot.getElementById("test").addEventListener("click", e => {
-        e.preventDefault();   
-        loadIngredientList()
+    this.shadowRoot.getElementById('test').addEventListener('click', (e) => {
+      e.preventDefault();
+      loadIngredientList();
     });
 
     function loadIngredientList() {
-    
-    /* NOT SURE About fetch() */
-    fetch('http://127.0.0.1:5000', {
+      /* NOT SURE About fetch() */
+      fetch('http://127.0.0.1:5000', {
         method: 'GET', // or 'PUT'
         headers: {
           'Content-Type': 'img',
@@ -87,12 +92,18 @@ class GroceryPage extends HTMLElement {
         .then((response) => response.json())
         .then((data) => {
           //   window.location.href = 'home.html';
-            console.log('Success:', data);
-            let fullIngredientListPos = this.shadowRoot.querySelector('table');
-            let fullIngredientList = data.recipe.extendedIngredients;
-            for(let i = 0; i < fullIngredientList.length; i++) {
-                fullIngredientListPos.innerHTML += '<tr><td><input type="checkbox"></td><td>' + extendedIngredients[i].name + '</td><td>' + extendedIngredients[i].amount + extendedIngredients[i].unit + '</td></tr>';
-            }
+          console.log('Success:', data);
+          let fullIngredientListPos = this.shadowRoot.querySelector('table');
+          let fullIngredientList = data.recipe.extendedIngredients;
+          for (let i = 0; i < fullIngredientList.length; i++) {
+            fullIngredientListPos.innerHTML +=
+              '<tr><td><input type="checkbox"></td><td>' +
+              extendedIngredients[i].name +
+              '</td><td>' +
+              extendedIngredients[i].amount +
+              extendedIngredients[i].unit +
+              '</td></tr>';
+          }
         })
         .catch((error) => {
           console.error('Error:', error);
