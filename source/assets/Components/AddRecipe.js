@@ -1,7 +1,5 @@
 // AddRecipe.js
 
-//TODO
-
 // IMPORTS
 // import { formatters } from 'stylelint';
 import { router } from '../scripts/main.js';
@@ -269,7 +267,7 @@ class AddRecipePage extends HTMLElement {
     // Add images/Display Image when the file is been addes
     var img = this.shadowRoot.getElementById('recipeImage');
     var imgFile = this.shadowRoot.querySelector('input[type="file"]');
-    
+
     imgFile.addEventListener('change', function () {
       imageDisplay(this);
       console.log(imgFile.files[0]);

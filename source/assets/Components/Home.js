@@ -6,7 +6,8 @@ import { GET, POST } from '../scripts/request.js';
 
 /**
  * Class: HomePage
- * TODO:
+ * Starting page after loggin in. Shows some basic user info
+ * and some of the favorite/recent recipes.
  */
 class HomePage extends HTMLElement {
   constructor() {
@@ -111,9 +112,8 @@ class HomePage extends HTMLElement {
     });
 
     // Display current user info TODO: move to other Profile.js
-    //const urlParams = new URLSearchParams(window.location.search); Old way of URL searching (bad for security)
 
-    //Looks in LocalStorage to get username and token.
+    // Looks in LocalStorage to get username and token.
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
 
@@ -134,7 +134,7 @@ class HomePage extends HTMLElement {
 customElements.define('home-page', HomePage);
 
 /**
- * TODO:
+ * Fetch the email from the user and display it
  * @param {String} username
  * @param {String} token
  */
@@ -144,7 +144,7 @@ function getEmail(username, token, userEmail) {
   )}&token=${encodeURIComponent(token)}`;
 
   /**
-   * TODO:
+   * Populate the display element with the fetched email
    * @param {*} data
    */
   function getFn(data) {
@@ -156,7 +156,8 @@ function getEmail(username, token, userEmail) {
 }
 
 /**
- * TODO:
+ * Deletes the user from the database
+ * TODO: add a confirmation page
  * @param {String} username
  * @param {String} token
  */
@@ -168,7 +169,7 @@ function deleteUser(username, token) {
   };
 
   /**
-   * TODO:
+   * Redirects to the user login page after deleting user
    */
   function afterDelete() {
     window.location.href = 'userLogin.html';
