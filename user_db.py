@@ -88,7 +88,7 @@ class User_DB:
         print(profile)
         dbPassword = profile[0][0] #database password
 
-        if(password == dbPassword):
+        if(str(password) == str(dbPassword)): #Enforce Consistent Type Checking (String VS Int)
             return profile[0][1] #database token
         else:
             print("User does not exist in database!")
