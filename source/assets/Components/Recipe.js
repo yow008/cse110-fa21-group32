@@ -212,9 +212,13 @@ class RecipePage extends HTMLElement {
     this.shadowRoot.querySelector('h2').innerHTML = title;
 
     // Set Summary
+    // var image = new Image();
+    // image.src = 
+    // document.body.appendChild(image);
     const summary = document.createElement('p');
     const image = document.createElement('img');
     summary.innerHTML = getSummary(data);
+    image.setAttribute('width', "400");
     image.setAttribute('src', getImage(data));
     this.shadowRoot.getElementById('recipe-summaryID').appendChild(image);
     this.shadowRoot.getElementById('recipe-summaryID').appendChild(summary);

@@ -171,8 +171,9 @@ class UpdateRecipePage extends HTMLElement {
     this.shadowRoot.getElementById('recipeImage').setAttribute('src', oldimage);
 
     // Display/Change Image form the data
-    let img = this.shadowRoot.getElementById('recipeImage');
-    let imgFile = this.shadowRoot.querySelector('input[type="file"]');
+    var img = this.shadowRoot.getElementById('recipeImage');
+    var imgFile = this.shadowRoot.querySelector('input[type="file"]');
+    var base64Image = '';
 
     imgFile.addEventListener('change', function () {
       imageDisplay(this);
@@ -184,6 +185,7 @@ class UpdateRecipePage extends HTMLElement {
         reader = new FileReader();
         reader.onload = function (e) {
           img.setAttribute('src', e.target.result);
+          base64Image = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
       }
@@ -355,7 +357,7 @@ class UpdateRecipePage extends HTMLElement {
         POST(data, afterDelete);
       });
 
-    console.log('Before publish button');
+    //console.log('Before publish button');
     this.shadowRoot
       .getElementById('publishBtn')
       .addEventListener('click', (e) => {
@@ -383,6 +385,19 @@ class UpdateRecipePage extends HTMLElement {
      * This function is called when the publish button is clicked and it sends the new inputted data to the database
      */
     function updateData() {
+      // Select image to base64String
+      // var reader = new FileReader();
+      // // console.log("next");
+      // var base64Image = '';
+      // reader.onload = function () {
+      //   if (reader.result.length > 0) {
+      //     base64Image = reader.result;
+      //     //console.log(base64Image);
+      //   }
+      // }
+      // reader.readAsDataURL(imgFile['files'][0]);
+
+
       // Select all ingredients
       //let ingredientList = this.shadowRoot.getElementById()
       // console.log(imgFile.files[0]);
@@ -434,47 +449,47 @@ class UpdateRecipePage extends HTMLElement {
         60 * parseInt(cookingTimeHour.value) + parseInt(cookingTimeMin.value);
 
       // Send Data
-      let recipe = {
-        image: imgFile.files[0],
-        readyInMinutes: readyInMinutes,
-        servings: servings.value,
-        title: title.value,
-        summary: summary.value,
-        extendedIngredients: extendedIngredients,
-        analyzedInstructions: instructions,
-        author: localStorage.getItem('username'), // TODO: Need to update with curr user
-        id: data.recipe['id'],
-      };
+        let recipe = {
+          image: base64Image,
+          readyInMinutes: readyInMinutes,
+          servings: servings.value,
+          title: title.value,
+          summary: summary.value,
+          extendedIngredients: extendedIngredients,
+          analyzedInstructions: instructions,
+          author: localStorage.getItem('username'), // TODO: Need to update with curr user
+          id: data.recipe['id'],
+        };
+        //console.log(recipe);
+        // in 'submit' event, call page.updateData = <>
+        // Create the POST message to send to the backend
+        let newData = {
+          type: 'updateRecipe',
+          username: localStorage.getItem('username'), // TODO: Need to update with curr user
+          token: localStorage.getItem('token'), // TODO: Need to update with curr password
+          recipe: recipe,
+          title: recipe['title'],
+        };
 
-      // in 'submit' event, call page.updateData = <>
-      // Create the POST message to send to the backend
-      let newData = {
-        type: 'updateRecipe',
-        username: localStorage.getItem('username'), // TODO: Need to update with curr user
-        token: localStorage.getItem('token'), // TODO: Need to update with curr password
-        recipe: recipe,
-        title: recipe['title'],
-      };
+        //Moves back to home page once POST is called
+        function afterFetch() {
+          router.addPage(`recipe_${recipe['id']}`, function () {
+            document
+              .getElementById('#section--update-recipe')
+              .classList.remove('shown');
+            document.getElementById('#section--recipe').classList.add('shown');
+            // Fetch and populate recipe page and add to recipe section
+            const recipePage = document.createElement('recipe-page');
+            recipePage.data = data;
+            recipePage.classList.add('shown');
+            document.getElementById('#section--recipe').innerHTML = '';
+            document.getElementById('#section--recipe').appendChild(recipePage);
+          });
+          router.navigate(`recipe_${recipe['id']}`);
+        }
 
-      //Moves back to home page once POST is called
-      function afterFetch() {
-        router.addPage(`recipe_${recipe['id']}`, function () {
-          document
-            .getElementById('#section--update-recipe')
-            .classList.remove('shown');
-          document.getElementById('#section--recipe').classList.add('shown');
-          // Fetch and populate recipe page and add to recipe section
-          const recipePage = document.createElement('recipe-page');
-          recipePage.data = data;
-          recipePage.classList.add('shown');
-          document.getElementById('#section--recipe').innerHTML = '';
-          document.getElementById('#section--recipe').appendChild(recipePage);
-        });
-        router.navigate(`recipe_${recipe['id']}`);
-      }
-
-      //Sends data to database
-      POST(newData, afterFetch);
+        //Sends data to database
+        POST(newData, afterFetch);
     }
   }
 }
