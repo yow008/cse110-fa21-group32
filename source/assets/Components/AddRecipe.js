@@ -30,6 +30,27 @@ class AddRecipePage extends HTMLElement {
           padding: 23.5px;
           color: white;
         }
+        div {
+          margin-left: 5%;
+        }
+        .publish-button {
+          background-color: white;
+          border-radius: 9px;
+          border: 1.5px solid #ca676a;
+          text-align: center;
+          min-width: 8%;
+          height: 16pt;
+          margin-left: 5%;
+        }
+        button {
+          background-color: white;
+          border-radius: 9px;
+          border: 1.5px solid #ca676a;
+          text-align: center;
+          min-width: 8%;
+          height: 16pt;
+          margin-left: 5%;
+        }
         `;
     article.innerHTML = `
         <h2>Add Recipe</h2>
@@ -140,7 +161,7 @@ class AddRecipePage extends HTMLElement {
         <button id="addDirectionButton"> Add More </button>
       </div>
       <br>
-      <input type="submit" value="Publish">
+      <input class="publish-button" type="submit" value="Publish">
       </form>
       <!--TO DO delete Directions button-->
 
@@ -380,14 +401,14 @@ class AddRecipePage extends HTMLElement {
           summary: summary.value,
           extendedIngredients: extendedIngredients,
           analyzedInstructions: instructions,
-          author: 'Martin1234', // TODO: Need to update with curr user
+          author: localStorage.getItem('username'), // TODO: Need to update with curr user
         };
 
         // Create the POST message to send to the backend
         let data = {
           type: 'addRecipe',
-          username: 'Martin1234', // TODO: Need to update with curr user
-          password: '1234', // TODO: Need to update with curr password
+          username: localStorage.getItem('username'), // TODO: Need to update with curr user
+          token: localStorage.getItem('token'), // TODO: Need to update with curr password
           recipe: recipe,
           title: title.value,
         };
