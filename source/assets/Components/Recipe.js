@@ -1,6 +1,11 @@
 // Recipe.js
 import { router } from '../scripts/main.js';
 
+/**
+ * Class: RecipePage
+ * Shows detailed information of the recipe broken
+ * down into summary, ingredients, and direction tabs.
+ */
 class RecipePage extends HTMLElement {
   constructor() {
     super();
@@ -58,6 +63,7 @@ class RecipePage extends HTMLElement {
     }
 
     `;
+
     article.innerHTML = `
 
         <h2>Recipes</h2>
@@ -93,7 +99,7 @@ class RecipePage extends HTMLElement {
         <!--Add To List Button--> 
         <form></form>
         <br>
-        <button type="button">Add to List</button>
+        <button type="button" id="addToList">Add to List</button>
         </div>
 
         <!--Recipe Directions-->
@@ -101,130 +107,19 @@ class RecipePage extends HTMLElement {
         <p>Direction</p>
         <ul>
         </ul>
-        <button><a id="LinkToCM"> Cook </a></button>
+        <button type ="button" id="LinkToCM"> Cook </button>
         </div>
 
     `;
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
-    /*router.addPage('cooking-mode', function () {
-      document.getElementById('#section--recipe').classList.remove('shown');
-
-      document.getElementById('#section--cooking-mode').classList.add('shown');
-    });
-
-    const CMPage = this.shadowRoot.getElementById('LinkToCM');
-    CMPage.addEventListener('click', () => {
-      router.navigate('cooking-mode');
-    });*/
-
-    //Summary
-    this.shadowRoot.getElementById('ToSum').addEventListener('click', (e) => {
-      e.preventDefault();
-      this.shadowRoot
-        .getElementById('recipe-summaryID')
-        .setAttribute('style', 'display: show');
-      this.shadowRoot
-        .getElementById('recipe-ingredientsID')
-        .setAttribute('style', 'display: none');
-      this.shadowRoot
-        .getElementById('recipe-directionID')
-        .setAttribute('style', 'display: none');
-    });
-
-    //Add elements to summary
-    /*let summaryDiv = this.shadowRoot.getElementById('recipe-summaryID');
-
-    //Create image
-    let image = document.createElement('img');
-    image.src = getImage(data);
-    image.alt = 'No Image to Display';
-    image.id = 'summaryImage';
-
-    //Create Coook Time
-    let cookTime = document.createElement('p');
-    cookTime.innerHTML = 'Cook Time ' + getCookTime(data) + ' minutes';
-    cookTime.id = 'summaryCookTime';
-
-    //Create Servings
-    let servings = document.createElement('p');
-    servings.innerHTML = 'Servings ' + getServings(data);
-    servings.id = 'summaryServings';
-
-    //Create Summary
-    let summary = document.createElement('p');
-    summary.innerHTML = getSummary(data);
-    summary.id = 'summarySummary';
-
-    summaryDiv.appendChild(image);
-    summaryDiv.appendChild(cookTime);
-    summaryDiv.appendChild(servings);
-    summaryDiv.appendChild(summary);*/
-
-    //Ingredients
-    this.shadowRoot.getElementById('ToIng').addEventListener('click', (e) => {
-      e.preventDefault();
-      this.shadowRoot
-        .getElementById('recipe-summaryID')
-        .setAttribute('style', 'display: none');
-      this.shadowRoot
-        .getElementById('recipe-ingredientsID')
-        .setAttribute('style', 'display: show');
-      this.shadowRoot
-        .getElementById('recipe-directionID')
-        .setAttribute('style', 'display: none');
-    });
-
-    //Add Ingredients to display
-    /*let table = this.shadowRoot
-      .getElementById('recipe-ingredientsID')
-      .querySelector('table');
-    let ingredientsArray = getIngreds(data);
-    for (let i = 0; i < ingredientsArray.length; i++) {
-      let row = table.insertRow(i);
-      let cell1 = row.insertCell(0);
-      let cell2 = row.insertCell(1);
-
-      let checkBox = document.createElement('input');
-      checkBox.type = 'checkbox';
-      checkBox.name = 'checkbox' + i;
-      cell1.appendChild(checkBox);
-
-      let ingredient = ingredientsArray[i];
-      let label = document.createElement('label');
-      let ingredientString = document.createTextNode(
-        ingredient['amount'] +
-          ' ' +
-          ingredient['unit'] +
-          ' of ' +
-          ingredient['name']
-      );
-      label.appendChild(ingredientString);
-      cell2.appendChild(label);
-    }*/
-
-    //Directions
-    this.shadowRoot.getElementById('ToDir').addEventListener('click', (e) => {
-      e.preventDefault();
-      this.shadowRoot
-        .getElementById('recipe-summaryID')
-        .setAttribute('style', 'display: none');
-      this.shadowRoot
-        .getElementById('recipe-ingredientsID')
-        .setAttribute('style', 'display: none');
-      this.shadowRoot
-        .getElementById('recipe-directionID')
-        .setAttribute('style', 'display: show');
-    });
-
-    //Add Directions to display
-    /*let directionsDiv = this.shadowRoot.getElementById('recipe-directionID');
-    let instructions = document.createElement('div');
-    instructions.innerHTML = getDirs(data);
-    directionsDiv.appendChild(instructions);*/
   }
 
+  /**
+   * Populate the recipe information sections with data
+   * @param {JSON} data Recipe data retrieved from backend (db or Spoonacular)
+   */
   set data(data) {
     console.log(data);
     this.json = data;
@@ -260,7 +155,7 @@ class RecipePage extends HTMLElement {
         <form>
         </form>
         <br>
-        <button type="button">Add to List</button>
+        <button type="button" id="addToList">Add to List</button>
       </div>
 
       <!--Recipe Directions-->
@@ -268,11 +163,10 @@ class RecipePage extends HTMLElement {
       <p>Direction</p>
       <ol>
       </ol>
-      <button><a id="LinkToCM"> Cook </a></button>
+      <button type ="button" id="LinkToCM"> Cook </button>
       </div>
 
     `;
-
     //Edit button nav to UpdateRecipe.js
     //TODO: Have ONLY the USER recipe been send to update-recipe
     //----------------------------------------------------------------------------
@@ -294,13 +188,30 @@ class RecipePage extends HTMLElement {
       recipeUpdatePage.data = this.json;
       router.navigate('update-recipe');
     });
-    //-----------------------------------------------------------------------------
 
-    //Set Title
+    router.addPage('cooking-mode', function () {
+      document.getElementById('#section--recipe').classList.remove('shown');
+
+      document.getElementById('#section--cooking-mode').classList.add('shown');
+    });
+
+    const CMPage = this.shadowRoot.getElementById('LinkToCM');
+    CMPage.addEventListener('click', () => {
+      const cookingPage = document.createElement('cooking-mode-page');
+      cookingPage.classList.add('shown');
+      document.getElementById('#section--cooking-mode').innerHTML = '';
+      document
+        .getElementById('#section--cooking-mode')
+        .appendChild(cookingPage);
+      cookingPage.data = this.json;
+      router.navigate('cooking-mode');
+    });
+
+    // Set Title
     const title = getTitle(data).toUpperCase();
     this.shadowRoot.querySelector('h2').innerHTML = title;
 
-    //Set Summary
+    // Set Summary
     const summary = document.createElement('p');
     const image = document.createElement('img');
     summary.innerHTML = getSummary(data);
@@ -313,7 +224,7 @@ class RecipePage extends HTMLElement {
     servings.innerHTML = getServings(data);
     this.shadowRoot.getElementById('recipe-servingsID').appendChild(servings);
 
-    //Set cooktime
+    // Set cooktime
     const cooktime = document.createElement('p');
     cooktime.innerHTML = timeConvert(getCookTime(data));
     this.shadowRoot.getElementById('recipe-cooktimeID').appendChild(cooktime);
@@ -322,17 +233,20 @@ class RecipePage extends HTMLElement {
     const form = this.shadowRoot.querySelector('form');
     for (let i = 0; i < data.recipe.extendedIngredients.length; i++) {
       const ingredient = data.recipe.extendedIngredients[i];
+      const div = document.createElement('div');
       const currElement = document.createElement('input');
       currElement.setAttribute('type', 'checkbox');
       currElement.setAttribute('name', ingredient.name);
-      form.append(currElement);
+      currElement.setAttribute('value', ingredient.original);
+      div.append(currElement);
       const content = document.createElement('label');
       content.setAttribute('for', ingredient.name);
       content.innerHTML = ingredient.original;
-      form.append(content);
+      div.append(content);
+      form.append(div);
     }
 
-    //Set Directions
+    // Set Directions
     const list = this.shadowRoot.querySelector('ol');
     for (let i = 0; i < data.recipe.analyzedInstructions[0].steps.length; i++) {
       const step = data.recipe.analyzedInstructions[0].steps[i];
@@ -379,6 +293,37 @@ class RecipePage extends HTMLElement {
         .getElementById('recipe-directionID')
         .setAttribute('style', 'display: none');
     });
+
+    const checkedIng = this.shadowRoot.querySelectorAll(
+      'input[type="checkbox"]'
+    );
+    //Add Ingredients to an Array "ingredientsSelect" List if they are been checked
+    function getCheckedIngredient() {
+      //console.log(checkedIng);
+      let listAll = [];
+      let ingredientsSelect = [];
+      for (let i = 0; i < checkedIng.length; i++) {
+        //console.log(checkedIng[i].value);
+        if (checkedIng[i].checked == true) {
+          //console.log(checkedIng[i].value);
+          ingredientsSelect.push(checkedIng[i].value);
+          //TODO: Nasty Array with Recipe Name, ID, and Checked ingredients
+          listAll['name'] = title;
+          listAll['id'] = data.recipe.id;
+          listAll['ingredients'] = ingredientsSelect;
+        }
+      }
+      console.log(ingredientsSelect);
+      console.log(listAll);
+      return listAll;
+    }
+
+    //"Add to list" button -> send the data to Grocery list
+    const checklist = this.shadowRoot.getElementById('addToList');
+    checklist.addEventListener('click', (e) => {
+      e.preventDefault();
+      getCheckedIngredient();
+    });
   }
 
   /**
@@ -391,7 +336,7 @@ class RecipePage extends HTMLElement {
 
 // SUMMARY ELEMENTS
 /**
- *
+ * Returns number of minutes for cooking the recipe
  * @param {JSON} data
  * @returns Number of minutes it takes to cook this recipe
  */
@@ -401,7 +346,7 @@ function getCookTime(data) {
 
 // TIME CONVERT
 /**
- *
+ * Converts time units into a string format (hrs and min equivalent)
  * @param {int} n
  * @returns Number of minutes, hours, and minutes it takes to cook this recipe
  */
@@ -417,7 +362,7 @@ function timeConvert(n) {
 }
 
 /**
- *
+ * Returns the number of servings
  * @param {JSON} data
  * @returns Number of servings this recipe creates
  */
@@ -426,7 +371,7 @@ function getServings(data) {
 }
 
 /**
- *
+ * Returns the image (Base 64 format)
  * @param {JSON} data
  * @returns Base 64 format of image or url link to image depending on if it comes from spoonacular or our database
  */
@@ -435,7 +380,7 @@ function getImage(data) {
 }
 
 /**
- *
+ * Returns the title of the recipe
  * @param {JSON} data
  * @returns Title of recipe
  */
@@ -444,7 +389,7 @@ function getTitle(data) {
 }
 
 /**
- *
+ * Returns the summary of the recipe
  * @param {JSON} data
  * @returns Summary paragraph of the recipe
  */
@@ -452,25 +397,26 @@ function getSummary(data) {
   return data.recipe.summary;
 }
 
-// INGREDIENTS ELEMENTS
-/**
- *
- * @param {JSON} data
- * @returns Array of objects where each object contains an ingredient summary,
- * the ingredient summary object looks like, {name:"", unit:"", amount:""}
- */
-function getIngreds(data) {
-  return data['extendedIngredients'];
-}
+// TODO: remove if remains unused
+// // INGREDIENTS ELEMENTS
+// /**
+//  *
+//  * @param {JSON} data
+//  * @returns Array of objects where each object contains an ingredient summary,
+//  * the ingredient summary object looks like, {name:"", unit:"", amount:""}
+//  */
+// function getIngreds(data) {
+//   return data['extendedIngredients'];
+// }
 
-// DIRECTIONS ELEMENTS
-/**
- *
- * @param {JSON} data
- * @returns An ordered list <ol> with each step in its own list element <li>
- */
-function getDirs(data) {
-  return data['instructions'];
-}
+// // DIRECTIONS ELEMENTS
+// /**
+//  *
+//  * @param {JSON} data
+//  * @returns An ordered list <ol> with each step in its own list element <li>
+//  */
+// function getDirs(data) {
+//   return data['instructions'];
+// }
 
 customElements.define('recipe-page', RecipePage);

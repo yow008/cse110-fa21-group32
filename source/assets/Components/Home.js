@@ -6,7 +6,8 @@ import { GET, POST } from '../scripts/request.js';
 
 /**
  * Class: HomePage
- * TODO:
+ * Starting page after loggin in. Shows some basic user info
+ * and some of the favorite/recent recipes.
  */
 class HomePage extends HTMLElement {
   constructor() {
@@ -38,12 +39,69 @@ class HomePage extends HTMLElement {
       justify-content: space-between;
     }
 
+    .recipe-grid {
+      margin-left: 5%;
+      display: grid;
+      grid-template-columns: auto auto auto;
+      grid-column-gap: 3%;
+      grid-row-gap: 3%;
+      margin-right: 5%;
+    }
+    .recipe-picture {
+      max-width: 100%;
+    }
+    button {
+      background-color: white;
+      border-radius: 9px;
+      border: 1.5px solid #ca676a;
+      text-align: center;
+      min-width: 8%;
+      height: 16pt;
+    }
+
     `;
     article.innerHTML = `
         <!--<h1>Home Page</h1>-->
         <!--ADD RECIPES HERE-->
         <p id="#user-status"></p>
         <p id="#user-email"></p>
+        <div class="recipe-grid">
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634559-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634629-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624889-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624779-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634229-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624449-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634769-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634779-556x370.jpg"/>
+        </div>
+
+        <div>
+          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624569-556x370.jpg"/>
+        </div>
+        </div>
         <button id="#btn-delete" type="button">Delete User</button>
         <button id="#btn-recipe" type="button">See Added Recipes</button>
         <div id="#recipeDiv">
@@ -87,28 +145,21 @@ class HomePage extends HTMLElement {
     });
 
     // Display current user info TODO: move to other Profile.js
-    const urlParams = new URLSearchParams(window.location.search);
-    const user = urlParams.get('user');
-    const pass = urlParams.get('pass');
+
+    // Looks in LocalStorage to get username and token.
+    const user = localStorage.getItem('username');
+    const token = localStorage.getItem('token');
 
     const userStatus = this.shadowRoot.getElementById('#user-status');
     userStatus.innerHTML = `Currently logged in as ${user}`;
 
     const userEmail = this.shadowRoot.getElementById('#user-email');
-    getEmail(user, pass, userEmail);
+    getEmail(user, token, userEmail);
 
     const deleteBtn = this.shadowRoot.getElementById('#btn-delete');
     deleteBtn.addEventListener('click', () => {
       console.log('DELETE');
-      deleteUser(user, pass);
-    });
-
-    // TODO: delete this and show recipes Profile.js (this was a demo hack)
-    const ownRecipes = this.shadowRoot.getElementById('#btn-recipe');
-    ownRecipes.addEventListener('click', () => {
-      console.log('SHOW USERS');
-      const divElem = this.shadowRoot.getElementById('#recipeDiv');
-      getOwnRecipes(user, pass);
+      deleteUser(user, token);
     });
   }
 }
@@ -116,17 +167,17 @@ class HomePage extends HTMLElement {
 customElements.define('home-page', HomePage);
 
 /**
- * TODO:
+ * Fetch the email from the user and display it
  * @param {String} username
- * @param {String} password
+ * @param {String} token
  */
-function getEmail(username, password, userEmail) {
+function getEmail(username, token, userEmail) {
   const emailReq = `type=request&elem=email&user=${encodeURIComponent(
     username
-  )}&pass=${encodeURIComponent(password)}`;
+  )}&token=${encodeURIComponent(token)}`;
 
   /**
-   * TODO:
+   * Populate the display element with the fetched email
    * @param {*} data
    */
   function getFn(data) {
@@ -138,19 +189,20 @@ function getEmail(username, password, userEmail) {
 }
 
 /**
- * TODO:
+ * Deletes the user from the database
+ * TODO: add a confirmation page
  * @param {String} username
- * @param {String} password
+ * @param {String} token
  */
-function deleteUser(username, password) {
+function deleteUser(username, token) {
   let msg = {
-    type: 'delete',
+    type: 'deleteUser',
     username: username,
-    password: password,
+    token: token,
   };
 
   /**
-   * TODO:
+   * Redirects to the user login page after deleting user
    */
   function afterDelete() {
     window.location.href = 'userLogin.html';
@@ -158,70 +210,4 @@ function deleteUser(username, password) {
   }
 
   POST(msg, afterDelete);
-}
-
-/**
- *
- * @param {*} username
- * @param {*} password
- */
-function getOwnRecipes(username, password) {
-  const getOwnReq = `type=getCustomizedRecipeIDs&user=${encodeURIComponent(
-    username
-  )}&pass=${encodeURIComponent(password)}`;
-
-  /**
-   *
-   * @param {*} data
-   */
-  function getFn(data) {
-    Object.keys(data).forEach(function (key) {
-      const btn = document.createElement('button');
-      console.log(data[key]);
-      router.addPage(`recipe_${data[key]}`, function () {
-        document.getElementById('#section--home').classList.remove('shown');
-        document
-          .getElementById('#section--search-bar')
-          .classList.remove('shown');
-
-        document.getElementById('#section--recipe').classList.add('shown');
-
-        // Fetch and populate recipe page and add to recipe section
-        const recipePage = document.createElement('recipe-page');
-        fetchRecipe(data[key], recipePage); //TODO: NEEDS FIXING
-        recipePage.classList.add('shown');
-        document.getElementById('#section--recipe').appendChild(recipePage);
-      });
-
-      btn.addEventListener('click', () => {
-        router.navigate(`recipe_${data[key]}`);
-      });
-      btn.innerHTML = data[key];
-      console.log(document.getElementById('#section--home'));
-      document.getElementById('#section--home').appendChild(btn);
-    });
-    //setFormMessage(loginForm, 'error', 'Invalid username or password!');
-  }
-
-  GET(getOwnReq, getFn);
-}
-
-/**
- * Uses the recipe ID to get the full json details of the recipe. Once
- * the recipe is found, set the recipe information.
- * @param {String} recipeId
- * @param {SearchResultsPage} recipePage
- */
-function fetchRecipe(recipeId, recipePage) {
-  const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
-
-  /**
-   * TODO:
-   * @param {*} data
-   */
-  function afterFetch(data) {
-    recipePage.data = data;
-  }
-
-  POST(fetchReq, afterFetch);
 }

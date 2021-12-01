@@ -1,12 +1,13 @@
 // FavoriteRecipes.js
 
 // IMPORTS
-import { router } from '../scripts/main.js';
-import { GET, POST } from '../scripts/request.js';
+// import { router } from '../scripts/main.js';
+// import { GET, POST } from '../scripts/request.js';
 
 /**
  * Class: FavRecipesPage
- * TODO:
+ * A page that will show the user the recipes in their
+ * favorites list and link to the recipe view for each.
  */
 class FavRecipesPage extends HTMLElement {
   constructor() {

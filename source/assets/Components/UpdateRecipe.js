@@ -1,7 +1,16 @@
 // UpdateRecipe.js
-import { router } from '../scripts/main.js';
-import { GET, POST } from '../scripts/request.js';
 
+// IMPORTS
+import { router } from '../scripts/main.js';
+import { POST } from '../scripts/request.js';
+
+/**
+ * Class: UpdateRecipePage
+ * Whenever the user updates the recipe (option is found under the update
+ * button on the recipe page), they are taken to this page. This page
+ * populates the form values with the previous values and submitting will
+ * update the recipe.
+ */
 class UpdateRecipePage extends HTMLElement {
   constructor() {
     super();
@@ -97,26 +106,6 @@ class UpdateRecipePage extends HTMLElement {
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
 
-    //Display Image form the data
-    // let img = this.shadowRoot.getElementById('recipeImage');
-    // let imgFile = this.shadowRoot.querySelector('input[type="file"]');
-
-    // imgFile.addEventListener('change', function () {
-    //   imageDisplay(this);
-    // });
-
-    // function imageDisplay(input) {
-    //   var reader;
-    //   if (input.files && input.files[0]) {
-    //     reader = new FileReader();
-    //     reader.onload = function (e) {
-    //       img.setAttribute('src', e.target.result);
-    //     };
-
-    //     reader.readAsDataURL(input.files[0]);
-    //   }
-    // }
-
     //Nav Bar for "Summary", "Ingredients", and "Directons"
     //----------------------------------------------------------------
     // Display Update Summary
@@ -178,8 +167,40 @@ class UpdateRecipePage extends HTMLElement {
   set data(data) {
     this.json = data;
     //Set Image
-    // let oldimage = data.recipe.image;
-    // this.shadowRoot.getElementById('recipeImage').setAttribute('src', oldimage);
+    let oldimage = data.recipe.image;
+    this.shadowRoot.getElementById('recipeImage').setAttribute('src', oldimage);
+
+    // Display/Change Image form the data
+    let img = this.shadowRoot.getElementById('recipeImage');
+    let imgFile = this.shadowRoot.querySelector('input[type="file"]');
+
+    imgFile.addEventListener('change', function () {
+      imageDisplay(this);
+    });
+
+    function imageDisplay(input) {
+      var reader;
+      if (input.files && input.files[0]) {
+        reader = new FileReader();
+        reader.onload = function (e) {
+          img.setAttribute('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    // Select input file image
+    // const imageData = new FormData();
+    // const image = document
+    // let image = '';
+    // let fileReader = new FileReader();
+    // fileReader.onload = function () {
+    //   if (fileReader.result.length > 0) {
+    //     image = fileReader.result;
+    //   }
+    // };
+    // console.log(photo.files[0]);
+    // fileReader.readAsDataURL(photo.files[0]);
 
     //Set Cooking Hour and Mins
     let cookTimeHourPrev = Math.floor(
@@ -315,14 +336,14 @@ class UpdateRecipePage extends HTMLElement {
     //Delete Recipe
     this.shadowRoot
       .getElementById('deleteRecipe')
-      .addEventListener('click', (e) => {
+      .addEventListener('click', () => {
         let recipe = {
           id: this.json['recipe']['id'],
         };
         let data = {
           type: 'deleteRecipe',
-          username: 'Martin1234', // TODO: Need to update with curr user
-          password: '1234', // TODO: Need to update with curr password
+          username: localStorage.getItem('username'), // TODO: Need to update with curr user
+          token: localStorage.getItem('token'), // TODO: Need to update with curr password
           recipe: recipe,
         };
 
@@ -364,6 +385,10 @@ class UpdateRecipePage extends HTMLElement {
     function updateData() {
       // Select all ingredients
       //let ingredientList = this.shadowRoot.getElementById()
+      // console.log(imgFile.files[0]);
+      // let imageData = new FormData();
+      // imageData.append('file', imgFile.files[0]);
+      // console.log(imageData);
       let quantity = ingredientList.querySelectorAll('input[name="quantity"]');
       let unit = ingredientList.querySelectorAll('input[name="unit"]');
       let ingredient = ingredientList.querySelectorAll(
@@ -374,16 +399,6 @@ class UpdateRecipePage extends HTMLElement {
       let directionsList = directions.querySelectorAll(
         'textarea[name="directionStep"]'
       );
-
-      //let image = '';
-      // let fileReader = new FileReader();
-      // fileReader.onload = function () {
-      //   if (fileReader.result.length > 0) {
-      //     image = fileReader.result;
-      //   }
-      // };
-      // console.log(photo.files[0]);
-      // fileReader.readAsDataURL(photo.files[0]);
 
       // For loop for upload all ingredient information
       let extendedIngredients = [];
@@ -420,14 +435,14 @@ class UpdateRecipePage extends HTMLElement {
 
       // Send Data
       let recipe = {
-        //image: image,
+        image: imgFile.files[0],
         readyInMinutes: readyInMinutes,
         servings: servings.value,
         title: title.value,
         summary: summary.value,
         extendedIngredients: extendedIngredients,
         analyzedInstructions: instructions,
-        author: 'Martin1234', // TODO: Need to update with curr user
+        author: localStorage.getItem('username'), // TODO: Need to update with curr user
         id: data.recipe['id'],
       };
 
@@ -435,8 +450,8 @@ class UpdateRecipePage extends HTMLElement {
       // Create the POST message to send to the backend
       let newData = {
         type: 'updateRecipe',
-        username: 'Martin1234', // TODO: Need to update with curr user
-        password: '1234', // TODO: Need to update with curr password
+        username: localStorage.getItem('username'), // TODO: Need to update with curr user
+        token: localStorage.getItem('token'), // TODO: Need to update with curr password
         recipe: recipe,
         title: recipe['title'],
       };
@@ -465,3 +480,5 @@ class UpdateRecipePage extends HTMLElement {
 }
 
 customElements.define('update-recipe-page', UpdateRecipePage);
+
+// EXPORTS

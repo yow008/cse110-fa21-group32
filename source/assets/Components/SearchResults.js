@@ -2,13 +2,14 @@
 
 // IMPORTS
 import { router } from '../scripts/main.js';
-import { GET, POST } from '../scripts/request.js';
+import { GET } from '../scripts/request.js';
 
 // GLOBALS
 
 /**
  * Class: SearchResultsPage
- * TODO:
+ * Displays brief recipe information based on the search
+ * keyphrase. Each recipe result links to the dedicated recipe page.
  */
 class SearchResultsPage extends HTMLElement {
   constructor() {
@@ -82,9 +83,9 @@ function createRecipeCards(results, section) {
     // Add the corresponding expand recipe view to router
     addPage(data.id);
 
-    card.addEventListener('click', e => {
+    card.addEventListener('click', () => {
       let recipeView = document.getElementById('#section--recipe');
-      while(recipeView.firstChild){
+      while (recipeView.firstChild) {
         recipeView.removeChild(recipeView.firstChild);
       }
       router.navigate(`recipe_${data.id}`);
@@ -100,6 +101,8 @@ function addPage(recipeId) {
   router.addPage(`recipe_${recipeId}`, function () {
     document.getElementById('#section--home').classList.remove('shown');
     document.getElementById('#section--search-bar').classList.remove('shown');
+    document.getElementById('#section--grocery').classList.remove('shown');
+    document.getElementById('#section--cooking-mode').classList.remove('shown');
 
     document
       .getElementById('#section--search-results')
@@ -111,9 +114,9 @@ function addPage(recipeId) {
     const recipePage = document.createElement('recipe-page');
     fetchRecipe(recipeId, recipePage);
     recipePage.classList.add('shown');
-    document.getElementById('#section--recipe').innerHTML='';
+    document.getElementById('#section--recipe').innerHTML = '';
     document.getElementById('#section--recipe').appendChild(recipePage);
-  }); 
+  });
 }
 
 /**

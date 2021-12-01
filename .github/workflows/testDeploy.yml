@@ -59,7 +59,10 @@ jobs:
 
       # Exclude the test.js files due to errors about jest functions
       - name: Run ESLint
-        run: npx eslint source/**/*.js
+        run: npx eslint source/assets/scripts/*.js
+
+      - name: Run ESLint
+        run: npx eslint source/assets/Components/*.js
 
   js-test:
     runs-on: ubuntu-latest
@@ -84,7 +87,7 @@ jobs:
 
       # Only validates source .html files, can generalize if desired
       - name: Run HTML validator
-        run: npx html-validate source/**/*.html
+        run: npx html-validate source/*.html
 
   css-lint:
     needs: build
@@ -99,29 +102,51 @@ jobs:
 
       # Only validates source .css files, can generalize if desired
       - name: Run CSS linter
-        run: npx stylelint source/**/*.css
+        run: npx stylelint source/assets/styles/*.css
 
-  minify:
-    needs: [build, js-eslint, css-lint, html-validate]
+  # Reference: https://github.com/marketplace/actions/jsdoc-action
+  js-doc:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Compile with Grunt
-        uses: elstudio/actions-js-build/build@v4
-
-      # - name: Config GitHub user name
-      #   run: git config --global user.name hannahhui5184
-
-      # - name: Config GitHub user email
-      #   run: git config --global user.email hannah.hui5184@gmail.com
-
-      # - name: Run minification
-      #   run: grunt
-
-      - name: Commit changes
-        uses: elstudio/actions-js-build/commit@v4
+      - name: JSDoc Build
+        uses: andstor/jsdoc-action@v1
         with:
-          commitMessage: Minified source files for deployment
+          source_dir: ./source/assets
+          output_dir: ./out
+          config_file: jsdoc.conf.json
+          template: minami
+          front_page: JSDOC.md
+
+      - name: JSDoc Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_dir: ./out
+
+  # minify:
+  #   needs: [build, js-eslint, css-lint, html-validate]
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2
+
+  #     - name: Compile with Grunt
+  #       uses: elstudio/actions-js-build/build@v4
+
+  #     # - name: Config GitHub user name
+  #     #   run: git config --global user.name hannahhui5184
+
+  #     # - name: Config GitHub user email
+  #     #   run: git config --global user.email hannah.hui5184@gmail.com
+
+  #     # - name: Run minification
+  #     #   run: grunt
+
+  #     - name: Commit changes
+  #       uses: elstudio/actions-js-build/commit@v4
+  #       with:
+  #         commitMessage: Minified source files for deployment
