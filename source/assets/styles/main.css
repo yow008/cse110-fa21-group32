@@ -7,47 +7,48 @@ section:not(section.shown) {
 }
 
 @font-face {
-  font-family: "IBM Plex Sans";
+  font-family: "IBM Plex Sans", sans-serif;
   src: url("IBM_Plex_Sans/IBMPlexSans-Bold.ttf");
   font-weight: bold;
 }
+
 @font-face {
-  font-family: "IBM Plex Sans";
+  font-family: "IBM Plex Sans", sans-serif;
   src: url("IBM_Plex_Sans/IBMPlexSans-BoldItalic.ttf");
   font-weight: bold;
   font-style: italic;
 }
 
 @font-face {
-  font-family: "IBM Plex Sans";
+  font-family: "IBM Plex Sans", sans-serif;
   src: url("IBM_Plex_Sans/IBMPlexSans-Italic.ttf");
   font-style: italic;
   font-weight: normal;
 }
 
 @font-face {
-  font-family: "IBM Plex Sans";
+  font-family: "IBM Plex Sans", sans-serif;
   src: url("IBM_Plex_Sans/IBMPlexSans-Light.ttf");
   font-weight: lighter;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "IBM Plex Sans";
-  src: url("IBM_Plex_Sans/IBMPlexSans-LightItalic.ttf");;
+  font-family: "IBM Plex Sans", sans-serif;
+  src: url("IBM_Plex_Sans/IBMPlexSans-LightItalic.ttf");
   font-weight: lighter;
   font-style: italic;
 }
 
 @font-face {
-  font-family: "IBM Plex Sans";
+  font-family: "IBM Plex Sans", sans-serif;
   src: url("IBM_Plex_Sans/IBMPlexSans-Regular.ttf");
   font-weight: normal;
   font-style: normal;
 }
 
 * {
-  font-family: "IBM Plex Sans";
+  font-family: "IBM Plex Sans", sans-serif;
   font-weight: normal;
   font-style: normal;
 }
@@ -88,14 +89,16 @@ section:not(section.shown) {
   color: #f1f1f1;
 }
 
-#LinkToFav:hover{
-  background-color: #86A383 !important;
+#LinkToFav:hover {
+  background-color: #86a383 !important;
 }
-#LinkToAdd:hover{
-  background-color: #9DBC9A !important;
+
+#LinkToAdd:hover {
+  background-color: #9dbc9a !important;
 }
-#LinkToWrite:hover{
-  background-color: #B2D8AF !important;
+
+#LinkToWrite:hover {
+  background-color: #b2d8af !important;
 }
 
 /* Position and style the close button (top right corner) */

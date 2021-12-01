@@ -213,8 +213,7 @@ class ProfilePage extends HTMLElement {
 
       editProfileSection.appendChild(addChangesBtn);
 
-      addChangesBtn.addEventListener('click', (e) => {});
-
+      addChangesBtn.addEventListener('click', () => {});
     });
 
     const user = localStorage.getItem('username');
