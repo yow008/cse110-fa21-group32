@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Components/Recipe.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="AddRecipePage.html">AddRecipePage</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CalendarPage.html">CalendarPage</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CookingMode.html">CookingMode</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="FavRecipesPage.html">FavRecipesPage</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="GroceryPage.html">GroceryPage</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="HomePage.html">HomePage</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ProfilePage.html">ProfilePage</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="RecipePage.html">RecipePage</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Router.html">Router</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Router.html#addPage">addPage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Router.html#addPage">addPage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Router.html#navigate">navigate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Router.html#navigate">navigate</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="SearchBar.html">SearchBar</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="SearchResultsPage.html">SearchResultsPage</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="UpdateRecipePage.html">UpdateRecipePage</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#addMainPages">addMainPages</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#addPage">addPage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#bindNavIcons">bindNavIcons</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#bindPopstate">bindPopstate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#bindSidePanel">bindSidePanel</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#clearInputError">clearInputError</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#createAccount">createAccount</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#createRecipeCards">createRecipeCards</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#deleteUser">deleteUser</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#fetchRecipe">fetchRecipe</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#GET">GET</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getCookTime">getCookTime</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getEmail">getEmail</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getImage">getImage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getRecipes">getRecipes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getServings">getServings</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getSummary">getSummary</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getTitle">getTitle</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#helloWorld">helloWorld</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#init">init</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#login">login</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#POST">POST</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#searchRecipes">searchRecipes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#setFormMessage">setFormMessage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#setInputError">setInputError</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#timeConvert">timeConvert</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Components/Recipe.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Recipe.js
+import { router } from '../scripts/main.js';
+
+/**
+ * Class: RecipePage
+ * Shows detailed information of the recipe broken
+ * down into summary, ingredients, and direction tabs.
+ */
+class RecipePage extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+
+    // Create styles and root element
+    const styles = document.createElement('style');
+    const article = document.createElement('article');
+
+    // Styles and root element
+    styles.innerHTML = ``;
+    article.innerHTML = `
+
+        &lt;h2>Recipes&lt;/h2>
+        &lt;div class="recipe-navbar">
+        &lt;a href="#recipe-summaryID" id="ToSum">Summary&lt;/a>
+        &lt;a href="#recipe-ingredientsID" id="ToIng">Ingredients&lt;/a>
+        &lt;a href="#recipe-directionID" id="ToDir">Directions&lt;/a>
+        &lt;/div>
+
+        &lt;!--Recipe Summary-->
+        &lt;div id="recipe-summaryID" class="recipe-summary" style="display: block">
+        &lt;p>Summary&lt;/p>
+        &lt;p>Content...&lt;/p>
+        
+        &lt;button type="button" class="recipe-summmaryButton">Add to My Favorites&lt;/button>
+        &lt;/div>
+
+        &lt;!--Recipe Ingredients-->
+        &lt;div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none">
+        &lt;p>Ingredients&lt;/p>
+        &lt;!--Add To List Button--> 
+        &lt;form>&lt;/form>
+        &lt;br>
+        &lt;button type="button" id="addToList">Add to List&lt;/button>
+        &lt;/div>
+
+        &lt;!--Recipe Directions-->
+        &lt;div id="recipe-directionID" class="recipe-direction" style="display: none">
+        &lt;p>Direction&lt;/p>
+        &lt;ul>
+        &lt;/ul>
+        &lt;button type ="button" id="LinkToCM"> Cook &lt;/button>
+        &lt;/div>
+
+    `;
+
+    // Append elements to the shadow root
+    this.shadowRoot.append(styles, article);
+  }
+
+  /**
+   * Populate the recipe information sections with data
+   * @param {JSON} data Recipe data retrieved from backend (db or Spoonacular)
+   */
+  set data(data) {
+    console.log(data);
+    this.json = data;
+    this.id = this.shadowRoot.querySelector('article').innerHTML = `
+
+      &lt;h2>Recipes&lt;/h2>
+      &lt;div class="recipe-navbar">
+      &lt;a href="#recipe-summaryID" id="ToSum">Summary&lt;/a>
+      &lt;a href="#recipe-ingredientsID" id="ToIng">Ingredients&lt;/a>
+      &lt;a href="#recipe-directionID" id="ToDir">Directions&lt;/a>
+      &lt;/div>
+
+      &lt;br>
+      &lt;!--User recipes ONLY-->
+      &lt;div class="editRecipes">
+      &lt;button type="button" id="editRecipe"> Edit &lt;/button>
+      &lt;/div>
+      &lt;br>
+
+      &lt;!--Recipe Summary-->
+      &lt;div id="recipe-summaryID" class="recipe-summary" style="display: block">
+      &lt;button type="button" class="recipe-summmaryButton">Add to My Favorites&lt;/button>
+      &lt;div id="recipe-servingsID" class="recipe-servings">Servings: &lt;/div>
+      &lt;div id="recipe-cooktimeID" class="recipe-cooktime">Cooktime: &lt;/div>
+      Summary:
+      
+      &lt;/div>
+
+      &lt;!--Recipe Ingredients-->
+      &lt;div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none">
+        &lt;p>Ingredients&lt;/p>
+        &lt;!--Add To List Button--> 
+        &lt;form>
+        &lt;/form>
+        &lt;br>
+        &lt;button type="button" id="addToList">Add to List&lt;/button>
+      &lt;/div>
+
+      &lt;!--Recipe Directions-->
+      &lt;div id="recipe-directionID" class="recipe-direction" style="display: none">
+      &lt;p>Direction&lt;/p>
+      &lt;ol>
+      &lt;/ol>
+      &lt;button type ="button" id="LinkToCM"> Cook &lt;/button>
+      &lt;/div>
+
+    `;
+    //Edit button nav to UpdateRecipe.js
+    //TODO: Have ONLY the USER recipe been send to update-recipe
+    //----------------------------------------------------------------------------
+    router.addPage('update-recipe', function () {
+      document.getElementById('#section--recipe').classList.remove('shown');
+      document.getElementById('#section--update-recipe').classList.add('shown');
+      console.log(document.getElementById('#section--update-recipe'));
+    });
+
+    const updateBtn = this.shadowRoot.getElementById('editRecipe');
+    updateBtn.addEventListener('click', () => {
+      const recipeUpdatePage = document.createElement('update-recipe-page');
+
+      recipeUpdatePage.classList.add('shown');
+      document.getElementById('#section--update-recipe').innerHTML = '';
+      document
+        .getElementById('#section--update-recipe')
+        .appendChild(recipeUpdatePage);
+      recipeUpdatePage.data = this.json;
+      router.navigate('update-recipe');
+    });
+
+    router.addPage('cooking-mode', function () {
+      document.getElementById('#section--recipe').classList.remove('shown');
+
+      document.getElementById('#section--cooking-mode').classList.add('shown');
+    });
+
+    const CMPage = this.shadowRoot.getElementById('LinkToCM');
+    CMPage.addEventListener('click', () => {
+      const cookingPage = document.createElement('cooking-mode-page');
+      cookingPage.classList.add('shown');
+      document.getElementById('#section--cooking-mode').innerHTML = '';
+      document
+        .getElementById('#section--cooking-mode')
+        .appendChild(cookingPage);
+      cookingPage.data = this.json;
+      router.navigate('cooking-mode');
+    });
+
+    // Set Title
+    const title = getTitle(data).toUpperCase();
+    this.shadowRoot.querySelector('h2').innerHTML = title;
+
+    // Set Summary
+    const summary = document.createElement('p');
+    const image = document.createElement('img');
+    summary.innerHTML = getSummary(data);
+    image.setAttribute('src', getImage(data));
+    this.shadowRoot.getElementById('recipe-summaryID').appendChild(image);
+    this.shadowRoot.getElementById('recipe-summaryID').appendChild(summary);
+
+    // Set Servings
+    const servings = document.createElement('p');
+    servings.innerHTML = getServings(data);
+    this.shadowRoot.getElementById('recipe-servingsID').appendChild(servings);
+
+    // Set cooktime
+    const cooktime = document.createElement('p');
+    cooktime.innerHTML = timeConvert(getCookTime(data));
+    this.shadowRoot.getElementById('recipe-cooktimeID').appendChild(cooktime);
+
+    //Set Ingredients
+    const form = this.shadowRoot.querySelector('form');
+    for (let i = 0; i &lt; data.recipe.extendedIngredients.length; i++) {
+      const ingredient = data.recipe.extendedIngredients[i];
+      const div = document.createElement('div');
+      const currElement = document.createElement('input');
+      currElement.setAttribute('type', 'checkbox');
+      currElement.setAttribute('name', ingredient.name);
+      currElement.setAttribute('value', ingredient.original);
+      div.append(currElement);
+      const content = document.createElement('label');
+      content.setAttribute('for', ingredient.name);
+      content.innerHTML = ingredient.original;
+      div.append(content);
+      form.append(div);
+    }
+
+    // Set Directions
+    const list = this.shadowRoot.querySelector('ol');
+    for (let i = 0; i &lt; data.recipe.analyzedInstructions[0].steps.length; i++) {
+      const step = data.recipe.analyzedInstructions[0].steps[i];
+      const currStep = document.createElement('li');
+      currStep.innerHTML = step.step;
+      list.appendChild(currStep);
+    }
+
+    this.shadowRoot.getElementById('ToSum').addEventListener('click', (e) => {
+      e.preventDefault();
+      this.shadowRoot
+        .getElementById('recipe-summaryID')
+        .setAttribute('style', 'display: show');
+      this.shadowRoot
+        .getElementById('recipe-ingredientsID')
+        .setAttribute('style', 'display: none');
+      this.shadowRoot
+        .getElementById('recipe-directionID')
+        .setAttribute('style', 'display: none');
+    });
+
+    this.shadowRoot.getElementById('ToDir').addEventListener('click', (e) => {
+      e.preventDefault();
+      this.shadowRoot
+        .getElementById('recipe-summaryID')
+        .setAttribute('style', 'display: none');
+      this.shadowRoot
+        .getElementById('recipe-ingredientsID')
+        .setAttribute('style', 'display: none');
+      this.shadowRoot
+        .getElementById('recipe-directionID')
+        .setAttribute('style', 'display: show');
+    });
+
+    this.shadowRoot.getElementById('ToIng').addEventListener('click', (e) => {
+      e.preventDefault();
+      this.shadowRoot
+        .getElementById('recipe-summaryID')
+        .setAttribute('style', 'display: none');
+      this.shadowRoot
+        .getElementById('recipe-ingredientsID')
+        .setAttribute('style', 'display: show');
+      this.shadowRoot
+        .getElementById('recipe-directionID')
+        .setAttribute('style', 'display: none');
+    });
+
+    const checkedIng = this.shadowRoot.querySelectorAll(
+      'input[type="checkbox"]'
+    );
+    //Add Ingredients to an Array "ingredientsSelect" List if they are been checked
+    function getCheckedIngredient() {
+      //console.log(checkedIng);
+      let listAll = [];
+      let ingredientsSelect = [];
+      for (let i = 0; i &lt; checkedIng.length; i++) {
+        //console.log(checkedIng[i].value);
+        if (checkedIng[i].checked == true) {
+          //console.log(checkedIng[i].value);
+          ingredientsSelect.push(checkedIng[i].value);
+          //TODO: Nasty Array with Recipe Name, ID, and Checked ingredients
+          listAll['name'] = title;
+          listAll['id'] = data.recipe.id;
+          listAll['ingredients'] = ingredientsSelect;
+        }
+      }
+      console.log(ingredientsSelect);
+      console.log(listAll);
+      return listAll;
+    }
+
+    //"Add to list" button -> send the data to Grocery list
+    const checklist = this.shadowRoot.getElementById('addToList');
+    checklist.addEventListener('click', (e) => {
+      e.preventDefault();
+      getCheckedIngredient();
+    });
+  }
+
+  /**
+   * Returns the object of the currect recipe being used.
+   */
+  get data() {
+    return this.json;
+  }
+}
+
+// SUMMARY ELEMENTS
+/**
+ * Returns number of minutes for cooking the recipe
+ * @param {JSON} data
+ * @returns Number of minutes it takes to cook this recipe
+ */
+function getCookTime(data) {
+  return data.recipe['readyInMinutes'];
+}
+
+// TIME CONVERT
+/**
+ * Converts time units into a string format (hrs and min equivalent)
+ * @param {int} n
+ * @returns Number of minutes, hours, and minutes it takes to cook this recipe
+ */
+function timeConvert(n) {
+  var num = n;
+  var hours = num / 60;
+  var rhours = Math.floor(hours);
+  var minutes = (hours - rhours) * 60;
+  var rminutes = Math.round(minutes);
+  return (
+    num + ' minutes = ' + rhours + ' hour(s) and ' + rminutes + ' minute(s).'
+  );
+}
+
+/**
+ * Returns the number of servings
+ * @param {JSON} data
+ * @returns Number of servings this recipe creates
+ */
+function getServings(data) {
+  return data.recipe['servings'];
+}
+
+/**
+ * Returns the image (Base 64 format)
+ * @param {JSON} data
+ * @returns Base 64 format of image or url link to image depending on if it comes from spoonacular or our database
+ */
+function getImage(data) {
+  return data.recipe.image;
+}
+
+/**
+ * Returns the title of the recipe
+ * @param {JSON} data
+ * @returns Title of recipe
+ */
+function getTitle(data) {
+  return data.recipe.title;
+}
+
+/**
+ * Returns the summary of the recipe
+ * @param {JSON} data
+ * @returns Summary paragraph of the recipe
+ */
+function getSummary(data) {
+  return data.recipe.summary;
+}
+
+// TODO: remove if remains unused
+// // INGREDIENTS ELEMENTS
+// /**
+//  *
+//  * @param {JSON} data
+//  * @returns Array of objects where each object contains an ingredient summary,
+//  * the ingredient summary object looks like, {name:"", unit:"", amount:""}
+//  */
+// function getIngreds(data) {
+//   return data['extendedIngredients'];
+// }
+
+// // DIRECTIONS ELEMENTS
+// /**
+//  *
+//  * @param {JSON} data
+//  * @returns An ordered list &lt;ol> with each step in its own list element &lt;li>
+//  */
+// function getDirs(data) {
+//   return data['instructions'];
+// }
+
+customElements.define('recipe-page', RecipePage);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Wed Dec 01 2021 06:49:06 GMT+0000 (Coordinated Universal Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
