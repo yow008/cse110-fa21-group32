@@ -114,9 +114,9 @@ jobs:
       - name: JSDoc Build
         uses: andstor/jsdoc-action@v1
         with:
-          source_dir: ./source
+          source_dir: ./source/assets
           output_dir: ./out
-          config_file: conf.json
+          config_file: jsdoc.conf.json
           template: minami
           front_page: JSDOC.md
 
