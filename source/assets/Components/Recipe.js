@@ -15,8 +15,55 @@ class RecipePage extends HTMLElement {
     const styles = document.createElement('style');
     const article = document.createElement('article');
 
-    // Styles and root element
-    styles.innerHTML = ``;
+    // Fill in styles and root element
+    styles.innerHTML = `
+    h2{
+      background-color: #324A54;
+      background-size: cover;
+      padding: 23.5px;
+      color: white;
+    }
+    .openbtn {
+      background-color: #324A54 !important;
+    }
+    .recipe-navbar{
+      display: flex;
+      justify-content: space-around;
+      background-color: #324A54;
+      padding: 20px;
+      color: white !important;
+    }
+
+    .recipe-navbar > a{
+      color:white;
+      text-decoration: none;
+    }
+
+    img{
+      width: 100%;
+      max-height: 350px;
+      object-fit: cover;
+    }
+
+    .genInfo{
+      display: flex;
+      justify-content: space-around;
+      background-color: #324A54;
+      padding: 40px;
+      color: white !important;
+      font-family: IBM Plex Sans;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 9px;
+    }
+    .insertInfo{
+      display: flex;
+      justify-content: space-around;
+    }
+
+    `;
+
     article.innerHTML = `
 
         <h2>Recipes</h2>
@@ -28,10 +75,22 @@ class RecipePage extends HTMLElement {
 
         <!--Recipe Summary-->
         <div id="recipe-summaryID" class="recipe-summary" style="display: block">
-        <p>Summary</p>
-        <p>Content...</p>
-        
-        <button type="button" class="recipe-summmaryButton">Add to My Favorites</button>
+        <!--<p>Summary</p>-->
+          <!--placeholder for recipe image-->
+          <div class="placeholder">
+            <img src="https://media.istockphoto.com/photos/varied-food-carbohydrates-protein-vegetables-fruits-dairy-legumes-on-picture-id1218254547?b=1&k=20&m=1218254547&s=170667a&w=0&h=mOEC7x7qU5NC78mCULs-jAPeLkxy8opOvIbGSnwmAyw=" img>
+          </div>
+
+          <!--general info-->
+          <div class="genInfo">
+            <p>Cook Time</p>
+            <p>Servings</p>
+            <p>Cost</p>
+          </div>
+
+          <p>Content...</p>
+          <button type="button" class="recipe-summmaryButton">Add to My Favorites</button>
+
         </div>
 
         <!--Recipe Ingredients-->
@@ -164,7 +223,7 @@ class RecipePage extends HTMLElement {
     this.shadowRoot.getElementById('recipe-summaryID').appendChild(image);
     this.shadowRoot.getElementById('recipe-summaryID').appendChild(summary);
 
-    // Set Servings
+    //Set Servings
     const servings = document.createElement('p');
     servings.innerHTML = getServings(data);
     this.shadowRoot.getElementById('recipe-servingsID').appendChild(servings);
