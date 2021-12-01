@@ -200,8 +200,10 @@ function login(username, password, loginForm) {
       return response.json();
     })
     .then((data) => {
-      // TODO: passes user information to home.html but need to update with more secure way
-      window.location.href = `home.html?user=${data.userInfo[0]}&pass=${data.userInfo[1]}`;
+      localStorage.setItem('username', username);
+      localStorage.setItem('token', data.userInfo);
+      window.location.href = `home.html`;
+      //window.location.href = `home.html?user=${data.userInfo[0]}&pass=${data.userInfo[1]}`; Old method of rerouting.
       console.log('Success:', data);
     })
     .catch((error) => {
