@@ -20,7 +20,8 @@
   },
   "scripts": {
     "test": "jest",
-    "doc": "jsdoc -c jsdoc.conf.json"
+    "doc": "jsdoc -c jsdoc.conf.json",
+    "coverage": "jest --collect-coverage"
   },
   "jest": {
     "preset": "jest-puppeteer",
