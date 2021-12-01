@@ -28,6 +28,7 @@ class CookingMode extends HTMLElement {
         <!--Cooking Timer-->
         <div class="cooking-timer">
             <p>Timer</p>
+            <p id='countdown'></p>
             <button type="button">Start</button>
         </div>
     
@@ -40,6 +41,55 @@ class CookingMode extends HTMLElement {
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
+
+    //convert input to seconds
+    function convert(input) {
+      let parts = input.split(':'),
+          hours = +parts[0],
+          minutes = +parts[1],
+          seconds = +parts[2];
+      if(!parts || parts.length != 3){
+        alert('not valid, try again!');
+        return null;
+      };
+      return (hours*60*60 + minutes * 60 + seconds).toFixed(3);
+    }
+
+    //convert seconds to hours, minutes and seconds
+    function convertHMS(value) {
+      const sec = parseInt(value, 10); // convert value to number if it's string
+      let hours   = Math.floor(sec / 3600); // get hours
+      let minutes = Math.floor((sec - (hours * 3600)) / 60); // get minutes
+      let seconds = sec - (hours * 3600) - (minutes * 60); //  get seconds
+      // add 0 if value < 10; Example: 2 => 02
+      if (hours   < 10) {hours   = "0"+hours;}
+      if (minutes < 10) {minutes = "0"+minutes;}
+      if (seconds < 10) {seconds = "0"+seconds;}
+      return hours+':'+minutes+':'+seconds; // Return is HH : MM : SS
+    }
+  
+
+
+    let time = this.shadowRoot.getElementById('countdown');
+    let isPaused = false;
+    this.shadowRoot.querySelector('button').addEventListener('click', () => {
+      let timeleft = prompt('Enter a time to set up timer', '00:00:00');
+      let timeSec = convert(timeleft);
+      if(!timeSec){
+        return;
+      }
+      let downloadTimer = setInterval(function(){
+        if(timeSec < 0){
+          clearInterval(downloadTimer);
+          time.innerHTML = 'Finished!';
+          alert('It is ready!!');
+        } 
+        else {
+          time.innerHTML = convertHMS(timeSec);
+        }
+        timeSec -= 1;
+      }, 1000);
+    });
   }
 
   /**

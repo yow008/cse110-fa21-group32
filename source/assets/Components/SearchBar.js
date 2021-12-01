@@ -46,6 +46,7 @@ class SearchBar extends HTMLElement {
     router.addPage('search-results', function () {
       document.getElementById('#section--home').classList.remove('shown');
       document.getElementById('#section--search-bar').classList.remove('shown');
+      document.getElementById('#section--recipe').classList.remove('shown');
 
       document
         .getElementById('#section--search-results')

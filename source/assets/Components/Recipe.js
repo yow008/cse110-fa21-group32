@@ -110,7 +110,6 @@ class RecipePage extends HTMLElement {
     router.addPage('update-recipe', function () {
       document.getElementById('#section--recipe').classList.remove('shown');
       document.getElementById('#section--update-recipe').classList.add('shown');
-      console.log(document.getElementById('#section--update-recipe'));
     });
 
     const updateBtn = this.shadowRoot.getElementById('editRecipe');
