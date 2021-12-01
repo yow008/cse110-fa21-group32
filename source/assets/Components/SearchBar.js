@@ -8,7 +8,8 @@ import { GET } from '../scripts/request.js';
 
 /**
  * Class: SearchBar
- * TODO:
+ * Search bar element that appears at the top of the page.
+ * Search redirects to the search results page.
  */
 class SearchBar extends HTMLElement {
   constructor() {
