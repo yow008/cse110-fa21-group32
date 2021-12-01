@@ -18,56 +18,50 @@ class UpdateUserPage extends HTMLElement {
     const article = document.createElement('article');
 
     // Added styles
-    //styles.innerHTML = `
-    // h2{
-    //     background-color: #CA676A;
-    //     background-size: cover;
-    //     padding: 23.5px;
-    //     color: white;
-    //   }
+    styles.innerHTML = `
+    h2{
+        background-color: #CA676A;
+        background-size: cover;
+        padding: 23.5px;
+        color: white;
+      }
 
-    // table {
-    //   table-layout: fixed;
-    //   width: 80%;
-    //   text-align: left;
-    // }
+    table {
+      table-layout: fixed;
+      width: 80%;
+      text-align: left;
+    }
 
-    // img {
-    //   border-radius: 50%;
-    //   width:  100px;
-    //   height: 100px;
-    //   object-fit: contain;
-    // }
+    img {
+      border-radius: 50%;
+      width:  100px;
+      height: 100px;
+      object-fit: contain;
+    }
 
-    // th {
-    //     height: 200px;
-    // }
+    th {
+        height: 200px;
+    }
 
-    // .button-group button {
-    //   background-color: transparent;
-    //   border: transparent;
-    //     cursor: pointer;
-    //   float: left;
-    // }
+    `;
 
-    // .button-group:after {
-    //   content: "";
-    //   clear: both;
-    //   display: table;
-    // }
-
-    // .button-group button:not(:last-child) {
-    //   border-right: none; /* Prevent double borders */
-    // }
-
-    // .button-group button:hover {
-    //   color: blue;
-    // }
-
-    // .profile-page-review {
-    //   display: none;
-    // }
-    //`;
+    // <tr id="#edit-username>
+    //                 <td>Change Username: </td>
+    //                 <td><input type="textarea" id="username" value="Current Username+++"></td>
+    //                 <td><input type="textarea" id="username" value="Current Username+++"></td>
+    //             </tr>
+    //             <tr id="#edit-email>
+    //                 <td>Change Email: </td>
+    //                 <td><input type="textarea" id="email" value="Current Email++"></td>
+    //             </tr>
+    //             <tr id="#edit-password>
+    //                 <td>New Password: </td>
+    //                 <td><input type="textarea" id="password" value="New Password"></td>
+    //             </tr>
+    //             <tr id="#edit-confirm-password>
+    //                 <td>Confirm Password: </td>
+    //                 <td><input type="textarea" id="confirm-password" value="New Password+++"></td>
+    //             </tr>
 
     /* Added article */
     article.innerHTML = `
@@ -79,8 +73,23 @@ class UpdateUserPage extends HTMLElement {
         <th scope="col">
             <table id="#edit-user-table">
                 <tr id="#edit-username>
-                    <td><label for="username">Change Username: </td>
-                    <td><input type="textarea" id="username">Current Username+++</td>
+                    <td>Change Username: </td>
+                    <td>Change Username 1: </td>
+                </tr>
+                <tr id="#edit-email>
+                    <td>Change Email: </td>
+                    <td>Change Email 1: </td>
+                </tr>
+                <tr id="#edit-password>
+                    <td>New Password: </td>
+                    <td>New Password 1: </td>
+                </tr>
+                <tr id="#edit-confirm-password>
+                    <td>Confirm Password: </td>
+                    <td>Confirm Password 1: </td>
+                </tr>
+                <tr>
+                    <td><button id="#add-changes">Add changes</button></td>
                 </tr>
             </table>
         </th>
