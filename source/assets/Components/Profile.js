@@ -141,7 +141,7 @@ class ProfilePage extends HTMLElement {
     const editProfileBtn = this.shadowRoot.getElementById(
       '#button-edit-profile'
     );
-    editProfileBtn.addEventListener('click', (e) => {
+    editProfileBtn.addEventListener('click', () => {
       // Create Edit Username Label and text area
       let editUsername = document.createElement('div');
       let editUsernameLabel = document.createElement('label');
