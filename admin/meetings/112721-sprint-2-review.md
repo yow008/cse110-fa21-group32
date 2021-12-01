@@ -28,6 +28,9 @@ Second sprint review meeting. Everyone shares their individual progress and cont
   - Added a table structure to grocery list, so that the ingredient, amount, and unit can be added in the expected order, with each ingredient occupying one row.
   - Implemented other CSS code with Tiffany.
 
+
+https://user-images.githubusercontent.com/91357781/144157856-f31474a9-1cfa-4b42-a4a8-767d97ae9a03.mp4
+
 <br></br>
 
 - **Bagrat Mikhaelyan**
