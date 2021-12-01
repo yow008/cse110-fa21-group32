@@ -156,7 +156,6 @@ class ProfilePage extends HTMLElement {
       document
         .getElementById('#section--update-user')
         .appendChild(updateUserPage);
-      updateUserPage.data = this.json;
       router.navigate('update-user-page');
     });
   }
