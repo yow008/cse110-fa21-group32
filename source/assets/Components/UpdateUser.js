@@ -26,7 +26,7 @@ class UpdateUserPage extends HTMLElement {
         color: white;
       }
 
-    table {
+    #outer-table {
       table-layout: fixed;
       width: 80%;
       text-align: left;
@@ -68,30 +68,26 @@ class UpdateUserPage extends HTMLElement {
         <h2>Update User Info</h2>
 
         <!--Update User Navbar-->
-        <table style="background-color: #eecbcc" align="center" >
+        <table id="outer-table" style="background-color: #eecbcc" align="center" >
         <th scope="col" style="text-align: center"><img src="assets/icons/logo.png"></th>
         <th scope="col">
-            <table id="#edit-user-table">
-                <tr id="#edit-username>
-                    <td>Change Username: </td>
-                    <td>Change Username 1: </td>
-                </tr>
-                <tr id="#edit-email>
-                    <td>Change Email: </td>
-                    <td>Change Email 1: </td>
-                </tr>
-                <tr id="#edit-password>
-                    <td>New Password: </td>
-                    <td>New Password 1: </td>
-                </tr>
-                <tr id="#edit-confirm-password>
-                    <td>Confirm Password: </td>
-                    <td>Confirm Password 1: </td>
-                </tr>
-                <tr>
-                    <td><button id="#add-changes">Add changes</button></td>
-                </tr>
-            </table>
+            <div id="edit-username">
+                <label for='username'>Change Username: </label>
+                <input type='textarea' id="username" value="NewUsername">
+            </div>
+            <div id="edit-email">
+                <label for='email'>Change Email: </label>
+                <input type='textarea' id="email" value="NewEmail">
+            </div>
+            <div id="change-password">
+                <label for='password'>Change Password: </label>
+                <input type='textarea' id="password" placeholder="NewPassword">
+            </div>
+            <div id="confirm-password-div">
+                <label for='confirm-password'>Confirm Password: </label>
+                <input type='textarea' id="confirm-password" placeholder="NewPassword">
+            </div>
+            <button id="add-changes"> Add Changes </button>
         </th>
         </table>
         <br>
@@ -104,93 +100,38 @@ class UpdateUserPage extends HTMLElement {
     const token = localStorage.getItem('token');
 
     // Create Edit Username Label and text area
-    // let editUsername = document.createElement('div');
-    // let editUsernameLabel = document.createElement('label');
-    // editUsernameLabel.innerHTML = 'Change Username: ';
-    // editUsernameLabel.setAttribute('for', '#edit-username');
-    // let editUsernameTextArea = document.createElement('input');
-    // editUsernameTextArea.setAttribute('type', 'text');
-    // editUsernameTextArea.setAttribute(
-    // 'value',
-    // localStorage.getItem('username')
-    // );
-    // editUsernameTextArea.setAttribute('id', '#edit-username');
-    // editUsername.appendChild(editUsernameLabel);
-    // editUsername.appendChild(editUsernameTextArea);
-    // editProfileSection.appendChild(editUsername);
+    let username = this.shadowRoot.getElementById('username');
+    username.setAttribute('value', user);
 
     // Add current email to email textarea element
     let email = this.shadowRoot.getElementById('email');
-    //getEmail(user, token, email);
+    getEmail(user, token, email);
     console.log('Hello');
-    // console.log(email);
-    // let editEmail = document.createElement('div');
-    // let editEmailLabel = document.createElement('label');
-    // editEmailLabel.innerHTML = 'Change Email: ';
-    // editEmailLabel.setAttribute('for', '#edit-email');
-    // let editEmailTextArea = document.createElement('input');
-    // editEmailTextArea.setAttribute('type', 'text');
-    // editEmailTextArea.setAttribute('value', '"current Email"');
-    // editEmailTextArea.setAttribute('id', '#edit-email');
-    // editEmail.appendChild(editEmailLabel);
-    // editEmail.appendChild(editEmailTextArea);
-    // editProfileSection.appendChild(editEmail);
-
-    // Create Edit Password Label and text area
-    // let editPassword = document.createElement('div');
-    // let editPasswordLabel = document.createElement('label');
-    // editPasswordLabel.innerHTML = 'New Password: ';
-    // editPasswordLabel.setAttribute('for', '#edit-password');
-    // let editPasswordTextArea = document.createElement('input');
-    // editPasswordTextArea.setAttribute('type', 'text');
-    // editPasswordTextArea.setAttribute('placeholder', 'New Password');
-    // editPasswordTextArea.setAttribute('id', '#edit-password');
-    // editPassword.appendChild(editPasswordLabel);
-    // editPassword.appendChild(editPasswordTextArea);
-    // editProfileSection.appendChild(editPassword);
-
-    // // Create Edit Password confirm Label and text area
-    // let editConfirmPassword = document.createElement('div');
-    // let editConfirmPasswordLabel = document.createElement('label');
-    // editConfirmPasswordLabel.innerHTML = 'Confirm New Password: ';
-    // editConfirmPasswordLabel.setAttribute('for', '#edit-confirm-password');
-    // let editConfirmPasswordTextArea = document.createElement('input');
-    // editConfirmPasswordTextArea.setAttribute('type', 'text');
-    // editConfirmPasswordTextArea.setAttribute('placeholder', 'Confirm Password');
-    // editConfirmPasswordTextArea.setAttribute('id', '#edit-confirm-password');
-    // editConfirmPassword.appendChild(editConfirmPasswordLabel);
-    // editConfirmPassword.appendChild(editConfirmPasswordTextArea);
-    // editProfileSection.appendChild(editConfirmPassword);
-    // let addChangesBtn = document.createElement('button');
-    // addChangesBtn.innerHTML = 'Add Changes';
-    // editProfileSection.appendChild(addChangesBtn);
-    // addChangesBtn.addEventListener('click', (e) => {
-    //   console.log('click');
-    // });
   }
 }
 
-// /**
-//  * TODO:
-//  * @param {String} username
-//  * @param {String} token
-//  */
-// function getEmail(username, token, userEmail) {
-//   const emailReq = `type=request&elem=email&user=${encodeURIComponent(
-//     username
-//   )}&token=${encodeURIComponent(token)}`;
+/**
+ * TODO:
+ * @param {String} username
+ * @param {String} token
+ */
+function getEmail(username, token, userEmail) {
+  const emailReq = `type=request&elem=email&user=${encodeURIComponent(
+    username
+  )}&token=${encodeURIComponent(token)}`;
 
-//   /**
-//    * TODO:
-//    * @param {*} data
-//    */
-//   function getFn(data) {
-//     userEmail.innerHTML = `User email: ${data.userInfo[0]}`;
-//     //setFormMessage(loginForm, 'error', 'Invalid username or password!');
-//   }
+  /**
+   * TODO:
+   * @param {*} data
+   */
+  function getFn(data) {
+    console.log(' Hello   ' + data.userInfo[0]);
+    userEmail.setAttribute('value', data.userInfo[0]);
+    //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+  }
 
-//   GET(emailReq, getFn);
-// }
+  GET(emailReq, getFn);
+}
 
 // /**
 //  *
