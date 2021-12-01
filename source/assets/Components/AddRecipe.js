@@ -269,10 +269,11 @@ class AddRecipePage extends HTMLElement {
     // Add images/Display Image when the file is been addes
     var img = this.shadowRoot.getElementById('recipeImage');
     var imgFile = this.shadowRoot.querySelector('input[type="file"]');
+    var base64Image = '';
     
     imgFile.addEventListener('change', function () {
       imageDisplay(this);
-      console.log(imgFile.files[0]);
+      //console.log(imgFile.files[0]);
     });
 
     function imageDisplay(input) {
@@ -281,6 +282,7 @@ class AddRecipePage extends HTMLElement {
         reader = new FileReader();
         reader.onload = function (e) {
           img.setAttribute('src', e.target.result);
+          base64Image = e.target.result;
         };
 
         reader.readAsDataURL(input.files[0]);
@@ -343,20 +345,7 @@ class AddRecipePage extends HTMLElement {
       );
 
       // Select all input from file image
-      //let image = photo.querySelector('input[type="file"]');
-      //console.log(image);
-      //console.log(photo);
-      // console.log(imgFile.files[0]);
-      // let imageData = new FormData();
-      // imageData.append('file', imgFile.files[0]);
-      // console.log(imageData);
-
-      // let fileReader = new FileReader();
-      // fileReader.onload = function () {
-      //   if (fileReader.result.length > 0) {
-      //     image = fileReader.result;
-      //   }
-      // };
+      //console.log(base64Image);
 
       // For loop for upload all ingredient information
       let extendedIngredients = [];
@@ -392,36 +381,32 @@ class AddRecipePage extends HTMLElement {
         60 * parseInt(cookingTimeHour.value) + parseInt(cookingTimeMin.value);
 
       // Create recipe JSON to send to the backend
-      setTimeout(function () {
-        let recipe = {
-          // image: imageData,
-          readyInMinutes: readyInMinutes,
-          servings: servings.value,
-          title: title.value,
-          summary: summary.value,
-          extendedIngredients: extendedIngredients,
-          analyzedInstructions: instructions,
-          author: localStorage.getItem('username'), // TODO: Need to update with curr user
-        };
+      let recipe = {
+        image: base64Image,
+        readyInMinutes: readyInMinutes,
+        servings: servings.value,
+        title: title.value,
+        summary: summary.value,
+        extendedIngredients: extendedIngredients,
+        analyzedInstructions: instructions,
+        author: localStorage.getItem('username'), // TODO: Need to update with curr user
+      };
 
-        // Create the POST message to send to the backend
-        let data = {
-          type: 'addRecipe',
-          username: localStorage.getItem('username'), // TODO: Need to update with curr user
-          token: localStorage.getItem('token'), // TODO: Need to update with curr password
-          recipe: recipe,
-          title: title.value,
-        };
+      // Create the POST message to send to the backend
+      let data = {
+        type: 'addRecipe',
+        username: localStorage.getItem('username'), // TODO: Need to update with curr user
+        token: localStorage.getItem('token'), // TODO: Need to update with curr password
+        recipe: recipe,
+        title: title.value,
+      };
 
-        console.log(recipe);
+      //POST request to send recipe data
 
-        //POST request to send recipe data
-
-        function afterAdd() {
-          router.navigate('profile');
-        }
-        POST(data, afterAdd);
-      });
+      function afterAdd() {
+        router.navigate('profile');
+      }
+      POST(data, afterAdd);
     }
   }
 }
