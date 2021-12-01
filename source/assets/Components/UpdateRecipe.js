@@ -1,7 +1,16 @@
 // UpdateRecipe.js
+
+// IMPORTS
 import { router } from '../scripts/main.js';
 import { POST } from '../scripts/request.js';
 
+/**
+ * Class: UpdateRecipePage
+ * Whenever the user updates the recipe (option is found under the update
+ * button on the recipe page), they are taken to this page. This page
+ * populates the form values with the previous values and submitting will
+ * update the recipe.
+ */
 class UpdateRecipePage extends HTMLElement {
   constructor() {
     super();
@@ -160,7 +169,7 @@ class UpdateRecipePage extends HTMLElement {
     //Set Image
     let oldimage = data.recipe.image;
     this.shadowRoot.getElementById('recipeImage').setAttribute('src', oldimage);
-    
+
     // Display/Change Image form the data
     var img = this.shadowRoot.getElementById('recipeImage');
     var imgFile = this.shadowRoot.querySelector('input[type="file"]');
@@ -358,7 +367,9 @@ class UpdateRecipePage extends HTMLElement {
     const title = this.shadowRoot.getElementById('updateTitle');
     const summary = this.shadowRoot.getElementById('updateSummary');
     const ingredientList = this.shadowRoot.getElementById('ingredient-table');
-    const directions = this.shadowRoot.getElementById('update-recipe-direction');
+    const directions = this.shadowRoot.getElementById(
+      'update-recipe-direction'
+    );
 
     /**
      * This function is called when the publish button is clicked and it sends the new inputted data to the database
@@ -385,7 +396,9 @@ class UpdateRecipePage extends HTMLElement {
       // console.log(imageData);
       let quantity = ingredientList.querySelectorAll('input[name="quantity"]');
       let unit = ingredientList.querySelectorAll('input[name="unit"]');
-      let ingredient = ingredientList.querySelectorAll('input[name="ingredientName"]');
+      let ingredient = ingredientList.querySelectorAll(
+        'input[name="ingredientName"]'
+      );
 
       // Select all input from Direction Steps
       let directionsList = directions.querySelectorAll(
@@ -472,3 +485,5 @@ class UpdateRecipePage extends HTMLElement {
 }
 
 customElements.define('update-recipe-page', UpdateRecipePage);
+
+// EXPORTS

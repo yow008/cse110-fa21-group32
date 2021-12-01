@@ -1,7 +1,5 @@
 // AddRecipe.js
 
-//TODO
-
 // IMPORTS
 // import { formatters } from 'stylelint';
 import { router } from '../scripts/main.js';

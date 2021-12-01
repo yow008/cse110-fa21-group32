@@ -3,7 +3,8 @@ import { router } from '../scripts/main.js';
 
 /**
  * Class: RecipePage
- * TODO:
+ * Shows detailed information of the recipe broken
+ * down into summary, ingredients, and direction tabs.
  */
 class RecipePage extends HTMLElement {
   constructor() {
@@ -56,6 +57,10 @@ class RecipePage extends HTMLElement {
     this.shadowRoot.append(styles, article);
   }
 
+  /**
+   * Populate the recipe information sections with data
+   * @param {JSON} data Recipe data retrieved from backend (db or Spoonacular)
+   */
   set data(data) {
     console.log(data);
     this.json = data;
@@ -168,7 +173,7 @@ class RecipePage extends HTMLElement {
     const cooktime = document.createElement('p');
     cooktime.innerHTML = timeConvert(getCookTime(data));
     this.shadowRoot.getElementById('recipe-cooktimeID').appendChild(cooktime);
- 
+
     //Set Ingredients
     const form = this.shadowRoot.querySelector('form');
     for (let i = 0; i < data.recipe.extendedIngredients.length; i++) {
@@ -195,7 +200,7 @@ class RecipePage extends HTMLElement {
       list.appendChild(currStep);
     }
 
-    this.shadowRoot.getElementById('ToSum').addEventListener('click', e => {
+    this.shadowRoot.getElementById('ToSum').addEventListener('click', (e) => {
       e.preventDefault();
       this.shadowRoot
         .getElementById('recipe-summaryID')
@@ -208,7 +213,7 @@ class RecipePage extends HTMLElement {
         .setAttribute('style', 'display: none');
     });
 
-    this.shadowRoot.getElementById('ToDir').addEventListener('click', e => {
+    this.shadowRoot.getElementById('ToDir').addEventListener('click', (e) => {
       e.preventDefault();
       this.shadowRoot
         .getElementById('recipe-summaryID')
@@ -221,7 +226,7 @@ class RecipePage extends HTMLElement {
         .setAttribute('style', 'display: show');
     });
 
-    this.shadowRoot.getElementById('ToIng').addEventListener('click', e => {
+    this.shadowRoot.getElementById('ToIng').addEventListener('click', (e) => {
       e.preventDefault();
       this.shadowRoot
         .getElementById('recipe-summaryID')
@@ -234,23 +239,23 @@ class RecipePage extends HTMLElement {
         .setAttribute('style', 'display: none');
     });
 
-    const checkedIng = this.shadowRoot.querySelectorAll('input[type="checkbox"]');
+    const checkedIng = this.shadowRoot.querySelectorAll(
+      'input[type="checkbox"]'
+    );
     //Add Ingredients to an Array "ingredientsSelect" List if they are been checked
     function getCheckedIngredient() {
       //console.log(checkedIng);
       let listAll = [];
       let ingredientsSelect = [];
-      for(let i = 0; i < checkedIng.length; i++)
-      {
+      for (let i = 0; i < checkedIng.length; i++) {
         //console.log(checkedIng[i].value);
-        if(checkedIng[i].checked == true){
+        if (checkedIng[i].checked == true) {
           //console.log(checkedIng[i].value);
           ingredientsSelect.push(checkedIng[i].value);
           //TODO: Nasty Array with Recipe Name, ID, and Checked ingredients
           listAll['name'] = title;
           listAll['id'] = data.recipe.id;
           listAll['ingredients'] = ingredientsSelect;
-
         }
       }
       console.log(ingredientsSelect);
@@ -260,7 +265,7 @@ class RecipePage extends HTMLElement {
 
     //"Add to list" button -> send the data to Grocery list
     const checklist = this.shadowRoot.getElementById('addToList');
-    checklist.addEventListener('click', e => {
+    checklist.addEventListener('click', (e) => {
       e.preventDefault();
       getCheckedIngredient();
     });
@@ -276,7 +281,7 @@ class RecipePage extends HTMLElement {
 
 // SUMMARY ELEMENTS
 /**
- *
+ * Returns number of minutes for cooking the recipe
  * @param {JSON} data
  * @returns Number of minutes it takes to cook this recipe
  */
@@ -286,7 +291,7 @@ function getCookTime(data) {
 
 // TIME CONVERT
 /**
- *
+ * Converts time units into a string format (hrs and min equivalent)
  * @param {int} n
  * @returns Number of minutes, hours, and minutes it takes to cook this recipe
  */
@@ -302,7 +307,7 @@ function timeConvert(n) {
 }
 
 /**
- *
+ * Returns the number of servings
  * @param {JSON} data
  * @returns Number of servings this recipe creates
  */
@@ -311,7 +316,7 @@ function getServings(data) {
 }
 
 /**
- *
+ * Returns the image (Base 64 format)
  * @param {JSON} data
  * @returns Base 64 format of image or url link to image depending on if it comes from spoonacular or our database
  */
@@ -320,7 +325,7 @@ function getImage(data) {
 }
 
 /**
- *
+ * Returns the title of the recipe
  * @param {JSON} data
  * @returns Title of recipe
  */
@@ -329,7 +334,7 @@ function getTitle(data) {
 }
 
 /**
- *
+ * Returns the summary of the recipe
  * @param {JSON} data
  * @returns Summary paragraph of the recipe
  */

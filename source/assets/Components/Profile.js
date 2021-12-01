@@ -6,7 +6,8 @@ import { GET /*, POST*/ } from '../scripts/request.js';
 
 /**
  * Class: ProfilePage
- * TODO:
+ * Shows user information and shows recipes created by the user.
+ * Also allows for updating user account information.
  */
 class ProfilePage extends HTMLElement {
   constructor() {
@@ -142,7 +143,6 @@ class ProfilePage extends HTMLElement {
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
     getRecipes(user, token, this.shadowRoot);
-
   }
 
   set recipes(recipes) {}
@@ -170,6 +170,11 @@ function getRecipes(username, token, shadowRoot) {
       fetchRecipe(data.ID[i], shadowRoot);
     }
 
+    /**
+     *
+     * @param {*} recipeId
+     * @param {*} shadowRoot
+     */
     function fetchRecipe(recipeId, shadowRoot) {
       const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
 
