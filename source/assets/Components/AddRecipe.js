@@ -66,7 +66,7 @@ class AddRecipePage extends HTMLElement {
 
         <!--Add Image-->
         <label for="img"><p><strong>Add Image</strong></p></label>
-        <input type="file" id="imgfile" name="img" accept="image/*"/>
+        <input type="file" id="imgfile" name="img" accept="image/*" required/>
         <p><img id="recipeImage" width="200"/></p>
         <br>
         <br>
@@ -74,13 +74,13 @@ class AddRecipePage extends HTMLElement {
 
         <!--Basic Information-->
         <label>Cooking Time:</label>
-        <input type="text" name="cookingTimeHour" id="#input--cook-time-hour" placeholder="hours..">
-        <input type="text" name="cookintTimeMin" id="#input--cook-time-mins" placeholder="mins..">
+        <input type="text" name="cookingTimeHour" id="#input--cook-time-hour" placeholder="hours.." required>
+        <input type="text" name="cookintTimeMin" id="#input--cook-time-mins" placeholder="mins.." required>
         <br>
         <br>
 
         <label id="servings" for="servings"> No. of Servings: </label>
-        <input type="text" name="numServings" id="#input--no-of-serv">
+        <input type="text" name="numServings" id="#input--no-of-serv" required>
         <br>
 
       <!--Basic Information (Tags/Summary)-->
@@ -121,8 +121,8 @@ class AddRecipePage extends HTMLElement {
       </ul>
 
       <label for="sum"><p><strong>Add Summary: </strong></p></label>
-      <textarea id="addTitle" name="recipeTitle" placeholder="Title:"></textarea><br>
-      <textarea id="addSummary" name="recipeSummary" placeholder="Summary"></textarea>
+      <textarea id="addTitle" name="recipeTitle" placeholder="Title:" required></textarea><br>
+      <textarea id="addSummary" name="recipeSummary" placeholder="Summary" required></textarea>
       <br>
       </div>
     
@@ -136,9 +136,9 @@ class AddRecipePage extends HTMLElement {
           <th>Ingredient</th>
         </tr>
         <tr>
-          <td><input type="text" name="quantity"/></td>
+          <td><input type="text" name="quantity" required/></td>
           <td><input type="text" name="unit"/></td>
-          <td><input type="text" name="ingredientName"/></td>
+          <td><input type="text" name="ingredientName" required/></td>
         </tr>
       </table>
       <!--When click add more should create another new 'tr' with three new inputs-->
@@ -152,7 +152,7 @@ class AddRecipePage extends HTMLElement {
         <p>Direction</p>
         <ol>
           <li>Step:</li>
-          <textarea name="directionStep" id="#input--direction-step"></textarea>
+          <textarea name="directionStep" id="#input--direction-step" required></textarea>
         </ol>
         <br>
         <!--When click add more should create another new textarea for direction-->
