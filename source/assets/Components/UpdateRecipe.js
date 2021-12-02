@@ -27,6 +27,26 @@ class UpdateRecipePage extends HTMLElement {
           background-size: cover;
           padding: 23.5px;
           color: white;
+          text-align: center;
+        }
+        .css-wrap {
+          margin-left: 5%;
+          margin-bottom: 16pt;
+          margin-right: 5%;
+        }
+        textarea {
+          width: 80%;
+          height: 42pt;
+        }
+        .normal-button {
+          background-color: white;
+          border-radius: 18px;
+          border: 1.5px solid #ca676a;
+          text-align: center;
+          min-width: 8%;
+          height: 20pt;
+          font-size: 14pt;
+          color:#ca676a;
         }
         `;
     article.innerHTML = `
@@ -37,7 +57,7 @@ class UpdateRecipePage extends HTMLElement {
             <a href="#update-recipe-ingredientsID" id="ToUpdateIng">Ingredients</a>
             <a href="#update-recipe-directionID" id="ToUpdateDir">Directions</a>
           </div>
-  
+      <div class="css-wrap">
           <form id="update-recipe">
           <!--Update Recipe Summary-->
           <div id="update-recipe-summary" style="display: show">
@@ -79,7 +99,7 @@ class UpdateRecipePage extends HTMLElement {
           </tr>
         </table>
         <!--When click add more should create another new 'tr' with three new inputs-->
-        <button id="addIngredientButton"> Add More </button>
+        <button class="normal-button" id="addIngredientButton"> Add More </button>
         <br>
         </div>
         <!--TO DO delete ingredients button-->
@@ -91,15 +111,16 @@ class UpdateRecipePage extends HTMLElement {
           </ol>
           <br>
           <!--When click add more should create another new textarea for direction-->
-          <button id="addDirectionButton"> Add More </button>
+          <button class="normal-button" id="addDirectionButton"> Add More </button>
         </div>
         <br>
         <input type="submit" id="publishBtn" value="Publish">
         </form>
         <!--TO DO delete Directions button-->
         
-        <button><a href="javascript:void(0)" id="deleteRecipe"> Delete </a></button>
-        <button><a href="home.html"> LEAVE </a></button>
+        <button class="normal-button"><a href="javascript:void(0)" id="deleteRecipe"> Delete </a></button>
+        <button class="normal-button"><a href="home.html"> Leave </a></button>
+      </div>
         `;
 
     this.recipeId = 0;
