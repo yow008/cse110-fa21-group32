@@ -18,102 +18,86 @@ class RecipePage extends HTMLElement {
     // Fill in styles and root element
     styles.innerHTML = `
     h2{
-      background-color: #CA676A;
+      background-color: #324A54;
       background-size: cover;
       padding: 23.5px;
       color: white;
-      height: 69pt;
-      text-align: center;
     }
-    .recipe-navbar button {
-      
-      border: transparent;
-      cursor: pointer;
-      float: left;
-      height: 31pt;
+    .openbtn {
+      background-color: #324A54 !important;
     }
-
-    .recipe-navbar:after {
-      content: "";
-      clear: both;
-      display: table;
+    .recipe-navbar{
+      display: flex;
+      justify-content: space-around;
+      background-color: #324A54;
+      padding: 20px;
+      color: white !important;
     }
-
-    .recipe-navbar button:not(:last-child) {
-      border-right: none; /* Prevent double borders */
+    .recipe-navbar > a{
+      color:white;
+      text-decoration: none;
     }
-
-    .css-wrap {
-      margin-left: 5%;
-      margin-bottom: 16pt;
-      margin-right: 5%;
+    img{
+      width: 100%;
+      max-height: 350px;
+      object-fit: cover;
+    }
+    .genInfo{
+      display: flex;
+      justify-content: space-around;
+      background-color: #324A54;
+      padding: 40px;
+      color: white !important;
+      font-family: IBM Plex Sans;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 9px;
+    }
+    .insertInfo{
+      display: flex;
+      justify-content: space-around;
     }
     `;
+
     article.innerHTML = `
-
-
-
-    `;
-
-    // Append elements to the shadow root
-    this.shadowRoot.append(styles, article);
-  }
-
-  set data(data) {
-    console.log(data);
-    this.json = data;
-    this.id = this.shadowRoot.querySelector('article').innerHTML = `
-
-      <h2>Recipes</h2>
-
-      <div class="recipe-navbar">
-      <button id="ToSum" style="width:30%; background-color: #324A54;">Summary
-      <a href="#recipe-summaryID"></a>
-      </button>
-      <button id="ToIng" style="width:30%; background-color: #CA676A;">Ingredients
-      <a href="#recipe-ingredientsID"></a>
-      </button>
-      <button id="ToDir" style="width:30%; background-color: #CA676A;">Directions
-      <a href="#recipe-directionID"></a>
-      </button>
-      </div>
-
-
-<div class="css-wrap">
-      <br>
-      <!--User recipes ONLY-->
-      <div class="editRecipes">
-      <button type="button" id="editRecipe"> Edit </button>
-      </div>
-      <br>
-      <div class="css-wrap">
-      <!--Recipe Summary-->
-      <div id="recipe-summaryID" class="recipe-summary" style="display: block">
-      <button type="button" class="recipe-summmaryButton">Add to My Favorites</button>
-      <div id="recipe-servingsID" class="recipe-servings">Servings: </div>
-      <div id="recipe-cooktimeID" class="recipe-cooktime">Cooktime: </div>
-      Summary:
-      
-      </div>
-
-      <!--Recipe Ingredients-->
-      <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none">
+        <h2>Recipes</h2>
+        <div class="recipe-navbar">
+        <a href="#recipe-summaryID" id="ToSum">Summary</a>
+        <a href="#recipe-ingredientsID" id="ToIng">Ingredients</a>
+        <a href="#recipe-directionID" id="ToDir">Directions</a>
+        </div>
+        <!--Recipe Summary-->
+        <div id="recipe-summaryID" class="recipe-summary" style="display: block">
+        <!--<p>Summary</p>-->
+          <!--placeholder for recipe image-->
+          <div class="placeholder">
+            <img src="https://media.istockphoto.com/photos/varied-food-carbohydrates-protein-vegetables-fruits-dairy-legumes-on-picture-id1218254547?b=1&k=20&m=1218254547&s=170667a&w=0&h=mOEC7x7qU5NC78mCULs-jAPeLkxy8opOvIbGSnwmAyw=" img>
+          </div>
+          <!--general info-->
+          <div class="genInfo">
+            <p>Cook Time</p>
+            <p>Servings</p>
+            <p>Cost</p>
+          </div>
+          <p>Content...</p>
+          <button type="button" class="recipe-summmaryButton">Add to My Favorites</button>
+        </div>
+        <!--Recipe Ingredients-->
+        <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none">
         <p>Ingredients</p>
         <!--Add To List Button--> 
-        <form>
-        </form>
+        <form></form>
         <br>
         <button type="button" id="addToList">Add to List</button>
-      </div>
-
-      <!--Recipe Directions-->
-      <div id="recipe-directionID" class="recipe-direction" style="display: none">
-      <p>Direction</p>
-      <ol>
-      </ol>
-      <button type ="button" id="LinkToCM"> Cook </button>
-      </div>
-</div>
+        </div>
+        <!--Recipe Directions-->
+        <div id="recipe-directionID" class="recipe-direction" style="display: none">
+        <p>Direction</p>
+        <ul>
+        </ul>
+        <button type ="button" id="LinkToCM"> Cook </button>
+        </div>
     `;
 
     // Append elements to the shadow root
@@ -128,21 +112,18 @@ class RecipePage extends HTMLElement {
     console.log(data);
     this.json = data;
     this.id = this.shadowRoot.querySelector('article').innerHTML = `
-
       <h2>Recipes</h2>
       <div class="recipe-navbar">
       <a href="#recipe-summaryID" id="ToSum">Summary</a>
       <a href="#recipe-ingredientsID" id="ToIng">Ingredients</a>
       <a href="#recipe-directionID" id="ToDir">Directions</a>
       </div>
-
       <br>
       <!--User recipes ONLY-->
       <div class="editRecipes">
       <button type="button" id="editRecipe"> Edit </button>
       </div>
       <br>
-
       <!--Recipe Summary-->
       <div id="recipe-summaryID" class="recipe-summary" style="display: block">
       <button type="button" class="recipe-summmaryButton">Add to My Favorites</button>
@@ -151,7 +132,6 @@ class RecipePage extends HTMLElement {
       Summary:
       
       </div>
-
       <!--Recipe Ingredients-->
       <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none">
         <p>Ingredients</p>
@@ -161,7 +141,6 @@ class RecipePage extends HTMLElement {
         <br>
         <button type="button" id="addToList">Add to List</button>
       </div>
-
       <!--Recipe Directions-->
       <div id="recipe-directionID" class="recipe-direction" style="display: none">
       <p>Direction</p>
@@ -169,7 +148,6 @@ class RecipePage extends HTMLElement {
       </ol>
       <button type ="button" id="LinkToCM"> Cook </button>
       </div>
-
     `;
     //Edit button nav to UpdateRecipe.js
     //TODO: Have ONLY the USER recipe been send to update-recipe
