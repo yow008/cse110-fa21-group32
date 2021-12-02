@@ -136,4 +136,4 @@ jobs:
           PROJECT_ID: cse110-333801
           APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
         with:
-          args: info
+          args: python3 app.py
