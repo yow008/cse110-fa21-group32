@@ -22,42 +22,80 @@ class AddRecipePage extends HTMLElement {
 
     // Fill in styles and root element
     styles.innerHTML = `
-        h2{
-          background-color: #CA676A;
-          background-size: cover;
-          padding: 23.5px;
-          color: white;
-        }
-        div {
-          margin-left: 5%;
-        }
-        .publish-button {
-          background-color: white;
-          border-radius: 9px;
-          border: 1.5px solid #ca676a;
-          text-align: center;
-          min-width: 8%;
-          height: 16pt;
-          margin-left: 5%;
-        }
-        button {
-          background-color: white;
-          border-radius: 9px;
-          border: 1.5px solid #ca676a;
-          text-align: center;
-          min-width: 8%;
-          height: 16pt;
-          margin-left: 5%;
-        }
+    h2{
+      background-color: #CA676A;
+      background-size: cover;
+      padding: 23.5px;
+      color: white;
+      height: 69pt;
+      text-align: center;
+    }
+    .add-recipe-navbar button {
+  
+      border: transparent;
+      cursor: pointer;
+      float: left;
+      color: white;
+      font-size: large;
+      height: 31pt;
+    }
+    .add-recipe-navbar:after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    .add-recipe-navbar button:not(:last-child) {
+      border-right: none; /* Prevent double borders */
+    }
+    .publish-button {
+      background-color: white;
+      border-radius: 18px;
+      border: 1.5px solid #ca676a;
+      text-align: center;
+      min-width: 8%;
+      height: 20pt;
+     
+      font-size: 14pt;
+      color:#ca676a;
+    }
+    .normal-button {
+      background-color: white;
+      border-radius: 18px;
+      border: 1.5px solid #ca676a;
+      text-align: center;
+      min-width: 8%;
+      height: 20pt;
+      font-size: 14pt;
+      color:#ca676a;
+    }
+    textarea {
+      width: 80%;
+      height: 42pt;
+    }
+    .css-wrap {
+      margin-left: 5%;
+      margin-bottom: 16pt;
+      margin-right: 5%;
+    }
         `;
     article.innerHTML = `
-        <h2>Add Recipe</h2>
-        <div class="add-recipe-navbar">
-          <!-- li><a onclick="navTo('homeID')" href="javascript:void(0)">home</a></li> -->
-          <a href="#add-recipe-summaryID" id="ToAddSum">Summary</a>
-          <a href="#add-recipe-ingredientsID" id="ToAddIng">Ingredients</a>
-          <a href="#add-recipe-directionID" id="ToAddDir">Directions</a>
-        </div>
+      <h2> Add Your Recipe
+      <br>
+      <br>
+      <div class="add-recipe-navbar">
+        <button id="ToAddSum" style="width:33.3%; background-color: #324A54;">Summary
+          <a href="#add-recipe-summaryID"></a>
+        </button>
+        <button id="ToAddIng" style="width:33.3%; background-color: #CA676A;">Ingredients
+          <a href="#add-recipe-ingredientsID"></a>
+        </button>
+        <button id="ToAddDir" style="width:33.3%; background-color: #CA676A;">Directions
+          <a href="#add-recipe-directionID"></a>
+        </button>
+      </div>
+      </h2>
+  <div class="css-wrap">
 
         <form id="new-recipe">
         <!--Add Recipe Summary-->
@@ -142,7 +180,7 @@ class AddRecipePage extends HTMLElement {
         </tr>
       </table>
       <!--When click add more should create another new 'tr' with three new inputs-->
-      <button id="addIngredientButton"> Add More </button>
+      <button class="normal-button" id="addIngredientButton"> Add More </button>
       <br>
       </div>
       <!--TO DO delete ingredients button-->
@@ -156,14 +194,17 @@ class AddRecipePage extends HTMLElement {
         </ol>
         <br>
         <!--When click add more should create another new textarea for direction-->
-        <button id="addDirectionButton"> Add More </button>
+        <button class="normal-button" id="addDirectionButton"> Add More </button>
       </div>
       <br>
       <input class="publish-button" type="submit" value="Publish">
       </form>
       <!--TO DO delete Directions button-->
 
-      <button><a href="home.html"> LEAVE </a></button>
+      <button class="normal-button" id="leaveButton">
+      <a href="home.html" style="color:#CA676A">Leave</a>
+      </button>
+  </div>
       `;
 
     // Append elements to the shadow root
