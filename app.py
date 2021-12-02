@@ -26,10 +26,15 @@ def home_page():
         
         # USER
         # Register (create) the user
-        if msg['type'] == 'register':
+        if msg['type'] == 'register': #Uses Password
             user_db.createUser(msg['username'], msg['password'], msg['email'], '', '')
             return {'msg': 'Success!'}, 201
           
+        # Update the user
+        if msg['type'] == 'updateUser':
+            user_db.updateUser(msg['username'], msg['token'], msg['newInfo'])
+            return {'msg': 'Success!'}, 201
+
         # Delete the user
         elif msg['type'] == 'deleteUser':
             user_db.deleteUser(msg['username'], msg['token'])
@@ -59,27 +64,27 @@ def home_page():
         # Add a loose ingredient
         elif msg['type'] == 'addIndGrocery':
             username = msg['username']
-            password = msg['password']
+            password = msg['token']
             section_id = msg['id']
             ingred = msg['ingredient']
             user_db.addIndIngred(username, password, section_id, ingred)
         # Add all ingredients of a recipe section
         elif msg['type'] == 'addRecGrocery':
             username = msg['username']
-            password = msg['password']
+            password = msg['token']
             recipe_data = msg['recipe']
             user_db.addRecIngred(username, password, recipe_data)
         # Remove a loose ingredient
         elif msg['type'] == 'removeIndGrocery':
             username = msg['username']
-            password = msg['password']
+            password = msg['token']
             section_id = msg['id']
             ingred = msg['ingredient']
             user_db.removeIndIngred(username, password, section_id, ingred)
         # Remove all ingredients of a recipe section
         elif msg['type'] == 'removeRecGrocery':
             username = msg['username']
-            password = msg['password']
+            password = msg['token']
             section_id = msg['id']
             user_db.removeRecIngred(username, password, section_id)
 

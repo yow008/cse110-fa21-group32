@@ -117,8 +117,7 @@ class UpdateUserPage extends HTMLElement {
       let newInfo = {
         username: username,
         email: email,
-        password,
-        password,
+        password: password,
       };
       if (
         password.value == confirmPassword.value &&
