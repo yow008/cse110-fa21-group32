@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://34.125.45.110:8081/';
+const SERVER_URL = '127.0.0.1:5000/';
 
 /**
  * Sends a POST request to the backend. Calls postFn after
@@ -47,7 +47,6 @@ function GET(getReq, getFn) {
     }
   )
     .then((response) => {
-      console.log(response.json());
       return response.json();
     })
     .then((data) => {

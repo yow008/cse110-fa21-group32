@@ -107,6 +107,43 @@ class UpdateUserPage extends HTMLElement {
     let email = this.shadowRoot.getElementById('email');
     getEmail(user, token, email);
     console.log('Hello');
+
+    let password = this.shadowRoot.getElementById('password');
+    let confirmPassword = this.shadowRoot.getElementById('confirm-password');
+
+    let addChangesBtn = this.shadowRoot.getElementById('add-changes');
+    addChangesBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      let newInfo = {
+        username: username,
+        email: email,
+        password,
+        password,
+      };
+      if (
+        password.value == confirmPassword.value &&
+        password.value != '' &&
+        username.value.length > 9
+      ) {
+        setNewInfo(newInfo);
+      } else if (password.value != confirmPassword.value) {
+        let nonmatchingPasswords = document.createElement('p');
+        nonmatchingPasswords.innerHTML = 'Passwords do not match!';
+        let divConfirmPassword = this.shadowRoot.getElementById(
+          'confirm-password-div'
+        );
+        divConfirmPassword.appendChild(nonmatchingPasswords);
+      } else if (username.value.length < 10) {
+        let divUsername = this.shadowRoot.getElementById('edit-username');
+        let usernameError = document.createElement('p');
+        usernameError.innerHTML = 'Username must be at least 10 charachetrs';
+        divUsername.appendChild(usernameError);
+        return;
+      } else if (password.value == '') {
+        delete newInfo['password'];
+        setNewInfo(newInfo);
+      }
+    });
   }
 }
 
@@ -131,6 +168,25 @@ function getEmail(username, token, userEmail) {
   }
 
   GET(emailReq, getFn);
+}
+
+function setNewInfo(newInfo) {
+  // const newInfoReq = `type=updateUser&user=${encodeURIComponent(
+  //   username
+  // )}&token=${encodeURIComponent(token)}`;
+
+  let newInfoPost = {
+    type: 'updateUser',
+    username: localStorage.getItem('username'), // TODO: Need to update with curr user
+    token: localStorage.getItem('token'), // TODO: Need to update with curr password
+    newInfo: newInfo,
+  };
+
+  function afterUpdate() {
+    console.log('Details Updated');
+  }
+
+  POST(newInfoPost, afterUpdate);
 }
 
 // /**
