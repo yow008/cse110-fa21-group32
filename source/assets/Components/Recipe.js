@@ -298,40 +298,57 @@ class RecipePage extends HTMLElement {
         .setAttribute('style', 'display: none');
     });
 
-    const checkedIng = this.shadowRoot.querySelectorAll(
-      'input[type="checkbox"]'
-    );
+    const checkedIng = this.shadowRoot.querySelectorAll('input[type="checkbox"]');
     //Add Ingredients to an Array "ingredientsSelect" List if they are been checked
     function getCheckedIngredient() {
-      //console.log(checkedIng);
-      let listAll = [];
+      let recipe = data.recipe.id;
+
+      //Build array of ingredients that were checked by the user.
       let ingredientsSelect = [];
       for (let i = 0; i < checkedIng.length; i++) {
-        //console.log(checkedIng[i].value);
         if (checkedIng[i].checked == true) {
-          //console.log(checkedIng[i].value);
           ingredientsSelect.push(checkedIng[i].value);
-          //TODO: Nasty Array with Recipe Name, Token, ID, and Checked ingredients
-          listAll['name'] = title;
-          listAll['token']=window.localStorage.getItem('token');// newly added 
-          listAll['id'] = data.recipe.id;
-          listAll['ingredients'] = ingredientsSelect;
         }
       }
-      console.log(ingredientsSelect);
-      console.log(listAll);
-      POST(listAll,doNothing());    
+
+      //Construct submessage containing information about the recipe.
+      let listAll = { 
+        name : title, //Title of recipe.
+        id : recipe.data.id,
+        ingredients : ingredientsSelect, //List of checked ingredients in the recipe.
+      }
+
+      // console.log(ingredientsSelect);
+      // console.log(listAll);
+ 
+      //Starts building message for backend call.
+      let msg = {
+        username: localStorage.getItem("username"),
+        token: localStorage.getItem("token"),
+        type: "addtoList",
+        info: listAll
+      };
+      POST(msg,doNothing());
       return listAll;
     }
+    
     function doNothing()
     {
-
+      //This function is called after the user calls the backend for updates on their list. Nothing is done here.
     }
+    
     //"Add to list" button -> send the data to Grocery list
     const checklist = this.shadowRoot.getElementById('addToList');
     checklist.addEventListener('click', (e) => {
       e.preventDefault();
       getCheckedIngredient();
+
+      const GroceryPage = document.createElement('grocery-page');
+      // document.getElementById('#section--grocery-page').innerHTML = '';
+      // document
+      //   .getElementById('#section--update-recipe')
+      //   .appendChild(recipeUpdatePage);
+        GroceryPage.data = this.json;
     });
   }
 

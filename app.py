@@ -18,8 +18,8 @@ def home_page():
     print(request)
     if request.method == 'POST':
         msg = request.get_json()
-        print(msg)
         
+
         # USER
         # Register (create) the user
         # NOTE: This uses password, NOT the token.
@@ -51,6 +51,12 @@ def home_page():
             user_db.removeRecipe(msg['username'], msg['token'],recipe['id'])
             return {'msg': 'Success!'}, 201
         
+        # Add ingredient to grocery list
+        elif msg['type'] == 'addToList':
+            username=msg['username']
+            token=msg['token']
+            info= msg['info']['ingredients'] #?
+            user_db.addToList(username,token,info)
         # Add a loose ingredient
         elif msg['type'] == 'addIndGrocery':
             username = msg['username']

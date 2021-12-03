@@ -37,8 +37,8 @@ class GroceryPage extends HTMLElement {
       <button type="submit" id="add-icon">Add to the list</button>
     </form>
     <br>
-    <form id="#my-list">
     <p>My List</p>
+    <form id="#my-list">
       <div>
         <input type="checkbox" name="ingredient-list">
         <label>item</label>
@@ -52,8 +52,8 @@ class GroceryPage extends HTMLElement {
         <label>item</label>
       </div>
     </form>
-    <p>Some Recipe Ingredient List</p>
     <form id="#recipe-list">
+      <p>Some Recipe Ingredient List</p>
       <div>
         <input type="checkbox" name="ingredient-list">
         <label>item</label>
@@ -71,8 +71,12 @@ class GroceryPage extends HTMLElement {
     <br>
     <br>
     </div>
-    <button type="checked" id="checked">Checked &#10004;</button>
+    <button type="save" id="save">Save &#10004;</button>
     <button type="delete" id="delete">Delete &#10006;</button>
+    <br>
+    <br>
+    
+    <!--<button type="checked" id="checked">Checked</button>-->
         `;
 
     // Append elements to the shadow root
@@ -118,6 +122,25 @@ class GroceryPage extends HTMLElement {
           elements[i].parentElement.remove();
         }
       }
+      const form = this.shadowRoot.querySelectorAll('form');
+
+    }
+
+    //Save the update grocery and send the data to the backend
+    const saveButton = this.shadowRoot.getElementById('save');
+    saveButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      saveIngredient();
+    });
+
+    function saveIngredient(){
+      const savedIng = [];
+      const elements = groceryList.querySelectorAll('input[type="checkbox"]');
+      for (let i = 0; i < elements.length; i++) {
+        let complete = elements[i].parentElement.querySelector('label');
+        savedIng.push(complete.innerText);
+      }
+        console.log(savedIng);
     }
 
     // //Delete Recipe
@@ -142,30 +165,31 @@ class GroceryPage extends HTMLElement {
     //   POST(data, afterDelete);
     // });
 
+    //Not used
     //line through ingredients when user clicked Checked Button
-    const checkedButton = this.shadowRoot.getElementById('checked');
-    checkedButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      checkedIngredient();
-    });
+    // const checkedButton = this.shadowRoot.getElementById('checked');
+    // checkedButton.addEventListener('click', (e) => {
+    //   e.preventDefault();
+    //   checkedIngredient();
+    // });
 
-    function checkedIngredient() {
-      const elements = groceryList.querySelectorAll('input[type="checkbox"]');
-      for (let i = 0; i < elements.length; i++) {
-        if (elements[i].checked == true) {
-          let complete = elements[i].parentElement.querySelector('label');
-          let findS = elements[i].parentElement.getElementsByTagName('s');
-          let s = document.createElement('s');
-          if (findS.length == 0) {
-            s.append(complete);
-            elements[i].parentElement.append(s);
-          } else {
-            elements[i].parentElement.append(complete);
-            elements[i].parentElement.querySelector('s').remove();
-          }
-        }
-      }
-    }
+    // function checkedIngredient() {
+    //   const elements = groceryList.querySelectorAll('input[type="checkbox"]');
+    //   for (let i = 0; i < elements.length; i++) {
+    //     if (elements[i].checked == true) {
+    //       let complete = elements[i].parentElement.querySelector('label');
+    //       let findS = elements[i].parentElement.getElementsByTagName('s');
+    //       let s = document.createElement('s');
+    //       if (findS.length == 0) {
+    //         s.append(complete);
+    //         elements[i].parentElement.append(s);
+    //       } else {
+    //         elements[i].parentElement.append(complete);
+    //         elements[i].parentElement.querySelector('s').remove();
+    //       }
+    //     }
+    //   }
+    // }
     
     function saveOwn() {
       const elements = groceryList.querySelectorAll('input[type="checkbox"]');
@@ -225,6 +249,63 @@ class GroceryPage extends HTMLElement {
     //     });
     //}
   }
+
+  set data(data){
+    console.log(data);
+    this.json = data;
+    this.id = this.shadowRoot.querySelector('article').innerHTML = `
+    <h2>Grocery List</h2>
+    <div id="grocery-list">
+    <!--Add Recipe Ingredients-->
+    <p> Grocery List </p>
+    <form id="#my-input">
+      <input type="text" placeholder="Add ingredient..."/>
+      <button type="submit" id="add-icon">Add to the list</button>
+    </form>
+    <br>
+    <form id="#my-list">
+    <p>My List</p>
+      <div>
+        <input type="checkbox" name="ingredient-list">
+        <label>item</label>
+      </div>
+      <div>
+        <input type="checkbox" name="ingredient-list">
+        <label>item</label>
+      </div>
+      <div>
+        <input type="checkbox" name="ingredient-list">
+        <label>item</label>
+      </div>
+    </form>
+    <p>Some Recipe Ingredient List</p>
+    <form id="#recipe-list">
+      <div>
+        <input type="checkbox" name="ingredient-list">
+        <label>item</label>
+      </div>
+      <div>
+        <input type="checkbox" name="ingredient-list">
+        <label>item</label>
+      </div>
+      <div>
+        <input type="checkbox" name="ingredient-list">
+        <label>item</label>
+      </div>
+    </form>
+    <br>
+    <br>
+    <br>
+    </div>
+    <button type="save" id="save">Save &#10004;</button>
+    <button type="delete" id="delete">Delete &#10006;</button>
+    `;
+  }
+
+  get data() {
+    return this.json;
+  }
 }
+
 
 customElements.define('grocery-page', GroceryPage);
