@@ -170,7 +170,17 @@ class GroceryPage extends HTMLElement {
         }
       }
     }
-
+    
+    function saveOwn() {
+      const elements = groceryList.querySelectorAll('input[type="checkbox"]');
+          const newData = {
+            type: 'addRecGrocery',
+            username: localStorage.getItem("username"),
+            token: localStorage.getItem("token"), 
+            recipe: elements,
+          };
+     POST(newData,checkedIngredient);
+    }
     //TODO:
     //1. Backend Save Data (under user ID)
     //2. Get the Data 

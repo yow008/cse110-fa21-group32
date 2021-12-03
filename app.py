@@ -46,7 +46,7 @@ def home_page():
             recipe_db.removeRecipe(recipe['id'])
             user_db.removeRecipe(msg['username'], msg['token'],recipe['id'])
             return {'msg': 'Success!'}, 201
-        # GROCERY
+        
         # Add a loose ingredient
         elif msg['type'] == 'addIndGrocery':
             username = msg['username']
