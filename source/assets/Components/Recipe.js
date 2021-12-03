@@ -1,6 +1,6 @@
 // Recipe.js
 import { router } from '../scripts/main.js';
-
+import { POST } from '../scripts/request.js';
 /**
  * Class: RecipePage
  * TODO:
@@ -242,18 +242,22 @@ class RecipePage extends HTMLElement {
         if(checkedIng[i].checked == true){
           //console.log(checkedIng[i].value);
           ingredientsSelect.push(checkedIng[i].value);
-          //TODO: Nasty Array with Recipe Name, ID, and Checked ingredients
+          //TODO: Nasty Array with Recipe Name, Token, ID, and Checked ingredients
           listAll['name'] = title;
+          listAll['token']=window.localStorage.getItem('token');// newly added 
           listAll['id'] = data.recipe.id;
           listAll['ingredients'] = ingredientsSelect;
-
         }
       }
       console.log(ingredientsSelect);
       console.log(listAll);
+      POST(listAll,doNothing());    
       return listAll;
     }
+    function doNothing()
+    {
 
+    }
     //"Add to list" button -> send the data to Grocery list
     const checklist = this.shadowRoot.getElementById('addToList');
     checklist.addEventListener('click', e => {
