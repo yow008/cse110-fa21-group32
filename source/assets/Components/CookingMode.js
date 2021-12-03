@@ -27,9 +27,8 @@ class CookingMode extends HTMLElement {
         </div>
         <!--Cooking Timer-->
         <div class="cooking-timer">
-            <p>Timer</p>
-            <p id='countdown'></p>
-            <button type="button">Start</button>
+            <label id="hours">00</label>:<label id="minutes">00</label>:<label id="seconds">00</label>
+            <button id="start" type="button">Start</button>
         </div>
     
         <!--Back to the Recipe Page-->
@@ -43,7 +42,7 @@ class CookingMode extends HTMLElement {
     this.shadowRoot.append(styles, article);
 
     //convert input to seconds
-    function convert(input) {
+    /*function convert(input) {
       let parts = input.split(':'),
           hours = +parts[0],
           minutes = +parts[1],
@@ -66,29 +65,33 @@ class CookingMode extends HTMLElement {
       if (minutes < 10) {minutes = "0"+minutes;}
       if (seconds < 10) {seconds = "0"+seconds;}
       return hours+':'+minutes+':'+seconds; // Return is HH : MM : SS
+    }*/
+
+    let hoursLabel = this.shadowRoot.getElementById('hours')
+    let minutesLabel = this.shadowRoot.getElementById('minutes');
+    let secondsLabel = this.shadowRoot.getElementById('seconds');
+    let totalSeconds = 0;
+
+    function setTime() {
+      ++totalSeconds;
+      secondsLabel.innerHTML = pad(totalSeconds % 60);
+      minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+      hoursLabel.innerHTML = pad(parseInt(totalSeconds / 3600));
     }
-  
 
-
-    let time = this.shadowRoot.getElementById('countdown');
-    let isPaused = false;
-    this.shadowRoot.querySelector('button').addEventListener('click', () => {
-      let timeleft = prompt('Enter a time to set up timer', '00:00:00');
-      let timeSec = convert(timeleft);
-      if(!timeSec){
-        return;
+    function pad(val) {
+      var valString = val + "";
+      if (valString.length < 2) {
+        return "0" + valString;
+      } else {
+        return valString;
       }
-      let downloadTimer = setInterval(function(){
-        if(timeSec < 0){
-          clearInterval(downloadTimer);
-          time.innerHTML = 'Finished!';
-          alert('It is ready!!');
-        } 
-        else {
-          time.innerHTML = convertHMS(timeSec);
-        }
-        timeSec -= 1;
-      }, 1000);
+    }
+
+    let btnStart = this.shadowRoot.getElementById('start');
+    btnStart.addEventListener('click', () => {
+      
+      setInterval(setTime, 1000);
     });
   }
 
