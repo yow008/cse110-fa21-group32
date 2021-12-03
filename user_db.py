@@ -34,7 +34,6 @@ class User_DB:
         self.conn.close()
 
     def createUser(self, username, password, email, fname, lname):
-        print("HERE")
         '''
         Inputs: 
         - username: string
