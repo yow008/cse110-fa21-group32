@@ -14,15 +14,19 @@ user_db = user_db.User_DB()
 recipe_db = recipe.Recipe_DB()
 @app.route("/", methods=['GET', 'POST'])
 def home_page():
+    print("Hello")
     print(request)
     if request.method == 'POST':
         msg = request.get_json()
         print(msg)
+        
         # USER
         # Register (create) the user
-        if msg['type'] == 'register': #Unique, uses password
+        # NOTE: This uses password, NOT the token.
+        if msg['type'] == 'register':
             user_db.createUser(msg['username'], msg['password'], msg['email'], '', '')
             return {'msg': 'Success!'}, 201
+          
         # Delete the user
         elif msg['type'] == 'deleteUser':
             user_db.deleteUser(msg['username'], msg['token'])
@@ -38,7 +42,7 @@ def home_page():
         elif msg['type'] == 'updateRecipe':
             recipe = msg['recipe']
             recipe_db.updateRecipe(recipe['id'], recipe)
-            user_db.updateRecipe(recipe['id'], recipe)
+            #user_db.updateRecipe(recipe['id'], recipe)
             return {'msg': 'Success!'}, 201
         # Delete a custom recipe
         elif msg['type'] == 'deleteRecipe':
@@ -63,7 +67,7 @@ def home_page():
         # Remove a loose ingredient
         elif msg['type'] == 'removeIndGrocery':
             username = msg['username']
-            token = msg['passtokenword']
+            token = msg['token']
             section_id = msg['id']
             ingred = msg['ingredient']
             user_db.removeIndIngred(username, token, section_id, ingred)
@@ -95,14 +99,15 @@ def home_page():
                 response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
             # TODO: USER delete these functions or update with new token system
-            # Get username and password of user after login TODO: replace with Eamon's edit
-            elif msg['type'] == 'login': #Unique, uses password
+            # Get username and password of user after login NOTE: This uses password, NOT the token
+            elif msg['type'] == 'login':
                 username = msg['user']
                 password = msg['pass']
-                userInfo = user_db.request(username, password, ['Username', 'Password'])
+                userInfo = user_db.login(username, password)
                 data = {"userInfo": userInfo}
                 data_json = json.dumps(data, indent=2)
                 response = Response(response=data_json, status=200, mimetype='application/json')
+                print(response)
                 return response
             # Get email of user
             elif msg['type'] == 'request':
@@ -135,6 +140,7 @@ def home_page():
                 token = msg['token']
                 keys = ['Recipes']
                 result = user_db.request(username, token, keys)
+                print(result)
                 recipes = pickle.loads(result[0])
                 data = {"ID": recipes}
                 data_json = json.dumps(data, indent=2)
