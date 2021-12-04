@@ -27,19 +27,17 @@ class AddRecipePage extends HTMLElement {
       background-size: cover;
       padding: 23.5px;
       color: white;
-      height: 66pt;
+      height: 69pt;
       text-align: center;
     }
-    .add-recipe-navbar {
-      width: 100%;
-    }
     .add-recipe-navbar button {
+  
       border: transparent;
       cursor: pointer;
       float: left;
       color: white;
       font-size: large;
-      height: 35pt;
+      height: 31pt;
     }
     .add-recipe-navbar:after {
       content: "";

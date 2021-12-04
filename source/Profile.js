@@ -25,6 +25,7 @@ class ProfilePage extends HTMLElement {
         background-size: cover;
         padding: 23.5px;
         color: white;
+        test-align: center;
       }
 
     table {
