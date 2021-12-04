@@ -1,9 +1,11 @@
 // Profile.js
 
 // IMPORTS
-import { router } from '../scripts/main.js';
+// import { router } from '../scripts/main.js';
 import { GET, POST } from '../scripts/request.js';
 
+// Page to change to when user is deleted
+const loginPage = 'http://127.0.0.1:5500/source/userLogin.html';
 /**
  * Class: UpdateUserPage
  * TODO:
@@ -45,24 +47,6 @@ class UpdateUserPage extends HTMLElement {
 
     `;
 
-    // <tr id="#edit-username>
-    //                 <td>Change Username: </td>
-    //                 <td><input type="textarea" id="username" value="Current Username+++"></td>
-    //                 <td><input type="textarea" id="username" value="Current Username+++"></td>
-    //             </tr>
-    //             <tr id="#edit-email>
-    //                 <td>Change Email: </td>
-    //                 <td><input type="textarea" id="email" value="Current Email++"></td>
-    //             </tr>
-    //             <tr id="#edit-password>
-    //                 <td>New Password: </td>
-    //                 <td><input type="textarea" id="password" value="New Password"></td>
-    //             </tr>
-    //             <tr id="#edit-confirm-password>
-    //                 <td>Confirm Password: </td>
-    //                 <td><input type="textarea" id="confirm-password" value="New Password+++"></td>
-    //             </tr>
-
     /* Added article */
     article.innerHTML = `
         <h2>Update User Info</h2>
@@ -88,6 +72,7 @@ class UpdateUserPage extends HTMLElement {
                 <input type='textarea' id="confirm-password" placeholder="NewPassword">
             </div>
             <button id="add-changes"> Add Changes </button>
+            <button id="delete-user"> Delete User </button>
         </th>
         </table>
         <br>
@@ -106,26 +91,29 @@ class UpdateUserPage extends HTMLElement {
     // Add current email to email textarea element
     let email = this.shadowRoot.getElementById('email');
     getEmail(user, token, email);
-    console.log('Hello');
 
     let password = this.shadowRoot.getElementById('password');
     let confirmPassword = this.shadowRoot.getElementById('confirm-password');
 
+    // Update user info when Update user button is clicked
     let addChangesBtn = this.shadowRoot.getElementById('add-changes');
     addChangesBtn.addEventListener('click', (e) => {
       e.preventDefault();
       let newInfo = {
-        username: username,
-        email: email,
-        password: password,
+        Username: username.value,
+        Email: email.value,
+        Password: password.value,
       };
       if (
         password.value == confirmPassword.value &&
         password.value != '' &&
         username.value.length > 9
       ) {
+        // Sets the users info to the given info
+        console.log('setting new info');
         setNewInfo(newInfo);
       } else if (password.value != confirmPassword.value) {
+        // If passwords don't match then send error
         let nonmatchingPasswords = document.createElement('p');
         nonmatchingPasswords.innerHTML = 'Passwords do not match!';
         let divConfirmPassword = this.shadowRoot.getElementById(
@@ -133,47 +121,74 @@ class UpdateUserPage extends HTMLElement {
         );
         divConfirmPassword.appendChild(nonmatchingPasswords);
       } else if (username.value.length < 10) {
+        // Send error if the user tries to change username to something less than 10 characters
         let divUsername = this.shadowRoot.getElementById('edit-username');
         let usernameError = document.createElement('p');
-        usernameError.innerHTML = 'Username must be at least 10 charachetrs';
+        usernameError.innerHTML = 'Username must be at least 10 characters';
         divUsername.appendChild(usernameError);
-        return;
       } else if (password.value == '') {
-        delete newInfo['password'];
+        //If there is no given password value then do not update the password
+        delete newInfo['Password'];
         setNewInfo(newInfo);
       }
     });
+
+    //Deletes user when Delete user button is clicked
+    this.shadowRoot
+      .getElementById('delete-user')
+      .addEventListener('click', (e) => {
+        deleteUser();
+      });
   }
 }
 
 /**
- * TODO:
- * @param {String} username
- * @param {String} token
+ * Deletes the user from the database and logs the user out
  */
-function getEmail(username, token, userEmail) {
+function deleteUser() {
+  let deleteUserPost = {
+    type: 'deleteUser',
+    username: localStorage.getItem('username'), // TODO: Need to update with curr user
+    token: localStorage.getItem('token'), // TODO: Need to update with curr password
+  };
+
+  /**
+   * Logs the user out and returns to log in page
+   */
+  function afterDelete() {
+    localStorage.clear();
+    window.location = loginPage;
+  }
+
+  POST(deleteUserPost, afterDelete);
+}
+
+/**
+ * Retrieves the users current email from the database
+ * @param {String} username Users username from local storage to help retrieve the email
+ * @param {String} token Users token from local storage to help retrieve the email
+ */
+function getEmail(username, token, userEmailElement) {
   const emailReq = `type=request&elem=email&user=${encodeURIComponent(
     username
   )}&token=${encodeURIComponent(token)}`;
 
   /**
-   * TODO:
-   * @param {*} data
+   * Adds the users email to the text area element where the user can change the email
+   * @param {Object} data Users email from the database
    */
   function getFn(data) {
-    console.log(' Hello   ' + data.userInfo[0]);
-    userEmail.setAttribute('value', data.userInfo[0]);
-    //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+    userEmailElement.setAttribute('value', data.userInfo[0]);
   }
 
   GET(emailReq, getFn);
 }
 
+/**
+ * Replaces the users details (Username, Email and Password) with the given information
+ * @param {Object} newInfo The user information to replace the old information
+ */
 function setNewInfo(newInfo) {
-  // const newInfoReq = `type=updateUser&user=${encodeURIComponent(
-  //   username
-  // )}&token=${encodeURIComponent(token)}`;
-
   let newInfoPost = {
     type: 'updateUser',
     username: localStorage.getItem('username'), // TODO: Need to update with curr user
@@ -181,77 +196,14 @@ function setNewInfo(newInfo) {
     newInfo: newInfo,
   };
 
+  /**
+   * After the information is replaced in the database the local storage needs to be updated
+   */
   function afterUpdate() {
-    console.log('Details Updated');
+    localStorage.setItem('username', newInfo['Username']);
   }
 
   POST(newInfoPost, afterUpdate);
 }
-
-// /**
-//  *
-//  * @param {*} username
-//  * @param {*} token
-//  * @param {*} shadowRoot
-//  */
-// function getRecipes(username, token, shadowRoot) {
-//   const searchReq = `type=getCustomizedRecipeIDs&user=${encodeURIComponent(
-//     username
-//   )}&token=${encodeURIComponent(token)}`;
-
-//   /**
-//    *
-//    * @param {*} data
-//    */
-//   function atFetch(data) {
-//     for (let i = 0; i < data.ID.length; i++) {
-//       fetchRecipe(data.ID[i], shadowRoot);
-//     }
-
-//     function fetchRecipe(recipeId, shadowRoot) {
-//       const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
-
-//       /**
-//        * TODO:
-//        * @param {JSON} data
-//        */
-//       function afterFetch(data) {
-//         // Create title element
-//         const title = document.createElement('h3');
-//         title.innerText = data.recipe.title;
-//         shadowRoot.getElementById('profile-page-recipeID').appendChild(title);
-
-//         // Add page to router so navigate works
-//         router.addPage(`recipe_${recipeId}`, function () {
-//           document
-//             .getElementById('#section--profile')
-//             .classList.remove('shown');
-
-//           document.getElementById('#section--recipe').classList.add('shown');
-
-//           // Fetch and populate recipe page and add to recipe section
-//           const recipePage = document.createElement('recipe-page');
-//           recipePage.data = data;
-//           recipePage.classList.add('shown');
-//           document.getElementById('#section--recipe').innerHTML = '';
-//           document.getElementById('#section--recipe').appendChild(recipePage);
-//         });
-
-//         // Add click listener to title element -> navigates to recipe card page
-//         title.addEventListener('click', () => {
-//           // let recipeView = document.getElementById('#profile-page-recipeID');
-//           // while (recipeView.firstChild) {
-//           //   recipeView.removeChild(recipeView.firstChild);
-//           // }
-//           router.navigate(`recipe_${recipeId}`);
-//         });
-//       }
-
-//       GET(fetchReq, afterFetch);
-//     }
-//   }
-
-//   GET(searchReq, atFetch);
-// }
 
 customElements.define('update-user-page', UpdateUserPage);
