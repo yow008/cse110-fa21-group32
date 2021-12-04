@@ -108,6 +108,7 @@ class HomePage extends HTMLElement {
           <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624569-556x370.jpg"/>
         </div>
         </div>
+        <div><button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></div>
         <br>
         <br>
 
@@ -150,10 +151,10 @@ class HomePage extends HTMLElement {
       document.getElementById('#section--recipe').classList.add('shown');
     });
 
- /*   const recipePage = this.shadowRoot.getElementById('ExpRecipe');
+    const recipePage = this.shadowRoot.getElementById('ExpRecipe');
     recipePage.addEventListener('click', () => {
       router.navigate('recipe');
-    });*/
+    });
 
     // Display current user info TODO: move to other Profile.js
 
@@ -167,7 +168,7 @@ class HomePage extends HTMLElement {
     const userEmail = this.shadowRoot.getElementById('#user-email');
     getEmail(user, token, userEmail);
 
-  /*  const deleteBtn = this.shadowRoot.getElementById('#btn-delete');
+    /*  const deleteBtn = this.shadowRoot.getElementById('#btn-delete');
     deleteBtn.addEventListener('click', () => {
       console.log('DELETE');
       deleteUser(user, token);
