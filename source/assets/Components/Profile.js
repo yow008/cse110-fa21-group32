@@ -6,7 +6,8 @@ import { GET /*, POST*/ } from '../scripts/request.js';
 
 /**
  * Class: ProfilePage
- * TODO:
+ * Shows user information and shows recipes created by the user.
+ * Also allows for updating user account information.
  */
 class ProfilePage extends HTMLElement {
   constructor() {
@@ -67,6 +68,23 @@ class ProfilePage extends HTMLElement {
     .profile-page-review {
       display: none;
     }
+
+    .css-wrap {
+      margin-left: 5%;
+      margin-bottom: 16pt;
+      margin-right: 5%;
+    }
+
+    .normal-button {
+      background-color: white;
+      border-radius: 18px;
+      border: 1.5px solid #ca676a;
+      text-align: center;
+      min-width: 8%;
+      height: 20pt;
+      font-size: 14pt;
+      color:#ca676a;
+    }
     `;
 
     /* Added article */
@@ -80,7 +98,7 @@ class ProfilePage extends HTMLElement {
             <ul>
                 <li><a href="#profile-page-recipeID" id="UserRec">Recipes</a></li><br>
                 <li><a href="#profile-page-reviewsID" id="UserRev">Reviews</a></li><br>
-                <li><button id="#button-edit-profile" type="button">Update User Info</button></li>
+                <li id="#section-edit-profile"><button class="normal-button" id="#button-edit-profile" type="button">Edit Profile</button></li>
             </ul>
         </th>
         </table>
@@ -100,7 +118,6 @@ class ProfilePage extends HTMLElement {
         <!--Profile Page Reviews-->
         <div id="profile-page-reviewID" class="profile-page-review">
             <p>NOT AVAILABLE</p>
-            <button>REMOVE ME 2</button>
             <br>
         </div>
         `;
@@ -185,6 +202,11 @@ function getRecipes(username, token, shadowRoot) {
       fetchRecipe(data.ID[i], shadowRoot);
     }
 
+    /**
+     *
+     * @param {*} recipeId
+     * @param {*} shadowRoot
+     */
     function fetchRecipe(recipeId, shadowRoot) {
       const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
 
