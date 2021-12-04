@@ -247,3 +247,4 @@ class GroceryPage extends HTMLElement {
 
 
 customElements.define('grocery-page', GroceryPage);
+

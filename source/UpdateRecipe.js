@@ -33,6 +33,7 @@ class UpdateRecipePage extends HTMLElement {
           font-size: large;
           height: 35pt;
         }
+
     
         .css-wrap {
           margin-left: 5%;
@@ -58,7 +59,10 @@ class UpdateRecipePage extends HTMLElement {
         }
         `;
     article.innerHTML = `
-    <h2 class="update-recipe-navbar"> Update Recipe <br><br>
+    <h2> Update Recipe
+    <br>
+    <br>
+    <div class="update-recipe-navbar">
       <button id="ToUpdateSum" style="width:33.3%; background-color: #324A54;">Summary
         <a href="#update-recipe-summaryID"></a>
       </button>
@@ -68,7 +72,9 @@ class UpdateRecipePage extends HTMLElement {
       <button id="ToUpdateDir" style="width:33.3%; background-color: #CA676A;">Directions
         <a href="#update-recipe-directionID"></a>
       </button>
+    </div>
     </h2>
+
 <div class="css-wrap">
           <form id="update-recipe">
           <!--Update Recipe Summary-->
@@ -148,17 +154,17 @@ class UpdateRecipePage extends HTMLElement {
         var goToDirectionsButton = this.shadowRoot.getElementById(
           'ToUpdateDir'
         );
-        goToSummaryButton.addEventListener('click', () => {
+        goToSummaryButton.addEventListener('click', (e) => {
           goToSummaryButton.style.backgroundColor = '#324A54';
           goToIngredientsButton.style.backgroundColor = '#CA676A';
           goToDirectionsButton.style.backgroundColor = '#CA676A';
         });
-        goToIngredientsButton.addEventListener('click', () => {
+        goToIngredientsButton.addEventListener('click', (e) => {
           goToSummaryButton.style.backgroundColor = '#CA676A';
           goToIngredientsButton.style.backgroundColor = '#324A54';
           goToDirectionsButton.style.backgroundColor = '#CA676A';
         });
-        goToDirectionsButton.addEventListener('click', () => {
+        goToDirectionsButton.addEventListener('click', (e) => {
           goToSummaryButton.style.backgroundColor = '#CA676A';
           goToIngredientsButton.style.backgroundColor = '#CA676A';
           goToDirectionsButton.style.backgroundColor = '#324A54';
