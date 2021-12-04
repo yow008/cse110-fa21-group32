@@ -25,22 +25,14 @@ class FavRecipesPage extends HTMLElement {
             background-size: cover;
             padding: 23.5px;
             color: white;
-            text-align: center;
-          }
-          .css-wrap {
-            margin-left: 5%;
-            margin-bottom: 16pt;
-            margin-right: 5%;
           }
           `;
     article.innerHTML = `
         <h2>Favorites</h2>
-      <div class="css-wrap">
         <p>Content...</p>
         <div class="favorite-recipe-cards-wrapper">
           <!--ADD RECIPES HERE-->
         </div>
-      </div>
         `;
 
     // Append elements to the shadow root

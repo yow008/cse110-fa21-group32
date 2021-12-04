@@ -22,82 +22,42 @@ class AddRecipePage extends HTMLElement {
 
     // Fill in styles and root element
     styles.innerHTML = `
-    h2{
-      background-color: #CA676A;
-      background-size: cover;
-      padding: 23.5px;
-      color: white;
-      height: 66pt;
-      text-align: center;
-    }
-    .add-recipe-navbar {
-      width: 100%;
-    }
-    .add-recipe-navbar button {
-      border: transparent;
-      cursor: pointer;
-      float: left;
-      color: white;
-      font-size: large;
-      height: 35pt;
-    }
-    .add-recipe-navbar:after {
-      content: "";
-      clear: both;
-      display: table;
-    }
-
-    .add-recipe-navbar button:not(:last-child) {
-      border-right: none; /* Prevent double borders */
-    }
-    .publish-button {
-      background-color: white;
-      border-radius: 18px;
-      border: 1.5px solid #ca676a;
-      text-align: center;
-      min-width: 8%;
-      height: 20pt;
-     
-      font-size: 14pt;
-      color:#ca676a;
-    }
-    .normal-button {
-      background-color: white;
-      border-radius: 18px;
-      border: 1.5px solid #ca676a;
-      text-align: center;
-      min-width: 8%;
-      height: 20pt;
-      font-size: 14pt;
-      color:#ca676a;
-    }
-    textarea {
-      width: 80%;
-      height: 42pt;
-    }
-    .css-wrap {
-      margin-left: 5%;
-      margin-bottom: 16pt;
-      margin-right: 5%;
-    }
+        h2{
+          background-color: #CA676A;
+          background-size: cover;
+          padding: 23.5px;
+          color: white;
+        }
+        div {
+          margin-left: 5%;
+        }
+        .publish-button {
+          background-color: white;
+          border-radius: 9px;
+          border: 1.5px solid #ca676a;
+          text-align: center;
+          min-width: 8%;
+          height: 16pt;
+          margin-left: 5%;
+        }
+        button {
+          background-color: white;
+          border-radius: 9px;
+          border: 1.5px solid #ca676a;
+          text-align: center;
+          min-width: 8%;
+          height: 16pt;
+          margin-left: 5%;
+        }
         `;
     article.innerHTML = `
-      <h2> Add Your Recipe
-      <br>
-      <br>
-      <div class="add-recipe-navbar">
-        <button id="ToAddSum" style="width:33.3%; background-color: #324A54;">Summary
-          <a href="#add-recipe-summaryID"></a>
-        </button>
-        <button id="ToAddIng" style="width:33.3%; background-color: #CA676A;">Ingredients
-          <a href="#add-recipe-ingredientsID"></a>
-        </button>
-        <button id="ToAddDir" style="width:33.3%; background-color: #CA676A;">Directions
-          <a href="#add-recipe-directionID"></a>
-        </button>
-      </div>
-      </h2>
-  <div class="css-wrap">
+        <h2>Add Recipe</h2>
+        <div class="add-recipe-navbar">
+          <!-- li><a onclick="navTo('homeID')" href="javascript:void(0)">home</a></li> -->
+          <a href="#add-recipe-summaryID" id="ToAddSum">Summary</a>
+          <a href="#add-recipe-ingredientsID" id="ToAddIng">Ingredients</a>
+          <a href="#add-recipe-directionID" id="ToAddDir">Directions</a>
+        </div>
 
         <form id="new-recipe">
         <!--Add Recipe Summary-->
@@ -182,7 +142,7 @@ class AddRecipePage extends HTMLElement {
         </tr>
       </table>
       <!--When click add more should create another new 'tr' with three new inputs-->
-      <button class="normal-button" id="addIngredientButton"> Add More </button>
+      <button id="addIngredientButton"> Add More </button>
       <br>
       </div>
       <!--TO DO delete ingredients button-->
@@ -196,48 +156,19 @@ class AddRecipePage extends HTMLElement {
         </ol>
         <br>
         <!--When click add more should create another new textarea for direction-->
-        <button class="normal-button" id="addDirectionButton"> Add More </button>
+        <button id="addDirectionButton"> Add More </button>
       </div>
       <br>
       <input class="publish-button" type="submit" value="Publish">
       </form>
       <!--TO DO delete Directions button-->
 
-      <button class="normal-button" id="leaveButton">
-      <a href="home.html" style="color:#CA676A">Leave</a>
-      </button>
-  </div>
+      <button><a href="home.html"> LEAVE </a></button>
       `;
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
 
-        // Functions for the layout of recipe detailed page
-        var goToSummaryButton = this.shadowRoot.getElementById(
-          'ToAddSum'
-        );
-        var goToIngredientsButton = this.shadowRoot.getElementById(
-          'ToAddIng'
-        );
-        var goToDirectionsButton = this.shadowRoot.getElementById(
-          'ToAddDir'
-        );
-        goToSummaryButton.addEventListener('click', () => {
-          goToSummaryButton.style.backgroundColor = '#324A54';
-          goToIngredientsButton.style.backgroundColor = '#CA676A';
-          goToDirectionsButton.style.backgroundColor = '#CA676A';
-        });
-        goToIngredientsButton.addEventListener('click', () => {
-          goToSummaryButton.style.backgroundColor = '#CA676A';
-          goToIngredientsButton.style.backgroundColor = '#324A54';
-          goToDirectionsButton.style.backgroundColor = '#CA676A';
-        });
-        goToDirectionsButton.addEventListener('click', () => {
-          goToSummaryButton.style.backgroundColor = '#CA676A';
-          goToIngredientsButton.style.backgroundColor = '#CA676A';
-          goToDirectionsButton.style.backgroundColor = '#324A54';
-        });
-    
     // Add Summary
     this.shadowRoot
       .getElementById('ToAddSum')
@@ -303,7 +234,7 @@ class AddRecipePage extends HTMLElement {
         ingredient.innerHTML = '<input type="text" name="ingredientName"/>';
         let deleteButton = row.insertCell(3);
         deleteButton.innerHTML =
-          '<button class="normal-button" onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button>';
+          '<button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button>';
       });
 
     // When click "Add More" there should be a new input text area for user to input directions

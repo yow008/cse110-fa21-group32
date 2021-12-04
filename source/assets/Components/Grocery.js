@@ -20,33 +20,13 @@ class GroceryPage extends HTMLElement {
 
     // Fill in styles and root element
     styles.innerHTML = `
-      h2{
-        background-color: #CA676A;
-        background-size: cover;
-        padding: 23.5px;
-        color: white;
-        text-align: center;
-      }
-      p{
-        margin-left: 40%;
-      }
-      input{
-        margin-left: 40%;
-      }
-      button {
-        background-color: white;
-        border-radius: 18px;
-        border: 1.5px solid #ca676a;
-        text-align: center;
-        min-width: 8%;
-        height: 20pt;
-        font-size: 14pt;
-        color:#ca676a;
-      }
-      .left-button {
-        margin-left: 40%;
-      }
-    `;
+        h2{
+            background-color: #CA676A;
+            background-size: cover;
+            padding: 23.5px;
+            color: white;
+          }
+        `;
     article.innerHTML = `
     <h2>Grocery List</h2>
     <div id="grocery-list">
@@ -59,17 +39,39 @@ class GroceryPage extends HTMLElement {
     <br>
     <form id="#my-list">
     <p>My List</p>
-
+      <div>
+        <input type="checkbox" name="ingredient-list">
+        <label>item</label>
+      </div>
+      <div>
+        <input type="checkbox" name="ingredient-list">
+        <label>item</label>
+      </div>
+      <div>
+        <input type="checkbox" name="ingredient-list">
+        <label>item</label>
+      </div>
     </form>
-    
+    <p>Some Recipe Ingredient List</p>
     <form id="#recipe-list">
-
+      <div>
+        <input type="checkbox" name="ingredient-list">
+        <label>item</label>
+      </div>
+      <div>
+        <input type="checkbox" name="ingredient-list">
+        <label>item</label>
+      </div>
+      <div>
+        <input type="checkbox" name="ingredient-list">
+        <label>item</label>
+      </div>
     </form>
     <br>
     <br>
     <br>
     </div>
-    <button class="left-button" type="checked" id="checked">Checked &#10004;</button>
+    <button type="checked" id="checked">Checked &#10004;</button>
     <button type="delete" id="delete">Delete &#10006;</button>
         `;
 
