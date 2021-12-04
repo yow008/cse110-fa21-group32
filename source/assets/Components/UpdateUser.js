@@ -5,7 +5,7 @@
 import { GET, POST } from '../scripts/request.js';
 
 // Page to change to when user is deleted
-const loginPage = 'http://127.0.0.1:5500/source/userLogin.html';
+const loginPage = 'userLogin.html';
 /**
  * Class: UpdateUserPage
  * TODO:
@@ -136,7 +136,7 @@ class UpdateUserPage extends HTMLElement {
     //Deletes user when Delete user button is clicked
     this.shadowRoot
       .getElementById('delete-user')
-      .addEventListener('click', (e) => {
+      .addEventListener('click', function() {
         deleteUser();
       });
   }
