@@ -26,9 +26,7 @@ class CookingMode extends HTMLElement {
         <div id="btnNav">
         </div>
         <!--Cooking Timer-->
-        <div class="cooking-timer">
-            <label id="hours">00</label>:<label id="minutes">00</label>:<label id="seconds">00</label>
-            <button id="start" type="button">Start</button>
+        <div id="cooking-timer">
         </div>
     
         <!--Back to the Recipe Page-->
@@ -41,20 +39,33 @@ class CookingMode extends HTMLElement {
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
 
-    //convert input to seconds
-    /*function convert(input) {
-      let parts = input.split(':'),
-          hours = +parts[0],
-          minutes = +parts[1],
-          seconds = +parts[2];
-      if(!parts || parts.length != 3){
-        alert('not valid, try again!');
-        return null;
-      };
-      return (hours*60*60 + minutes * 60 + seconds).toFixed(3);
+    /*function convertHMS(value) {
+      const sec = parseInt(value, 10); // convert value to number if it's string
+      let hours   = Math.floor(sec / 3600); // get hours
+      let minutes = Math.floor((sec - (hours * 3600)) / 60); // get minutes
+      let seconds = sec - (hours * 3600) - (minutes * 60); //  get seconds
+      // add 0 if value < 10; Example: 2 => 02
+      if (hours   < 10) {hours   = "0"+hours;}
+      if (minutes < 10) {minutes = "0"+minutes;}
+      if (seconds < 10) {seconds = "0"+seconds;}
+      return hours+':'+minutes+':'+seconds; // Return is HH : MM : SS
     }
+    
+    function setTime() {
+      ++totalSeconds;
+      content.innerHTML = convertHMS(totalSeconds);
+    }*/
+  }
 
-    //convert seconds to hours, minutes and seconds
+  /**
+   * Sets all the elements of the update recipe page to the recipes current data
+   * @param data Previous recipe data to set the placeholder values
+   */
+   set data(data) {
+    this.json = data;
+
+
+    //convert totalseconds into seconds, minutes and hours format
     function convertHMS(value) {
       const sec = parseInt(value, 10); // convert value to number if it's string
       let hours   = Math.floor(sec / 3600); // get hours
@@ -65,49 +76,15 @@ class CookingMode extends HTMLElement {
       if (minutes < 10) {minutes = "0"+minutes;}
       if (seconds < 10) {seconds = "0"+seconds;}
       return hours+':'+minutes+':'+seconds; // Return is HH : MM : SS
-    }*/
-
-    let hoursLabel = this.shadowRoot.getElementById('hours')
-    let minutesLabel = this.shadowRoot.getElementById('minutes');
-    let secondsLabel = this.shadowRoot.getElementById('seconds');
-    let totalSeconds = 0;
-
-    function setTime() {
-      ++totalSeconds;
-      secondsLabel.innerHTML = pad(totalSeconds % 60);
-      minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
-      hoursLabel.innerHTML = pad(parseInt(totalSeconds / 3600));
     }
-
-    function pad(val) {
-      var valString = val + "";
-      if (valString.length < 2) {
-        return "0" + valString;
-      } else {
-        return valString;
-      }
-    }
-
-    let btnStart = this.shadowRoot.getElementById('start');
-    btnStart.addEventListener('click', () => {
-      
-      setInterval(setTime, 1000);
-    });
-  }
-
-  /**
-   * Sets all the elements of the update recipe page to the recipes current data
-   * @param data Previous recipe data to set the placeholder values
-   */
-   set data(data) {
-    this.json = data;
-
-    //
+    
+    //get all directions
     const content = data.recipe.analyzedInstructions[0].steps;
     //initialize page
     for(let i = 0; i < content.length; i++){
 
       //initialize current step 
+      content[i].step.search(/minutes/i);
       let cookingStep = this.shadowRoot.getElementById('cooking-steps');
       let cookingBtn = this.shadowRoot.getElementById('btnNav');
       let currStep = document.createElement('p');
@@ -125,10 +102,74 @@ class CookingMode extends HTMLElement {
       currBtn.setAttribute('id', `btn${i + 1}`);
       currBtn.innerHTML = `${i + 1}`
       cookingBtn.appendChild(currBtn);
-    }
 
+      //initialize timer if needed
+      if(content[i].step.search(/hour/i) != -1 || content[i].step.search(/minute/i) != -1 || content[i].step.search(/second/i) != -1){
+
+        let totalSeconds = 0;
+        
+        //count up algorithm
+        function setTime() {
+          ++totalSeconds;
+          currTime.innerHTML = convertHMS(totalSeconds);
+        }
+
+
+
+        let timerArea = this.shadowRoot.getElementById('cooking-timer');
+        
+        //create a div for current page timer
+        let currArea = document.createElement('div');
+        currArea.setAttribute('id', `area${i + 1}`);
+        timerArea.appendChild(currArea);
+
+        //create a paragraph for showing time
+        let currTime = document.createElement('p');
+        currTime.setAttribute('id', `currTime${i + 1}`);
+        currTime.innerHTML = '00:00:00';
+        currArea.appendChild(currTime);
+
+        //create a start button for start timer
+        let startBtn = document.createElement('button');
+        startBtn.setAttribute('id', `startBtn${i + 1}`);
+        startBtn.innerHTML = 'Start';
+        currArea.appendChild(startBtn);
+        
+        //create a pasue button
+        let pauseBtn = document.createElement('button');
+        pauseBtn.setAttribute('id', `pauseBtn${i + 1}`);
+        pauseBtn.innerHTML = 'Pause';
+        currArea.appendChild(pauseBtn);
+        
+        //create a reset button
+        let resetBtn = document.createElement('button');
+        resetBtn.setAttribute('id', `resetBtn${i + 1}`);
+        resetBtn.innerHTML = 'Reset';
+        currArea.appendChild(resetBtn);
+        
+        //create functionality for three buttons
+        startBtn.addEventListener('click', () => {
+          let timer = setInterval(setTime, 1000);
+          pauseBtn.addEventListener('click', () => {
+            clearInterval(timer);
+          });
+          resetBtn.addEventListener('click', () => {
+            totalSeconds = 0;
+            currTime.innerHTML = '00:00:00';
+          });
+        });
+        
+        //initialize all timer to be invisible excepte first one
+        if(i != 0){
+          currArea.setAttribute('style', 'display:none');
+        }
+
+      }
+    }
+    
     for(let i = 0; i < content.length; i++){
       let curr = this.shadowRoot.querySelectorAll('button')[i];
+      let area = this.shadowRoot.getElementById('cooking-timer');
       let pages = this.shadowRoot.querySelectorAll('p');
       curr.addEventListener('click', () => {
         for(let j = 0; j < content.length; j++){
@@ -137,6 +178,15 @@ class CookingMode extends HTMLElement {
           }
           else{
             pages[j].setAttribute('style', 'display: none');
+          }
+        }
+
+        for(let k = 0; k < area.children.length; k++){
+          if(area.children[k].id == `area${i + 1}`){
+            area.children[k].setAttribute('style', 'display: inline');
+          }
+          else{
+            area.children[k].setAttribute('style', 'display: none');
           }
         }
       });
