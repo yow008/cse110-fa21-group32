@@ -27,6 +27,11 @@ def home_page():
             user_db.createUser(msg['username'], msg['password'], msg['email'], '', '')
             return {'msg': 'Success!'}, 201
           
+        # Update the user
+        if msg['type'] == 'updateUser':
+            user_db.updateUser(msg['username'], msg['token'], msg['newInfo'])
+            return {'msg': 'Success!'}, 201
+
         # Delete the user
         elif msg['type'] == 'deleteUser':
             user_db.deleteUser(msg['username'], msg['token'])
