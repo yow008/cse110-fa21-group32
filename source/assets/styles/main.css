@@ -17,7 +17,6 @@ section:not(section.shown) {
   src: url("IBM_Plex_Sans/IBMPlexSans-BoldItalic.ttf");
   font-weight: bold;
   font-style: italic;
-  font-size: 14pt;
 }
 
 @font-face {
@@ -52,7 +51,6 @@ section:not(section.shown) {
   font-family: "IBM Plex Sans", sans-serif;
   font-weight: normal;
   font-style: normal;
-  font-size: 14pt;
 }
 
 /* The sidepanel menu */
