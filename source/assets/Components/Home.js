@@ -23,7 +23,7 @@ class HomePage extends HTMLElement {
     *{
       clear: both;
     }
-/*
+
     .todayMeals{
       display: flex;
       justify-content: space-between;
@@ -38,7 +38,7 @@ class HomePage extends HTMLElement {
       display: flex;
       justify-content: space-between;
     }
-*/
+
     .recipe-grid {
       margin-left: 5%;
       display: grid;
@@ -58,19 +58,13 @@ class HomePage extends HTMLElement {
       min-width: 8%;
       height: 16pt;
     }
-    .css-wrap {
-      margin-left: 5%;
-      margin-bottom: 16pt;
-      margin-right: 5%;
-    }
+
     `;
     article.innerHTML = `
         <!--<h1>Home Page</h1>-->
         <!--ADD RECIPES HERE-->
-        <div class="css-wrap">
         <p id="#user-status"></p>
         <p id="#user-email"></p>
-        </div>
         <div class="recipe-grid">
         <div>
           <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634559-556x370.jpg"/>
@@ -108,6 +102,7 @@ class HomePage extends HTMLElement {
           <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624569-556x370.jpg"/>
         </div>
         </div>
+
         <div><button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></div>
         <br>
         <br>
@@ -138,7 +133,6 @@ class HomePage extends HTMLElement {
               <div> <button type="menu">Recipe 3 (not linked)</button></div>
         </div>
         </div>
-        </div-->
         `;
 
     // Append elements to the shadow root
@@ -168,11 +162,11 @@ class HomePage extends HTMLElement {
     const userEmail = this.shadowRoot.getElementById('#user-email');
     getEmail(user, token, userEmail);
 
-    /*  const deleteBtn = this.shadowRoot.getElementById('#btn-delete');
+    const deleteBtn = this.shadowRoot.getElementById('#btn-delete');
     deleteBtn.addEventListener('click', () => {
       console.log('DELETE');
       deleteUser(user, token);
-    });*/
+    });
   }
 }
 

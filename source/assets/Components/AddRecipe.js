@@ -27,17 +27,19 @@ class AddRecipePage extends HTMLElement {
       background-size: cover;
       padding: 23.5px;
       color: white;
-      height: 69pt;
+      height: 66pt;
       text-align: center;
     }
+    .add-recipe-navbar {
+      width: 100%;
+    }
     .add-recipe-navbar button {
-  
       border: transparent;
       cursor: pointer;
       float: left;
       color: white;
       font-size: large;
-      height: 31pt;
+      height: 35pt;
     }
     .add-recipe-navbar:after {
       content: "";
@@ -210,6 +212,32 @@ class AddRecipePage extends HTMLElement {
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
 
+        // Functions for the layout of recipe detailed page
+        var goToSummaryButton = this.shadowRoot.getElementById(
+          'ToAddSum'
+        );
+        var goToIngredientsButton = this.shadowRoot.getElementById(
+          'ToAddIng'
+        );
+        var goToDirectionsButton = this.shadowRoot.getElementById(
+          'ToAddDir'
+        );
+        goToSummaryButton.addEventListener('click', () => {
+          goToSummaryButton.style.backgroundColor = '#324A54';
+          goToIngredientsButton.style.backgroundColor = '#CA676A';
+          goToDirectionsButton.style.backgroundColor = '#CA676A';
+        });
+        goToIngredientsButton.addEventListener('click', () => {
+          goToSummaryButton.style.backgroundColor = '#CA676A';
+          goToIngredientsButton.style.backgroundColor = '#324A54';
+          goToDirectionsButton.style.backgroundColor = '#CA676A';
+        });
+        goToDirectionsButton.addEventListener('click', () => {
+          goToSummaryButton.style.backgroundColor = '#CA676A';
+          goToIngredientsButton.style.backgroundColor = '#CA676A';
+          goToDirectionsButton.style.backgroundColor = '#324A54';
+        });
+    
     // Add Summary
     this.shadowRoot
       .getElementById('ToAddSum')
@@ -275,7 +303,7 @@ class AddRecipePage extends HTMLElement {
         ingredient.innerHTML = '<input type="text" name="ingredientName"/>';
         let deleteButton = row.insertCell(3);
         deleteButton.innerHTML =
-          '<button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button>';
+          '<button class="normal-button" onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button>';
       });
 
     // When click "Add More" there should be a new input text area for user to input directions

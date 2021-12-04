@@ -43,6 +43,9 @@ class GroceryPage extends HTMLElement {
         font-size: 14pt;
         color:#ca676a;
       }
+      .left-button {
+        margin-left: 40%;
+      }
     `;
     article.innerHTML = `
     <h2>Grocery List</h2>
@@ -66,7 +69,7 @@ class GroceryPage extends HTMLElement {
     <br>
     <br>
     </div>
-    <button type="checked" id="checked">Checked &#10004;</button>
+    <button class="left-button" type="checked" id="checked">Checked &#10004;</button>
     <button type="delete" id="delete">Delete &#10006;</button>
         `;
 
