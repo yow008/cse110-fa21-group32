@@ -34,7 +34,6 @@ class User_DB:
         self.conn.close()
 
     def createUser(self, username, password, email, fname, lname):
-        print("HERE")
         '''
         Inputs: 
         - username: string
@@ -86,9 +85,12 @@ class User_DB:
         self.cur.execute('SELECT Password, Token FROM Users WHERE Username = "%s"' % (username))
         profile = self.cur.fetchall()
         print(profile)
+        if len(profile) == 0:
+            print("Wrong Information Provided.")
+            return None
         dbPassword = profile[0][0] #database password
 
-        if(password == dbPassword):
+        if(str(password) == str(dbPassword)): #Enforce Consistent Type Checking (String VS Int)
             return profile[0][1] #database token
         else:
             print("User does not exist in database!")
