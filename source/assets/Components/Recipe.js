@@ -244,10 +244,33 @@ class RecipePage extends HTMLElement {
       currElement.setAttribute('value', ingredient.original);
       div.append(currElement);
       const content = document.createElement('label');
-      content.setAttribute('for', ingredient.name);
+      content.setAttribute('for', 'ingredient');
       content.innerHTML = ingredient.original;
       div.append(content);
       form.append(div);
+    }
+
+    //Set User Checked Ingredidents
+    // localStorage.setItem("grocery", JSON.stringify([]));
+    let current = localStorage.getItem("grocery");
+    current = JSON.parse(current);
+    
+    if(current == null){
+      current = [];
+    }
+
+    for(let i = 0; i <current.length; i++){
+      if(data.recipe.id == current[i].id){
+        const checkeding = this.shadowRoot.querySelectorAll('input[type="checkbox"]');
+        const userchecked = current[i].ingredients;
+        for(let s = 0; s < userchecked.length; s++) {
+          for(let e = 0; e < checkeding.length; e++){
+            if(userchecked[s] == checkeding[e].value){
+              checkeding[e].checked = true;
+            }
+          }
+        }
+      }
     }
 
     // Set Directions
@@ -301,7 +324,7 @@ class RecipePage extends HTMLElement {
     const checkedIng = this.shadowRoot.querySelectorAll('input[type="checkbox"]');
     //Add Ingredients to an Array "ingredientsSelect" List if they are been checked
     function getCheckedIngredient() {
-      let recipe = data.recipe.id;
+      let recipeID = data.recipe.id;
 
       //Build array of ingredients that were checked by the user.
       let ingredientsSelect = [];
@@ -314,41 +337,36 @@ class RecipePage extends HTMLElement {
       //Construct submessage containing information about the recipe.
       let listAll = { 
         name : title, //Title of recipe.
-        id : recipe.data.id,
+        id : recipeID,
         ingredients : ingredientsSelect, //List of checked ingredients in the recipe.
       }
+      // localStorage.setItem("grocery", JSON.stringify([]));
 
-      // console.log(ingredientsSelect);
-      // console.log(listAll);
- 
-      //Starts building message for backend call.
-      let msg = {
-        username: localStorage.getItem("username"),
-        token: localStorage.getItem("token"),
-        type: "addtoList",
-        info: listAll
-      };
-      POST(msg,doNothing());
-      return listAll;
+      // Push listAll to the localStorage
+      var tempList = localStorage.getItem("grocery");
+      tempList = JSON.parse(tempList);
+      console.log(tempList);
+      if(tempList == null || tempList.length == 0){
+        tempList = [];
+        // if localStorage for "grocery" is empty, push "listAll" directly to the local storage
+        tempList.push(listAll);
+        localStorage.setItem("grocery", JSON.stringify(tempList)); 
+      }
+      // If ingredients have been pushed (with the same recipe id) -> Update ingredients
+      for(let i = 0; i <tempList.length; i++){
+        if(data.recipe.id == tempList[i].id){
+          tempList[i].ingredients = ingredientsSelect;
+          localStorage.setItem("grocery", JSON.stringify(tempList)); 
+        }
+      
+      }
     }
-    
-    function doNothing()
-    {
-      //This function is called after the user calls the backend for updates on their list. Nothing is done here.
-    }
-    
+
     //"Add to list" button -> send the data to Grocery list
     const checklist = this.shadowRoot.getElementById('addToList');
     checklist.addEventListener('click', (e) => {
       e.preventDefault();
       getCheckedIngredient();
-
-      const GroceryPage = document.createElement('grocery-page');
-      // document.getElementById('#section--grocery-page').innerHTML = '';
-      // document
-      //   .getElementById('#section--update-recipe')
-      //   .appendChild(recipeUpdatePage);
-        GroceryPage.data = this.json;
     });
   }
 
