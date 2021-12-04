@@ -18,44 +18,33 @@ class RecipePage extends HTMLElement {
     // Fill in styles and root element
     styles.innerHTML = `
     h2{
-      margin-bottom: 0 !important;
       background-color: #324A54;
       background-size: cover;
       padding: 23.5px;
       color: white;
-      margin-top: 0;
-      text-align: center;
-      font-weight: lighter !important;
     }
-    button.openbtn {
+    .openbtn {
       background-color: #324A54 !important;
     }
-
-    .recipe-navbar button {
-  
-      border: transparent;
-      cursor: pointer;
-      float: left;
-      color: white;
-      font-size: large;
-      height: 31pt;
+    .recipe-navbar{
+      display: flex;
+      justify-content: space-around;
+      background-color: #324A54;
+      padding: 20px;
+      color: white !important;
     }
 
-    .recipe-navbar:after {
-      content: "";
-      clear: both;
-      display: table;
-    }
-
-    .recipe-navbar button:not(:last-child) {
-      border-right: none; /* Prevent double borders */
+    .recipe-navbar > a{
+      color:white;
+      text-decoration: none;
     }
 
     img{
       width: 100%;
-      max-height: 400px;
+      max-height: 350px;
       object-fit: cover;
     }
+
     .genInfo{
       display: flex;
       justify-content: space-around;
@@ -72,139 +61,38 @@ class RecipePage extends HTMLElement {
       display: flex;
       justify-content: space-around;
     }
-    .my-container{
-    }
-    .my-row{
-      background: #324A54;
-      color: white;
-    }
 
-    .my-col{
-      height: 12.5rem;
-    }
-
-    .circle {
-      background: white;
-      border-radius: 50%;
-      height: 6.5rem;
-      width: 6.5rem;
-      position: relative;
-      margin-left:auto;
-      margin-right:auto;
-      display:block;
-    }
-
-    .circle > p{
-      color: #609C8B;
-      hyphens: auto;
-      margin: 0.75em;
-      text-align: center;
-      font-size: 3rem;
-    }
-
-    .recipe-description{
-      padding: 1.5rem;
-      font-size: .8rem;
-      font-style: italic;
-    }
-
-    .my-navbar{
-      background: #324A54;
-    }
-
-    .navbar-light .navbar-nav .nav-link {
-      color: white;
-    }
-
-    
     `;
 
     article.innerHTML = `
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-        <h2>RECIPE NAME</h2>
-        
-        <nav class="navbar navbar-expand-lg navbar-light my-navbar">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav nav-fill w-100">
-            <a id="ToSum" class="nav-item nav-link active" href="#recipe-summaryID" style="color:white;">Summary<span class="sr-only"></span></a>
-            <a id="ToIng" class="nav-item nav-link" href="#recipe-ingredientsID" style="color:white;">Ingredients</a>
-            <a id="ToDir" class="nav-item nav-link" href="#recipe-directionID" style="color:white;">Directions</a>
-          </div>
+        <h2>Recipes</h2>
+        <div class="recipe-navbar">
+        <a href="#recipe-summaryID" id="ToSum">Summary</a>
+        <a href="#recipe-ingredientsID" id="ToIng">Ingredients</a>
+        <a href="#recipe-directionID" id="ToDir">Directions</a>
         </div>
-      </nav>
 
         <!--Recipe Summary-->
         <div id="recipe-summaryID" class="recipe-summary" style="display: block">
         <!--<p>Summary</p>-->
-
-        <!--Carousel-->
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <!--placeholder for recipe image-->
+          <div class="placeholder">
+            <img src="https://media.istockphoto.com/photos/varied-food-carbohydrates-protein-vegetables-fruits-dairy-legumes-on-picture-id1218254547?b=1&k=20&m=1218254547&s=170667a&w=0&h=mOEC7x7qU5NC78mCULs-jAPeLkxy8opOvIbGSnwmAyw=" img>
           </div>
 
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="https://media.istockphoto.com/photos/varied-food-carbohydrates-protein-vegetables-fruits-dairy-legumes-on-picture-id1218254547?b=1&k=20&m=1218254547&s=170667a&w=0&h=mOEC7x7qU5NC78mCULs-jAPeLkxy8opOvIbGSnwmAyw=" class="d-block w-100">
-            </div>
-            <div class="carousel-item">
-              <img src="https://media.istockphoto.com/photos/food-backgrounds-table-filled-with-large-variety-of-food-picture-id1155240408?k=20&m=1155240408&s=612x612&w=0&h=Zvr3TwVQ-wlfBnvGrgJCtv-_P_LUcIK301rCygnirbk=" class="d-block w-100">
-            </div>
-            <div class="carousel-item">
-              <img src="https://media.istockphoto.com/photos/varied-food-carbohydrates-protein-vegetables-fruits-dairy-legumes-on-picture-id1218254547?b=1&k=20&m=1218254547&s=170667a&w=0&h=mOEC7x7qU5NC78mCULs-jAPeLkxy8opOvIbGSnwmAyw=" class="d-block w-100">
-            </div>
+          <!--general info-->
+          <div class="genInfo">
+            <p>Cook Time</p>
+            <p>Servings</p>
+            <p>Cost</p>
           </div>
 
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
+          <p>Content...</p>
+          <button type="button" class="recipe-summmaryButton">Add to My Favorites</button>
 
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
         </div>
-        
-        <!--general info-->
-        <div class="container-fluid my-container">
-          <div class="row justify-content-center d-flex align-items-center my-row">
-            <div class="col my-col text-center align-items-center justify-content-center p-4">
-              <div class="circle d-flex align-items-center">
-                <p>X</p>
-              </div>
-              <br>
-              Cook Time
-            </div>
-            <div class="col my-col text-center p-4">
-              <div class="circle d-flex align-items-center">
-                <p>X</p>
-              </div>
-              <br>
-              Servings
-            </div>
-            <div class="col my-col text-center p-4">
-              <div class="circle d-flex align-items-center">
-                <p>X</p>
-              </div>
-              <br>
-              Cost
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="recipe-description">
-          <p>INSERT RECIPE DESCRIPTION Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-        <button type="button" class="recipe-summmaryButton">Add to My Favorites</button>
-        </div>
+
         <!--Recipe Ingredients-->
         <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none">
         <p>Ingredients</p>
@@ -213,6 +101,7 @@ class RecipePage extends HTMLElement {
         <br>
         <button type="button" id="addToList">Add to List</button>
         </div>
+
         <!--Recipe Directions-->
         <div id="recipe-directionID" class="recipe-direction" style="display: none">
         <p>Direction</p>
@@ -220,6 +109,7 @@ class RecipePage extends HTMLElement {
         </ul>
         <button type ="button" id="LinkToCM"> Cook </button>
         </div>
+
     `;
 
     // Append elements to the shadow root
@@ -234,18 +124,21 @@ class RecipePage extends HTMLElement {
     console.log(data);
     this.json = data;
     this.id = this.shadowRoot.querySelector('article').innerHTML = `
+
       <h2>Recipes</h2>
       <div class="recipe-navbar">
       <a href="#recipe-summaryID" id="ToSum">Summary</a>
       <a href="#recipe-ingredientsID" id="ToIng">Ingredients</a>
       <a href="#recipe-directionID" id="ToDir">Directions</a>
       </div>
+
       <br>
       <!--User recipes ONLY-->
       <div class="editRecipes">
       <button type="button" id="editRecipe"> Edit </button>
       </div>
       <br>
+
       <!--Recipe Summary-->
       <div id="recipe-summaryID" class="recipe-summary" style="display: block">
       <button type="button" class="recipe-summmaryButton">Add to My Favorites</button>
@@ -254,6 +147,7 @@ class RecipePage extends HTMLElement {
       Summary:
       
       </div>
+
       <!--Recipe Ingredients-->
       <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none">
         <p>Ingredients</p>
@@ -263,6 +157,7 @@ class RecipePage extends HTMLElement {
         <br>
         <button type="button" id="addToList">Add to List</button>
       </div>
+
       <!--Recipe Directions-->
       <div id="recipe-directionID" class="recipe-direction" style="display: none">
       <p>Direction</p>
@@ -270,6 +165,7 @@ class RecipePage extends HTMLElement {
       </ol>
       <button type ="button" id="LinkToCM"> Cook </button>
       </div>
+
     `;
     //Edit button nav to UpdateRecipe.js
     //TODO: Have ONLY the USER recipe been send to update-recipe
@@ -317,12 +213,12 @@ class RecipePage extends HTMLElement {
 
     // Set Summary
     // var image = new Image();
-    // image.src =
+    // image.src = 
     // document.body.appendChild(image);
     const summary = document.createElement('p');
     const image = document.createElement('img');
     summary.innerHTML = getSummary(data);
-    image.setAttribute('width', '400');
+    image.setAttribute('width', "400");
     image.setAttribute('src', getImage(data));
     this.shadowRoot.getElementById('recipe-summaryID').appendChild(image);
     this.shadowRoot.getElementById('recipe-summaryID').appendChild(summary);
