@@ -45,6 +45,7 @@ class GroceryPage extends HTMLElement {
     <br>
     <br>
     <button type="delete" id="delete">Delete &#10006;</button>
+    <button type="reload" id="reload">Reload the Page</button>
     <br>
     <br>
     
@@ -206,6 +207,14 @@ class GroceryPage extends HTMLElement {
       }
       
     }
+
+    // Reload page for update grocery information
+    const reloadButton = this.shadowRoot.getElementById('reload');
+    reloadButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      location.reload();
+    });
+
 
     //Not used
     //line through ingredients when user clicked Checked Button
