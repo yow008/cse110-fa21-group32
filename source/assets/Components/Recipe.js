@@ -131,9 +131,9 @@ class RecipePage extends HTMLElement {
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav nav-fill w-100">
-            <a id="ToSum" class="nav-item nav-link active" href="#recipe-summaryID">Summary<span class="sr-only"></span></a>
-            <a id="ToIng" class="nav-item nav-link" href="#recipe-ingredientsID">Ingredients</a>
-            <a id="ToDir" class="nav-item nav-link" href="#recipe-directionID">Directions</a>
+            <a id="ToSum" class="nav-item nav-link active" href="#recipe-summaryID" style="color:white;">Summary<span class="sr-only"></span></a>
+            <a id="ToIng" class="nav-item nav-link" href="#recipe-ingredientsID" style="color:white;">Ingredients</a>
+            <a id="ToDir" class="nav-item nav-link" href="#recipe-directionID" style="color:white;">Directions</a>
           </div>
         </div>
       </nav>

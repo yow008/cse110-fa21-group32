@@ -23,22 +23,20 @@ class HomePage extends HTMLElement {
     *{
       clear: both;
     }
-
+/*
     .todayMeals{
       display: flex;
       justify-content: space-between;
     }
-
     .recentlyVisited{
       display: flex;
       justify-content: space-between;
     }
-
     .favorites{
       display: flex;
       justify-content: space-between;
     }
-
+*/
     .recipe-grid {
       margin-left: 5%;
       display: grid;
@@ -58,67 +56,149 @@ class HomePage extends HTMLElement {
       min-width: 8%;
       height: 16pt;
     }
+    .css-wrap {
+      margin-left: 5%;
+      margin-bottom: 16pt;
+      margin-right: 5%;
+    }
 
+    .card-body{
+      background-color: #324A54;
+      color: white;
+      text-align: center;
+    }
     `;
     article.innerHTML = `
         <!--<h1>Home Page</h1>-->
         <!--ADD RECIPES HERE-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <div class="css-wrap">
         <p id="#user-status"></p>
         <p id="#user-email"></p>
-        <div class="recipe-grid">
+        </div>
+        <!--<div class="recipe-grid">
         <div>
           <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634559-556x370.jpg"/>
         </div>
-
         <div>
           <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634629-556x370.jpg"/>
         </div>
-
         <div>
           <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624889-556x370.jpg"/>
         </div>
-
         <div>
           <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624779-556x370.jpg"/>
         </div>
-
         <div>
           <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634229-556x370.jpg"/>
         </div>
-
         <div>
           <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624449-556x370.jpg"/>
         </div>
-
         <div>
           <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634769-556x370.jpg"/>
         </div>
-
         <div>
           <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634779-556x370.jpg"/>
         </div>
-
         <div>
           <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624569-556x370.jpg"/>
         </div>
+        </div>-->
+
+        <div class="container-fluid my-container">
+          <div class="row justify-content-center d-flex align-items-center my-row">
+            <div class="col my-col text-center align-items-center justify-content-center p-4">
+              <div class="card my-card" style="width: 18rem;">
+                <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col my-col text-center p-4">
+              <div class="card my-card" style="width: 18rem;">
+              <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col my-col text-center p-4">
+              <div class="card my-card" style="width: 18rem;">
+              <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center d-flex align-items-center my-row">
+          <div class="col my-col text-center align-items-center justify-content-center p-4">
+            <div class="card my-card" style="width: 18rem;">
+              <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
+              <div class="card-body">
+                <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col my-col text-center p-4">
+            <div class="card my-card" style="width: 18rem;">
+            <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
+              <div class="card-body">
+                <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col my-col text-center p-4">
+            <div class="card my-card" style="width: 18rem;">
+            <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
+              <div class="card-body">
+                <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
+              </div>
+            </div>
+          </div>
         </div>
+        <div class="row justify-content-center d-flex align-items-center my-row">
+        <div class="col my-col text-center align-items-center justify-content-center p-4">
+          <div class="card my-card" style="width: 18rem;">
+            <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
+            <div class="card-body">
+              <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col my-col text-center p-4">
+          <div class="card my-card" style="width: 18rem;">
+          <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
+            <div class="card-body">
+              <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
+            </div>
+          </div>
+        </div>
+        <div class="col my-col text-center p-4">
+          <div class="card my-card" style="width: 18rem;">
+          <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
+            <div class="card-body">
+              <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
 
-        <div><button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></div>
         <br>
         <br>
-
         <!--div>
         <button id="#btn-delete" type="button">Delete User</button>
         <button id="#btn-recipe" type="button">See Added Recipes</button>
         <div id="#recipeDiv">
-
         <h3>Today's Meals</h3>
         <div id=#todayMeals class="todayMeals">
             <div><button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></div>
             <div><button type="menu">Recipe 2 (not linked)</button></div>
             <div><button type="menu">Recipe 3 (not linked)</button></div>
         </div>
-
         <h3>Recently Visited</h3>
         <div id=#recentlyVisited class="recentlyVisited">
               <div><button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></div>
@@ -133,6 +213,7 @@ class HomePage extends HTMLElement {
               <div> <button type="menu">Recipe 3 (not linked)</button></div>
         </div>
         </div>
+        </div-->
         `;
 
     // Append elements to the shadow root
@@ -162,11 +243,11 @@ class HomePage extends HTMLElement {
     const userEmail = this.shadowRoot.getElementById('#user-email');
     getEmail(user, token, userEmail);
 
-    const deleteBtn = this.shadowRoot.getElementById('#btn-delete');
+    /*  const deleteBtn = this.shadowRoot.getElementById('#btn-delete');
     deleteBtn.addEventListener('click', () => {
       console.log('DELETE');
       deleteUser(user, token);
-    });
+    });*/
   }
 }
 
