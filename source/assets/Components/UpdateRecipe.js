@@ -148,17 +148,17 @@ class UpdateRecipePage extends HTMLElement {
         var goToDirectionsButton = this.shadowRoot.getElementById(
           'ToUpdateDir'
         );
-        goToSummaryButton.addEventListener('click', (e) => {
+        goToSummaryButton.addEventListener('click', () => {
           goToSummaryButton.style.backgroundColor = '#324A54';
           goToIngredientsButton.style.backgroundColor = '#CA676A';
           goToDirectionsButton.style.backgroundColor = '#CA676A';
         });
-        goToIngredientsButton.addEventListener('click', (e) => {
+        goToIngredientsButton.addEventListener('click', () => {
           goToSummaryButton.style.backgroundColor = '#CA676A';
           goToIngredientsButton.style.backgroundColor = '#324A54';
           goToDirectionsButton.style.backgroundColor = '#CA676A';
         });
-        goToDirectionsButton.addEventListener('click', (e) => {
+        goToDirectionsButton.addEventListener('click', () => {
           goToSummaryButton.style.backgroundColor = '#CA676A';
           goToIngredientsButton.style.backgroundColor = '#CA676A';
           goToDirectionsButton.style.backgroundColor = '#324A54';
