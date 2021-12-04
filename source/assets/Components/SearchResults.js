@@ -8,7 +8,8 @@ import { GET } from '../scripts/request.js';
 
 /**
  * Class: SearchResultsPage
- * TODO:
+ * Displays brief recipe information based on the search
+ * keyphrase. Each recipe result links to the dedicated recipe page.
  */
 class SearchResultsPage extends HTMLElement {
   constructor() {
@@ -17,54 +18,12 @@ class SearchResultsPage extends HTMLElement {
 
     // Create styles and root element
     const styles = document.createElement('style');
-    const article = document.createElement('article');
 
     // Fill in styles and root element
-    styles.innerHTML = `
-    h2{
-      background-color: #CA676A;
-      background-size: cover;
-      padding: 23.5px;
-      color: white;
-      text-align: center;
-    }
-    .title {
-      
-      text-align: center;
-      background-color: rgba(0,0,0,0.8);
-      position: absolute;
-      color: white;
-      height: 22pt;
-      width: 45ch;
-      display:block;
-      margin-top: -63px;
-      margin-left: 20ch;
-    }
-    .css-image {
-      width: 45ch;
-      margin-left: 20ch;
-      margin-bottom: 35px;
-    }
-    .css-division {
-      margin: auto;
-    }
-    button {
-      background-color: white;
-      border-radius: 9px;
-      border: 1.5px solid #ca676a;
-      text-align: center;
-      min-width: 8%;
-      height: 16pt;
-    }
-    `;
-    article.innerHTML = `
-    <h2>Recipes</h2>
-    <div class = "css-division">
-    </div>
-    `;
+    styles.innerHTML = ``;
 
     // Append elements to the shadow root
-    this.shadowRoot.append(styles, article);
+    this.shadowRoot.append(styles);
   }
 
   /**
@@ -103,7 +62,6 @@ function createRecipeCards(results, section) {
 
     // Add recipe picture
     const image = document.createElement('img');
-    image.classList.add('css-image');
     image.setAttribute('src', data.image);
     image.setAttribute('alt', data.title);
 
