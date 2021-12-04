@@ -1,6 +1,6 @@
 // Recipe.js
 import { router } from '../scripts/main.js';
-import { POST } from '../scripts/request.js';
+// import { POST } from '../scripts/request.js';
 /**
  * Class: RecipePage
  * Shows detailed information of the recipe broken
