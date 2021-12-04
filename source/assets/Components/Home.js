@@ -66,7 +66,24 @@ class HomePage extends HTMLElement {
       background-color: #324A54;
       color: white;
       text-align: center;
+      font-weight: lighter;
+      font-style: normal;
     }
+
+    .card-title{
+      font-weight: lighter;
+      font-style: normal;
+    }
+
+    .my-card{
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .my-container{
+      width: 90% !important;
+    }
+
+
     `;
     article.innerHTML = `
         <!--<h1>Home Page</h1>-->
@@ -107,25 +124,25 @@ class HomePage extends HTMLElement {
         </div>-->
 
         <div class="container-fluid my-container">
-          <div class="row justify-content-center d-flex align-items-center my-row">
-            <div class="col my-col text-center align-items-center justify-content-center p-4">
-              <div class="card my-card" style="width: 18rem;">
+          <div class="row justify-content-center d-flex align-items-center my-row ">
+            <div class="col my-col text-center align-items-center d-flex justify-content-center p-4">
+              <div class="card my-card" style="width: 75%;">
                 <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
                 <div class="card-body">
                   <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
                 </div>
               </div>
             </div>
-            <div class="col my-col text-center p-4">
-              <div class="card my-card" style="width: 18rem;">
+            <div class="col my-col text-center d-flex justify-content-center p-4">
+              <div class="card my-card" style="width: 75%;">
               <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
                 <div class="card-body">
                   <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
                 </div>
               </div>
             </div>
-            <div class="col my-col text-center p-4">
-              <div class="card my-card" style="width: 18rem;">
+            <div class="col my-col text-center d-flex justify-content-center p-4">
+              <div class="card my-card" style="width: 75%;">
               <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
                 <div class="card-body">
                   <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
@@ -134,53 +151,54 @@ class HomePage extends HTMLElement {
             </div>
           </div>
           <div class="row justify-content-center d-flex align-items-center my-row">
-          <div class="col my-col text-center align-items-center justify-content-center p-4">
-            <div class="card my-card" style="width: 18rem;">
+            <div class="col my-col text-center align-items-center d-flex justify-content-center p-4">
+              <div class="card my-card" style="width: 75%;">
+                <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col my-col text-center d-flex justify-content-center p-4">
+              <div class="card my-card" style="width: 75%;">
+              <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col my-col text-center d-flex justify-content-center p-4">
+              <div class="card my-card" style="width: 75%;">
+              <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center d-flex align-items-center my-row">
+          <div class="col my-col text-center align-items-center d-flex justify-content-center p-4">
+            <div class="card my-card" style="width: 75%;">
               <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
               <div class="card-body">
                 <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
               </div>
             </div>
           </div>
-          <div class="col my-col text-center p-4">
-            <div class="card my-card" style="width: 18rem;">
+          <div class="col my-col text-center d-flex justify-content-center p-4">
+            <div class="card my-card" style="width: 75%;">
             <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
               <div class="card-body">
                 <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
               </div>
             </div>
           </div>
-          <div class="col my-col text-center p-4">
-            <div class="card my-card" style="width: 18rem;">
+          <div class="col my-col text-center d-flex justify-content-center p-4">
+            <div class="card my-card" style="width: 75%;">
             <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
               <div class="card-body">
                 <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="row justify-content-center d-flex align-items-center my-row">
-        <div class="col my-col text-center align-items-center justify-content-center p-4">
-          <div class="card my-card" style="width: 18rem;">
-            <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
-            </div>
-          </div>
-        </div>
-        <div class="col my-col text-center p-4">
-          <div class="card my-card" style="width: 18rem;">
-          <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
-            </div>
-          </div>
-        </div>
-        <div class="col my-col text-center p-4">
-          <div class="card my-card" style="width: 18rem;">
-          <img class="card-img-top" src="https://spoonacular.com/recipeImages/624569-556x370.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 id="ExpRecipe" class="card-title align-items-center">Recipe Name</h5>
             </div>
           </div>
         </div>
