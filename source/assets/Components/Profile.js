@@ -81,7 +81,8 @@ class ProfilePage extends HTMLElement {
             <ul>
                 <li><a href="#profile-page-recipeID" id="UserRec">Recipes</a></li><br>
                 <li><a href="#profile-page-reviewsID" id="UserRev">Reviews</a></li><br>
-                <li id="#section-edit-profile"><button id="#button-edit-profile" type="button">Edit Profile</button></li>
+                <li id="#section-edit-profile"><button class="normal-button" id="#button-edit-profile" type="button">Edit Profile</button></li>
+
             </ul>
         </th>
         </table>
@@ -101,7 +102,6 @@ class ProfilePage extends HTMLElement {
         <!--Profile Page Reviews-->
         <div id="profile-page-reviewID" class="profile-page-review">
             <p>NOT AVAILABLE</p>
-            <button>REMOVE ME 2</button>
             <br>
         </div>
         `;
@@ -135,90 +135,31 @@ class ProfilePage extends HTMLElement {
       reviewsInProfile.style.display = 'contents';
     });
 
-    const editProfileSection = this.shadowRoot.getElementById(
-      '#section-edit-profile'
-    );
-    const editProfileBtn = this.shadowRoot.getElementById(
-      '#button-edit-profile'
-    );
-    editProfileBtn.addEventListener('click', () => {
-      // Create Edit Username Label and text area
-      let editUsername = document.createElement('div');
-      let editUsernameLabel = document.createElement('label');
-      editUsernameLabel.innerHTML = 'Change Username: ';
-      editUsernameLabel.setAttribute('for', '#edit-username');
-
-      let editUsernameTextArea = document.createElement('input');
-      editUsernameTextArea.setAttribute('type', 'text');
-      editUsernameTextArea.setAttribute(
-        'value',
-        localStorage.getItem('username')
-      );
-      editUsernameTextArea.setAttribute('id', '#edit-username');
-
-      editUsername.appendChild(editUsernameLabel);
-      editUsername.appendChild(editUsernameTextArea);
-      editProfileSection.appendChild(editUsername);
-
-      // Create Edit Email Label and text area
-      let editEmail = document.createElement('div');
-      let editEmailLabel = document.createElement('label');
-      editEmailLabel.innerHTML = 'Change Email: ';
-      editEmailLabel.setAttribute('for', '#edit-email');
-
-      let editEmailTextArea = document.createElement('input');
-      editEmailTextArea.setAttribute('type', 'text');
-      editEmailTextArea.setAttribute('value', '"current Email"');
-      editEmailTextArea.setAttribute('id', '#edit-email');
-
-      editEmail.appendChild(editEmailLabel);
-      editEmail.appendChild(editEmailTextArea);
-      editProfileSection.appendChild(editEmail);
-
-      // Create Edit Password Label and text area
-      let editPassword = document.createElement('div');
-      let editPasswordLabel = document.createElement('label');
-      editPasswordLabel.innerHTML = 'New Password: ';
-      editPasswordLabel.setAttribute('for', '#edit-password');
-
-      let editPasswordTextArea = document.createElement('input');
-      editPasswordTextArea.setAttribute('type', 'text');
-      editPasswordTextArea.setAttribute('placeholder', 'New Password');
-      editPasswordTextArea.setAttribute('id', '#edit-password');
-
-      editPassword.appendChild(editPasswordLabel);
-      editPassword.appendChild(editPasswordTextArea);
-      editProfileSection.appendChild(editPassword);
-
-      // Create Edit Password confirm Label and text area
-      let editConfirmPassword = document.createElement('div');
-      let editConfirmPasswordLabel = document.createElement('label');
-      editConfirmPasswordLabel.innerHTML = 'Confirm New Password: ';
-      editConfirmPasswordLabel.setAttribute('for', '#edit-confirm-password');
-
-      let editConfirmPasswordTextArea = document.createElement('input');
-      editConfirmPasswordTextArea.setAttribute('type', 'text');
-      editConfirmPasswordTextArea.setAttribute(
-        'placeholder',
-        'Confirm Password'
-      );
-      editConfirmPasswordTextArea.setAttribute('id', '#edit-confirm-password');
-
-      editConfirmPassword.appendChild(editConfirmPasswordLabel);
-      editConfirmPassword.appendChild(editConfirmPasswordTextArea);
-      editProfileSection.appendChild(editConfirmPassword);
-
-      let addChangesBtn = document.createElement('button');
-      addChangesBtn.innerHTML = 'Add Changes';
-
-      editProfileSection.appendChild(addChangesBtn);
-
-      addChangesBtn.addEventListener('click', () => {});
-    });
-
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
     getRecipes(user, token, this.shadowRoot);
+
+    const editProfileBtn = this.shadowRoot.getElementById(
+      '#button-edit-profile'
+    );
+
+    router.addPage('update-user-page', function () {
+      document.getElementById('#section--profile').classList.remove('shown');
+      document.getElementById('#section--update-user').classList.add('shown');
+      console.log(document.getElementById('#section--update-user'));
+    });
+
+    editProfileBtn.addEventListener('click', () => {
+      const updateUserPage = document.createElement('update-user-page');
+
+      updateUserPage.classList.add('shown');
+      document.getElementById('#section--update-user').innerHTML = '';
+      document
+        .getElementById('#section--update-user')
+        .appendChild(updateUserPage);
+      router.navigate('update-user-page');
+    });
+    
   }
 
   set recipes(recipes) {}
