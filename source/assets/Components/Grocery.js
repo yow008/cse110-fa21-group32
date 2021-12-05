@@ -55,6 +55,60 @@ class GroceryPage extends HTMLElement {
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
 
+    //Not used
+    //line through ingredients when user clicked Checked Button
+    // const checkedButton = this.shadowRoot.getElementById('checked');
+    // checkedButton.addEventListener('click', (e) => {
+    //   e.preventDefault();
+    //   checkedIngredient();
+    // });
+
+    // function checkedIngredient() {
+    //   const elements = groceryList.querySelectorAll('input[type="checkbox"]');
+    //   for (let i = 0; i < elements.length; i++) {
+    //     if (elements[i].checked == true) {
+    //       let complete = elements[i].parentElement.querySelector('label');
+    //       let findS = elements[i].parentElement.getElementsByTagName('s');
+    //       let s = document.createElement('s');
+    //       if (findS.length == 0) {
+    //         s.append(complete);
+    //         elements[i].parentElement.append(s);
+    //       } else {
+    //         elements[i].parentElement.append(complete);
+    //         elements[i].parentElement.querySelector('s').remove();
+    //       }
+    //     }
+    //   }
+    // }
+  }
+
+  set update(data){
+    //Display checked Ingredients information from the localStorage "grocery"
+    this.id = this.shadowRoot.querySelector('article').innerHTML = `
+    <h2>Grocery List</h2>
+    <div id="grocery-list">
+    <!--Add Recipe Ingredients-->
+    <p> Grocery List </p>
+    <form id="#my-input">
+      <input type="text" placeholder="Add ingredient..."/>
+      <button type="submit" id="add-icon">Add to the list</button>
+    </form>
+    <br>
+    <p>My List</p>
+    <form id="#my-list">
+    </form>
+    </div>
+    <br>
+    <br>
+    <br>
+    <button type="delete" id="delete">Delete &#10006;</button>
+    <button type="reload" id="reload">Reload the Page</button>
+    <br>
+    <br>
+
+    <!--<button type="checked" id="checked">Checked</button>-->
+        `;
+    
     const groceryList = this.shadowRoot.getElementById('grocery-list');
     const myIngredient = this.shadowRoot.getElementById('#my-input');
     const myForm = this.shadowRoot.getElementById('#my-list');
@@ -65,17 +119,21 @@ class GroceryPage extends HTMLElement {
     
     if(mytempList == null){
       mytempList = [];
+      let ingredient = [];
       let Mylist = { 
         name : 'My List', //Title of recipe.
         id : null,
-        ingredients : null, //List of checked ingredients in the recipe.
+        ingredients : ingredient, //List of checked ingredients in the recipe.
       }
       mytempList.push(Mylist);
       localStorage.setItem("mylist", JSON.stringify(mytempList));
     }
 
     //Display my list Ingredients information from the localStorage "my-list"
-    const userchecked = mytempList.ingredients;
+    var userchecked = mytempList.ingredients;
+    if(userchecked == null){
+      userchecked = [];
+    }
 
     for(let e = 0; e < userchecked.length; e++){
       let div = document.createElement('div');
@@ -205,7 +263,6 @@ class GroceryPage extends HTMLElement {
           form[i].remove();
         }
       }
-      
     }
 
     // Reload page for update grocery information
@@ -216,33 +273,7 @@ class GroceryPage extends HTMLElement {
     });
 
 
-    //Not used
-    //line through ingredients when user clicked Checked Button
-    // const checkedButton = this.shadowRoot.getElementById('checked');
-    // checkedButton.addEventListener('click', (e) => {
-    //   e.preventDefault();
-    //   checkedIngredient();
-    // });
-
-    // function checkedIngredient() {
-    //   const elements = groceryList.querySelectorAll('input[type="checkbox"]');
-    //   for (let i = 0; i < elements.length; i++) {
-    //     if (elements[i].checked == true) {
-    //       let complete = elements[i].parentElement.querySelector('label');
-    //       let findS = elements[i].parentElement.getElementsByTagName('s');
-    //       let s = document.createElement('s');
-    //       if (findS.length == 0) {
-    //         s.append(complete);
-    //         elements[i].parentElement.append(s);
-    //       } else {
-    //         elements[i].parentElement.append(complete);
-    //         elements[i].parentElement.querySelector('s').remove();
-    //       }
-    //     }
-    //   }
-    // }
   }
-
 }
 
 

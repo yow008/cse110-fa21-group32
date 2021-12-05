@@ -78,6 +78,9 @@ function addMainPages() {
     document
       .getElementById('#section--' + pageNames[i])
       .appendChild(pageContent);
+    if(pageNames[i] === 'grocery'){
+      pageContent.update = '';
+    }
   }
 
   // Create and add search bar

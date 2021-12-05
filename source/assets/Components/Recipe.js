@@ -1,5 +1,6 @@
 // Recipe.js
 import { router } from '../scripts/main.js';
+import { GET /*, POST*/ } from '../scripts/request.js';
 // import { POST } from '../scripts/request.js';
 /**
  * Class: RecipePage
@@ -73,8 +74,15 @@ class RecipePage extends HTMLElement {
         <a href="#recipe-directionID" id="ToDir">Directions</a>
         </div>
 
+        <br>
+        <!--User recipes ONLY-->
+        <div class="editRecipes" style="display: none">
+        <button type="button" id="editRecipe"> Edit </button>
+        </div>
+        <br>
+
         <!--Recipe Summary-->
-        <div id="recipe-summaryID" class="recipe-summary" style="display: block">
+        <div id="recipe-summaryID" class="recipe-summary">
         <!--<p>Summary</p>-->
           <!--placeholder for recipe image-->
           <div class="placeholder">
@@ -134,7 +142,7 @@ class RecipePage extends HTMLElement {
 
       <br>
       <!--User recipes ONLY-->
-      <div class="editRecipes">
+      <div class="editRecipes" style="display: none">
       <button type="button" id="editRecipe"> Edit </button>
       </div>
       <br>
@@ -167,16 +175,24 @@ class RecipePage extends HTMLElement {
       </div>
 
     `;
+
+    var recipeID = data.recipe.id;
+    const user = localStorage.getItem('username');
+    const token = localStorage.getItem('token');
+    const updateBtn = this.shadowRoot.getElementById('editRecipe');
+    getRecipes(user, token, recipeID, updateBtn);
+
     //Edit button nav to UpdateRecipe.js
     //TODO: Have ONLY the USER recipe been send to update-recipe
     //----------------------------------------------------------------------------
+    //Edit button will only appear if that's user's own recipe
+
     router.addPage('update-recipe', function () {
       document.getElementById('#section--recipe').classList.remove('shown');
       document.getElementById('#section--update-recipe').classList.add('shown');
       console.log(document.getElementById('#section--update-recipe'));
     });
-
-    const updateBtn = this.shadowRoot.getElementById('editRecipe');
+    
     updateBtn.addEventListener('click', () => {
       const recipeUpdatePage = document.createElement('update-recipe-page');
 
@@ -189,6 +205,7 @@ class RecipePage extends HTMLElement {
       router.navigate('update-recipe');
     });
 
+    // Nav to cooking mode
     router.addPage('cooking-mode', function () {
       document.getElementById('#section--recipe').classList.remove('shown');
 
@@ -260,7 +277,7 @@ class RecipePage extends HTMLElement {
     }
 
     for(let i = 0; i <current.length; i++){
-      if(data.recipe.id == current[i].id){
+      if(recipeID == current[i].id){
         const checkeding = this.shadowRoot.querySelectorAll('input[type="checkbox"]');
         const userchecked = current[i].ingredients;
         for(let s = 0; s < userchecked.length; s++) {
@@ -324,7 +341,6 @@ class RecipePage extends HTMLElement {
     const checkedIng = this.shadowRoot.querySelectorAll('input[type="checkbox"]');
     //Add Ingredients to an Array "ingredientsSelect" List if they are been checked
     function getCheckedIngredient() {
-      let recipeID = data.recipe.id;
 
       //Build array of ingredients that were checked by the user.
       let ingredientsSelect = [];
@@ -351,15 +367,25 @@ class RecipePage extends HTMLElement {
         // if localStorage for "grocery" is empty, push "listAll" directly to the local storage
         tempList.push(listAll);
         localStorage.setItem("grocery", JSON.stringify(tempList)); 
+        document.getElementById('#section--grocery').firstChild.update = "";
+        return;
       }
       // If ingredients have been pushed (with the same recipe id) -> Update ingredients
-      for(let i = 0; i <tempList.length; i++){
-        if(data.recipe.id == tempList[i].id){
-          tempList[i].ingredients = ingredientsSelect;
-          localStorage.setItem("grocery", JSON.stringify(tempList)); 
+      else{
+        for(let i = 0; i <tempList.length; i++){
+          if(data.recipe.id == tempList[i].id){
+            tempList[i].ingredients = ingredientsSelect;
+            localStorage.setItem("grocery", JSON.stringify(tempList)); 
+            document.getElementById('#section--grocery').firstChild.update = "";
+            return;
+          }
         }
-      
       }
+      // If ingredients not been pushed -> push "listAll" to the local storage
+      tempList.push(listAll);
+      localStorage.setItem("grocery", JSON.stringify(tempList)); 
+
+      document.getElementById('#section--grocery').firstChild.update = '';
     }
 
     //"Add to list" button -> send the data to Grocery list
@@ -439,6 +465,34 @@ function getTitle(data) {
  */
 function getSummary(data) {
   return data.recipe.summary;
+}
+
+// Call function for Edit to appear
+/**
+ * @param {*} username
+ * @param {*} token
+ * @param {*} recipeID
+ * @param {*} button
+ */
+  function getRecipes(username, token, recipeID, button) {
+  const searchReq = `type=getCustomizedRecipeIDs&user=${encodeURIComponent(
+    username
+  )}&token=${encodeURIComponent(token)}`;
+
+  /**
+   * @param {*} data
+   */
+  function atFetch(data) {
+    for (let i = 0; i < data.ID.length; i++) {
+      if(recipeID == data.ID[i]){
+        button.parentElement.style.display = "block";
+      }
+      else{
+        button.parentElement.style.display = "none";
+      }
+    }
+  }
+  GET(searchReq, atFetch);
 }
 
 // TODO: remove if remains unused
