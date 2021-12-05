@@ -4,7 +4,7 @@
 
 // GLOBALS
 // TODO: edit the local server URL to hosted server
-const SERVER_URL = 'http://34.125.225.39:5000/';
+const SERVER_URL = 'https://cookez.click/';
 
 /**
  * TODO:
@@ -200,11 +200,17 @@ function login(username, password, loginForm) {
       return response.json();
     })
     .then((data) => {
-      localStorage.setItem('username', username);
-      localStorage.setItem('token', data.userInfo);
-      window.location.href = `home.html`;
-      //window.location.href = `home.html?user=${data.userInfo[0]}&pass=${data.userInfo[1]}`; Old method of rerouting.
-      console.log('Success:', data);
+      //No Token Returned (wrong authentication)
+      if (!data.userInfo) {
+        setFormMessage(loginForm, 'error', 'Invalid username or password!');
+        console.error('Wrong information provided to DB!');
+      } else {
+        localStorage.setItem('username', username);
+        localStorage.setItem('token', data.userInfo);
+        window.location.href = `home.html`;
+        //window.location.href = `home.html?user=${data.userInfo[0]}&pass=${data.userInfo[1]}`; Old method of rerouting.
+        console.log('Success:', data);
+      }
     })
     .catch((error) => {
       setFormMessage(loginForm, 'error', 'Invalid username or password!');
