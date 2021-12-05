@@ -37,71 +37,183 @@ class GroceryPage extends HTMLElement {
       <button type="submit" id="add-icon">Add to the list</button>
     </form>
     <br>
-    <form id="#my-list">
     <p>My List</p>
-      <div>
-        <input type="checkbox" name="ingredient-list">
-        <label>item</label>
-      </div>
-      <div>
-        <input type="checkbox" name="ingredient-list">
-        <label>item</label>
-      </div>
-      <div>
-        <input type="checkbox" name="ingredient-list">
-        <label>item</label>
-      </div>
+    <form id="#my-list">
     </form>
-    <p>Some Recipe Ingredient List</p>
-    <form id="#recipe-list">
-      <div>
-        <input type="checkbox" name="ingredient-list">
-        <label>item</label>
-      </div>
-      <div>
-        <input type="checkbox" name="ingredient-list">
-        <label>item</label>
-      </div>
-      <div>
-        <input type="checkbox" name="ingredient-list">
-        <label>item</label>
-      </div>
-    </form>
-    <br>
-    <br>
-    <br>
     </div>
-    <button type="checked" id="checked">Checked &#10004;</button>
+    <br>
+    <br>
+    <br>
     <button type="delete" id="delete">Delete &#10006;</button>
+    <button type="reload" id="reload">Reload the Page</button>
+    <br>
+    <br>
+    
+    <!--<button type="checked" id="checked">Checked</button>-->
         `;
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
 
+    //Not used
+    //line through ingredients when user clicked Checked Button
+    // const checkedButton = this.shadowRoot.getElementById('checked');
+    // checkedButton.addEventListener('click', (e) => {
+    //   e.preventDefault();
+    //   checkedIngredient();
+    // });
+
+    // function checkedIngredient() {
+    //   const elements = groceryList.querySelectorAll('input[type="checkbox"]');
+    //   for (let i = 0; i < elements.length; i++) {
+    //     if (elements[i].checked == true) {
+    //       let complete = elements[i].parentElement.querySelector('label');
+    //       let findS = elements[i].parentElement.getElementsByTagName('s');
+    //       let s = document.createElement('s');
+    //       if (findS.length == 0) {
+    //         s.append(complete);
+    //         elements[i].parentElement.append(s);
+    //       } else {
+    //         elements[i].parentElement.append(complete);
+    //         elements[i].parentElement.querySelector('s').remove();
+    //       }
+    //     }
+    //   }
+    // }
+  }
+
+  set update(data) {
+    //Display checked Ingredients information from the localStorage "grocery"
+    this.id = this.shadowRoot.querySelector('article').innerHTML = `
+    <h2>Grocery List</h2>
+    <div id="grocery-list">
+    <!--Add Recipe Ingredients-->
+    <p> Grocery List </p>
+    <form id="#my-input">
+      <input type="text" placeholder="Add ingredient..."/>
+      <button type="submit" id="add-icon">Add to the list</button>
+    </form>
+    <br>
+    <p>My List</p>
+    <form id="#my-list">
+    </form>
+    </div>
+    <br>
+    <br>
+    <br>
+    <button type="delete" id="delete">Delete &#10006;</button>
+    <button type="reload" id="reload">Reload the Page</button>
+    <br>
+    <br>
+
+    <!--<button type="checked" id="checked">Checked</button>-->
+        `;
+
     const groceryList = this.shadowRoot.getElementById('grocery-list');
+    const myIngredient = this.shadowRoot.getElementById('#my-input');
+    const myForm = this.shadowRoot.getElementById('#my-list');
+
+    // Get information from the Local Storage for my added list
+    var mytempList = localStorage.getItem('mylist');
+    mytempList = JSON.parse(mytempList);
+
+    if (mytempList == null) {
+      mytempList = [];
+      let ingredient = [];
+      let Mylist = {
+        name: 'My List', //Title of recipe.
+        id: null,
+        ingredients: ingredient, //List of checked ingredients in the recipe.
+      };
+      mytempList.push(Mylist);
+      localStorage.setItem('mylist', JSON.stringify(mytempList));
+    }
+
+    //Display my list Ingredients information from the localStorage "my-list"
+    var userchecked = mytempList.ingredients;
+    if (userchecked == null) {
+      userchecked = [];
+    }
+
+    for (let e = 0; e < userchecked.length; e++) {
+      let div = document.createElement('div');
+      let input = document.createElement('input');
+      input.setAttribute('type', 'checkbox');
+      div.append(input);
+      let label = document.createElement('label');
+      label.innerHTML = userchecked[e];
+      div.append(label);
+      myForm.append(div);
+    }
+    groceryList.append(myForm);
+
+    //Display checked Ingredients information from the localStorage "grocery"
+    let current = localStorage.getItem('grocery');
+    current = JSON.parse(current);
+
+    if (current == null) {
+      current = [];
+    }
+
+    for (let i = 0; i < current.length; i++) {
+      let form = document.createElement('form');
+      form.setAttribute('class', 'recipe-list');
+
+      let p = document.createElement('p');
+      p.innerHTML = current[i].name;
+      form.append(p);
+
+      const userchecked = current[i].ingredients;
+
+      for (let e = 0; e < userchecked.length; e++) {
+        let div = document.createElement('div');
+        let input = document.createElement('input');
+        input.setAttribute('type', 'checkbox');
+        div.append(input);
+        let label = document.createElement('label');
+        label.innerHTML = userchecked[e];
+        div.append(label);
+
+        form.append(div);
+      }
+      groceryList.append(form);
+    }
 
     // Add the input text to the list if user click "Add to the list"
     const addButton = this.shadowRoot.getElementById('add-icon');
     addButton.addEventListener('click', (e) => {
       e.preventDefault();
       addNewIngredient();
+      saveIngredient(); //update my saved ingredients saved in local storage
     });
 
-    const myIngredient = this.shadowRoot.getElementById('#my-input');
-    const myForm = this.shadowRoot.getElementById('#my-list');
-
     function addNewIngredient() {
-      const element = myIngredient.querySelector('input[type="text"]');
-      const div = document.createElement('div');
-      const currElement = document.createElement('input');
+      let element = myIngredient.querySelector('input[type="text"]');
+      let div = document.createElement('div');
+      let currElement = document.createElement('input');
       currElement.setAttribute('type', 'checkbox');
-      //Maybe have the checkbox invisible by default, and if user click delete button, checkbox will appear
-      currElement.setAttribute('name', element.value);
+      //Maybe have the checkbox invisible by default, and if user click delete button, checkbox will appear??
       div.append(currElement);
-      const content = document.createElement('label');
+      let content = document.createElement('label');
       content.innerHTML = element.value;
       div.append(content);
       myForm.append(div);
+    }
+
+    //Once user add new ingredients, information will be added to local storage
+    function saveIngredient() {
+      let savedIng = [];
+      let elements = myForm.querySelectorAll('input[type="checkbox"]');
+      for (let i = 0; i < elements.length; i++) {
+        let complete = elements[i].parentElement.querySelector('label');
+        savedIng.push(complete.innerText);
+      }
+      let Mylist = {
+        name: 'My List', //Title of recipe.
+        id: null,
+        ingredients: savedIng, //List of checked ingredients in the recipe.
+      };
+      localStorage.setItem('mylist', JSON.stringify(Mylist));
     }
 
     //Delete ingredients when user clicked Delete Button
@@ -109,111 +221,55 @@ class GroceryPage extends HTMLElement {
     deleteButton.addEventListener('click', (e) => {
       e.preventDefault();
       deleteIngredient();
+      saveIngredient(); //update my saved ingredients saved in local storage
     });
 
     function deleteIngredient() {
-      const elements = groceryList.querySelectorAll('input[type="checkbox"]');
+      let elements = groceryList.querySelectorAll('input[type="checkbox"]');
+
       for (let i = 0; i < elements.length; i++) {
         if (elements[i].checked == true) {
+          let item = elements[i].parentElement.querySelector('label').innerHTML;
+
+          //Delete ingredient information from "grocery" in localStorage
+          for (let i = 0; i < current.length; i++) {
+            const userchecked = current[i].ingredients;
+
+            for (let e = 0; e < userchecked.length; e++) {
+              if (userchecked[e] == item) {
+                current[i].ingredients.splice(e, 1);
+                localStorage.setItem('grocery', JSON.stringify(current));
+              }
+              if (userchecked.length == 0) {
+                console.log(current);
+                console.log(i);
+                current.splice(i, 1);
+                localStorage.setItem('grocery', JSON.stringify(current));
+              }
+            }
+          }
+
+          //Delete ingredient information from display
           elements[i].parentElement.remove();
         }
       }
-    }
 
-    // //Delete Recipe
-    // this.shadowRoot
-    // .getElementById('deleteRecipe')
-    // .addEventListener('click', () => {
-    //   let recipe = {
-    //     id: this.json['recipe']['id'],
-    //   };
-    //   let data = {
-    //     type: 'deleteRecipe',
-    //     username: 'Martin1234', // TODO: Need to update with curr user
-    //     password: '1234', // TODO: Need to update with curr password
-    //     recipe: recipe,
-    //   };
-
-    //   function afterDelete() {
-    //     //Going Back to the Home Pgae
-    //     router.navigate('home');
-    //   }
-
-    //   POST(data, afterDelete);
-    // });
-
-    //line through ingredients when user clicked Checked Button
-    const checkedButton = this.shadowRoot.getElementById('checked');
-    checkedButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      checkedIngredient();
-    });
-
-    function checkedIngredient() {
-      const elements = groceryList.querySelectorAll('input[type="checkbox"]');
-      for (let i = 0; i < elements.length; i++) {
-        if (elements[i].checked == true) {
-          let complete = elements[i].parentElement.querySelector('label');
-          let findS = elements[i].parentElement.getElementsByTagName('s');
-          let s = document.createElement('s');
-          if (findS.length == 0) {
-            s.append(complete);
-            elements[i].parentElement.append(s);
-          } else {
-            elements[i].parentElement.append(complete);
-            elements[i].parentElement.querySelector('s').remove();
-          }
+      //If all ingredients are deleted then delete the recipe title
+      let form = groceryList.querySelectorAll('form[class="recipe-list"]');
+      for (let i = 0; i < form.length; i++) {
+        let checkempty = form[i].querySelectorAll('input[type="checkbox"]');
+        if (checkempty.length == 0) {
+          form[i].remove();
         }
       }
     }
 
-    //TODO:
-    //1. Backend Save Data (under user ID)
-    //2. Get the Data
-    //3.
-
-    /* ADDED */
-    /* Dummy Test. Delete this after integration with backend. */
-    // var name = "Ingredient name";
-    // var amount = 3;
-    // var unit = "mg";
-    // this.shadowRoot.querySelector("button").addEventListener("click", e => {
-    //     e.preventDefault();
-    //     let ingredientsList = this.shadowRoot.querySelector('table');
-    //     ingredientsList.innerHTML += '<tr><td><input type="checkbox"></td><td>' + name + '</td><td>' + amount + unit + '</td></tr>'
-    //     //ingredientsList.innerHTML += ingredient;
-    // });
-
-    /* Integration Test. Modify this. */
-    // this.shadowRoot.getElementById("test").addEventListener("click", e => {
-    //     e.preventDefault();
-    //     loadIngredientList();
-    // });
-
-    //function loadIngredientList() {
-    /* NOT SURE About fetch() */
-    // fetch('http://127.0.0.1:5000', {
-    //     method: 'GET', // or 'PUT'
-    //     headers: {
-    //       'Content-Type': ,
-    //     },
-    //     //body: JSON.stringify(data),
-    //     //body: imgList[0].files[0]
-    //   })
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //       //   window.location.href = 'home.html';
-    //         console.log('Success:', data);
-    //         let fullIngredientListPos = this.shadowRoot.querySelector('table');
-    //         let fullIngredientList = data.recipe.extendedIngredients;
-    //         for(let i = 0; i < fullIngredientList.length; i++) {
-    //             fullIngredientListPos.innerHTML += '<tr><td><input type="checkbox"></td><td>' + extendedIngredients[i].name + '</td><td>' + extendedIngredients[i].amount + extendedIngredients[i].unit + '</td></tr>';
-    //         }
-    //     })
-    //     .catch((error) => {
-    //       console.error('Error:', error);
-    //     });
-    //}
+    // Reload page for update grocery information
+    const reloadButton = this.shadowRoot.getElementById('reload');
+    reloadButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      location.reload();
+    });
   }
 }
 

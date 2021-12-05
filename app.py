@@ -1,29 +1,25 @@
 # Flask app / server
-
 # https://towardsdatascience.com/talking-to-python-from-javascript-flask-and-the-fetch-api-e0ef3573c451
 # https://www.youtube.com/watch?v=AsoJL9GPi1k
 # requirements: flask
-
 from flask import Flask, jsonify, request, render_template, Response
 from flask_cors import CORS
 import json
 import user_db
 import recipe
 import pickle
-
 app = Flask(__name__)
 CORS(app)
 user_db = user_db.User_DB()
 recipe_db = recipe.Recipe_DB()
-
 @app.route("/", methods=['GET', 'POST'])
 def home_page():
     print("Hello")
     print(request)
     if request.method == 'POST':
         msg = request.get_json()
-        print(msg)
         
+
         # USER
         # Register (create) the user
         # NOTE: This uses password, NOT the token.
@@ -40,7 +36,6 @@ def home_page():
         elif msg['type'] == 'deleteUser':
             user_db.deleteUser(msg['username'], msg['token'])
             return {'msg': 'Success!'}, 201
-
         # RECIPE
         # Add a custom recipe
         elif msg['type'] == 'addRecipe':
@@ -60,8 +55,13 @@ def home_page():
             recipe_db.removeRecipe(recipe['id'])
             user_db.removeRecipe(msg['username'], msg['token'],recipe['id'])
             return {'msg': 'Success!'}, 201
-
-        # GROCERY
+        
+        # Add ingredient to grocery list
+        elif msg['type'] == 'addToList':
+            username=msg['username']
+            token=msg['token']
+            info= msg['info']['ingredients'] #?
+            user_db.addToList(username,token,info)
         # Add a loose ingredient
         elif msg['type'] == 'addIndGrocery':
             username = msg['username']
@@ -88,7 +88,6 @@ def home_page():
             token = msg['token']
             section_id = msg['id']
             user_db.removeRecIngred(username, token, section_id)
-
     if request.method == 'GET':
         msg = request.args
         if 'type' in msg:
@@ -98,7 +97,7 @@ def home_page():
                 keyword = msg['keyword']
                 recipes = recipe_db.searchRecipeByKeyword(keyword)
                 recipes = {i: recipes[i] for i in range(len(recipes))}
-                recipe_json = json.dumps(recipes, indent=2) 
+                recipe_json = json.dumps(recipes, indent=2)
                 # print(recipe_json)
                 response = Response(response=recipe_json, status=200, mimetype='application/json')
                 print(response.response)
@@ -110,7 +109,6 @@ def home_page():
                 data_json = json.dumps(data, indent=2)
                 response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
-
             # TODO: USER delete these functions or update with new token system
             # Get username and password of user after login NOTE: This uses password, NOT the token
             elif msg['type'] == 'login':
@@ -170,7 +168,5 @@ def home_page():
                 data_json = json.dumps(data, indent=2)
                 response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
-
     return render_template('home.html')
-
 app.run(debug=True)
