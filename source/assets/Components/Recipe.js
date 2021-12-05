@@ -416,7 +416,7 @@ function getCookTime(data) {
 
 // TIME CONVERT
 /**
- * Converts time units into a string format (hrs and min equivalent)
+ * Converts [time units into a string format (hrs and min equivalent)
  * @param {int} n
  * @returns Number of minutes, hours, and minutes it takes to cook this recipe
  */

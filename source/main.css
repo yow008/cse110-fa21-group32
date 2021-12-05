@@ -126,6 +126,7 @@ section:not(section.shown) {
   border: none;
   float: left;
   background: #ca676a;
+  height: 75px;
 }
 
 /* .openbtn:hover {
