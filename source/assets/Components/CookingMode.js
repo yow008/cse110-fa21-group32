@@ -16,7 +16,16 @@ class CookingMode extends HTMLElement {
 
     // Fill in styles and root element
     styles.innerHTML = `
-        
+    h2{
+      background-color: #CA676A;
+      background-size: cover;
+      padding: 23.5px;
+      color: white;
+    }
+    button {
+      background-color: white;
+      border: 1.5px solid #ca676a;
+    }
         `;
     article.innerHTML = `
         <h2>Cooking Mode</h2>
