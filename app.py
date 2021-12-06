@@ -18,7 +18,7 @@ recipe_db = recipe.Recipe_DB()
 
 @app.route("/", methods=['GET', 'POST'])
 def home_page():
-    print("Hello")
+    print("Firing up Backend....")
     print(request)
     if request.method == 'POST':
         msg = request.get_json()
@@ -97,17 +97,24 @@ def home_page():
             if msg['type'] == 'search':
                 keyword = msg['keyword']
                 recipes = recipe_db.searchRecipeByKeyword(keyword)
-                recipes = {i: recipes[i] for i in range(len(recipes))}
-                recipe_json = json.dumps(recipes, indent=2) 
-                # print(recipe_json)
+                if recipes is None:
+                    recipes = {"isEmpty": True}
+                    recipe_json = json.dumps(recipes, indent = 2)
+                else:
+                    recipes = {i: recipes[i] for i in range(len(recipes))}
+                    recipe_json = json.dumps(recipes, indent=2) 
                 response = Response(response=recipe_json, status=200, mimetype='application/json')
                 print(response.response)
                 return response
             # Get each recipe data based on recipe ID
             elif msg['type'] == 'fetchRecipe':
                 recipe = recipe_db.fetchRecipeByID(msg['id'])
-                data = {"recipe": recipe}
-                data_json = json.dumps(data, indent=2)
+                if recipe is None:
+                    data = {"isEmpty": True}
+                    data_json = json.dumps(data, indent=2)
+                else:
+                    data = {"recipe": recipe}
+                    data_json = json.dumps(data, indent=2)
                 response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
 
@@ -117,10 +124,13 @@ def home_page():
                 username = msg['user']
                 password = msg['pass']
                 userInfo = user_db.login(username, password)
-                data = {"userInfo": userInfo}
-                data_json = json.dumps(data, indent=2)
+                if userInfo is None:
+                    data = {"isEmpty": True}
+                    data_json = json.dumps(data, indent=2)
+                else:
+                    data = {"userInfo": userInfo}
+                    data_json = json.dumps(data, indent=2)
                 response = Response(response=data_json, status=200, mimetype='application/json')
-                print(response)
                 return response
             # Get email of user
             elif msg['type'] == 'request':
@@ -128,10 +138,12 @@ def home_page():
                 token = msg['token']
                 elem = msg['elem']
                 userInfo = user_db.request(username, token, ['Email'])
-                print(username, token, elem)
-                data = {"userInfo": userInfo}
-                print(userInfo)
-                data_json = json.dumps(data, indent=2)
+                if userInfo is None:
+                    data = {"isEmpty": True}
+                    data_json = json.dumps(data, indent=2)
+                else:         
+                    data = {"userInfo": userInfo}
+                    data_json = json.dumps(data, indent=2)
                 response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
             # Get <elem> columns from the user based on username + password
@@ -139,12 +151,15 @@ def home_page():
                 username = msg['user']
                 token = msg['token']
                 elem = msg['elem']
+                response = None #Protection if elem is not keys
                 if(elem == "keys"):
                     userInfo = user_db.request(username, token, ['keys'])
-                    print(username, token, elem)
-                    data = {"userInfo": userInfo}
-                    print(userInfo)
-                    data_json = json.dumps(data, indent=2)
+                    if userInfo is None:
+                        data = {"isEmpty": True}
+                        data_json = json.dumps(data, indent=2)
+                    else:                   
+                        data = {"userInfo": userInfo}
+                        data_json = json.dumps(data, indent=2)
                     response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
             # Get all recipes written by the user (list of recipe IDs)
@@ -153,10 +168,13 @@ def home_page():
                 token = msg['token']
                 keys = ['Recipes']
                 result = user_db.request(username, token, keys)
-                print(result)
-                recipes = pickle.loads(result[0])
-                data = {"ID": recipes}
-                data_json = json.dumps(data, indent=2)
+                if result is None:
+                    data = {"isEmpty": True}
+                    data_json = json.dumps(data, indent=2)
+                else:
+                    recipes = pickle.loads(result[0])
+                    data = {"ID": recipes}
+                    data_json = json.dumps(data, indent=2)
                 response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
             # Get the grocery list of the user
@@ -165,9 +183,14 @@ def home_page():
                 token = msg['token']
                 keys = ['Shopping_list']
                 result = user_db.request(username, token, keys)
-                grocery = pickle.loads(result[0])
-                data = {"grocery": grocery}
-                data_json = json.dumps(data, indent=2)
+                if result is None:
+                    data = {"isEmpty": True}
+                    data_json = json.dumps(data, indent=2)
+                else:
+                    grocery = pickle.loads(result[0])
+                    data = {"grocery": grocery}
+                    data_json = json.dumps(data, indent=2)
+
                 response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
 
