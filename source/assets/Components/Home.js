@@ -144,8 +144,8 @@ class HomePage extends HTMLElement {
     // I would suggest doing this in the AfterSearch function within the
     // searchRandomRecipes function and pass in the cards through a new
     // parameter
-    const recipes = {};
-    searchRandomRecipes(recipes);
+    //const recipes = {};
+    searchRandomRecipes(/*recipes*/);
 
     const recipePage = this.shadowRoot.getElementById('ExpRecipe');
     recipePage.addEventListener('click', () => {
@@ -223,7 +223,7 @@ function deleteUser(username, token) {
 /**
  * Searches for random recipes to populate the home page
  */
-function searchRandomRecipes(resultsObject) {
+function searchRandomRecipes(/*resultsObject*/) {
   const searchReq = `type=searchRandom`;
 
   /**
@@ -232,7 +232,7 @@ function searchRandomRecipes(resultsObject) {
    */
   function afterSearch(data) {
     console.log('Aftersearch' + data[0]['title']);
-    resultsObject = data;
+    // resultsObject = data;
   }
 
   GET(searchReq, afterSearch);
