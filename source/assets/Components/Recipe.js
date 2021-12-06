@@ -3,7 +3,8 @@ import { router } from '../scripts/main.js';
 
 /**
  * Class: RecipePage
- * TODO:
+ * Shows detailed information of the recipe broken
+ * down into summary, ingredients, and direction tabs.
  */
 class RecipePage extends HTMLElement {
   constructor() {
@@ -14,8 +15,55 @@ class RecipePage extends HTMLElement {
     const styles = document.createElement('style');
     const article = document.createElement('article');
 
-    // Styles and root element
-    styles.innerHTML = ``;
+    // Fill in styles and root element
+    styles.innerHTML = `
+    h2{
+      background-color: #324A54;
+      background-size: cover;
+      padding: 23.5px;
+      color: white;
+    }
+    .openbtn {
+      background-color: #324A54 !important;
+    }
+    .recipe-navbar{
+      display: flex;
+      justify-content: space-around;
+      background-color: #324A54;
+      padding: 20px;
+      color: white !important;
+    }
+
+    .recipe-navbar > a{
+      color:white;
+      text-decoration: none;
+    }
+
+    img{
+      width: 100%;
+      max-height: 350px;
+      object-fit: cover;
+    }
+
+    .genInfo{
+      display: flex;
+      justify-content: space-around;
+      background-color: #324A54;
+      padding: 40px;
+      color: white !important;
+      font-family: IBM Plex Sans;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 9px;
+    }
+    .insertInfo{
+      display: flex;
+      justify-content: space-around;
+    }
+
+    `;
+
     article.innerHTML = `
 
         <h2>Recipes</h2>
@@ -27,10 +75,22 @@ class RecipePage extends HTMLElement {
 
         <!--Recipe Summary-->
         <div id="recipe-summaryID" class="recipe-summary" style="display: block">
-        <p>Summary</p>
-        <p>Content...</p>
-        
-        <button type="button" class="recipe-summmaryButton">Add to My Favorites</button>
+        <!--<p>Summary</p>-->
+          <!--placeholder for recipe image-->
+          <div class="placeholder">
+            <img src="https://media.istockphoto.com/photos/varied-food-carbohydrates-protein-vegetables-fruits-dairy-legumes-on-picture-id1218254547?b=1&k=20&m=1218254547&s=170667a&w=0&h=mOEC7x7qU5NC78mCULs-jAPeLkxy8opOvIbGSnwmAyw=" img>
+          </div>
+
+          <!--general info-->
+          <div class="genInfo">
+            <p>Cook Time</p>
+            <p>Servings</p>
+            <p>Cost</p>
+          </div>
+
+          <p>Content...</p>
+          <button type="button" class="recipe-summmaryButton">Add to My Favorites</button>
+
         </div>
 
         <!--Recipe Ingredients-->
@@ -39,7 +99,7 @@ class RecipePage extends HTMLElement {
         <!--Add To List Button--> 
         <form></form>
         <br>
-        <button type="button">Add to List</button>
+        <button type="button" id="addToList">Add to List</button>
         </div>
 
         <!--Recipe Directions-->
@@ -56,6 +116,10 @@ class RecipePage extends HTMLElement {
     this.shadowRoot.append(styles, article);
   }
 
+  /**
+   * Populate the recipe information sections with data
+   * @param {JSON} data Recipe data retrieved from backend (db or Spoonacular)
+   */
   set data(data) {
     console.log(data);
     this.json = data;
@@ -91,7 +155,7 @@ class RecipePage extends HTMLElement {
         <form>
         </form>
         <br>
-        <button type="button">Add to List</button>
+        <button type="button" id="addToList">Add to List</button>
       </div>
 
       <!--Recipe Directions-->
@@ -103,7 +167,6 @@ class RecipePage extends HTMLElement {
       </div>
 
     `;
-
     //Edit button nav to UpdateRecipe.js
     //TODO: Have ONLY the USER recipe been send to update-recipe
     //----------------------------------------------------------------------------
@@ -148,14 +211,18 @@ class RecipePage extends HTMLElement {
     this.shadowRoot.querySelector('h2').innerHTML = title;
 
     // Set Summary
+    // var image = new Image();
+    // image.src = 
+    // document.body.appendChild(image);
     const summary = document.createElement('p');
     const image = document.createElement('img');
     summary.innerHTML = getSummary(data);
+    image.setAttribute('width', "400");
     image.setAttribute('src', getImage(data));
     this.shadowRoot.getElementById('recipe-summaryID').appendChild(image);
     this.shadowRoot.getElementById('recipe-summaryID').appendChild(summary);
 
-    // Set Servings
+    //Set Servings
     const servings = document.createElement('p');
     servings.innerHTML = getServings(data);
     this.shadowRoot.getElementById('recipe-servingsID').appendChild(servings);
@@ -165,22 +232,26 @@ class RecipePage extends HTMLElement {
     cooktime.innerHTML = timeConvert(getCookTime(data));
     this.shadowRoot.getElementById('recipe-cooktimeID').appendChild(cooktime);
 
-    // Set Ingredients
+    //Set Ingredients
     const form = this.shadowRoot.querySelector('form');
+    
     if(!data.recipe.extendedIngredients || data.recipe.extendedIngredients.length == 0){
       form.innerHTML = 'There are no ingredients(need to be fixed)';
     }
     else{
-      for(let i = 0; i < data.recipe.extendedIngredients.length; i++){
+      for (let i = 0; i < data.recipe.extendedIngredients.length; i++) {
         const ingredient = data.recipe.extendedIngredients[i];
+        const div = document.createElement('div');
         const currElement = document.createElement('input');
         currElement.setAttribute('type', 'checkbox');
         currElement.setAttribute('name', ingredient.name);
-        form.append(currElement);
+        currElement.setAttribute('value', ingredient.original);
+        div.append(currElement);
         const content = document.createElement('label');
         content.setAttribute('for', ingredient.name);
         content.innerHTML = ingredient.original;
-        form.append(content);
+        div.append(content);
+        form.append(div);
       }
     }
 
@@ -237,6 +308,37 @@ class RecipePage extends HTMLElement {
         .getElementById('recipe-directionID')
         .setAttribute('style', 'display: none');
     });
+
+    const checkedIng = this.shadowRoot.querySelectorAll(
+      'input[type="checkbox"]'
+    );
+    //Add Ingredients to an Array "ingredientsSelect" List if they are been checked
+    function getCheckedIngredient() {
+      //console.log(checkedIng);
+      let listAll = [];
+      let ingredientsSelect = [];
+      for (let i = 0; i < checkedIng.length; i++) {
+        //console.log(checkedIng[i].value);
+        if (checkedIng[i].checked == true) {
+          //console.log(checkedIng[i].value);
+          ingredientsSelect.push(checkedIng[i].value);
+          //TODO: Nasty Array with Recipe Name, ID, and Checked ingredients
+          listAll['name'] = title;
+          listAll['id'] = data.recipe.id;
+          listAll['ingredients'] = ingredientsSelect;
+        }
+      }
+      console.log(ingredientsSelect);
+      console.log(listAll);
+      return listAll;
+    }
+
+    //"Add to list" button -> send the data to Grocery list
+    const checklist = this.shadowRoot.getElementById('addToList');
+    checklist.addEventListener('click', (e) => {
+      e.preventDefault();
+      getCheckedIngredient();
+    });
   }
 
   /**
@@ -249,7 +351,7 @@ class RecipePage extends HTMLElement {
 
 // SUMMARY ELEMENTS
 /**
- *
+ * Returns number of minutes for cooking the recipe
  * @param {JSON} data
  * @returns Number of minutes it takes to cook this recipe
  */
@@ -259,7 +361,7 @@ function getCookTime(data) {
 
 // TIME CONVERT
 /**
- *
+ * Converts time units into a string format (hrs and min equivalent)
  * @param {int} n
  * @returns Number of minutes, hours, and minutes it takes to cook this recipe
  */
@@ -275,7 +377,7 @@ function timeConvert(n) {
 }
 
 /**
- *
+ * Returns the number of servings
  * @param {JSON} data
  * @returns Number of servings this recipe creates
  */
@@ -284,7 +386,7 @@ function getServings(data) {
 }
 
 /**
- *
+ * Returns the image (Base 64 format)
  * @param {JSON} data
  * @returns Base 64 format of image or url link to image depending on if it comes from spoonacular or our database
  */
@@ -293,7 +395,7 @@ function getImage(data) {
 }
 
 /**
- *
+ * Returns the title of the recipe
  * @param {JSON} data
  * @returns Title of recipe
  */
@@ -302,7 +404,7 @@ function getTitle(data) {
 }
 
 /**
- *
+ * Returns the summary of the recipe
  * @param {JSON} data
  * @returns Summary paragraph of the recipe
  */

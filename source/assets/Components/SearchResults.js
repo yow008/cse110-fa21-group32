@@ -8,7 +8,8 @@ import { GET } from '../scripts/request.js';
 
 /**
  * Class: SearchResultsPage
- * TODO:
+ * Displays brief recipe information based on the search
+ * keyphrase. Each recipe result links to the dedicated recipe page.
  */
 class SearchResultsPage extends HTMLElement {
   constructor() {
@@ -100,6 +101,7 @@ function addPage(recipeId) {
   router.addPage(`recipe_${recipeId}`, function () {
     document.getElementById('#section--home').classList.remove('shown');
     document.getElementById('#section--search-bar').classList.remove('shown');
+    document.getElementById('#section--grocery').classList.remove('shown');
     document.getElementById('#section--cooking-mode').classList.remove('shown');
     document.getElementById('#section--update-recipe').classList.remove('shown');
     document
