@@ -106,11 +106,39 @@ class CookingMode extends HTMLElement {
       //initialize timer if needed
       if(content[i].step.search(/hour/i) != -1 || content[i].step.search(/minute/i) != -1 || content[i].step.search(/second/i) != -1){
 
-        let totalSeconds = 0;
+        //get maximum time of current recipe
+        let time;
+        if (content[i].step.match(/([\d.]+) *-second/)){
+          time = content[i].step.match(/([\d.]+) *-second/)[1];
+          time = parseInt(time);
+          console.log(time);
+        }
+        else if (content[i].step.match(/([\d.]+) *minutes/)){
+          time = content[i].step.match(/([\d.]+) *minutes/)[1];
+          time = parseInt(time);
+          console.log(time);
+          time = time * 60;
+        }
+        else if (content[i].step.match(/([\d.]+) *hours/)){
+          time = content[i].setp.match(/([\d.]+) *hours/)[1];
+          time = parseInt(time);
+          console.log(time);
+          time = time * 3600;
+        }
         
+
+
+        let totalSeconds = 1795;
+        let timer;
         //count up algorithm
         function setTime() {
           ++totalSeconds;
+          if(totalSeconds >= time){
+            currTime.style.color = 'red';
+          }
+          else{
+            currTime.style.color = 'green';
+          }
           currTime.innerHTML = convertHMS(totalSeconds);
         }
 
@@ -127,6 +155,9 @@ class CookingMode extends HTMLElement {
         let currTime = document.createElement('p');
         currTime.setAttribute('id', `currTime${i + 1}`);
         currTime.innerHTML = '00:00:00';
+        currTime.style.fontSize = '25px';
+        currTime.style.fontWeight = 'bold';
+        currTime.style.color = 'green';
         currArea.appendChild(currTime);
 
         //create a start button for start timer
@@ -149,14 +180,17 @@ class CookingMode extends HTMLElement {
         
         //create functionality for three buttons
         startBtn.addEventListener('click', () => {
-          let timer = setInterval(setTime, 1000);
-          pauseBtn.addEventListener('click', () => {
-            clearInterval(timer);
-          });
-          resetBtn.addEventListener('click', () => {
-            totalSeconds = 0;
-            currTime.innerHTML = '00:00:00';
-          });
+          timer = setInterval(setTime, 1000);
+        });
+          
+        pauseBtn.addEventListener('click', () => {
+          clearInterval(timer);
+        });
+          
+        resetBtn.addEventListener('click', () => {
+          totalSeconds = 0;
+          currTime.innerHTML = '00:00:00';
+          currTime.style.color = 'green';
         });
         
         //initialize all timer to be invisible excepte first one
