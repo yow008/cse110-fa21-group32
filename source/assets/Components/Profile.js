@@ -25,12 +25,11 @@ class ProfilePage extends HTMLElement {
         background-size: cover;
         padding: 23.5px;
         color: white;
+        text-align: center;
       }
 
-    table {
-      table-layout: fixed;
-      width: 80%;
-      text-align: left;
+    th {
+      height: 20pt;
     }
 
     img {
@@ -40,15 +39,22 @@ class ProfilePage extends HTMLElement {
       object-fit: contain;
     }
 
+    table {
+      width: 100%;
+    }
     th {
-        height: 200px;
+      width: 32%;
+        height: 40pt;
     }
 
     .button-group button {
-      background-color: transparent;
+  
       border: transparent;
-        cursor: pointer;
+      cursor: pointer;
       float: left;
+      color: white;
+      font-size: large;
+      height: 31pt;
     }
 
     .button-group:after {
@@ -61,29 +67,31 @@ class ProfilePage extends HTMLElement {
       border-right: none; /* Prevent double borders */
     }
 
-    .button-group button:hover {
-      color: blue;
-    }
-
     .profile-page-review {
       display: none;
     }
 
-    .css-wrap {
-      margin-left: 5%;
-      margin-bottom: 16pt;
-      margin-right: 5%;
+    .css-background {
+      background-color: #324A54;
+      width: 100%;
+    }
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .normal-button {
-      background-color: white;
-      border-radius: 18px;
-      border: 1.5px solid #ca676a;
-      text-align: center;
-      min-width: 8%;
-      height: 20pt;
+      background-color: #324A54;
+      color: white;
+      border: none;
       font-size: 14pt;
-      color:#ca676a;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+      font-size: 14pt;
     }
     `;
 
@@ -92,22 +100,24 @@ class ProfilePage extends HTMLElement {
         <h2>User Profile</h2>
 
         <!--Profile Page Navbar-->
-        <table class=profile-page-navbar style="background-color: #eecbcc" align="center" >
-        <th scope="col" style="text-align: center"><img src="assets/icons/logo.png"></th>
-        <th scope="col">
-            <ul>
-                <li><a href="#profile-page-recipeID" id="UserRec">Recipes</a></li><br>
-                <li><a href="#profile-page-reviewsID" id="UserRev">Reviews</a></li><br>
-                <li id="#section-edit-profile"><button class="normal-button" id="#button-edit-profile" type="button">Edit Profile</button></li>
-            </ul>
-        </th>
-        </table>
+        <div class=profile-page-navbar>
+        <div class="css-background">
+          <br>
+          <img src="assets/icons/logo.png"/>
+          <table>
+            <tr>
+                <th><a href="#profile-page-recipeID" id="UserRec">Recipes</a></th>
+                <th><a href="#profile-page-reviewsID" id="UserRev">Reviews</a></th>
+                <th id="#section-edit-profile"><button class="normal-button" id="#button-edit-profile" type="button">Edit Profile</button></th>
+            </tr>
+          </table>
+        </div>
         <br>
 
         <!--Profile Page Recipe-->
         <div class="button-group">
-          <button id="recipe-in-profile-button" style="width:50%; color: blue">Recipes</button>
-          <button id="review-in-profile-button" style="width:50%; color: grey">Reviews</button>
+          <button id="recipe-in-profile-button" style="width:50%; background-color: #324A54">Recipes</button>
+          <button id="review-in-profile-button" style="width:50%; background-color: #CA676A">Reviews</button>
         </div>
         <div id="profile-page-recipeID" class="profile-page-recipe">
             <p>Recipe Gallery Should Be Displayed Here.</p>
@@ -139,102 +149,43 @@ class ProfilePage extends HTMLElement {
       'profile-page-reviewID'
     );
     recipesInProfileButton.addEventListener('click', () => {
-      recipesInProfileButton.style.color = 'blue';
-      reviewsInProfileButton.style.color = 'grey';
+      recipesInProfileButton.style.backgroundColor = '#324A54';
+      reviewsInProfileButton.style.backgroundColor = '#CA676A';
       reviewsInProfile.style.display = 'none';
       recipesInProfile.style.display = 'contents';
     });
     reviewsInProfileButton.addEventListener('click', () => {
-      reviewsInProfileButton.style.color = 'blue';
-      recipesInProfileButton.style.color = 'grey';
+      reviewsInProfileButton.style.backgroundColor = '#324A54';
+      recipesInProfileButton.style.backgroundColor = '#CA676A';
       recipesInProfile.style.display = 'none';
       reviewsInProfile.style.display = 'contents';
-    });
-
-    const editProfileSection = this.shadowRoot.getElementById(
-      '#section-edit-profile'
-    );
-    const editProfileBtn = this.shadowRoot.getElementById(
-      '#button-edit-profile'
-    );
-    editProfileBtn.addEventListener('click', () => {
-      // Create Edit Username Label and text area
-      let editUsername = document.createElement('div');
-      let editUsernameLabel = document.createElement('label');
-      editUsernameLabel.innerHTML = 'Change Username: ';
-      editUsernameLabel.setAttribute('for', '#edit-username');
-
-      let editUsernameTextArea = document.createElement('input');
-      editUsernameTextArea.setAttribute('type', 'text');
-      editUsernameTextArea.setAttribute(
-        'value',
-        localStorage.getItem('username')
-      );
-      editUsernameTextArea.setAttribute('id', '#edit-username');
-
-      editUsername.appendChild(editUsernameLabel);
-      editUsername.appendChild(editUsernameTextArea);
-      editProfileSection.appendChild(editUsername);
-
-      // Create Edit Email Label and text area
-      let editEmail = document.createElement('div');
-      let editEmailLabel = document.createElement('label');
-      editEmailLabel.innerHTML = 'Change Email: ';
-      editEmailLabel.setAttribute('for', '#edit-email');
-
-      let editEmailTextArea = document.createElement('input');
-      editEmailTextArea.setAttribute('type', 'text');
-      editEmailTextArea.setAttribute('value', '"current Email"');
-      editEmailTextArea.setAttribute('id', '#edit-email');
-
-      editEmail.appendChild(editEmailLabel);
-      editEmail.appendChild(editEmailTextArea);
-      editProfileSection.appendChild(editEmail);
-
-      // Create Edit Password Label and text area
-      let editPassword = document.createElement('div');
-      let editPasswordLabel = document.createElement('label');
-      editPasswordLabel.innerHTML = 'New Password: ';
-      editPasswordLabel.setAttribute('for', '#edit-password');
-
-      let editPasswordTextArea = document.createElement('input');
-      editPasswordTextArea.setAttribute('type', 'text');
-      editPasswordTextArea.setAttribute('placeholder', 'New Password');
-      editPasswordTextArea.setAttribute('id', '#edit-password');
-
-      editPassword.appendChild(editPasswordLabel);
-      editPassword.appendChild(editPasswordTextArea);
-      editProfileSection.appendChild(editPassword);
-
-      // Create Edit Password confirm Label and text area
-      let editConfirmPassword = document.createElement('div');
-      let editConfirmPasswordLabel = document.createElement('label');
-      editConfirmPasswordLabel.innerHTML = 'Confirm New Password: ';
-      editConfirmPasswordLabel.setAttribute('for', '#edit-confirm-password');
-
-      let editConfirmPasswordTextArea = document.createElement('input');
-      editConfirmPasswordTextArea.setAttribute('type', 'text');
-      editConfirmPasswordTextArea.setAttribute(
-        'placeholder',
-        'Confirm Password'
-      );
-      editConfirmPasswordTextArea.setAttribute('id', '#edit-confirm-password');
-
-      editConfirmPassword.appendChild(editConfirmPasswordLabel);
-      editConfirmPassword.appendChild(editConfirmPasswordTextArea);
-      editProfileSection.appendChild(editConfirmPassword);
-
-      let addChangesBtn = document.createElement('button');
-      addChangesBtn.innerHTML = 'Add Changes';
-
-      editProfileSection.appendChild(addChangesBtn);
-
-      addChangesBtn.addEventListener('click', () => {});
     });
 
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
     getRecipes(user, token, this.shadowRoot);
+
+    const editProfileBtn = this.shadowRoot.getElementById(
+      '#button-edit-profile'
+    );
+
+    router.addPage('update-user-page', function () {
+      document.getElementById('#section--profile').classList.remove('shown');
+      document.getElementById('#section--update-user').classList.add('shown');
+      console.log(document.getElementById('#section--update-user'));
+    });
+
+    editProfileBtn.addEventListener('click', () => {
+      const updateUserPage = document.createElement('update-user-page');
+
+      updateUserPage.classList.add('shown');
+      document.getElementById('#section--update-user').innerHTML = '';
+      document
+        .getElementById('#section--update-user')
+        .appendChild(updateUserPage);
+      router.navigate('update-user-page');
+    });
+    
   }
 
   set recipes(recipes) {}
