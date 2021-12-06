@@ -26,6 +26,9 @@ class GroceryPage extends HTMLElement {
             padding: 23.5px;
             color: white;
           }
+        :checked {
+            text-color: blue;
+          }
         `;
     article.innerHTML = `
     <h2>Grocery List</h2>
@@ -115,11 +118,10 @@ class GroceryPage extends HTMLElement {
     const myForm = this.shadowRoot.getElementById('#my-list');
 
     // Get information from the Local Storage for the user's custom list
-    let mytempList = localStorage.getItem('mylist');
-    let tempListJSON = JSON.parse(mytempList);
+    let mytempList = JSON.parse(localStorage.getItem('mylist'));
 
     // If there is nothing in the user's custom list
-    if (tempListJSON == null) {
+    if (mytempList == null) {
       mytempList = [];
       let ingredient = [];
       let checked = [];
@@ -144,11 +146,10 @@ class GroceryPage extends HTMLElement {
       myChecks = [];
     }
 
-    displayIngredients(myIngreds, myChecks, groceryList, myForm);
+    displayIngredients(myIngreds, myChecks, groceryList, myForm, 'mylist');
 
     // Load list from localStorage "grocery"
-    let currList = localStorage.getItem('grocery');
-    currList = JSON.parse(currList);
+    let currList = JSON.parse(localStorage.getItem('grocery'));
 
     if (currList == null) {
       currList = [];
@@ -159,14 +160,16 @@ class GroceryPage extends HTMLElement {
       let form = document.createElement('form');
       form.setAttribute('class', 'recipe-list');
 
+      // Populates recipe name as title of section
       let p = document.createElement('p');
-      p.innerHTML = currList[i]['name']; // Populates recipe name
+      p.innerHTML = currList[i]['name'];
       form.append(p);
 
-      const ingreds = currList[i]['ingredients']; // Populates ingredients
+      // Populates ingredients and checked list
+      const ingreds = currList[i]['ingredients'];
       const checks = currList[i]['checked'];
 
-      displayIngredients(ingreds, checks, groceryList, form);
+      displayIngredients(ingreds, checks, groceryList, form, 'grocery');
     }
 
     // Add the input text to the list if user click "Add to the list"
@@ -203,7 +206,7 @@ customElements.define('grocery-page', GroceryPage);
  * @param {*} groceryList
  * @param {*} form
  */
-function displayIngredients(ingreds, checks, groceryList, form) {
+function displayIngredients(ingreds, checks, groceryList, form, localName) {
   // Displays each ingredient in user's custom list
   for (let e = 0; e < ingreds.length; e++) {
     let div = document.createElement('div');
@@ -218,6 +221,45 @@ function displayIngredients(ingreds, checks, groceryList, form) {
 
     div.append(label);
     form.append(div);
+
+    input.addEventListener('click', () => {
+      // input.checked will show the status *after* the click
+      let currList = JSON.parse(localStorage.getItem(localName));
+      let recipeIdx = -1;
+
+      if (localName === 'grocery') {
+        for (let j = 0; j < currList.length; j++) {
+          if (
+            currList[j]['name'] ===
+            input.parentElement.parentElement.querySelector('p').innerText
+          ) {
+            recipeIdx = j;
+            break;
+          }
+        }
+        if (recipeIdx < 0) {
+          console.log('Ingredient checkbox not matching error');
+          return;
+        } else {
+          for (let i = 0; i < currList[recipeIdx]['ingredients'].length; i++) {
+            if (currList[recipeIdx]['ingredients'][i] === label.innerHTML) {
+              currList[recipeIdx]['checked'][i] =
+                !currList[recipeIdx]['checked'][i];
+              localStorage.setItem(localName, JSON.stringify(currList));
+              break;
+            }
+          }
+        }
+      } else if (localName === 'mylist') {
+        for (let i = 0; i < currList['ingredients'].length; i++) {
+          if (currList['ingredients'][i] === label.innerHTML) {
+            currList['checked'][i] = !currList['checked'][i];
+            localStorage.setItem(localName, JSON.stringify(currList));
+            break;
+          }
+        }
+      }
+    });
   }
   groceryList.append(form);
 }
