@@ -225,7 +225,7 @@ class RecipePage extends HTMLElement {
     });
 
     // Set Title
-    const title = getTitle(data).toUpperCase();
+    const title = getTitle(data);
     this.shadowRoot.querySelector('h2').innerHTML = title;
 
     // Set Summary
@@ -358,7 +358,7 @@ class RecipePage extends HTMLElement {
         name: title, //Title of recipe.
         id: recipeID,
         ingredients: ingredientsSelect, //List of checked ingredients in the recipe.
-        checked: new Array(ingredientsSelect.length).fill(true), // All unchecked in list
+        checked: new Array(ingredientsSelect.length).fill(false), // All unchecked in list
       };
       // localStorage.setItem("grocery", JSON.stringify([]));
 

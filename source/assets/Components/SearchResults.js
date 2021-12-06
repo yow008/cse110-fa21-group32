@@ -71,13 +71,6 @@ function createRecipeCards(results, section) {
     card.appendChild(image);
     card.appendChild(title);
 
-    // // Add all elements inside a link
-    // const link = document.createElement('a');
-    // link.setAttribute('href', `home.html#recipe${data.id}`);
-
-    // link.appendChild(card);
-    // section.appendChild(link);
-
     section.appendChild(card);
 
     // Add the corresponding expand recipe view to router
