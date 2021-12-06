@@ -26,9 +26,6 @@ class GroceryPage extends HTMLElement {
             padding: 23.5px;
             color: white;
           }
-        :checked {
-            text-color: blue;
-          }
         `;
     article.innerHTML = `
     <h2>Grocery List</h2>
@@ -36,7 +33,7 @@ class GroceryPage extends HTMLElement {
     <!--Add Recipe Ingredients-->
     <p> Grocery List </p>
     <form id="#my-input">
-      <input type="text" placeholder="Add ingredient..."/>
+      <input type="text" id="add-input" placeholder="Add ingredient..."/>
       <button type="submit" id="add-icon">Add to the list</button>
     </form>
     <br>
@@ -184,8 +181,14 @@ class GroceryPage extends HTMLElement {
     const deleteButton = this.shadowRoot.getElementById('delete');
     deleteButton.addEventListener('click', (e) => {
       e.preventDefault();
-      deleteIngredient(groceryList, currList);
-      saveIngredient(myForm); //update my saved ingredients saved in local storage
+      if (
+        window.confirm(
+          'Do you want to delete all of your marked ingredients from your list?'
+        )
+      ) {
+        deleteIngredient(groceryList, currList);
+        saveIngredient(myForm); //update my saved ingredients saved in local storage
+      }
     });
 
     // Reload page for update grocery information
@@ -208,6 +211,7 @@ customElements.define('grocery-page', GroceryPage);
  */
 function displayIngredients(ingreds, checks, groceryList, form, localName) {
   // Displays each ingredient in user's custom list
+
   for (let e = 0; e < ingreds.length; e++) {
     let div = document.createElement('div');
     let input = document.createElement('input');
@@ -280,6 +284,21 @@ function addNewIngredient(myIngredient, myForm) {
   content.innerHTML = element.value;
   div.append(content);
   myForm.append(div);
+
+  element.value = ''; // Reset the value in the input box
+
+  currElement.addEventListener('click', () => {
+    // input.checked will show the status *after* the click
+    let currList = JSON.parse(localStorage.getItem('mylist'));
+
+    for (let i = 0; i < currList['ingredients'].length; i++) {
+      if (currList['ingredients'][i] === content.innerHTML) {
+        currList['checked'][i] = !currList['checked'][i];
+        localStorage.setItem('mylist', JSON.stringify(currList));
+        break;
+      }
+    }
+  });
 }
 
 /**
@@ -301,6 +320,7 @@ function saveIngredient(myForm) {
     ingredients: savedIng, //List of checked ingredients in the recipe.
     checked: savedCheck,
   };
+
   localStorage.setItem('mylist', JSON.stringify(Mylist));
 }
 
@@ -313,21 +333,23 @@ function deleteIngredient(groceryList, currList) {
   let elements = groceryList.querySelectorAll('input[type="checkbox"]');
 
   for (let i = 0; i < elements.length; i++) {
-    if (elements[i].checked == true) {
+    if (elements[i].checked) {
       let item = elements[i].parentElement.querySelector('label').innerHTML;
 
       // Delete ingredient information from "grocery" in localStorage
       for (let i = 0; i < currList.length; i++) {
-        const userchecked = currList[i]['ingredients'];
+        const ingreds = currList[i]['ingredients'];
 
         // Goes through each ingredient in the current grocery list recipe section
-        for (let e = 0; e < userchecked.length; e++) {
+        for (let e = 0; e < ingreds.length; e++) {
           // If the ingredient matches, delete
-          if (userchecked[e]['ingred'] === item) {
-            currList[i].ingredients.splice(e, 1);
+          if (ingreds[e] === item) {
+            currList[i]['ingredients'].splice(e, 1);
+            currList[i]['checked'].splice(e, 1);
             localStorage.setItem('grocery', JSON.stringify(currList));
           }
-          if (userchecked.length == 0) {
+          // Removes the recipe section if there are 0 ingredients
+          if (ingreds.length == 0) {
             console.log(currList);
             console.log(i);
             currList.splice(i, 1);
