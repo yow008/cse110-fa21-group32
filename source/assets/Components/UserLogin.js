@@ -4,7 +4,7 @@
 
 // GLOBALS
 // TODO: edit the local server URL to hosted server
-const SERVER_URL = 'https://cookez.click/';
+const SERVER_URL = 'http://127.0.0.1:5000/';
 
 /**
  * TODO:
@@ -208,7 +208,6 @@ function login(username, password, loginForm) {
         localStorage.setItem('username', username);
         localStorage.setItem('token', data.userInfo);
         window.location.href = `home.html`;
-        //window.location.href = `home.html?user=${data.userInfo[0]}&pass=${data.userInfo[1]}`; Old method of rerouting.
         console.log('Success:', data);
       }
     })
