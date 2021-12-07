@@ -168,5 +168,8 @@ def home_page():
                 response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
     return render_template('home.html')
-  
-app.run(debug=True)
+
+if __name__ == '__main__':
+    context = ('fullchain.pem', 'privkey.pem')
+    app.run(debug=True, host='0.0.0.0', port=443, ssl_context=context)
+    #app.run(debug=True) # local server
