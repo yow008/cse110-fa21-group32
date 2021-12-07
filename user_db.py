@@ -165,5 +165,3 @@ class User_DB:
         shopping = pickle.dumps(shoppingData)
         self.updateUser(username,token,{'Shopping_list':shopping})
         self.conn.commit()
-
-

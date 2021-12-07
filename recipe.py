@@ -12,7 +12,7 @@ class Recipe_DB:
     def __init__(self):
         # Spoonacular 
         self.url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/"
-        self.API_KEY = '59e761926ee542d384a32515dbb2527a'
+        self.API_KEY = '4f1ffcfc75434032a0fbe8e32a91f561'
         self.headers = {
             'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
             'x-rapidapi-key': self.API_KEY
@@ -60,7 +60,16 @@ class Recipe_DB:
         #     # Probably shouldn't cache here but need to update fetchRecipe to update from Spoonacular and not the db before moving
         #     self.cacheRecipe(recipe['results'][i]['id'], src)
         return recipe['results']
-        
+
+    def searchRandomRecipes(self):
+        # Retrieve random recipes to populate home page. Get recipe IDs from spoonacular, update DB, and return results
+
+        url = 'https://api.spoonacular.com/recipes/random?apiKey=%s&number=10' % (self.API_KEY)
+
+        recipe = requests.request("GET", url, headers=self.headers).json()
+        print(recipe)
+
+        return recipe['recipes']
 
     def cacheRecipe(self, ID, src):
         try:

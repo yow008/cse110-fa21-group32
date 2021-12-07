@@ -139,6 +139,14 @@ class HomePage extends HTMLElement {
       document.getElementById('#section--recipe').classList.add('shown');
     });
 
+    // Searches for random recipes to populate the home page
+    // If you are going to try attach the results to recipe card elements
+    // I would suggest doing this in the AfterSearch function within the
+    // searchRandomRecipes function and pass in the cards through a new
+    // parameter
+    //const recipes = {};
+    searchRandomRecipes(/*recipes*/);
+
     const recipePage = this.shadowRoot.getElementById('ExpRecipe');
     recipePage.addEventListener('click', () => {
       router.navigate('recipe');
@@ -210,4 +218,22 @@ function deleteUser(username, token) {
   }
 
   POST(msg, afterDelete);
+}
+
+/**
+ * Searches for random recipes to populate the home page
+ */
+function searchRandomRecipes(/*resultsObject*/) {
+  const searchReq = `type=searchRandom`;
+
+  /**
+   *
+   * @param {Object} data Contains all the random recipes
+   */
+  function afterSearch(data) {
+    console.log('Aftersearch' + data[0]['title']);
+    // resultsObject = data;
+  }
+
+  GET(searchReq, afterSearch);
 }
