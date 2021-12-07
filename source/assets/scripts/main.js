@@ -208,23 +208,3 @@ function logout(username, token) {
 }
 
 export { router };
- page after logging out
-   */
-  function afterLogout() {
-    window.location.href = 'userLogin.html';
-    localStorage.clear(); // Clear local storage
-  }
-  POST(msg, afterLogout);
-}
-
-export { router };
- page after logging out
-   */
-  function afterLogout() {
-    window.location.href = 'userLogin.html';
-    localStorage.clear(); // Clear local storage
-  }
-  POST(msg, afterLogout);
-}
-
-export { router };
