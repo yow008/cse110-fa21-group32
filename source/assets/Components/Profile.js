@@ -159,7 +159,6 @@ class ProfilePage extends HTMLElement {
         .appendChild(updateUserPage);
       router.navigate('update-user-page');
     });
-    
   }
 
   set recipes(recipes) {}
@@ -209,6 +208,25 @@ function getRecipes(username, token, shadowRoot) {
         router.addPage(`recipe_${recipeId}`, function () {
           document
             .getElementById('#section--profile')
+            .classList.remove('shown');
+          document.getElementById('#section--home').classList.remove('shown');
+          document
+            .getElementById('#section--search-bar')
+            .classList.remove('shown');
+          document
+            .getElementById('#section--grocery')
+            .classList.remove('shown');
+          document
+            .getElementById('#section--cooking-mode')
+            .classList.remove('shown');
+          document
+            .getElementById('#section--update-recipe')
+            .classList.remove('shown');
+          document
+            .getElementById('#section--grocery')
+            .classList.remove('shown');
+          document
+            .getElementById('#section--search-results')
             .classList.remove('shown');
 
           document.getElementById('#section--recipe').classList.add('shown');

@@ -1,5 +1,6 @@
 // Grocery.js
 
+import { router } from '../scripts/main.js';
 import { GET } from '../scripts/request.js';
 
 // IMPORTS
@@ -134,6 +135,9 @@ class GroceryPage extends HTMLElement {
       // Populates recipe name as title of section
       let p = document.createElement('p');
       p.innerHTML = currList[i]['name'];
+      p.addEventListener('click', () => {
+        router.navigate(`recipe_${currList[i]['id']}`);
+      });
       form.append(p);
 
       // Populates ingredients and checked list
