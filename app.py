@@ -40,7 +40,6 @@ def home_page():
         elif msg['type'] == 'deleteUser':
             user_db.deleteUser(msg['username'], msg['token'])
             return {'msg': 'Success!'}, 201
-
         # RECIPE
         # Add a custom recipe
         elif msg['type'] == 'addRecipe':
@@ -60,34 +59,16 @@ def home_page():
             recipe_db.removeRecipe(recipe['id'])
             user_db.removeRecipe(msg['username'], msg['token'],recipe['id'])
             return {'msg': 'Success!'}, 201
+        
+        # Save information upon logout
+        elif msg['type'] == 'logout':
+            username=msg['username']
+            token=msg['token']
+            grocery=msg['grocery']
 
-        # GROCERY
-        # Add a loose ingredient
-        elif msg['type'] == 'addIndGrocery':
-            username = msg['username']
-            token = msg['token']
-            section_id = msg['id']
-            ingred = msg['ingredient']
-            user_db.addIndIngred(username, token, section_id, ingred)
-        # Add all ingredients of a recipe section
-        elif msg['type'] == 'addRecGrocery':
-            username = msg['username']
-            token = msg['token']
-            recipe_data = msg['recipe']
-            user_db.addRecIngred(username, token, recipe_data)
-        # Remove a loose ingredient
-        elif msg['type'] == 'removeIndGrocery':
-            username = msg['username']
-            token = msg['token']
-            section_id = msg['id']
-            ingred = msg['ingredient']
-            user_db.removeIndIngred(username, token, section_id, ingred)
-        # Remove all ingredients of a recipe section
-        elif msg['type'] == 'removeRecGrocery':
-            username = msg['username']
-            token = msg['token']
-            section_id = msg['id']
-            user_db.removeRecIngred(username, token, section_id)
+            # Update grocery list when logging out
+            user_db.addToList(username,token,grocery)
+            return {'msg': 'Success!'}, 201
 
     if request.method == 'GET':
         msg = request.args

@@ -1,14 +1,14 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Main Branch Linting & Formatting
+name: Deploy (GCP) Branch Linting & Formatting
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+  # Triggers the workflow on push or pull request events but only for the deploy branch
   push:
-    branches: [main]
+    branches: [deploy-gcp]
   pull_request:
-    branches: [main]
+    branches: [deploy-gcp]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -49,25 +49,8 @@ jobs:
       - name: Install npm
         run: npm install
 
-  prettier:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          # Make sure the actual branch is checked out when running on pull requests
-          ref: ${{ github.head_ref }}
-
-      - name: Prettify code
-        uses: creyD/prettier_action@v4.0
-        with:
-          # This part is also where you can pass other options, for example:
-          prettier_options: --write source/assets/**/*.{js,css} --write source/*.html
-          only_changed: True
-
   js-eslint:
-    needs: [build, prettier]
+    needs: [build]
     runs-on: ubuntu-latest
 
     steps:
@@ -82,7 +65,6 @@ jobs:
         run: npx eslint source/assets/Components/*.js
 
   js-test:
-    needs: prettier
     runs-on: ubuntu-latest
 
     steps:
@@ -96,7 +78,7 @@ jobs:
         run: yarn test
 
   html-validate:
-    needs: [build, prettier]
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -104,11 +86,11 @@ jobs:
       - uses: actions/setup-node@v2.4.1
 
       # Only validates source .html files, can generalize if desired
-      - name: Run HTML linter
+      - name: Run HTML validator
         run: npx html-validate source/*.html
 
   css-lint:
-    needs: [build, prettier]
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -122,36 +104,36 @@ jobs:
       - name: Run CSS linter
         run: npx stylelint source/assets/styles/*.css
 
-  # code-climate:
-  #   needs: [prettier]
-  #   runs-on: ubuntu-latest
+  # Reference: https://github.com/marketplace/actions/jsdoc-action
+  js-doc:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #   steps:
-  #     - name: Test & publish code coverage
-  #       uses: paambaati/codeclimate-action@v3.0.0
-  #       env:
-  #         CC_TEST_REPORTER_ID: ${{ secrets.CC_REPORTER_ID }}
-  #       with:
-  #         coverageCommand: npm run coverage
-  #         debug: true
+      - name: JSDoc Build
+        uses: andstor/jsdoc-action@v1
+        with:
+          source_dir: ./source/assets
+          output_dir: ./out
+          config_file: jsdoc.conf.json
+          template: minami
+          front_page: JSDOC.md
 
-  # py-lint:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-python@v2
-  #     - name: Install Python dependencies
-  #       run: |
-  #         pip install pipenv
-  #         pipenv install --deploy --dev --system
-  #     - uses: wearerequired/lint-action@v1
-  #       with:
-  #         github_token: ${{ secrets.GITHUB_TOKEN }}
-  #         black: true
-  #         auto_fix: true
+      - name: JSDoc Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_dir: ./out
 
-  # py-lint2:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - uses: ricardochaves/python-lint@v1.4.0
+  # Reference: https://github.com/actions-hub/gcloud
+  gcp-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: GCP launch
+        uses: actions-hub/gcloud@master
+        env:
+          PROJECT_ID: cse110-333801
+          APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+        with:
+          args: python3 app.py
