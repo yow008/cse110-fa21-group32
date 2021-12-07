@@ -18,7 +18,6 @@ def home_page():
     print(request)
     if request.method == 'POST':
         msg = request.get_json()
-        
 
         # USER
         # Register (create) the user
@@ -78,7 +77,7 @@ def home_page():
                 recipe_json = json.dumps(recipes, indent=2)
                 # print(recipe_json)
                 response = Response(response=recipe_json, status=200, mimetype='application/json')
-                print(response.response)
+                # print(response.response)
                 return response
             # Get random recipe results to populate home page
             if msg['type'] == 'searchRandom':
@@ -87,14 +86,7 @@ def home_page():
                 recipe_json = json.dumps(recipes, indent=2) 
                 # print(recipe_json)
                 response = Response(response=recipe_json, status=200, mimetype='application/json')
-                print(response.response)
-                return response
-            # Get each recipe data based on recipe ID
-            elif msg['type'] == 'fetchRecipe':
-                recipe = recipe_db.fetchRecipeByID(msg['id'])
-                data = {"recipe": recipe}
-                data_json = json.dumps(data, indent=2)
-                response = Response(response=data_json, status=200, mimetype='application/json')
+                # print(response.response)
                 return response
             # TODO: USER delete these functions or update with new token system
             # Get username and password of user after login NOTE: This uses password, NOT the token
@@ -105,7 +97,7 @@ def home_page():
                 data = {"userInfo": userInfo}
                 data_json = json.dumps(data, indent=2)
                 response = Response(response=data_json, status=200, mimetype='application/json')
-                print(response)
+                # print(response)
                 return response
             # Get email of user
             elif msg['type'] == 'request':
@@ -113,9 +105,9 @@ def home_page():
                 token = msg['token']
                 elem = msg['elem']
                 userInfo = user_db.request(username, token, ['Email'])
-                print(username, token, elem)
+                # print(username, token, elem)
                 data = {"userInfo": userInfo}
-                print(userInfo)
+                # print(userInfo)
                 data_json = json.dumps(data, indent=2)
                 response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
@@ -126,24 +118,39 @@ def home_page():
                 elem = msg['elem']
                 if(elem == "keys"):
                     userInfo = user_db.request(username, token, ['keys'])
-                    print(username, token, elem)
+                    # print(username, token, elem)
                     data = {"userInfo": userInfo}
-                    print(userInfo)
+                    # print(userInfo)
                     data_json = json.dumps(data, indent=2)
                     response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
+
             # Get all recipes written by the user (list of recipe IDs)
             elif msg['type'] == 'getCustomizedRecipeIDs':
                 username = msg['user']
                 token = msg['token']
                 keys = ['Recipes']
                 result = user_db.request(username, token, keys)
-                print(result)
-                recipes = pickle.loads(result[0])
-                data = {"ID": recipes}
+                # print(result)
+                recipesIds = pickle.loads(result[0])
+                recipes = []
+                for id in recipesIds:
+                    singleRecipe = recipe_db.fetchRecipeByID(id)
+                    recipes.append(singleRecipe)
+                
+                data = {"recipes": recipes}
                 data_json = json.dumps(data, indent=2)
                 response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
+
+            # Get each recipe data based on recipe ID
+            elif msg['type'] == 'fetchRecipe':
+                recipe = recipe_db.fetchRecipeByID(msg['id'])
+                data = {"recipe": recipe}
+                data_json = json.dumps(data, indent=2)
+                response = Response(response=data_json, status=200, mimetype='application/json')
+                return response
+
             # Get the grocery list of the user
             elif msg['type'] == 'getGrocery':
                 username = msg['user']

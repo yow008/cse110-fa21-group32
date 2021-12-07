@@ -13,7 +13,6 @@ const pageNames = [
   'fav-recipes',
   'add-recipe',
   'update-recipe',
-  'write-review',
 ];
 //,'prevCooked','user-login','calendar',
 const router = new Router();
@@ -39,8 +38,6 @@ function addMainPages() {
   for (let i = 0; i < pageNames.length; i++) {
     // Add all of the main pages
     router.addPage(pageNames[i], function () {
-      // If modified, also modify global pageNames
-      //const pageNames = ['home', 'calendar', 'grocery', 'profile'];
       for (let j = 0; j < pageNames.length; j++) {
         // If adding the current page, show. Otherwise hide
         if (pageNames[i] === pageNames[j]) {
@@ -202,6 +199,26 @@ function logout(username, token) {
 
   /**
    * Redirects to the user login page after logging out
+   */
+  function afterLogout() {
+    window.location.href = 'userLogin.html';
+    localStorage.clear(); // Clear local storage
+  }
+  POST(msg, afterLogout);
+}
+
+export { router };
+ page after logging out
+   */
+  function afterLogout() {
+    window.location.href = 'userLogin.html';
+    localStorage.clear(); // Clear local storage
+  }
+  POST(msg, afterLogout);
+}
+
+export { router };
+ page after logging out
    */
   function afterLogout() {
     window.location.href = 'userLogin.html';
