@@ -182,6 +182,7 @@ function getRecipes(username, token, shadowRoot) {
    * @param {*} data
    */
   function atFetch(data) {
+    localStorage.setItem('userRecipes', data.ID);
     for (let i = 0; i < data.ID.length; i++) {
       fetchRecipe(data.ID[i], shadowRoot);
     }
