@@ -278,23 +278,23 @@ function getEmail(username, token, userEmail) {
  * @param {String} username
  * @param {String} token
  */
-function deleteUser(username, token) {
-  let msg = {
-    type: 'deleteUser',
-    username: username,
-    token: token,
-  };
+// function deleteUser(username, token) {
+//   let msg = {
+//     type: 'deleteUser',
+//     username: username,
+//     token: token,
+//   };
 
-  /**
-   * Redirects to the user login page after deleting user
-   */
-  function afterDelete() {
-    window.location.href = 'userLogin.html';
-    //setFormMessage(loginForm, 'error', 'Invalid username or password!');
-  }
+//   /**
+//    * Redirects to the user login page after deleting user
+//    */
+//   function afterDelete() {
+//     window.location.href = 'userLogin.html';
+//     //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+//   }
 
-  POST(msg, afterDelete);
-}
+//   POST(msg, afterDelete);
+// }
 
 /**
  * Searches for random recipes to populate the home page
