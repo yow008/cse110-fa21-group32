@@ -1,29 +1,25 @@
 # Flask app / server
-
 # https://towardsdatascience.com/talking-to-python-from-javascript-flask-and-the-fetch-api-e0ef3573c451
 # https://www.youtube.com/watch?v=AsoJL9GPi1k
 # requirements: flask
-
 from flask import Flask, jsonify, request, render_template, Response
 from flask_cors import CORS
 import json
 import user_db
 import recipe
 import pickle
-
 app = Flask(__name__)
 CORS(app)
 user_db = user_db.User_DB()
 recipe_db = recipe.Recipe_DB()
-
 @app.route("/", methods=['GET', 'POST'])
 def home_page():
     print("Hello")
     print(request)
     if request.method == 'POST':
         msg = request.get_json()
-        print(msg)
         
+
         # USER
         # Register (create) the user
         # NOTE: This uses password, NOT the token.
@@ -40,7 +36,6 @@ def home_page():
         elif msg['type'] == 'deleteUser':
             user_db.deleteUser(msg['username'], msg['token'])
             return {'msg': 'Success!'}, 201
-
         # RECIPE
         # Add a custom recipe
         elif msg['type'] == 'addRecipe':
@@ -60,34 +55,16 @@ def home_page():
             recipe_db.removeRecipe(recipe['id'])
             user_db.removeRecipe(msg['username'], msg['token'],recipe['id'])
             return {'msg': 'Success!'}, 201
+        
+        # Save information upon logout
+        elif msg['type'] == 'logout':
+            username=msg['username']
+            token=msg['token']
+            grocery=msg['grocery']
 
-        # GROCERY
-        # Add a loose ingredient
-        elif msg['type'] == 'addIndGrocery':
-            username = msg['username']
-            token = msg['token']
-            section_id = msg['id']
-            ingred = msg['ingredient']
-            user_db.addIndIngred(username, token, section_id, ingred)
-        # Add all ingredients of a recipe section
-        elif msg['type'] == 'addRecGrocery':
-            username = msg['username']
-            token = msg['token']
-            recipe_data = msg['recipe']
-            user_db.addRecIngred(username, token, recipe_data)
-        # Remove a loose ingredient
-        elif msg['type'] == 'removeIndGrocery':
-            username = msg['username']
-            token = msg['token']
-            section_id = msg['id']
-            ingred = msg['ingredient']
-            user_db.removeIndIngred(username, token, section_id, ingred)
-        # Remove all ingredients of a recipe section
-        elif msg['type'] == 'removeRecGrocery':
-            username = msg['username']
-            token = msg['token']
-            section_id = msg['id']
-            user_db.removeRecIngred(username, token, section_id)
+            # Update grocery list when logging out
+            user_db.addToList(username,token,grocery)
+            return {'msg': 'Success!'}, 201
 
     if request.method == 'GET':
         msg = request.args
@@ -98,7 +75,7 @@ def home_page():
                 keyword = msg['keyword']
                 recipes = recipe_db.searchRecipeByKeyword(keyword)
                 recipes = {i: recipes[i] for i in range(len(recipes))}
-                recipe_json = json.dumps(recipes, indent=2) 
+                recipe_json = json.dumps(recipes, indent=2)
                 # print(recipe_json)
                 response = Response(response=recipe_json, status=200, mimetype='application/json')
                 print(response.response)
@@ -119,7 +96,6 @@ def home_page():
                 data_json = json.dumps(data, indent=2)
                 response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
-
             # TODO: USER delete these functions or update with new token system
             # Get username and password of user after login NOTE: This uses password, NOT the token
             elif msg['type'] == 'login':
@@ -175,11 +151,14 @@ def home_page():
                 keys = ['Shopping_list']
                 result = user_db.request(username, token, keys)
                 grocery = pickle.loads(result[0])
+                print("GROCERY ", grocery)
                 data = {"grocery": grocery}
+                if (grocery == None):
+                    data = {"isEmpty": True}
                 data_json = json.dumps(data, indent=2)
+                print(data_json)
                 response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
-
     return render_template('home.html')
-
+  
 app.run(debug=True)

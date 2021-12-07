@@ -99,12 +99,19 @@ class UpdateRecipePage extends HTMLElement {
         <!--TO DO delete Directions button-->
         
         <button><a href="javascript:void(0)" id="deleteRecipe"> Delete </a></button>
-        <button><a href="home.html"> LEAVE </a></button>
+        <button type="button" id="leave-button"> LEAVE </button>
         `;
 
     this.recipeId = 0;
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
+
+    // Add leave button listener
+    this.shadowRoot
+      .getElementById('leave-button')
+      .addEventListener('click', () => {
+        router.navigate('home');
+      });
 
     //Nav Bar for "Summary", "Ingredients", and "Directons"
     //----------------------------------------------------------------
@@ -397,7 +404,6 @@ class UpdateRecipePage extends HTMLElement {
       // }
       // reader.readAsDataURL(imgFile['files'][0]);
 
-
       // Select all ingredients
       //let ingredientList = this.shadowRoot.getElementById()
       // console.log(imgFile.files[0]);
@@ -449,47 +455,47 @@ class UpdateRecipePage extends HTMLElement {
         60 * parseInt(cookingTimeHour.value) + parseInt(cookingTimeMin.value);
 
       // Send Data
-        let recipe = {
-          image: base64Image,
-          readyInMinutes: readyInMinutes,
-          servings: servings.value,
-          title: title.value,
-          summary: summary.value,
-          extendedIngredients: extendedIngredients,
-          analyzedInstructions: instructions,
-          author: localStorage.getItem('username'), // TODO: Need to update with curr user
-          id: data.recipe['id'],
-        };
-        //console.log(recipe);
-        // in 'submit' event, call page.updateData = <>
-        // Create the POST message to send to the backend
-        let newData = {
-          type: 'updateRecipe',
-          username: localStorage.getItem('username'), // TODO: Need to update with curr user
-          token: localStorage.getItem('token'), // TODO: Need to update with curr password
-          recipe: recipe,
-          title: recipe['title'],
-        };
+      let recipe = {
+        image: base64Image,
+        readyInMinutes: readyInMinutes,
+        servings: servings.value,
+        title: title.value,
+        summary: summary.value,
+        extendedIngredients: extendedIngredients,
+        analyzedInstructions: instructions,
+        author: localStorage.getItem('username'), // TODO: Need to update with curr user
+        id: data.recipe['id'],
+      };
+      //console.log(recipe);
+      // in 'submit' event, call page.updateData = <>
+      // Create the POST message to send to the backend
+      let newData = {
+        type: 'updateRecipe',
+        username: localStorage.getItem('username'), // TODO: Need to update with curr user
+        token: localStorage.getItem('token'), // TODO: Need to update with curr password
+        recipe: recipe,
+        title: recipe['title'],
+      };
 
-        //Moves back to home page once POST is called
-        function afterFetch() {
-          router.addPage(`recipe_${recipe['id']}`, function () {
-            document
-              .getElementById('#section--update-recipe')
-              .classList.remove('shown');
-            document.getElementById('#section--recipe').classList.add('shown');
-            // Fetch and populate recipe page and add to recipe section
-            const recipePage = document.createElement('recipe-page');
-            recipePage.data = data;
-            recipePage.classList.add('shown');
-            document.getElementById('#section--recipe').innerHTML = '';
-            document.getElementById('#section--recipe').appendChild(recipePage);
-          });
-          router.navigate(`recipe_${recipe['id']}`);
-        }
+      //Moves back to home page once POST is called
+      function afterFetch() {
+        router.addPage(`recipe_${recipe['id']}`, function () {
+          document
+            .getElementById('#section--update-recipe')
+            .classList.remove('shown');
+          document.getElementById('#section--recipe').classList.add('shown');
+          // Fetch and populate recipe page and add to recipe section
+          const recipePage = document.createElement('recipe-page');
+          recipePage.data = data;
+          recipePage.classList.add('shown');
+          document.getElementById('#section--recipe').innerHTML = '';
+          document.getElementById('#section--recipe').appendChild(recipePage);
+        });
+        router.navigate(`recipe_${recipe['id']}`);
+      }
 
-        //Sends data to database
-        POST(newData, afterFetch);
+      //Sends data to database
+      POST(newData, afterFetch);
     }
   }
 }
