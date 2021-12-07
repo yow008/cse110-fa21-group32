@@ -98,6 +98,15 @@ def home_page():
                 response = Response(response=recipe_json, status=200, mimetype='application/json')
                 print(response.response)
                 return response
+            # Search for random recipes to populate the home page
+            if msg['type'] == 'searchRandom':
+                recipes = recipe_db.searchRandomRecipes()
+                recipes = {i: recipes[i] for i in range(len(recipes))}
+                recipe_json = json.dumps(recipes, indent=2) 
+                print(recipe_json)
+                response = Response(response=recipe_json, status=200, mimetype='application/json')
+                print(response.response)
+                return response
             # Get each recipe data based on recipe ID
             elif msg['type'] == 'fetchRecipe':
                 recipe = recipe_db.fetchRecipeByID(msg['id'])

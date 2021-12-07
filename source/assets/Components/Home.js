@@ -249,13 +249,13 @@ class HomePage extends HTMLElement {
     // I would suggest doing this in the AfterSearch function within the
     // searchRandomRecipes function and pass in the cards through a new
     // parameter
-    //const recipes = {};
-    searchRandomRecipes(/*recipes*/);
+    let cards = this.shadowRoot.querySelectorAll('.card');
+    searchRandomRecipes(cards);
 
-    const recipePage = this.shadowRoot.getElementById('ExpRecipe');
-    recipePage.addEventListener('click', () => {
-      router.navigate('recipe');
-    });
+    // const recipePage = this.shadowRoot.getElementById('ExpRecipe');
+    // recipePage.addEventListener('click', () => {
+    //   router.navigate('recipe');
+    // });
 
     // Display current user info TODO: move to other Profile.js
 
@@ -328,7 +328,7 @@ function deleteUser(username, token) {
 /**
  * Searches for random recipes to populate the home page
  */
-function searchRandomRecipes(/*resultsObject*/) {
+function searchRandomRecipes(resultsObject) {
   const searchReq = `type=searchRandom`;
 
   /**
@@ -336,9 +336,64 @@ function searchRandomRecipes(/*resultsObject*/) {
    * @param {Object} data Contains all the random recipes
    */
   function afterSearch(data) {
-    console.log('Aftersearch' + data[0]['title']);
-    // resultsObject = data;
+    createRecipeCards(data, resultsObject);
+    console.log('creating cards');
   }
 
   GET(searchReq, afterSearch);
+}
+
+/**
+ * TODO:
+ * @param {Objects} results
+ * @param {Object} section
+ */
+function createRecipeCards(results, section) {
+  // Go through every one of the result recipes
+  for (let i = 0; i < results.length; i++) {
+    const data = results[i];
+
+    // Add recipe title
+    section[i].querySelector('h5').innerHTML = data.title;
+
+    // Add recipe picture
+    //image.classList.add('css-image');
+    section[i].querySelector('img').setAttribute('src', data.image);
+    section[i].querySelector('img').setAttribute('alt', data.title);
+
+    // Add the corresponding expand recipe view to router
+    addPage(data);
+
+    section[i].addEventListener('click', () => {
+      let recipeView = document.getElementById('#section--recipe');
+      while (recipeView.firstChild) {
+        recipeView.removeChild(recipeView.firstChild);
+      }
+      router.navigate(`recipe_${data.id}`);
+    });
+  }
+}
+
+/**
+ * TODO:
+ * @param {String} recipeId
+ */
+function addPage(data) {
+  router.addPage(`recipe_${data.id}`, function () {
+    document.getElementById('#section--home').classList.remove('shown');
+    document.getElementById('#section--search-bar').classList.remove('shown');
+    document.getElementById('#section--grocery').classList.remove('shown');
+    document.getElementById('#section--cooking-mode').classList.remove('shown');
+
+    document.getElementById('#section--recipe').classList.add('shown');
+
+    // Fetch and populate recipe page and add to recipe section
+    const recipePage = document.createElement('recipe-page');
+    //fetchRecipe(recipeId, recipePage);
+    recipePage.data = data;
+    recipePage.classList.add('shown');
+    document.getElementById('#section--recipe').innerHTML = '';
+    document.getElementById('#section--recipe').appendChild(recipePage);
+  });
+  console.log('The end');
 }
