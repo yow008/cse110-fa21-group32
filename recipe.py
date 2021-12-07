@@ -67,7 +67,7 @@ class Recipe_DB:
         url = 'https://api.spoonacular.com/recipes/random?apiKey=%s&number=9' % (self.API_KEY)
 
         recipe = requests.request("GET", url, headers=self.headers).json()
-        print(recipe)
+        # print(recipe)
 
         return recipe['recipes']
 
