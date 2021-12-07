@@ -97,7 +97,7 @@ section:not(section.shown) {
   background-color: #9dbc9a !important;
 }
 
-#LinkToWrite:hover {
+#LinkToLogout:hover {
   background-color: #b2d8af !important;
 }
 
