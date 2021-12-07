@@ -166,7 +166,8 @@ function getRecipes(username, token, shadowRoot) {
 
         // Fetch and populate recipe page and add to recipe section
         const recipePage = document.createElement('recipe-page');
-        recipePage.data = recipe;
+        console.log(recipe);
+        recipePage.data = { recipe: recipe };
         recipePage.classList.add('shown');
         document.getElementById('#section--recipe').innerHTML = '';
         document.getElementById('#section--recipe').appendChild(recipePage);
