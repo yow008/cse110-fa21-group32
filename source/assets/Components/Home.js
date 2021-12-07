@@ -145,7 +145,8 @@ class HomePage extends HTMLElement {
     // searchRandomRecipes function and pass in the cards through a new
     // parameter
     //const recipes = {};
-    searchRandomRecipes(/*recipes*/);
+
+    //searchRandomRecipes(/*recipes*/);
 
     const recipePage = this.shadowRoot.getElementById('ExpRecipe');
     recipePage.addEventListener('click', () => {
@@ -231,7 +232,6 @@ function searchRandomRecipes(/*resultsObject*/) {
    * @param {Object} data Contains all the random recipes
    */
   function afterSearch(data) {
-    console.log('Aftersearch' + data[0]['title']);
     // resultsObject = data;
   }
 

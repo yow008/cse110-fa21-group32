@@ -12,7 +12,6 @@ const pageNames = [
   'fav-recipes',
   'add-recipe',
   'update-recipe',
-  'write-review',
 ];
 //,'prevCooked','user-login','calendar',
 const router = new Router();
@@ -39,7 +38,7 @@ function addMainPages() {
     // Add all of the main pages
     router.addPage(pageNames[i], function () {
       // If modified, also modify global pageNames
-      //const pageNames = ['home', 'calendar', 'grocery', 'profile'];
+      //const pageNames = ['home', 'grocery', 'profile'];
       for (let j = 0; j < pageNames.length; j++) {
         // If adding the current page, show. Otherwise hide
         if (pageNames[i] === pageNames[j]) {
@@ -96,7 +95,6 @@ function addMainPages() {
 function bindNavIcons() {
   // Retrieve buttons corresponding to icons
   const homeIcon = document.getElementById('LinkToHome');
-  // const calendarIcon = document.getElementById('LinkToCalendar');
   const groceryIcon = document.getElementById('LinkToList');
   const profileIcon = document.getElementById('LinkToProfile');
 
@@ -104,10 +102,6 @@ function bindNavIcons() {
   homeIcon.addEventListener('click', () => {
     router.navigate('home');
   });
-
-  // calendarIcon.addEventListener('click', () => {
-  //   router.navigate('calendar');
-  // });
 
   groceryIcon.addEventListener('click', () => {
     router.navigate('grocery');
@@ -139,7 +133,6 @@ function bindSidePanel() {
   const favoriteRecipes = document.getElementById('LinkToFav');
   //const userLogin = document.getElementById('LinkLogin');
   const addRecipe = document.getElementById('LinkToAdd');
-  const writeReview = document.getElementById('LinkToWrite');
 
   // Add click event listeners and proper navigatiorite'n
   favoriteRecipes.addEventListener('click', () => {
@@ -150,9 +143,6 @@ function bindSidePanel() {
   // });
   addRecipe.addEventListener('click', () => {
     router.navigate('add-recipe');
-  });
-  writeReview.addEventListener('click', () => {
-    router.navigate('write-review');
   });
 }
 

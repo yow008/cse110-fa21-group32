@@ -65,9 +65,6 @@ class ProfilePage extends HTMLElement {
       color: blue;
     }
 
-    .profile-page-review {
-      display: none;
-    }
     `;
 
     /* Added article */
@@ -79,8 +76,8 @@ class ProfilePage extends HTMLElement {
         <th scope="col" style="text-align: center"><img src="assets/icons/logo.png"></th>
         <th scope="col">
             <ul>
-                <li><a href="#profile-page-recipeID" id="UserRec">Recipes</a></li><br>
-                <li><a href="#profile-page-reviewsID" id="UserRev">Reviews</a></li><br>
+                <li><a id="UserRec">Recipes</a></li><br>
+                <li><a id="UserRev">Reviews</a></li><br>
                 <li id="#section-edit-profile"><button class="normal-button" id="#button-edit-profile" type="button">Edit Profile</button></li>
 
             </ul>
@@ -98,42 +95,10 @@ class ProfilePage extends HTMLElement {
             
             <br>
         </div>
-
-        <!--Profile Page Reviews-->
-        <div id="profile-page-reviewID" class="profile-page-review">
-            <p>NOT AVAILABLE</p>
-            <br>
-        </div>
         `;
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
-
-    // Functions for the layout of profile page
-    var recipesInProfileButton = this.shadowRoot.getElementById(
-      'recipe-in-profile-button'
-    );
-    var recipesInProfile = this.shadowRoot.getElementById(
-      'profile-page-recipeID'
-    );
-    var reviewsInProfileButton = this.shadowRoot.getElementById(
-      'review-in-profile-button'
-    );
-    var reviewsInProfile = this.shadowRoot.getElementById(
-      'profile-page-reviewID'
-    );
-    recipesInProfileButton.addEventListener('click', () => {
-      recipesInProfileButton.style.color = 'blue';
-      reviewsInProfileButton.style.color = 'grey';
-      reviewsInProfile.style.display = 'none';
-      recipesInProfile.style.display = 'contents';
-    });
-    reviewsInProfileButton.addEventListener('click', () => {
-      reviewsInProfileButton.style.color = 'blue';
-      recipesInProfileButton.style.color = 'grey';
-      recipesInProfile.style.display = 'none';
-      reviewsInProfile.style.display = 'contents';
-    });
 
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
@@ -159,12 +124,9 @@ class ProfilePage extends HTMLElement {
         .appendChild(updateUserPage);
       router.navigate('update-user-page');
     });
-    
   }
 
   set recipes(recipes) {}
-
-  set reviews(reviews) {}
 }
 
 /**
@@ -183,55 +145,39 @@ function getRecipes(username, token, shadowRoot) {
    * @param {*} data
    */
   function atFetch(data) {
-    for (let i = 0; i < data.ID.length; i++) {
-      fetchRecipe(data.ID[i], shadowRoot);
-    }
+    for (let i = 0; i < data.recipes.length; i++) {
+      // Create title element
+      let recipe = data.recipes[i];
+      const title = document.createElement('h3');
+      title.innerText = recipe['title'];
+      const image = document.createElement('img');
+      image.setAttribute('src', recipe['image']);
+      image.setAttribute('alt', 'No Image');
+      shadowRoot.getElementById('profile-page-recipeID').appendChild(title);
+      shadowRoot.getElementById('profile-page-recipeID').appendChild(image);
 
-    /**
-     *
-     * @param {*} recipeId
-     * @param {*} shadowRoot
-     */
-    function fetchRecipe(recipeId, shadowRoot) {
-      const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
+      // Add page to router so navigate works
+      router.addPage(`recipe_${recipe['id']}`, function () {
+        document.getElementById('#section--profile').classList.remove('shown');
 
-      /**
-       * TODO:
-       * @param {JSON} data
-       */
-      function afterFetch(data) {
-        // Create title element
-        const title = document.createElement('h3');
-        title.innerText = data.recipe.title;
-        shadowRoot.getElementById('profile-page-recipeID').appendChild(title);
+        document.getElementById('#section--recipe').classList.add('shown');
 
-        // Add page to router so navigate works
-        router.addPage(`recipe_${recipeId}`, function () {
-          document
-            .getElementById('#section--profile')
-            .classList.remove('shown');
+        // Fetch and populate recipe page and add to recipe section
+        const recipePage = document.createElement('recipe-page');
+        recipePage.data = recipe;
+        recipePage.classList.add('shown');
+        document.getElementById('#section--recipe').innerHTML = '';
+        document.getElementById('#section--recipe').appendChild(recipePage);
+      });
 
-          document.getElementById('#section--recipe').classList.add('shown');
-
-          // Fetch and populate recipe page and add to recipe section
-          const recipePage = document.createElement('recipe-page');
-          recipePage.data = data;
-          recipePage.classList.add('shown');
-          document.getElementById('#section--recipe').innerHTML = '';
-          document.getElementById('#section--recipe').appendChild(recipePage);
-        });
-
-        // Add click listener to title element -> navigates to recipe card page
-        title.addEventListener('click', () => {
-          // let recipeView = document.getElementById('#profile-page-recipeID');
-          // while (recipeView.firstChild) {
-          //   recipeView.removeChild(recipeView.firstChild);
-          // }
-          router.navigate(`recipe_${recipeId}`);
-        });
-      }
-
-      GET(fetchReq, afterFetch);
+      // Add click listener to title element -> navigates to recipe card page
+      title.addEventListener('click', () => {
+        // let recipeView = document.getElementById('#profile-page-recipeID');
+        // while (recipeView.firstChild) {
+        //   recipeView.removeChild(recipeView.firstChild);
+        // }
+        router.navigate(`recipe_${recipe['id']}`);
+      });
     }
   }
 
