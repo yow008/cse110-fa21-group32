@@ -153,6 +153,9 @@ class RecipePage extends HTMLElement {
     <div id="recipe-summaryID" class="recipe-summary" style="display: block">
       <!--<p>Summary</p>-->
 
+      <div>
+        <button type="button" id="editRecipe">Edit Recipe</button>
+      </div>
 
       <!--recipe image-->
       <div id="recipe-imageID">
@@ -216,42 +219,41 @@ class RecipePage extends HTMLElement {
     //Edit button nav to UpdateRecipe.js
     //TODO: Have ONLY the USER recipe been send to update-recipe
     //----------------------------------------------------------------------------
-    // router.addPage('update-recipe', function () {
-    //   document.getElementById('#section--recipe').classList.remove('shown');
-    //   document.getElementById('#section--update-recipe').classList.add('shown');
-    //   console.log(document.getElementById('#section--update-recipe'));
-    // });
+    router.addPage('update-recipe', function () {
+      document.getElementById('#section--recipe').classList.remove('shown');
+      document.getElementById('#section--update-recipe').classList.add('shown');
+      console.log(document.getElementById('#section--update-recipe'));
+    });
 
-    // const updateBtn = this.shadowRoot.getElementById('editRecipe');
-    // updateBtn.addEventListener('click', () => {
-    //   const recipeUpdatePage = document.createElement('update-recipe-page');
+    const updateBtn = this.shadowRoot.getElementById('editRecipe');
+    updateBtn.addEventListener('click', () => {
+      const recipeUpdatePage = document.createElement('update-recipe-page');
 
-    //   recipeUpdatePage.classList.add('shown');
-    //   document.getElementById('#section--update-recipe').innerHTML = '';
-    //   document
-    //     .getElementById('#section--update-recipe')
-    //     .appendChild(recipeUpdatePage);
-    //   recipeUpdatePage.data = this.json;
-    //   router.navigate('update-recipe');
-    // });
+      recipeUpdatePage.classList.add('shown');
+      document.getElementById('#section--update-recipe').innerHTML = '';
+      document
+        .getElementById('#section--update-recipe')
+        .appendChild(recipeUpdatePage);
+      recipeUpdatePage.data = this.json;
+      router.navigate('update-recipe');
+    });
 
-    // router.addPage('cooking-mode', function () {
-    //   document.getElementById('#section--recipe').classList.remove('shown');
+    router.addPage('cooking-mode', function () {
+      document.getElementById('#section--recipe').classList.remove('shown');
+      document.getElementById('#section--cooking-mode').classList.add('shown');
+    });
 
-    //   document.getElementById('#section--cooking-mode').classList.add('shown');
-    // });
-
-    // const CMPage = this.shadowRoot.getElementById('LinkToCM');
-    // CMPage.addEventListener('click', () => {
-    //   const cookingPage = document.createElement('cooking-mode-page');
-    //   cookingPage.classList.add('shown');
-    //   document.getElementById('#section--cooking-mode').innerHTML = '';
-    //   document
-    //     .getElementById('#section--cooking-mode')
-    //     .appendChild(cookingPage);
-    //   cookingPage.data = this.json;
-    //   router.navigate('cooking-mode');
-    // });
+    const CMPage = this.shadowRoot.getElementById('LinkToCM');
+    CMPage.addEventListener('click', () => {
+      const cookingPage = document.createElement('cooking-mode-page');
+      cookingPage.classList.add('shown');
+      document.getElementById('#section--cooking-mode').innerHTML = '';
+      document
+        .getElementById('#section--cooking-mode')
+        .appendChild(cookingPage);
+      cookingPage.data = this.json;
+      router.navigate('cooking-mode');
+    });
 
     // Set Title
     const title = getTitle(data).toUpperCase();
