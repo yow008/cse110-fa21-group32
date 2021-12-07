@@ -21,28 +21,87 @@ class CookingMode extends HTMLElement {
       background-size: cover;
       padding: 23.5px;
       color: white;
+      text-align: center;
     }
     button {
+      min-width: 10%;
+      border-radius: 18px;
       background-color: white;
       border: 1.5px solid #ca676a;
+      text-align: center;
+      font-size: 14pt;
+      color:#ca676a;
+    }
+    #btnNav {
+      position: fixed;
+      bottom: 40pt;
+    }
+    #btnNav button {
+      height: 22pt;
+      width: 22pt;
+      border-radius: 50%;
+      background-color: white;
+      border: 1.5px solid #ca676a;
+      text-align: center;
+      font-size: 14pt;
+      color:#ca676a;
+    }
+    .css-outer {
+      display: flex;
+      justify-content: center;
+    }
+    .special-outer {
+      display: table;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .middle {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+    }
+    
+    #cooking-steps {
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      text-align: center;
+      font-size: 18pt;
+    }
+    #cooking-timer {
+      position: fixed;
+      bottom: 80pt;
+      text-align: center;
     }
         `;
     article.innerHTML = `
         <h2>Cooking Mode</h2>
+
+        <div class="css-outer">
+        <div class="special-outer">
+        <div class="middle">
         <!--Cooking Steps-->
         <div id="cooking-steps">
         </div>
+        </div>
+        </div>
+
         <div id="btnNav">
         </div>
+        </div>
+
+        <div class="css-outer">
         <!--Cooking Timer-->
         <div id="cooking-timer">
         </div>
-    
-        <!--Back to the Recipe Page-->
-        <div class="back-to-recipe">
-            <p>Back to the Home Page</p>
-            <button><a href="home.html"> LEAVE </a></button>
         </div>
+    
+
         `;
 
     // Append elements to the shadow root
@@ -72,7 +131,10 @@ class CookingMode extends HTMLElement {
    */
   set data(data) {
     this.json = data;
-
+ 
+    // Set Title
+    const title = getTitle(data).toUpperCase();
+    this.shadowRoot.querySelector('h2').innerHTML = title;
 
     //convert totalseconds into seconds, minutes and hours format
     function convertHMS(value) {
@@ -231,7 +293,9 @@ class CookingMode extends HTMLElement {
     }
   }
 }
-
+function getTitle(data) {
+  return data.recipe.title;
+}
 customElements.define('cooking-mode-page', CookingMode);
 
 // EXPORT
