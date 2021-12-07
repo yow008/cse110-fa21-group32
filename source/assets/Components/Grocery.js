@@ -1,5 +1,7 @@
 // Grocery.js
 
+import { GET } from '../scripts/request.js';
+
 // IMPORTS
 // import { router } from '../scripts/main.js';
 // import { GET, POST } from '../scripts/request.js';
@@ -28,87 +30,59 @@ class GroceryPage extends HTMLElement {
           }
         `;
     article.innerHTML = `
-    <h2>Grocery List</h2>
-    <div id="grocery-list">
-    <!--Add Recipe Ingredients-->
-    <p> Grocery List </p>
-    <form id="#my-input">
-      <input type="text" id="add-input" placeholder="Add ingredient..."/>
-      <button type="submit" id="add-icon">Add to the list</button>
-    </form>
-    <br>
-    <p>My List</p>
-    <form id="#my-list">
-    </form>
-    </div>
-    <br>
-    <br>
-    <br>
-    <button type="delete" id="delete">Delete &#10006;</button>
-    <button type="reload" id="reload">Reload the Page</button>
-    <br>
-    <br>
-    
-    <!--<button type="checked" id="checked">Checked</button>-->
+        <h2>Grocery List</h2>
+        <div id="grocery-list">
+        <!--Add Recipe Ingredients-->
+        <p> Grocery List </p>
+        <form id="#my-input">
+          <input type="text" id="add-input" placeholder="Add ingredient..."/>
+          <button type="submit" id="add-icon">Add to the list</button>
+        </form>
+        <br>
+        <p>My List</p>
+        <form id="#my-list">
+        </form>
+        </div>
+        <br>
+        <br>
+        <br>
+        <button type="delete" id="delete">Delete &#10006;</button>\
+        <br>
         `;
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
 
-    //Not used
-    //line through ingredients when user clicked Checked Button
-    // const checkedButton = this.shadowRoot.getElementById('checked');
-    // checkedButton.addEventListener('click', (e) => {
-    //   e.preventDefault();
-    //   checkedIngredient();
-    // });
-
-    // function checkedIngredient() {
-    //   const elements = groceryList.querySelectorAll('input[type="checkbox"]');
-    //   for (let i = 0; i < elements.length; i++) {
-    //     if (elements[i].checked == true) {
-    //       let complete = elements[i].parentElement.querySelector('label');
-    //       let findS = elements[i].parentElement.getElementsByTagName('s');
-    //       let s = document.createElement('s');
-    //       if (findS.length == 0) {
-    //         s.append(complete);
-    //         elements[i].parentElement.append(s);
-    //       } else {
-    //         elements[i].parentElement.append(complete);
-    //         elements[i].parentElement.querySelector('s').remove();
-    //       }
-    //     }
-    //   }
-    // }
+    // Adds small timeout so to avoid simultaneous requests to backend
+    // (recursive cursor error)
+    setTimeout(() => {
+      loadGroceryList();
+    }, 200);
   }
 
   set update(data) {
     //Display checked Ingredients information from the localStorage "grocery"
     this.id = this.shadowRoot.querySelector('article').innerHTML = `
-    <h2>Grocery List</h2>
-    <div id="grocery-list">
-      <!--Add Recipe Ingredients-->
-      <p> Grocery List </p>
-      <form id="#my-input">
-        <input type="text" placeholder="Add ingredient..."/>
-        <button type="submit" id="add-icon">Add to the list</button>
-      </form>
-      <br>
+          <h2>Grocery List</h2>
+          <div id="grocery-list">
+            <!--Add Recipe Ingredients-->
+            <p> Grocery List </p>
+            <form id="#my-input">
+              <input type="text" placeholder="Add ingredient..."/>
+              <button type="submit" id="add-icon">Add to the list</button>
+            </form>
+            <br>
 
-      <p>My List</p>
-      <form id="#my-list">
-      </form>
-    </div>
-    <br>
-    <br>
-    <br>
-    <button type="delete" id="delete">Delete &#10006;</button>
-    <button type="reload" id="reload">Reload the Page</button>
-    <br>
-    <br>
-
-    <!--<button type="checked" id="checked">Checked</button>-->
-    `;
+            <p>My List</p>
+            <form id="#my-list">
+            </form>
+          </div>
+          <br>
+          <br>
+          <br>
+          <button type="delete" id="delete">Delete &#10006;</button>
+          <br>
+          `;
 
     const groceryList = this.shadowRoot.getElementById('grocery-list');
     const myIngredient = this.shadowRoot.getElementById('#my-input');
@@ -173,6 +147,8 @@ class GroceryPage extends HTMLElement {
     const addButton = this.shadowRoot.getElementById('add-icon');
     addButton.addEventListener('click', (e) => {
       e.preventDefault();
+      // Updates last-edited timestamp on grocery
+      localStorage.setItem('groceryStamp', Date.now());
       addNewIngredient(myIngredient, myForm);
       saveIngredient(myForm); //update my saved ingredients saved in local storage
     });
@@ -186,16 +162,11 @@ class GroceryPage extends HTMLElement {
           'Do you want to delete all of your marked ingredients from your list?'
         )
       ) {
+        // Updates last-edited timestamp on grocery
+        localStorage.setItem('groceryStamp', Date.now());
         deleteIngredient(groceryList, currList);
         saveIngredient(myForm); //update my saved ingredients saved in local storage
       }
-    });
-
-    // Reload page for update grocery information
-    const reloadButton = this.shadowRoot.getElementById('reload');
-    reloadButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      location.reload();
     });
   }
 }
@@ -226,9 +197,11 @@ function displayIngredients(ingreds, checks, groceryList, form, localName) {
     div.append(label);
     form.append(div);
 
+    // Adds a click listener to each ingredient checkbox
     input.addEventListener('click', () => {
-      // input.checked will show the status *after* the click
       let currList = JSON.parse(localStorage.getItem(localName));
+      // Updates the last-edited timestamp on grocery
+      localStorage.setItem('groceryStamp', Date.now());
       let recipeIdx = -1;
 
       if (localName === 'grocery') {
@@ -371,4 +344,58 @@ function deleteIngredient(groceryList, currList) {
       form[i].remove();
     }
   }
+}
+
+/**
+ * Fetches and loads grocery list into local storage from the backend storage
+ */
+function loadGroceryList() {
+  const username = localStorage.getItem('username');
+  const token = localStorage.getItem('token');
+
+  const groceryReq = `type=getGrocery&user=${encodeURIComponent(
+    username
+  )}&token=${encodeURIComponent(token)}`;
+
+  /**
+   * Populate the display element with the fetched shopping
+   * @param {JSON} data grocery list and timestamp from backend
+   */
+  function getFn(data) {
+    let hasMyList = localStorage.getItem('mylist') !== null;
+    let hasRecList = localStorage.getItem('grocery') !== null;
+    let stamp = localStorage.getItem('groceryStamp');
+    let hasStamp = stamp !== null;
+
+    // Only executes if the message contains grocery data
+    if (!data['isEmpty'] && data['grocery']['list'] !== undefined) {
+      // Loads local storage grocery from backend if there is no current
+      // local storage that is newer than the backend - prevents from overwriting
+      // on a browser close or refresh
+      if (
+        data['grocery']['list'].length > 0 &&
+        (!hasMyList || !hasStamp || data['timestamp'] > stamp)
+      ) {
+        localStorage.setItem(
+          'mylist',
+          JSON.stringify(data['grocery']['list'][0])
+        );
+      }
+      // Loads local storage grocery from backend if there is no current
+      // local storage that is newer than the backend - prevents from overwriting
+      // on a browser close or refresh
+      if (
+        data['grocery']['list'].length > 1 &&
+        (!hasRecList || !hasStamp || data['timestamp'] > stamp)
+      ) {
+        data['grocery']['list'].splice(0, 1);
+        localStorage.setItem(
+          'grocery',
+          JSON.stringify(data['grocery']['list'])
+        );
+      }
+    }
+  }
+
+  GET(groceryReq, getFn);
 }

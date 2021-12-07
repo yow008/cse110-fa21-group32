@@ -353,15 +353,16 @@ class RecipePage extends HTMLElement {
         }
       }
 
-      //Construct submessage containing information about the recipe.
+      // Construct submessage containing information about the recipe.
       let listAll = {
-        name: title, //Title of recipe.
+        name: title, // Title of recipe.
         id: recipeID,
-        ingredients: ingredientsSelect, //List of checked ingredients in the recipe.
+        ingredients: ingredientsSelect, // List of checked ingredients in the recipe.
         checked: new Array(ingredientsSelect.length).fill(false), // All unchecked in list
       };
-      // localStorage.setItem("grocery", JSON.stringify([]));
 
+      // Updates the last edited timestamp on grocery
+      localStorage.setItem('groceryStamp', Date.now());
       // Push listAll to the localStorage
       var tempList = localStorage.getItem('grocery');
       tempList = JSON.parse(tempList);
