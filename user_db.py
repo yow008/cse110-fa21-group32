@@ -161,15 +161,9 @@ class User_DB:
         self.updateUser(username, token, {'Recipes': recipes})
         self.conn.commit()
     
-    def addToList(self,username,title,token,identification,ingred):
-        self.cur.execute('SELECT Shopping_List FROM Users WHERE Username = ? AND Token = ?', (username, token))
-        result=self.cur.fetchall()
-        if len(result)==0:return # no user found
-        if result[0][0] is None:
-            shoppinglist=pickle.dumps([id])
-        else:
-            shoppinglist=pickle.loads(result[0][0])
-        self.updateUser(username,token,{'Shopping_List':shoppinglist})
+    def addToList(self, username, token, shoppingData):
+        shopping = pickle.dumps(shoppingData)
+        self.updateUser(username,token,{'Shopping_list':shopping})
         self.conn.commit()
 
 

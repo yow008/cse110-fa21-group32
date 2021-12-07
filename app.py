@@ -56,38 +56,16 @@ def home_page():
             user_db.removeRecipe(msg['username'], msg['token'],recipe['id'])
             return {'msg': 'Success!'}, 201
         
-        # Add ingredient to grocery list
-        elif msg['type'] == 'addToList':
+        # Save information upon logout
+        elif msg['type'] == 'logout':
             username=msg['username']
             token=msg['token']
-            info= msg['info']['ingredients'] #?
-            user_db.addToList(username,token,info)
-        # Add a loose ingredient
-        elif msg['type'] == 'addIndGrocery':
-            username = msg['username']
-            token = msg['token']
-            section_id = msg['id']
-            ingred = msg['ingredient']
-            user_db.addIndIngred(username, token, section_id, ingred)
-        # Add all ingredients of a recipe section
-        elif msg['type'] == 'addRecGrocery':
-            username = msg['username']
-            token = msg['token']
-            recipe_data = msg['recipe']
-            user_db.addRecIngred(username, token, recipe_data)
-        # Remove a loose ingredient
-        elif msg['type'] == 'removeIndGrocery':
-            username = msg['username']
-            token = msg['token']
-            section_id = msg['id']
-            ingred = msg['ingredient']
-            user_db.removeIndIngred(username, token, section_id, ingred)
-        # Remove all ingredients of a recipe section
-        elif msg['type'] == 'removeRecGrocery':
-            username = msg['username']
-            token = msg['token']
-            section_id = msg['id']
-            user_db.removeRecIngred(username, token, section_id)
+            grocery=msg['grocery']
+
+            # Update grocery list when logging out
+            user_db.addToList(username,token,grocery)
+            return {'msg': 'Success!'}, 201
+
     if request.method == 'GET':
         msg = request.args
         if 'type' in msg:
@@ -164,8 +142,12 @@ def home_page():
                 keys = ['Shopping_list']
                 result = user_db.request(username, token, keys)
                 grocery = pickle.loads(result[0])
+                print("GROCERY ", grocery)
                 data = {"grocery": grocery}
+                if (grocery == None):
+                    data = {"isEmpty": True}
                 data_json = json.dumps(data, indent=2)
+                print(data_json)
                 response = Response(response=data_json, status=200, mimetype='application/json')
                 return response
     return render_template('home.html')
