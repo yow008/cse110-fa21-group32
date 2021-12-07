@@ -19,16 +19,13 @@ class RecipePage extends HTMLElement {
     styles.innerHTML = `
     h2{
       margin-bottom: 0 !important;
-      background-color: #324A54;
+      background-color: #ca676a;
       background-size: cover;
       padding: 23.5px;
       color: white;
       margin-top: 0;
       text-align: center;
       font-weight: lighter !important;
-    }
-    button.openbtn {
-      background-color: #324A54 !important;
     }
 
     .recipe-navbar button {
@@ -72,8 +69,7 @@ class RecipePage extends HTMLElement {
       display: flex;
       justify-content: space-around;
     }
-    .my-container{
-    }
+
     .my-row{
       background: #324A54;
       color: white;
@@ -92,6 +88,7 @@ class RecipePage extends HTMLElement {
       margin-left:auto;
       margin-right:auto;
       display:block;
+      text-align: center;
     }
 
     .circle > p{
@@ -99,7 +96,7 @@ class RecipePage extends HTMLElement {
       hyphens: auto;
       margin: 0.75em;
       text-align: center;
-      font-size: 3rem;
+      font-size: 2rem;
     }
 
     .recipe-description{
@@ -116,7 +113,61 @@ class RecipePage extends HTMLElement {
       color: white;
     }
 
-    
+    .regbutton {
+      background-color: white;
+      border-radius: 18px !important;
+      border: 1.5px solid #ca676a;
+      text-align: center;
+      min-width: 8% !important;
+      height: 20pt !important;
+      font-size: 14pt;
+      color:#ca676a;
+      width: auto !important;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    div#recipe-ingredientsID {
+      text-align: center;
+    }
+
+    .cook-button{
+      font-size: 35pt !important;
+      height: auto !important;
+      weidth auto !important;
+      border-radius: 162px !important;
+    }
+
+    .editButton, recipe-summmaryButton{
+      display: inline-block;
+    }
+
+    input {
+      margin-bottom: 20px !important;
+    }
+
+    li{
+      margin-bottom: 20px !important;   
+    }
+
+    .recipe-navbar button {
+  
+      border: transparent;
+      cursor: pointer;
+      float: left;
+      color: white;
+      font-size: large;
+      height: 40pt;
+    }
+
+    .recipe-navbar:after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    .recipe-navbar button:not(:last-child) {
+      border-right: none; /* Prevent double borders */
+    }
     `;
 
     // Append elements to the shadow root
@@ -136,7 +187,7 @@ class RecipePage extends HTMLElement {
 
     <h2>Recipe Name</h2>
     
-    <nav class="navbar navbar-expand-lg navbar-light my-navbar">
+    <!--<nav class="navbar navbar-expand-lg navbar-light my-navbar">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -147,15 +198,23 @@ class RecipePage extends HTMLElement {
         <a id="ToDir" class="nav-item nav-link" href="#recipe-directionID" style="color:white;">Directions</a>
       </div>
     </div>
-  </nav>
+  </nav>-->
+
+    <div class="recipe-navbar" style="width: 100%">
+    <button id="ToSum" style="width:33.3%; background-color: #324A54;">Summary
+      <a href="#recipe-summaryID"></a>
+    </button>
+    <button id="ToIng" style="width:33.3%; background-color: #CA676A;">Ingredients
+      <a href="#recipe-ingredientsID"></a>
+    </button>
+    <button id="ToDir" style="width:33.3%; background-color: #CA676A;">Directions
+      <a href="#recipe-directionID"></a>
+    </button>
+  </div>
 
     <!--Recipe Summary-->
     <div id="recipe-summaryID" class="recipe-summary" style="display: block">
       <!--<p>Summary</p>-->
-
-      <div>
-        <button type="button" id="editRecipe">Edit Recipe</button>
-      </div>
 
       <!--recipe image-->
       <div id="recipe-imageID">
@@ -168,23 +227,23 @@ class RecipePage extends HTMLElement {
         <div class="row justify-content-center d-flex align-items-center my-row">
         <!--cook time-->
           <div class="col my-col text-center align-items-center justify-content-center p-4">
-            <div class="circle d-flex align-items-center" id="recipe-cooktimeID">
-              <!--<p id="recipe-cooktimeID">X</p>-->
+            <div class="circle d-flex align-items-center my-circle justify-content-center" id="recipe-cooktimeID">
+            
             </div>
             <br>
             Cook Time
           </div>
           <!--servings-->
-          <div class="col my-col text-center p-4">
-            <div class="circle d-flex align-items-center" id="recipe-servingsID">
-              <!--<p id="recipe-servingsID">X</p>-->
+          <div class="col my-col text-center align-items-center justify-content-center p-4">
+            <div class="circle d-flex align-items-center my-circle justify-content-center" id="recipe-servingsID">
+              
             </div>
             <br>
             Servings
           </div>
           <!--cost-->
-          <div class="col my-col text-center p-4">
-            <div class="circle d-flex align-items-center">
+          <div class="col my-col text-center align-items-center justify-content-center p-4">
+            <div class="circle d-flex align-items-center my-circle justify-content-center">
               <p>X</p>
             </div>
             <br>
@@ -195,25 +254,37 @@ class RecipePage extends HTMLElement {
       <br>
       <!--description-->
       <div class="recipe-description" id="recipe-descriptionID">
+        <button type="button" class="recipe-summmaryButton regbutton">Add to My Favorites</button>
+        <button type="button" class="editButton regbutton"id="editRecipe">Edit Recipe</button>
+        <br>
+        <br>
       </div>
-      <button type="button" class="recipe-summmaryButton">Add to My Favorites</button>
     </div>
-
+    
     <!--Recipe Ingredients-->
-    <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none">
-      <p>Ingredients</p>
-      <!--Add To List Button--> 
-      <form></form>
+    
+    <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none; text-align: center;">
+      <br> 
+      <form style="display: inline-block; text-align: left;"></form>
       <br>
-      <button type="button" id="addToList">Add to List</button>
+      <br>
+      <div class="row justify-content-center">
+        <button type="button" id="addToList" class="regbutton">Add to List</button>
+      </div>
+      <br>
+      <br>
     </div>
 
     <!--Recipe Directions-->
     <div id="recipe-directionID" class="recipe-direction" style="display: none">
-      <p>Direction</p>
+      <br>
+      <div class="row justify-content-center">
+        <button type ="button" id="LinkToCM" class="cook-button regbutton">COOK</button>
+      </div>
+      <br>
       <ol>
       </ol>
-      <button type ="button" id="LinkToCM"> Cook </button>
+      <br>
     </div>
     `;
     //Edit button nav to UpdateRecipe.js
@@ -321,6 +392,10 @@ class RecipePage extends HTMLElement {
       this.shadowRoot
         .getElementById('recipe-directionID')
         .setAttribute('style', 'display: none');
+
+      this.shadowRoot.getElementById('ToSum').style.backgroundColor = '#324A54';
+      this.shadowRoot.getElementById('ToDir').style.backgroundColor = '#CA676A';
+      this.shadowRoot.getElementById('ToIng').style.backgroundColor = '#CA676A';
     });
 
     this.shadowRoot.getElementById('ToDir').addEventListener('click', (e) => {
@@ -334,6 +409,9 @@ class RecipePage extends HTMLElement {
       this.shadowRoot
         .getElementById('recipe-directionID')
         .setAttribute('style', 'display: show');
+      this.shadowRoot.getElementById('ToSum').style.backgroundColor = '#CA676A';
+      this.shadowRoot.getElementById('ToDir').style.backgroundColor = '#324A54';
+      this.shadowRoot.getElementById('ToIng').style.backgroundColor = '#CA676A';
     });
 
     this.shadowRoot.getElementById('ToIng').addEventListener('click', (e) => {
@@ -347,6 +425,9 @@ class RecipePage extends HTMLElement {
       this.shadowRoot
         .getElementById('recipe-directionID')
         .setAttribute('style', 'display: none');
+      this.shadowRoot.getElementById('ToSum').style.backgroundColor = '#CA676A';
+      this.shadowRoot.getElementById('ToDir').style.backgroundColor = '#CA676A';
+      this.shadowRoot.getElementById('ToIng').style.backgroundColor = '#324A54';
     });
 
     const checkedIng = this.shadowRoot.querySelectorAll(

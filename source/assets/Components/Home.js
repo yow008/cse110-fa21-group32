@@ -93,35 +93,6 @@ class HomePage extends HTMLElement {
         <p id="#user-status"></p>
         <p id="#user-email"></p>
         </div>
-        <!--<div class="recipe-grid">
-        <div>
-          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634559-556x370.jpg"/>
-        </div>
-        <div>
-          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634629-556x370.jpg"/>
-        </div>
-        <div>
-          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624889-556x370.jpg"/>
-        </div>
-        <div>
-          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624779-556x370.jpg"/>
-        </div>
-        <div>
-          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634229-556x370.jpg"/>
-        </div>
-        <div>
-          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624449-556x370.jpg"/>
-        </div>
-        <div>
-          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634769-556x370.jpg"/>
-        </div>
-        <div>
-          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/634779-556x370.jpg"/>
-        </div>
-        <div>
-          <img class="recipe-picture" src="https://spoonacular.com/recipeImages/624569-556x370.jpg"/>
-        </div>
-        </div>-->
 
         <div class="container-fluid my-container">
           <div class="row justify-content-center d-flex align-items-center my-row ">

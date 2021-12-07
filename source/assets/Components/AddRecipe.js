@@ -73,7 +73,7 @@ class AddRecipePage extends HTMLElement {
       float: left;
       color: white;
       font-size: large;
-      height: 31pt;
+      height: 40pt;
     }
     .add-recipe-navbar:after {
       content: "";
@@ -262,32 +262,26 @@ class AddRecipePage extends HTMLElement {
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
 
-        // Functions for the layout of recipe detailed page
-        var goToSummaryButton = this.shadowRoot.getElementById(
-          'ToAddSum'
-        );
-        var goToIngredientsButton = this.shadowRoot.getElementById(
-          'ToAddIng'
-        );
-        var goToDirectionsButton = this.shadowRoot.getElementById(
-          'ToAddDir'
-        );
-        goToSummaryButton.addEventListener('click', () => {
-          goToSummaryButton.style.backgroundColor = '#324A54';
-          goToIngredientsButton.style.backgroundColor = '#CA676A';
-          goToDirectionsButton.style.backgroundColor = '#CA676A';
-        });
-        goToIngredientsButton.addEventListener('click', () => {
-          goToSummaryButton.style.backgroundColor = '#CA676A';
-          goToIngredientsButton.style.backgroundColor = '#324A54';
-          goToDirectionsButton.style.backgroundColor = '#CA676A';
-        });
-        goToDirectionsButton.addEventListener('click', () => {
-          goToSummaryButton.style.backgroundColor = '#CA676A';
-          goToIngredientsButton.style.backgroundColor = '#CA676A';
-          goToDirectionsButton.style.backgroundColor = '#324A54';
-        });
-    
+    // Functions for the layout of recipe detailed page
+    var goToSummaryButton = this.shadowRoot.getElementById('ToAddSum');
+    var goToIngredientsButton = this.shadowRoot.getElementById('ToAddIng');
+    var goToDirectionsButton = this.shadowRoot.getElementById('ToAddDir');
+    goToSummaryButton.addEventListener('click', () => {
+      goToSummaryButton.style.backgroundColor = '#324A54';
+      goToIngredientsButton.style.backgroundColor = '#CA676A';
+      goToDirectionsButton.style.backgroundColor = '#CA676A';
+    });
+    goToIngredientsButton.addEventListener('click', () => {
+      goToSummaryButton.style.backgroundColor = '#CA676A';
+      goToIngredientsButton.style.backgroundColor = '#324A54';
+      goToDirectionsButton.style.backgroundColor = '#CA676A';
+    });
+    goToDirectionsButton.addEventListener('click', () => {
+      goToSummaryButton.style.backgroundColor = '#CA676A';
+      goToIngredientsButton.style.backgroundColor = '#CA676A';
+      goToDirectionsButton.style.backgroundColor = '#324A54';
+    });
+
     // Add Summary
     this.shadowRoot
       .getElementById('ToAddSum')
@@ -368,7 +362,7 @@ class AddRecipePage extends HTMLElement {
         let li = document.createElement('li');
         li.innerHTML = 'Step:';
         let button = document.createElement('button');
-        button.innerHTML = 
+        button.innerHTML =
           '<button class="css-x-circle"><img src="assets/icons/x-circle.svg"/></button>';
         let input = document.createElement('textarea');
         input.setAttribute('name', 'directionStep');
@@ -388,7 +382,7 @@ class AddRecipePage extends HTMLElement {
     var img = this.shadowRoot.getElementById('recipeImage');
     var imgFile = this.shadowRoot.querySelector('input[type="file"]');
     var base64Image = '';
-    
+
     imgFile.addEventListener('change', function () {
       imageDisplay(this);
       //console.log(imgFile.files[0]);
