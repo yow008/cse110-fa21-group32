@@ -366,9 +366,7 @@ class AddRecipePage extends HTMLElement {
       //POST request to send recipe data
 
       function afterAdd() {
-        //router.navigate('profile');
-        window.location.href = 'userLogin.html';
-        console.log('Hello');
+        router.navigate('profile');
       }
       POST(data, afterAdd);
     }
