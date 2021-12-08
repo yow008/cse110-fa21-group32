@@ -160,3 +160,8 @@ class User_DB:
                 recipes = pickle.dumps(recipes)
         self.updateUser(username, token, {'Recipes': recipes})
         self.conn.commit()
+    
+    def addToList(self, username, token, shoppingData):
+        shopping = pickle.dumps(shoppingData)
+        self.updateUser(username,token,{'Shopping_list':shopping})
+        self.conn.commit()
