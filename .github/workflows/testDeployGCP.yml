@@ -1,14 +1,14 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Deploy Branch Linting & Formatting
+name: Deploy (GCP) Branch Linting & Formatting
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the deploy branch
   push:
-    branches: [deploy]
+    branches: [deploy-gcp]
   pull_request:
-    branches: [deploy]
+    branches: [deploy-gcp]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -125,3 +125,15 @@ jobs:
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_dir: ./out
+
+  # Reference: https://github.com/actions-hub/gcloud
+  gcp-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: GCP launch
+        uses: actions-hub/gcloud@master
+        env:
+          PROJECT_ID: cse110-333801
+          APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+        with:
+          args: python3 app.py
