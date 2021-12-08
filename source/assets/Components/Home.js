@@ -179,7 +179,6 @@ class HomePage extends HTMLElement {
         <br>
         <br>
         <!--div>
-        <button id="#btn-delete" type="button">Delete User</button>
         <button id="#btn-recipe" type="button">See Added Recipes</button>
         <div id="#recipeDiv">
         <h3>Today's Meals</h3>
@@ -215,20 +214,9 @@ class HomePage extends HTMLElement {
       document.getElementById('#section--recipe').classList.add('shown');
     });
 
-    // Searches for random recipes to populate the home page
-    // If you are going to try attach the results to recipe card elements
-    // I would suggest doing this in the AfterSearch function within the
-    // searchRandomRecipes function and pass in the cards through a new
-    // parameter
+    // Add random recipes to the card elements
     let cards = this.shadowRoot.querySelectorAll('.card');
     searchRandomRecipes(cards);
-
-    // const recipePage = this.shadowRoot.getElementById('ExpRecipe');
-    // recipePage.addEventListener('click', () => {
-    //   router.navigate('recipe');
-    // });
-
-    // Display current user info TODO: move to other Profile.js
 
     // Looks in LocalStorage to get username and token.
     const user = localStorage.getItem('username');
@@ -239,12 +227,6 @@ class HomePage extends HTMLElement {
 
     const userEmail = this.shadowRoot.getElementById('#user-email');
     getEmail(user, token, userEmail);
-
-    /*  const deleteBtn = this.shadowRoot.getElementById('#btn-delete');
-    deleteBtn.addEventListener('click', () => {
-      console.log('DELETE');
-      deleteUser(user, token);
-    });*/
   }
 }
 
@@ -273,37 +255,14 @@ function getEmail(username, token, userEmail) {
 }
 
 /**
- * Deletes the user from the database
- * TODO: add a confirmation page
- * @param {String} username
- * @param {String} token
- */
-// function deleteUser(username, token) {
-//   let msg = {
-//     type: 'deleteUser',
-//     username: username,
-//     token: token,
-//   };
-
-//   /**
-//    * Redirects to the user login page after deleting user
-//    */
-//   function afterDelete() {
-//     window.location.href = 'userLogin.html';
-//     //setFormMessage(loginForm, 'error', 'Invalid username or password!');
-//   }
-
-//   POST(msg, afterDelete);
-// }
-
-/**
  * Searches for random recipes to populate the home page
+ * {Array} resultsObject Array of recipe cards to add data to
  */
 function searchRandomRecipes(resultsObject) {
   const searchReq = `type=searchRandom`;
 
   /**
-   *
+   * Add data to the recipe cards after data is retrieved
    * @param {Object} data Contains all the random recipes
    */
   function afterSearch(data) {
@@ -314,9 +273,9 @@ function searchRandomRecipes(resultsObject) {
 }
 
 /**
- * TODO:
- * @param {Objects} results
- * @param {Object} section
+ * Adds data to the recipe cards 
+ * @param {Objects} results The random recipes retrieved from spoonacular
+ * @param {Object} section The array of recipe cards to add data to
  */
 function createRecipeCards(results, section) {
   // Go through every one of the result recipes
@@ -333,6 +292,7 @@ function createRecipeCards(results, section) {
     // Add the corresponding expand recipe view to router
     addPage(data);
 
+    // Open up recipe when you click on its card
     section[key].addEventListener('click', () => {
       let recipeView = document.getElementById('#section--recipe');
       while (recipeView.firstChild) {
@@ -344,8 +304,10 @@ function createRecipeCards(results, section) {
 }
 
 /**
- * TODO:
- * @param {String} recipeId
+ * Attaches an expanded recipe view to the card so that when you click on it
+ * you can see the full recipe
+ * @param {Object} data The data to give to the recipe card so that when it 
+ * opens up the expanded view has data to populate it
  */
 function addPage(data) {
   router.addPage(`recipe_${data.id}`, function () {
