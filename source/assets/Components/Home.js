@@ -23,20 +23,6 @@ class HomePage extends HTMLElement {
     *{
       clear: both;
     }
-/*
-    .todayMeals{
-      display: flex;
-      justify-content: space-between;
-    }
-    .recentlyVisited{
-      display: flex;
-      justify-content: space-between;
-    }
-    .favorites{
-      display: flex;
-      justify-content: space-between;
-    }
-*/
     .recipe-grid {
       margin-left: 5%;
       display: grid;
@@ -175,33 +161,6 @@ class HomePage extends HTMLElement {
           </div>
       
       </div>
-
-        <br>
-        <br>
-        <!--div>
-        <button id="#btn-recipe" type="button">See Added Recipes</button>
-        <div id="#recipeDiv">
-        <h3>Today's Meals</h3>
-        <div id=#todayMeals class="todayMeals">
-            <div><button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></div>
-            <div><button type="menu">Recipe 2 (not linked)</button></div>
-            <div><button type="menu">Recipe 3 (not linked)</button></div>
-        </div>
-        <h3>Recently Visited</h3>
-        <div id=#recentlyVisited class="recentlyVisited">
-              <div><button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></div>
-              <div><button type="menu">Recipe 2 (not linked)</button></div>
-              <div><button type="menu">Recipe 3 (not linked)</button></div>
-        </div>
-        
-        <h3>Favorites</h3>
-        <div id=#favorites class="favorites">
-              <div> <button id="ExpRecipe" type="menu">Recipe 1 (click this one)</button></div>
-              <div> <button type="menu">Recipe 2 (not linked)</button></div>
-              <div> <button type="menu">Recipe 3 (not linked)</button></div>
-        </div>
-        </div>
-        </div-->
         `;
 
     // Append elements to the shadow root
