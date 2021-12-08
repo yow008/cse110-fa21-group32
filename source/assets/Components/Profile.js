@@ -65,9 +65,6 @@ class ProfilePage extends HTMLElement {
       color: blue;
     }
 
-    .profile-page-review {
-      display: none;
-    }
     `;
 
     /* Added article */
@@ -79,8 +76,8 @@ class ProfilePage extends HTMLElement {
         <th scope="col" style="text-align: center"><img src="assets/icons/logo.png"></th>
         <th scope="col">
             <ul>
-                <li><a href="#profile-page-recipeID" id="UserRec">Recipes</a></li><br>
-                <li><a href="#profile-page-reviewsID" id="UserRev">Reviews</a></li><br>
+                <li><a id="UserRec">Recipes</a></li><br>
+                <li><a id="UserRev">Reviews</a></li><br>
                 <li id="#section-edit-profile"><button class="normal-button" id="#button-edit-profile" type="button">Edit Profile</button></li>
 
             </ul>
@@ -98,42 +95,10 @@ class ProfilePage extends HTMLElement {
             
             <br>
         </div>
-
-        <!--Profile Page Reviews-->
-        <div id="profile-page-reviewID" class="profile-page-review">
-            <p>NOT AVAILABLE</p>
-            <br>
-        </div>
         `;
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
-
-    // Functions for the layout of profile page
-    var recipesInProfileButton = this.shadowRoot.getElementById(
-      'recipe-in-profile-button'
-    );
-    var recipesInProfile = this.shadowRoot.getElementById(
-      'profile-page-recipeID'
-    );
-    var reviewsInProfileButton = this.shadowRoot.getElementById(
-      'review-in-profile-button'
-    );
-    var reviewsInProfile = this.shadowRoot.getElementById(
-      'profile-page-reviewID'
-    );
-    recipesInProfileButton.addEventListener('click', () => {
-      recipesInProfileButton.style.color = 'blue';
-      reviewsInProfileButton.style.color = 'grey';
-      reviewsInProfile.style.display = 'none';
-      recipesInProfile.style.display = 'contents';
-    });
-    reviewsInProfileButton.addEventListener('click', () => {
-      reviewsInProfileButton.style.color = 'blue';
-      recipesInProfileButton.style.color = 'grey';
-      recipesInProfile.style.display = 'none';
-      reviewsInProfile.style.display = 'contents';
-    });
 
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
@@ -162,8 +127,6 @@ class ProfilePage extends HTMLElement {
   }
 
   set recipes(recipes) {}
-
-  set reviews(reviews) {}
 }
 
 /**

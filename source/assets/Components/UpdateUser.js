@@ -136,7 +136,7 @@ class UpdateUserPage extends HTMLElement {
     //Deletes user when Delete user button is clicked
     this.shadowRoot
       .getElementById('delete-user')
-      .addEventListener('click', function() {
+      .addEventListener('click', function () {
         deleteUser();
       });
   }
