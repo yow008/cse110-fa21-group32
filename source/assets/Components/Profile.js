@@ -158,7 +158,11 @@ class ProfilePage extends HTMLElement {
 
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
-    getRecipes(user, token, this.shadowRoot);
+
+    let shadowRoot = this.shadowRoot;
+    setTimeout(function () {
+      getRecipes(user, token, shadowRoot);
+    }, 2000);
 
     let showUsername = this.shadowRoot.getElementById('showUsername');
     showUsername.innerHTML = 'Username: ' + user;
@@ -170,7 +174,10 @@ class ProfilePage extends HTMLElement {
 
     // Add current email to email textarea element
     let email = this.shadowRoot.getElementById('email');
-    getEmail(user, token, showEmail, email);
+    setTimeout(function () {
+      showEmail.innerHTML = `User Email: ` + localStorage.getItem('userEmail');
+      email.setAttribute('value', localStorage.getItem('userEmail'));
+    }, 2000);
 
     let password = this.shadowRoot.getElementById('password');
     let confirmPassword = this.shadowRoot.getElementById('confirm-password');
@@ -190,7 +197,6 @@ class ProfilePage extends HTMLElement {
         username.value.length > 9
       ) {
         // Sets the users info to the given info
-        console.log('setting new info');
         setNewInfo(newInfo);
       } else if (password.value != confirmPassword.value) {
         // If passwords don't match then send error
@@ -241,6 +247,7 @@ function setNewInfo(newInfo) {
    */
   function afterUpdate() {
     localStorage.setItem('username', newInfo['Username']);
+    localStorage.setItem('userEmail', newInfo['Email']);
   }
 
   POST(newInfoPost, afterUpdate);
@@ -265,32 +272,6 @@ function deleteUser() {
   }
 
   POST(deleteUserPost, afterDelete);
-}
-
-/**
- * Fetch the email from the user and display it
- * @param {String} username The current users username from localStorage
- * @param {String} token The current users token from localStorage
- * @param {Element} userEmail The element in the page thats value will be the
- * email
- */
-function getEmail(username, token, userEmail, userEmailTwo) {
-  const emailReq = `type=request&elem=email&user=${encodeURIComponent(
-    username
-  )}&token=${encodeURIComponent(token)}`;
-
-  /**
-   * Populate the display element with the fetched email
-   * @param {*} data
-   */
-  function getFn(data) {
-    console.log('After email fetch');
-    userEmail.innerHTML = `User Email: ${data.userInfo[0]}`;
-    userEmailTwo.setAttribute('value', data.userInfo[0]);
-    //setFormMessage(loginForm, 'error', 'Invalid username or password!');
-  }
-
-  GET(emailReq, getFn);
 }
 
 /**
