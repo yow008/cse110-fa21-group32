@@ -12,7 +12,7 @@ class Recipe_DB:
     def __init__(self):
         # Spoonacular 
         self.url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/"
-        self.API_KEY = '1414109596ee45759cfec0f52917cc31'
+        self.API_KEY = '0befee35f18449dfad85ae79b12bd075'
         self.headers = {
             'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
             'x-rapidapi-key': self.API_KEY
@@ -61,6 +61,15 @@ class Recipe_DB:
         #     self.cacheRecipe(recipe['results'][i]['id'], src)
         return recipe['results']
         
+    def searchRandomRecipes(self):
+        # Retrieve random recipes to populate home page. Get recipe IDs from spoonacular, update DB, and return results
+
+        url = 'https://api.spoonacular.com/recipes/random?apiKey=%s&number=9' % (self.API_KEY)
+
+        recipe = requests.request("GET", url, headers=self.headers).json()
+        # print(recipe)
+
+        return recipe['recipes']
 
     def cacheRecipe(self, ID, src):
         try:
