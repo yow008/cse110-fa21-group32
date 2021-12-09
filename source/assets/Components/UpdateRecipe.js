@@ -44,7 +44,7 @@ class UpdateRecipePage extends HTMLElement {
           <br>
   
           <!--Update Image-->
-          <label for="img"><p><strong>Update Image</strong></p></label>
+          <label for="img"><p><strong>Replace Image</strong></p></label>
           <input type="file" id="img" name="img" accept="image/*"/>
           <p><img id="recipeImage" width="200"/></p>
           <br>
@@ -197,19 +197,6 @@ class UpdateRecipePage extends HTMLElement {
         reader.readAsDataURL(input.files[0]);
       }
     }
-
-    // Select input file image
-    // const imageData = new FormData();
-    // const image = document
-    // let image = '';
-    // let fileReader = new FileReader();
-    // fileReader.onload = function () {
-    //   if (fileReader.result.length > 0) {
-    //     image = fileReader.result;
-    //   }
-    // };
-    // console.log(photo.files[0]);
-    // fileReader.readAsDataURL(photo.files[0]);
 
     //Set Cooking Hour and Mins
     let cookTimeHourPrev = Math.floor(
@@ -369,7 +356,7 @@ class UpdateRecipePage extends HTMLElement {
       .getElementById('publishBtn')
       .addEventListener('click', (e) => {
         e.preventDefault();
-        updateData(title);
+        updateData();
       });
     // Get elements of the form
     //const photo = this.shadowRoot.getElementById('img');
@@ -392,24 +379,7 @@ class UpdateRecipePage extends HTMLElement {
      * This function is called when the publish button is clicked and it sends the new inputted data to the database
      */
     function updateData() {
-      // Select image to base64String
-      // var reader = new FileReader();
-      // // console.log("next");
-      // var base64Image = '';
-      // reader.onload = function () {
-      //   if (reader.result.length > 0) {
-      //     base64Image = reader.result;
-      //     //console.log(base64Image);
-      //   }
-      // }
-      // reader.readAsDataURL(imgFile['files'][0]);
-
-      // Select all ingredients
-      //let ingredientList = this.shadowRoot.getElementById()
-      // console.log(imgFile.files[0]);
-      // let imageData = new FormData();
-      // imageData.append('file', imgFile.files[0]);
-      // console.log(imageData);
+      // Select elements from ingredients page
       let quantity = ingredientList.querySelectorAll('input[name="quantity"]');
       let unit = ingredientList.querySelectorAll('input[name="unit"]');
       let ingredient = ingredientList.querySelectorAll(
@@ -466,6 +436,9 @@ class UpdateRecipePage extends HTMLElement {
         author: localStorage.getItem('username'), // TODO: Need to update with curr user
         id: data.recipe['id'],
       };
+      if (base64Image == '') {
+        delete recipe.image;
+      }
       //console.log(recipe);
       // in 'submit' event, call page.updateData = <>
       // Create the POST message to send to the backend
@@ -495,7 +468,7 @@ class UpdateRecipePage extends HTMLElement {
       }
 
       //Sends data to database
-      POST(newData, afterFetch);
+      POST(newData, afterFetch());
     }
   }
 }

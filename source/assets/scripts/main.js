@@ -6,11 +6,9 @@ const pageNames = [
   'home',
   'grocery',
   'profile',
-  'update-user',
   'recipe',
   'search-results',
   'cooking-mode',
-  'fav-recipes',
   'add-recipe',
   'update-recipe',
 ];
@@ -38,6 +36,8 @@ function addMainPages() {
   for (let i = 0; i < pageNames.length; i++) {
     // Add all of the main pages
     router.addPage(pageNames[i], function () {
+      // If modified, also modify global pageNames
+      //const pageNames = ['home', 'calendar', 'grocery', 'profile'];
       for (let j = 0; j < pageNames.length; j++) {
         // If adding the current page, show. Otherwise hide
         if (pageNames[i] === pageNames[j]) {
@@ -128,15 +128,11 @@ function bindNavIcons() {
  */
 function bindSidePanel() {
   // Retrieve buttons corresponding to icons
-  const favoriteRecipes = document.getElementById('LinkToFav');
   //const userLogin = document.getElementById('LinkLogin');
   const addRecipe = document.getElementById('LinkToAdd');
   const logoutElem = document.getElementById('LinkToLogout');
 
   // Add click event listeners and proper navigation
-  favoriteRecipes.addEventListener('click', () => {
-    router.navigate('fav-recipes');
-  });
   // userLogin.addEventListener('click', () => {
   //   router.navigate('user-login');
   // });

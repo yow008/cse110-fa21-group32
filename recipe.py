@@ -75,7 +75,7 @@ class Recipe_DB:
             keyword, self.API_KEY)
         recipe = requests.request('GET', url, headers=self.headers).json()
         return recipe['results']
-
+        
     def searchRandomRecipes(self):
         ''' Retrieve random recipes to populate home page using Spoonacular.
 
