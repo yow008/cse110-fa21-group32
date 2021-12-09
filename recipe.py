@@ -49,7 +49,7 @@ class Recipe_DB:
     def searchRecipeByKeyword(self,keyword):
         # Search by keyword. Get recipe IDs from spoonacular, update DB, and return results
 
-        url = 'https://api.spoonacular.com/recipes/complexSearch?query=%s&apiKey=%s&includeNutrition=false' % (keyword, self.API_KEY)
+        url = 'https://api.spoonacular.com/recipes/complexSearch?query=%s&apiKey=%s&includeNutrition=false&number=12' % (keyword, self.API_KEY)
         # url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/complexSearch?query=%s&number=5' % (keyword)
         recipe = requests.request("GET", url, headers=self.headers).json()
         print(recipe)
