@@ -488,14 +488,19 @@ function getRecipes(username, token, recipeID, button) {
    * @param {*} data
    */
   function atFetch(data) {
-    for (let i = 0; i < data.ID.length; i++) {
-      if (recipeID == data.ID[i]) {
+    for (let i = 0; i < data.recipes.length; i++) {
+      if (recipeID == data.recipes[i].id) {
+        console.log('recipeID is found!');
         button.parentElement.style.display = 'block';
+        console.log(button.parentElement);
       } else {
+        console.log('recipeID is not found!');
         button.parentElement.style.display = 'none';
+        console.log(button.parentElement);
       }
     }
   }
+
   GET(searchReq, atFetch);
 }
 
