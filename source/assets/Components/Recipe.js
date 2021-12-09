@@ -357,6 +357,7 @@ class RecipePage extends HTMLElement {
         id: recipeID,
         ingredients: ingredientsSelect, // List of checked ingredients in the recipe.
         checked: new Array(ingredientsSelect.length).fill(false), // All unchecked in list
+        recipe: data,
       };
 
       // Updates the last edited timestamp on grocery
