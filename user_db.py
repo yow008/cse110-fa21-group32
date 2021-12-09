@@ -50,7 +50,7 @@ class User_DB:
             toHash = username+password+salt #Stick everything together.
             token = hashlib.sha256(toHash.encode()).hexdigest()
             empty = pickle.dumps([])
-            self.cur.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (username, password, token, email, fname, lname, empty, empty, empty, empty, empty))
+            self.cur.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?)", (username, password, token, email, fname, lname, empty, empty))
             self.conn.commit()
             return True
         except sqlite3.IntegrityError as er: # username is primary key so no duplicates allowed
