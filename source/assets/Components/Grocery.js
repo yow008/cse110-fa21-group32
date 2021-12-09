@@ -136,6 +136,23 @@ class GroceryPage extends HTMLElement {
       let p = document.createElement('p');
       p.innerHTML = currList[i]['name'];
       p.addEventListener('click', () => {
+        // Add the recipe page if it doesn't exist
+        if (router[`recipe_${currList[i]['id']}`] == null) {
+          router.addPage(`recipe_${currList[i]['id']}`, function () {
+            //Display recipe information from saved
+            const recipePage = document.createElement('recipe-page');
+            document
+              .getElementById('#section--grocery')
+              .classList.remove('shown');
+            recipePage.classList.add('shown');
+            document.getElementById('#section--recipe').innerHTML = '';
+
+            recipePage.data = currList[i].recipe;
+            document.getElementById('#section--recipe').appendChild(recipePage);
+            document.getElementById('#section--recipe').classList.add('shown');
+          });
+        }
+
         router.navigate(`recipe_${currList[i]['id']}`); // link to recipe page
       });
       form.append(p);
