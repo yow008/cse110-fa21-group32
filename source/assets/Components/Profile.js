@@ -309,75 +309,44 @@ function getRecipes(username, token, shadowRoot) {
    * @param {*} data
    */
   function atFetch(data) {
-    for (let i = 0; i < data.ID.length; i++) {
-      fetchRecipe(data.ID[i], shadowRoot);
+    let userRecipes = [];
+    for (let i = 0; i < data.recipes.length; i++) {
+      // Create title element
+      let recipe = data.recipes[i];
+      const title = document.createElement('h3');
+      title.innerText = recipe['title'];
+      const image = document.createElement('img');
+      image.setAttribute('src', recipe['image']);
+      image.setAttribute('alt', 'No Image');
+      shadowRoot.getElementById('profile-page-recipeID').appendChild(title);
+      shadowRoot.getElementById('profile-page-recipeID').appendChild(image);
+
+      userRecipes.push(recipe['id']);
+      // Add page to router so navigate works
+      router.addPage(`recipe_${recipe['id']}`, function () {
+        document.getElementById('#section--profile').classList.remove('shown');
+
+        document.getElementById('#section--recipe').classList.add('shown');
+
+        // Fetch and populate recipe page and add to recipe section
+        const recipePage = document.createElement('recipe-page');
+        console.log(recipe);
+        recipePage.data = { recipe: recipe };
+        recipePage.classList.add('shown');
+        document.getElementById('#section--recipe').innerHTML = '';
+        document.getElementById('#section--recipe').appendChild(recipePage);
+      });
+
+      // Add click listener to title element -> navigates to recipe card page
+      title.addEventListener('click', () => {
+        // let recipeView = document.getElementById('#profile-page-recipeID');
+        // while (recipeView.firstChild) {
+        //   recipeView.removeChild(recipeView.firstChild);
+        // }
+        router.navigate(`recipe_${recipe['id']}`);
+      });
     }
-
-    /**
-     *
-     * @param {*} recipeId
-     * @param {*} shadowRoot
-     */
-    function fetchRecipe(recipeId, shadowRoot) {
-      const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
-
-      /**
-       * TODO:
-       * @param {JSON} data
-       */
-      function afterFetch(data) {
-        // Create title element
-        const title = document.createElement('h3');
-        title.innerText = data.recipe.title;
-        shadowRoot.getElementById('profile-page-recipeID').appendChild(title);
-
-        // Add page to router so navigate works
-        router.addPage(`recipe_${recipeId}`, function () {
-          document
-            .getElementById('#section--profile')
-            .classList.remove('shown');
-          document.getElementById('#section--home').classList.remove('shown');
-          document
-            .getElementById('#section--search-bar')
-            .classList.remove('shown');
-          document
-            .getElementById('#section--grocery')
-            .classList.remove('shown');
-          document
-            .getElementById('#section--cooking-mode')
-            .classList.remove('shown');
-          document
-            .getElementById('#section--update-recipe')
-            .classList.remove('shown');
-          document
-            .getElementById('#section--grocery')
-            .classList.remove('shown');
-          document
-            .getElementById('#section--search-results')
-            .classList.remove('shown');
-
-          document.getElementById('#section--recipe').classList.add('shown');
-
-          // Fetch and populate recipe page and add to recipe section
-          const recipePage = document.createElement('recipe-page');
-          recipePage.data = data;
-          recipePage.classList.add('shown');
-          document.getElementById('#section--recipe').innerHTML = '';
-          document.getElementById('#section--recipe').appendChild(recipePage);
-        });
-
-        // Add click listener to title element -> navigates to recipe card page
-        title.addEventListener('click', () => {
-          // let recipeView = document.getElementById('#profile-page-recipeID');
-          // while (recipeView.firstChild) {
-          //   recipeView.removeChild(recipeView.firstChild);
-          // }
-          router.navigate(`recipe_${recipeId}`);
-        });
-      }
-
-      GET(fetchReq, afterFetch);
-    }
+    localStorage.setItem('userRecipes', userRecipes);
   }
 
   GET(searchReq, atFetch);
