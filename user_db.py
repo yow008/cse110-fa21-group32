@@ -23,11 +23,8 @@ class User_DB:
                 Email STR,
                 fName STR,
                 lName STR,
-                Calendar BLOB,
                 Shopping_list BLOB,
-                Recipes BLOB,
-                Reviews BLOB,
-                Favorites BLOB
+                Recipes BLOB
             )''')
 
     def __del__(self):
