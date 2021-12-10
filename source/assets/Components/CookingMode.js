@@ -5,7 +5,7 @@
  * Redirect option from the recipe view that splits the directions of
  * the recipe onto separate views.
  */
-class CookingMode extends HTMLElement {
+ class CookingMode extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -34,17 +34,44 @@ class CookingMode extends HTMLElement {
     }
     #btnNav {
       position: fixed;
+      display: flex;
       bottom: 40pt;
+      width: 30%;
+      justify-content: center;
+      padding-left: 50px;
+      padding-right: 50px;
     }
     #btnNav button {
-      height: 22pt;
-      width: 22pt;
+      height: 25pt;
+      width: 30pt;
       border-radius: 50%;
       background-color: white;
       border: 1.5px solid #ca676a;
       text-align: center;
       font-size: 14pt;
       color:#ca676a;
+    }
+    #btnNav button:hover {
+      background-color: pink;
+      color: white;
+      cursor: pointer;
+      transform: scale(1.10);
+    }
+    #btnNav button:active {
+      transform: scale(0.75);
+    }
+    #btnNav button:focus{
+      background-color: #ca676a;
+      color: white;
+    }
+    .hoverClass:hover {
+      background-color: pink;
+      color: white;
+      cursor: pointer;
+      transform: scale(1.10);
+    }
+    .activeClass:active {
+      transform: scale(0.75);
     }
     .css-outer {
       display: flex;
@@ -59,21 +86,20 @@ class CookingMode extends HTMLElement {
       width: 100%;
       text-align: center;
     }
-    
     .middle {
       display: table-cell;
       vertical-align: middle;
       text-align: center;
     }
-    
     #cooking-steps {
       margin-left: auto;
       margin-right: auto;
-      width: 100%;
+      width: 50%;
       text-align: center;
-      font-size: 18pt;
+      font-size: 20pt;
     }
     #cooking-timer {
+      margin-bottom: 30px;
       position: fixed;
       bottom: 80pt;
       text-align: center;
@@ -107,23 +133,6 @@ class CookingMode extends HTMLElement {
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
-
-    /*function convertHMS(value) {
-      const sec = parseInt(value, 10); // convert value to number if it's string
-      let hours   = Math.floor(sec / 3600); // get hours
-      let minutes = Math.floor((sec - (hours * 3600)) / 60); // get minutes
-      let seconds = sec - (hours * 3600) - (minutes * 60); //  get seconds
-      // add 0 if value < 10; Example: 2 => 02
-      if (hours   < 10) {hours   = "0"+hours;}
-      if (minutes < 10) {minutes = "0"+minutes;}
-      if (seconds < 10) {seconds = "0"+seconds;}
-      return hours+':'+minutes+':'+seconds; // Return is HH : MM : SS
-    }
-    
-    function setTime() {
-      ++totalSeconds;
-      content.innerHTML = convertHMS(totalSeconds);
-    }*/
   }
 
   /**
@@ -158,6 +167,9 @@ class CookingMode extends HTMLElement {
 
     let quitBtn = this.shadowRoot.querySelector('button');
     quitBtn.addEventListener('click', () => {
+      document.querySelector('.footer').style.display = 'flex';
+      document.getElementById('#section--cooking-mode')
+      .classList.remove('shown');
       history.back();
     });
 
@@ -171,7 +183,7 @@ class CookingMode extends HTMLElement {
       let cookingBtn = this.shadowRoot.getElementById('btnNav');
       let currStep = document.createElement('p');
       currStep.setAttribute('id', `step${i + 1}`);
-      currStep.innerHTML = `${i + 1}` + '.' + content[i].step;
+      currStep.innerHTML = `${i + 1}` + '. ' + content[i].step;
       cookingStep.appendChild(currStep);
 
       // let other than first step be invisible initially
@@ -183,6 +195,8 @@ class CookingMode extends HTMLElement {
       let currBtn = document.createElement('button');
       currBtn.setAttribute('id', `btn${i + 1}`);
       currBtn.innerHTML = `${i + 1}`;
+      currBtn.style.marginLeft = '5px';
+      currBtn.style.marginRight = '5px';
       cookingBtn.appendChild(currBtn);
 
       //initialize timer if needed
@@ -201,7 +215,7 @@ class CookingMode extends HTMLElement {
           time = parseInt(time);
           time = time * 60;
         } else if (content[i].step.match(/([\d.]+) *hours/)) {
-          time = content[i].setp.match(/([\d.]+) *hours/)[1];
+          time = content[i].step.match(/([\d.]+) *hours/)[1];
           time = parseInt(time);
           time = time * 3600;
         }
@@ -234,22 +248,39 @@ class CookingMode extends HTMLElement {
         currTime.style.fontWeight = 'bold';
         currTime.style.color = 'green';
         currArea.appendChild(currTime);
+        
 
         //create a start button for start timer
         let startBtn = document.createElement('button');
+        startBtn.classList.add('hoverClass');
+        startBtn.classList.add('activeClass');
+        startBtn.style.marginLeft = '5px';
+        startBtn.style.marginRight = '5px';
+        startBtn.style.marginBottom = '10px';
         startBtn.setAttribute('id', `startBtn${i + 1}`);
         startBtn.innerHTML = 'Start';
         currArea.appendChild(startBtn);
 
         //create a pasue button
         let pauseBtn = document.createElement('button');
+        pauseBtn.classList.add('hoverClass');
+        pauseBtn.classList.add('activeClass');
         pauseBtn.setAttribute('id', `pauseBtn${i + 1}`);
+        pauseBtn.style.marginLeft = '5px';
+        pauseBtn.style.marginRight = '5px';
+        pauseBtn.style.marginBottom = '10px';
         pauseBtn.innerHTML = 'Pause';
         currArea.appendChild(pauseBtn);
 
         //create a reset button
         let resetBtn = document.createElement('button');
         resetBtn.setAttribute('id', `resetBtn${i + 1}`);
+        resetBtn.classList.add('hoverClass');
+        resetBtn.classList.add('activeClass');
+        resetBtn.style.marginTop = '0px';
+        resetBtn.style.marginLeft = '5px';
+        resetBtn.style.marginRight = '5px';
+        resetBtn.style.marginBottom = '10px';
         resetBtn.innerHTML = 'Reset';
         currArea.appendChild(resetBtn);
 

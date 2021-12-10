@@ -27,47 +27,64 @@ class RecipePage extends HTMLElement {
       text-align: center;
       font-weight: lighter !important;
     }
+    .openbtn {
+      background: #324A54;
+    }
+    
+    #recipe-summaryID > p{
+      margin: auto;
+      margin-top: 1%;
+      width: 75%;
+      font-size: 16pt;
+    }
 
-    .recipe-navbar button {
-  
-      border: transparent;
-      cursor: pointer;
-      float: left;
+    .part1 {
+      background-color: #CA676A;
+      width: 100%;
       color: white;
-      font-size: large;
-      height: 31pt;
+      text-align: center;
+    }
+    
+    a { text-decoration: none; }
+
+    #recipe-ingredientsID > p{
+      margin: auto;
+      margin-top: 1%;
+      width: 75%;
+      font-size: 16pt;
     }
 
-    .recipe-navbar:after {
-      content: "";
-      clear: both;
-      display: table;
+    #recipe-directionID > p{
+      margin: auto;
+      margin-top: 1%;
+      width: 75%;
+      font-size: 16pt;
     }
 
-    .recipe-navbar button:not(:last-child) {
-      border-right: none; /* Prevent double borders */
+    #recipe-directionID > ol > li{
+      margin: auto;
+      margin-top: 1%;
+      width: 60%;
+      font-size: 18pt;
+    }
+
+    form {
+      margin: 5%;
+    }
+    input[type=checkbox] {
+      transform: scale(1.5);
+      width: 2em;
+      margin-bottom: 20px !important;
+    }
+
+    label {
+      font-size: 18pt;
     }
 
     img{
       width: 100%;
       max-height: 400px;
       object-fit: cover;
-    }
-    .genInfo{
-      display: flex;
-      justify-content: space-around;
-      background-color: #324A54;
-      padding: 40px;
-      color: white !important;
-      font-family: IBM Plex Sans;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 9px;
-    }
-    .insertInfo{
-      display: flex;
-      justify-content: space-around;
     }
 
     .my-row{
@@ -99,12 +116,6 @@ class RecipePage extends HTMLElement {
       font-size: 2rem;
     }
 
-    .recipe-description{
-      padding: 1.5rem;
-      font-size: .8rem;
-      font-style: italic;
-    }
-
     .my-navbar{
       background: #324A54;
     }
@@ -114,16 +125,19 @@ class RecipePage extends HTMLElement {
     }
 
     .regbutton {
+      cursor: pointer;
       background-color: white;
-      border-radius: 18px !important;
+      border-radius: 16px !important;
       border: 1.5px solid #ca676a;
       text-align: center;
       min-width: 8% !important;
-      height: 20pt !important;
-      font-size: 14pt;
+      height: 2.2em; !important;
+      font-size: 16pt;
       color:#ca676a;
       width: auto !important;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+      margin: 0.3em;
+      padding: 0.2em !important;
     }
 
     div#recipe-ingredientsID {
@@ -136,13 +150,13 @@ class RecipePage extends HTMLElement {
       weidth auto !important;
       border-radius: 162px !important;
     }
+    .regbutton:hover {
+      background-color: #ca676a;
+      color: white;
+    }
 
     .editButton, recipe-summmaryButton{
       display: inline-block;
-    }
-
-    input {
-      margin-bottom: 20px !important;
     }
 
     li{
@@ -150,7 +164,6 @@ class RecipePage extends HTMLElement {
     }
 
     .recipe-navbar button {
-  
       border: transparent;
       cursor: pointer;
       float: left;
@@ -160,13 +173,18 @@ class RecipePage extends HTMLElement {
     }
 
     .recipe-navbar:after {
-      content: "";
+      /*content: "";*/
       clear: both;
       display: table;
     }
 
     .recipe-navbar button:not(:last-child) {
       border-right: none; /* Prevent double borders */
+    }
+
+    .emp {
+      clear: both;
+      height: 100px;
     }
     `;
 
@@ -182,39 +200,27 @@ class RecipePage extends HTMLElement {
     console.log(data);
     this.json = data;
     this.id = this.shadowRoot.querySelector('article').innerHTML = `
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="assets/styles/bootstrap-change.css">-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-    <h2>Recipe Name</h2>
-    
-    <!--<nav class="navbar navbar-expand-lg navbar-light my-navbar">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse recipe-navbar" id="navbarNavAltMarkup">
-      <div class="navbar-nav nav-fill w-100">
-        <a id="ToSum" class="nav-item nav-link active" href="#recipe-summaryID" style="color:white;">Summary<span class="sr-only"></span></a>
-        <a id="ToIng" class="nav-item nav-link" href="#recipe-ingredientsID" style="color:white;">Ingredients</a>
-        <a id="ToDir" class="nav-item nav-link" href="#recipe-directionID" style="color:white;">Directions</a>
-      </div>
-    </div>
-  </nav>-->
-
+    <div class="part1"> 
+    <h2></h2>
     <div class="recipe-navbar" style="width: 100%">
-    <button id="ToSum" style="width:33.3%; background-color: #324A54;">Summary
-      <a href="#recipe-summaryID"></a>
-    </button>
-    <button id="ToIng" style="width:33.3%; background-color: #CA676A;">Ingredients
-      <a href="#recipe-ingredientsID"></a>
-    </button>
-    <button id="ToDir" style="width:33.3%; background-color: #CA676A;">Directions
-      <a href="#recipe-directionID"></a>
-    </button>
+      <button id="ToSum" style="width:33.3%; background-color: #324A54;">Summary
+        <a href="#update-recipe-summaryID"></a>
+      </button>
+      <button id="ToIng" style="width:33.4%; background-color: #CA676A;">Ingredients
+        <a href="#update-recipe-ingredientsID"></a>
+      </button>
+      <button id="ToDir" style="width:33.3%; background-color: #CA676A;">Directions
+        <a href="#update-recipe-directionID"></a>
+      </button>
+    </div>
   </div>
 
     <!--Recipe Summary-->
     <div id="recipe-summaryID" class="recipe-summary" style="display: block">
-      <!--<p>Summary</p>-->
 
       <!--recipe image-->
       <div id="recipe-imageID">
@@ -263,7 +269,7 @@ class RecipePage extends HTMLElement {
     
     <!--Recipe Ingredients-->
     
-    <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none; text-align: center;">
+    <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none" text-align: center;">
       <br> 
       <form style="display: inline-block; text-align: left;"></form>
       <br>
@@ -277,8 +283,10 @@ class RecipePage extends HTMLElement {
 
     <!--Recipe Directions-->
     <div id="recipe-directionID" class="recipe-direction" style="display: none">
-      <br>
+      <!-- empty div for spacing -->
+      <div class="emp"></div>
       <div class="row justify-content-center">
+      <br>
         <button type ="button" id="LinkToCM" class="cook-button regbutton">COOK</button>
       </div>
       <br>
@@ -323,7 +331,9 @@ class RecipePage extends HTMLElement {
     });
 
     const CMPage = this.shadowRoot.getElementById('LinkToCM');
+    const footer = document.querySelector('.footer');
     CMPage.addEventListener('click', () => {
+      footer.style.display = 'none';
       const cookingPage = document.createElement('cooking-mode-page');
       cookingPage.classList.add('shown');
       document.getElementById('#section--cooking-mode').innerHTML = '';
@@ -333,6 +343,7 @@ class RecipePage extends HTMLElement {
       cookingPage.data = this.json;
       router.navigate('cooking-mode');
     });
+    footer.style.display = 'flex';
 
     // Set Title
     const title = getTitle(data);
@@ -345,7 +356,7 @@ class RecipePage extends HTMLElement {
       .getElementById('recipe-imageID')
       .querySelector('img')
       .setAttribute('src', getImage(data));
-    this.shadowRoot.getElementById('recipe-descriptionID').appendChild(summary);
+    this.shadowRoot.getElementById('recipe-summaryID').appendChild(summary);
 
     // Set Servings
     const servings = document.createElement('p');
@@ -408,6 +419,7 @@ class RecipePage extends HTMLElement {
       list.appendChild(currStep);
     }
 
+    // Functions for the layout of recipe detailed page
     this.shadowRoot.getElementById('ToSum').addEventListener('click', (e) => {
       e.preventDefault();
       this.shadowRoot
@@ -468,6 +480,10 @@ class RecipePage extends HTMLElement {
         if (checkedIng[i].checked == true) {
           ingredientsSelect.push(checkedIng[i].value);
         }
+      }
+
+      if (ingredientsSelect.length == 0){
+        return;
       }
 
       // Construct submessage containing information about the recipe.

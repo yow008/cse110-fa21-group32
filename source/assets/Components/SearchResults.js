@@ -37,7 +37,7 @@ class SearchResultsPage extends HTMLElement {
       grid-row-gap: 3%;
       margin-right: 5%;
     }
-    .recipe-picture {
+    .card-img-top {
       max-width: 100%;
     }
     button {
@@ -69,6 +69,8 @@ class SearchResultsPage extends HTMLElement {
 
     .my-card{
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      width: 100;
+      height: 150;
     }
 
     .my-container{
@@ -248,8 +250,8 @@ function createRecipeCards(results, section) {
     section[key].querySelector('img').setAttribute('alt', data.title);
 
     // Add the corresponding expand recipe view to router
-    addPage(data.id);
 
+    addPage(data.id);
     // Open up recipe when you click on its card
     section[key].addEventListener('click', () => {
       let recipeView = document.getElementById('#section--recipe');
