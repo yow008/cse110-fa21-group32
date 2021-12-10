@@ -548,10 +548,10 @@ class AddRecipePage extends HTMLElement {
 
           document.getElementById('#section--profile').classList.add('shown');
         });
-        document.getElementById('#section--profile').router.navigate('profile');
+        router.navigate('profile');
 
         // Tell the profile page to update with the updated recipe list
-        document.querySelector('#section--profile').firstChild.update = '';
+        // document.querySelector('#section--profile').firstChild.update = '';
       }
       POST(data, afterAdd);
     }
