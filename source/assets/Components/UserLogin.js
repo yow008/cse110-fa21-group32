@@ -114,8 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const resetButton = document.querySelector('#reset');
-
   // Try to create account when info is submitted
   createForm.addEventListener('submit', (e) => {
     e.preventDefault();
