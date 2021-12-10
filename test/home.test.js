@@ -22,17 +22,7 @@ describe('Basic user flow for Website', () => {
       console.log(title);
       expect(title).toBe("CookEZ");
   }, 1000);
-  test('should change page when button is clicked', async() => {
-    var button = await page.$('button#LinkToCalendar');
-    
-    await button.click();
-    await page.waitForNavigation();
-    const result = await page.evaluate(() => {
-     return JSON.stringify(window.location.href);
-    });
-    console.log(result);
-    expect(result).toBe("\"http://127.0.0.1:5500/source/full_calendar/calendar.html\"");
-  });
+  
   // test('should change page when button is clicked', async() => {
   //   var button = await page.$('button#LinkToProfile');
   //   console.log(button);
