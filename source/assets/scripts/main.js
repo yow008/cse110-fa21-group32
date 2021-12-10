@@ -1,5 +1,5 @@
 import { Router } from './Router.js';
-import { POST } from './request.js';
+import { POST,GET } from './request.js';
 
 // If modified, also modify list of page names under addMainPages
 const pageNames = [
@@ -123,6 +123,31 @@ function bindNavIcons() {
 }
 // Looks in LocalStorage to get username and token.
 const user = localStorage.getItem('username');
+const token = localStorage.getItem('token');
+
+getEmail(user, token);
+
+/**
+ * Fetch the email from the user and display it
+ * @param {String} username
+ * @param {String} token
+ */
+ function getEmail(username, token, userEmail) {
+  const emailReq = `type=request&elem=email&user=${encodeURIComponent(
+    username
+  )}&token=${encodeURIComponent(token)}`;
+
+  /**
+   * Populate the display element with the fetched email
+   * @param {*} data
+   */
+  function getFn(data) {
+    localStorage.setItem('userEmail', data.userInfo[0]);
+    //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+  }
+
+  GET(emailReq, getFn);
+}
 
 const userStatus = document.getElementById('#user-status');
 userStatus.innerHTML = `Username: ${user}`;

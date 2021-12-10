@@ -45,14 +45,13 @@ class ProfilePage extends HTMLElement {
     }
 
     th {
-      width: 32%;
+      width: 30%;
       height: 40pt;
       font-size: 16pt;
     }
 
     td {
-      width: 32%;
-      height: 40pt;
+      width: 30%;
       font-size: 16pt;
     }
 
@@ -107,7 +106,6 @@ class ProfilePage extends HTMLElement {
       padding: 10px 15px;
       border-radius: 10px;
       box-sizing: border-box;
-      font-size: 16pt;
       text-align: center;
       overflow: hidden;
     }
@@ -275,7 +273,6 @@ class ProfilePage extends HTMLElement {
 
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
-
     // Set timeout to allow for main page to load first
     let shadowRoot = this.shadowRoot;
     setTimeout(function () {
