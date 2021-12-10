@@ -1,5 +1,5 @@
 import { Router } from './Router.js';
-import { POST, GET } from './request.js';
+import { POST /*, GET */ } from './request.js';
 
 // If modified, also modify list of page names under addMainPages
 const pageNames = [
