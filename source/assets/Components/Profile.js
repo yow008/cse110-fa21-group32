@@ -216,7 +216,7 @@ class ProfilePage extends HTMLElement {
             </tr>
             <tr id="edit-email">
                 <th><label for='email'>Change Email: </label></th>
-                <td><input type='textarea' id="email" value="NewEmail"></td>
+                <td><input type='textarea' id="newemail" placeholder="NewEmail"></td>
             </tr>
             <tr id="change-password">
                 <th><label for='password'>Change Password: </label></th>
@@ -273,7 +273,14 @@ class ProfilePage extends HTMLElement {
 
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
-    const email = localStorage.getItem('userEmail');
+
+    
+    setTimeout(function() {
+      const email = localStorage.getItem('userEmail');
+      showEmail.innerHTML = 'Email: ' + email;
+      inputEmail.setAttribute('value', email);
+    },1000);
+    
     // Set timeout to allow for main page to load first
     let shadowRoot = this.shadowRoot;
     setTimeout(function () {
@@ -283,8 +290,7 @@ class ProfilePage extends HTMLElement {
     let showUsername = this.shadowRoot.getElementById('showUsername');
     showUsername.innerHTML = 'Username: ' + user;
     let showEmail = this.shadowRoot.getElementById('showEmail');
-    showEmail.innerHTML = 'Email: ' + email;
-    this.shadowRoot.getElementById('email').setAttribute('value', email);
+    let inputEmail = this.shadowRoot.getElementById('newemail');
 
     // Create Edit Username Label and text area
     let username = this.shadowRoot.getElementById('username');
