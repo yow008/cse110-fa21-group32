@@ -1,8 +1,8 @@
-// HomePage.js
+// SearchResults.js
 
 // IMPORTS
 import { router } from '../scripts/main.js';
-import { GET /*, POST */} from '../scripts/request.js';
+import { GET /*, POST */ } from '../scripts/request.js';
 
 /**
  * Class: SearchResultsPage
@@ -21,6 +21,13 @@ class SearchResultsPage extends HTMLElement {
     styles.innerHTML = `
     *{
       clear: both;
+    }
+    h2{
+      background-color: #CA676A;
+      background-size: cover;
+      padding: 23.5px;
+      color: white;
+      text-align: center;
     }
     .recipe-grid {
       margin-left: 5%;
@@ -74,6 +81,7 @@ class SearchResultsPage extends HTMLElement {
         <!--<h1>Home Page</h1>-->
         <!--ADD RECIPES HERE-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <h2>Recipes</h2>
         <div class="css-wrap">
         <p id="#user-status"></p>
         <p id="#user-email"></p>
@@ -192,20 +200,21 @@ class SearchResultsPage extends HTMLElement {
     this.shadowRoot.append(styles, article);
 
     router.addPage('recipe', function () {
-      document.getElementById('#section--search-results').classList.remove('shown');
+      document
+        .getElementById('#section--search-results')
+        .classList.remove('shown');
       document.getElementById('#section--search-bar').classList.remove('shown');
 
       document.getElementById('#section--recipe').classList.add('shown');
     });
 
     // Add random recipes to the card elements
-    
   }
-  
+
   /**
-     * TODO:
-     * @param {Objects} results
-     */
+   * TODO:
+   * @param {Objects} results
+   */
   set results(results) {
     if (!results) return;
 
@@ -221,9 +230,8 @@ class SearchResultsPage extends HTMLElement {
 
 customElements.define('search-results-page', SearchResultsPage);
 
-
 /**
- * Adds data to the recipe cards 
+ * Adds data to the recipe cards
  * @param {Objects} results The random recipes retrieved from spoonacular
  * @param {Object} section The array of recipe cards to add data to
  */
@@ -254,15 +262,15 @@ function createRecipeCards(results, section) {
 
   console.log(Object.keys(results).length);
   console.log(section.length);
-  for (let i=Object.keys(results).length; i<section.length; i++) {
-    section[i].style.display = "none";
+  for (let i = Object.keys(results).length; i < section.length; i++) {
+    section[i].style.display = 'none';
   }
 }
 
 /**
  * Attaches an expanded recipe view to the card so that when you click on it
  * you can see the full recipe
- * @param {Object} data The data to give to the recipe card so that when it 
+ * @param {Object} data The data to give to the recipe card so that when it
  * opens up the expanded view has data to populate it
  */
 function addPage(recipeId) {
@@ -271,7 +279,9 @@ function addPage(recipeId) {
     document.getElementById('#section--search-bar').classList.add('shown');
     document.getElementById('#section--grocery').classList.remove('shown');
     document.getElementById('#section--cooking-mode').classList.remove('shown');
-    document.getElementById('#section--search-results').classList.remove('shown');
+    document
+      .getElementById('#section--search-results')
+      .classList.remove('shown');
 
     document.getElementById('#section--recipe').classList.add('shown');
 
@@ -291,7 +301,7 @@ function addPage(recipeId) {
  * @param {String} recipeId
  * @param {SearchResultsPage} recipePage
  */
- function fetchRecipe(recipeId, recipePage) {
+function fetchRecipe(recipeId, recipePage) {
   const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
 
   /**
@@ -304,4 +314,3 @@ function addPage(recipeId) {
 
   GET(fetchReq, afterFetch);
 }
-
