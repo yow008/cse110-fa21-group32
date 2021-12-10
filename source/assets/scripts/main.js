@@ -132,7 +132,7 @@ getEmail(user, token);
  * @param {String} username
  * @param {String} token
  */
- function getEmail(username, token, userEmail) {
+ function getEmail(username, token) {
   const emailReq = `type=request&elem=email&user=${encodeURIComponent(
     username
   )}&token=${encodeURIComponent(token)}`;
