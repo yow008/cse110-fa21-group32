@@ -79,7 +79,6 @@ class SearchBar extends HTMLElement {
     // Add search results page to router in order to successfully navigate to it
     router.addPage('search-results', function () {
       document.getElementById('#section--home').classList.remove('shown');
-      document.getElementById('#section--search-bar').classList.remove('shown');
       document.getElementById('#section--recipe').classList.remove('shown');
 
       document

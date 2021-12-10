@@ -5,7 +5,7 @@
  * Redirect option from the recipe view that splits the directions of
  * the recipe onto separate views.
  */
- class CookingMode extends HTMLElement {
+class CookingMode extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -17,11 +17,12 @@
     // Fill in styles and root element
     styles.innerHTML = `
     h2{
-      background-color: #CA676A;
+      background-color: #324A54;
       background-size: cover;
       padding: 23.5px;
       color: white;
       text-align: center;
+      margin-top: 0;
     }
     button {
       min-width: 10%;
@@ -35,25 +36,25 @@
     #btnNav {
       position: fixed;
       display: flex;
-      bottom: 40pt;
-      width: 30%;
-      justify-content: center;
-      padding-left: 50px;
-      padding-right: 50px;
+      bottom: 0;
+      width: 100%;
+      background-color: #324A54;
+      height: 150px;
+      padding-top: 50px;
+      overflow-x: scroll;
     }
     #btnNav button {
-      height: 25pt;
-      width: 30pt;
+      width: 70pt;
+      height: 70pt;
       border-radius: 50%;
-      background-color: white;
-      border: 1.5px solid #ca676a;
+      background-color: transparent;
+      border: 1.5px solid white;
       text-align: center;
       font-size: 14pt;
-      color:#ca676a;
+      font-weight: bold;
+      color: white;
     }
     #btnNav button:hover {
-      background-color: pink;
-      color: white;
       cursor: pointer;
       transform: scale(1.10);
     }
@@ -61,8 +62,8 @@
       transform: scale(0.75);
     }
     #btnNav button:focus{
-      background-color: #ca676a;
-      color: white;
+      background-color: white;
+      color: #324A54;
     }
     .hoverClass:hover {
       background-color: pink;
@@ -94,14 +95,15 @@
     #cooking-steps {
       margin-left: auto;
       margin-right: auto;
-      width: 50%;
+      width: 70%;
       text-align: center;
       font-size: 20pt;
+      margin-bottom: 100px; 
     }
     #cooking-timer {
       margin-bottom: 30px;
       position: fixed;
-      bottom: 80pt;
+      bottom: 250px;
       text-align: center;
     }
         `;
@@ -142,6 +144,7 @@
   set data(data) {
     this.json = data;
 
+    //console.log(document.getElementById('open'))
     // Set Title
     const title = getTitle(data).toUpperCase();
     this.shadowRoot.querySelector('h2').innerHTML = title;
@@ -168,8 +171,9 @@
     let quitBtn = this.shadowRoot.querySelector('button');
     quitBtn.addEventListener('click', () => {
       document.querySelector('.footer').style.display = 'flex';
-      document.getElementById('#section--cooking-mode')
-      .classList.remove('shown');
+      document
+        .getElementById('#section--cooking-mode')
+        .classList.remove('shown');
       history.back();
     });
 
@@ -195,8 +199,8 @@
       let currBtn = document.createElement('button');
       currBtn.setAttribute('id', `btn${i + 1}`);
       currBtn.innerHTML = `${i + 1}`;
-      currBtn.style.marginLeft = '5px';
-      currBtn.style.marginRight = '5px';
+      currBtn.style.marginLeft = '10px';
+      currBtn.style.marginRight = '10px';
       cookingBtn.appendChild(currBtn);
 
       //initialize timer if needed
@@ -248,7 +252,6 @@
         currTime.style.fontWeight = 'bold';
         currTime.style.color = 'green';
         currArea.appendChild(currTime);
-        
 
         //create a start button for start timer
         let startBtn = document.createElement('button');
@@ -307,6 +310,11 @@
           currArea.setAttribute('style', 'display:none');
         }
       }
+    }
+
+    let cookingBtn = this.shadowRoot.getElementById('btnNav');
+    if (content.length <= 8) {
+      cookingBtn.style.justifyContent = 'center';
     }
 
     for (let i = 0; i < content.length; i++) {
