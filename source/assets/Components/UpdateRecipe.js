@@ -605,35 +605,21 @@ class UpdateRecipePage extends HTMLElement {
 
       //Moves back to home page once POST is called
       function afterFetch() {
-        // router.addPage(`recipe_${recipe['id']}`, function () {
-        //   document
-        //     .getElementById('#section--update-recipe')
-        //     .classList.remove('shown');
+        router.addPage(`recipe_${recipe['id']}`, function () {
+          document
+            .getElementById('#section--update-recipe')
+            .classList.remove('shown');
 
-        //   // Fetch and populate recipe page and add to recipe section
-        //   const recipePage = document.createElement('recipe-page');
-        //   document.getElementById('#section--recipe').innerHTML = '';
+          // Fetch and populate recipe page and add to recipe section
+          const recipePage = document.createElement('recipe-page');
+          document.getElementById('#section--recipe').innerHTML = '';
 
-        //   recipePage.data = newData;
-        //   document.getElementById('#section--recipe').appendChild(recipePage);
-        //   document.getElementById('#section--recipe').classList.add('shown');
+          recipePage.data = newData;
+          document.getElementById('#section--recipe').appendChild(recipePage);
+          document.getElementById('#section--recipe').classList.add('shown');
 
-        // });
-        // router.navigate(`recipe_${recipe['id']}`);
-        // router.addPage('profile', function () {
-        //   document
-        //     .getElementById('#section--update-recipe')
-        //     .classList.remove('shown');
-        //   const profilePage = document.createElement('profile-page');
-        //   document.getElementById('#section--profile').innerHTML = '';
-
-        //   profilePage.data = newData;
-        //   document.getElementById('#section--profile').appendChild(profilePage);
-
-        //   document.getElementById('#section--profile').classList.add('shown');
-          
-        // });
-        router.navigate('profile');
+        });
+        router.navigate(`recipe_${recipe['id']}`);
 
         // Tell the profile page to update with the updated recipe list
         document.getElementById('#section--profile').firstChild.recipes = '';
