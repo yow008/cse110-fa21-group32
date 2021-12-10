@@ -1,7 +1,7 @@
 // Profile.js
 
 // IMPORTS
-import { router } from '../scripts/main.js';
+import { router, logout } from '../scripts/main.js';
 import { GET, POST } from '../scripts/request.js';
 
 // Page to change to when user is deleted
@@ -42,13 +42,6 @@ class ProfilePage extends HTMLElement {
 
     .profile-page-navbar{
       width: 100%
-    }
-
-    img {
-      border-radius: 50%;
-      width:  100px;
-      height: 100px;
-      object-fit: contain;
     }
 
     th {
@@ -109,6 +102,12 @@ class ProfilePage extends HTMLElement {
       font-size: 14pt;
     }
 
+    img{
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+    }
+
     .profile-page-editProfile {
       margin: auto;
       padding: 10px 15px;
@@ -140,10 +139,54 @@ class ProfilePage extends HTMLElement {
       background-color: #ca676a;
       color: white;
     }
+    .recipe-grid {
+      margin-left: 5%;
+      display: grid;
+      grid-template-columns: auto auto auto;
+      grid-column-gap: 3%;
+      grid-row-gap: 3%;
+      margin-right: 5%;
+    }
+    .recipe-picture {
+      max-width: 100%;
+    }
+    .css-wrap {
+      margin-left: 5%;
+      margin-bottom: 16pt;
+      margin-right: 5%;
+    }
+
+    .card-body{
+      background-color: #324A54;
+      color: white;
+      text-align: center;
+      font-weight: lighter;
+      font-style: normal;
+    }
+
+    .card-title{
+      font-weight: lighter;
+      font-style: normal;
+    }
+
+    .my-card{
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .my-container{
+      width: 90% !important;
+    }
+
+    .text-center {
+      text-align: center!important;
+    }
+    
     `;
 
     /* Added article */
     article.innerHTML = `
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
         <h2>User Profile</h2>
 
         <!--Profile Page Navbar-->
@@ -164,16 +207,14 @@ class ProfilePage extends HTMLElement {
 
         <br>
         <br>
-        <div id="profile-page-recipeID" class="profile-page-recipe">
-            <p>Recipe Gallery Should Be Displayed Here.</p>
-            
+        <div id="profile-page-recipeID" class="profile-page-recipe container-fluid my-container">
             <br>
         </div>
 
         <div id="profile-page-editProfileID" class="profile-page-editProfile">
         <br>
         <br>
-        <table class="profile-page-editProfile">
+        <table class="profile-page-editProfile>
             <tr id="edit-username">
                 <th><label for='username'>Change Username: </label></th>
                 <td><input type='textarea' id="username" value="NewUsername">
@@ -238,6 +279,7 @@ class ProfilePage extends HTMLElement {
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
 
+    // Set timeout to allow for main page to load first
     let shadowRoot = this.shadowRoot;
     setTimeout(function () {
       getRecipes(user, token, shadowRoot);
@@ -306,7 +348,19 @@ class ProfilePage extends HTMLElement {
       });
   }
 
-  set recipes(recipes) {}
+  /**
+   * Called from Add recipe and Update recipe to notify the profile
+   * page that the user's recipes have been changed
+   */
+  set recipes(recipes) {
+    // Clear the old recipes
+    this.shadowRoot.getElementById('profile-page-recipeID').innerHTML = '';
+
+    // Recreate the userRecipes
+    let username = localStorage.getItem('username');
+    let token = localStorage.getItem('token');
+    getRecipes(username, token, this.shadowRoot);
+  }
 }
 
 /**
@@ -316,8 +370,8 @@ class ProfilePage extends HTMLElement {
 function setNewInfo(newInfo) {
   let newInfoPost = {
     type: 'updateUser',
-    username: localStorage.getItem('username'), // TODO: Need to update with curr user
-    token: localStorage.getItem('token'), // TODO: Need to update with curr password
+    username: localStorage.getItem('username'),
+    token: localStorage.getItem('token'),
     newInfo: newInfo,
   };
 
@@ -325,8 +379,9 @@ function setNewInfo(newInfo) {
    * After the information is replaced in the database the local storage needs to be updated
    */
   function afterUpdate() {
-    localStorage.setItem('username', newInfo['Username']);
-    localStorage.setItem('userEmail', newInfo['Email']);
+    let username = localStorage.getItem('username');
+    let token = localStorage.getItem('token');
+    logout(username, token);
   }
 
   POST(newInfoPost, afterUpdate);
@@ -338,8 +393,8 @@ function setNewInfo(newInfo) {
 function deleteUser() {
   let deleteUserPost = {
     type: 'deleteUser',
-    username: localStorage.getItem('username'), // TODO: Need to update with curr user
-    token: localStorage.getItem('token'), // TODO: Need to update with curr password
+    username: localStorage.getItem('username'),
+    token: localStorage.getItem('token'),
   };
 
   /**
@@ -354,10 +409,10 @@ function deleteUser() {
 }
 
 /**
- *
- * @param {*} username
- * @param {*} token
- * @param {*} shadowRoot
+ * Retrieves the user's recipes from the backend and builds the page
+ * @param {String} username the username of the user
+ * @param {String} token the user's token received upon login
+ * @param {HTMLElement} shadowRoot the shadow root of the Profile page
  */
 function getRecipes(username, token, shadowRoot) {
   const searchReq = `type=getCustomizedRecipeIDs&user=${encodeURIComponent(
@@ -370,16 +425,69 @@ function getRecipes(username, token, shadowRoot) {
    */
   function atFetch(data) {
     let userRecipes = [];
+    //data == results
+    let divRow;
+    let rowNum = 3;
     for (let i = 0; i < data.recipes.length; i++) {
+      // If this is the start of a row, create a row
+      if (i % rowNum == 0) {
+        divRow = document.createElement('div');
+        let divRowClasses = [
+          'row',
+          'justify-content-center',
+          'd-flex',
+          'align-items-center',
+          'my-row',
+          'p-0',
+        ];
+        for (let i = 0; i < divRowClasses.length; i++) {
+          divRow.classList.add(divRowClasses[i]);
+        }
+      }
       // Create title element
       let recipe = data.recipes[i];
-      const title = document.createElement('h3');
-      title.innerText = recipe['title'];
-      const image = document.createElement('img');
-      image.setAttribute('src', recipe['image']);
-      image.setAttribute('alt', 'No Image');
-      shadowRoot.getElementById('profile-page-recipeID').appendChild(title);
-      shadowRoot.getElementById('profile-page-recipeID').appendChild(image);
+
+      let divCol = document.createElement('div');
+      let divCard = document.createElement('div');
+      let cardImg = document.createElement('img');
+      let cardBody = document.createElement('div');
+      let cardTitle = document.createElement('h5');
+
+      let divColClasses = [
+        'col',
+        'my-col',
+        'text-center',
+        'align-items-center',
+        'd-flex',
+        'justify-content-center',
+        'p-4',
+      ];
+      for (let i = 0; i < divColClasses.length; i++) {
+        divCol.classList.add(divColClasses[i]);
+      }
+      divCard.classList.add('my-card');
+      cardBody.classList.add('card-body');
+      cardImg.classList.add('card-img-top');
+      cardImg.setAttribute('src', recipe['image']);
+      cardImg.setAttribute('alt', `No Image for ${recipe['title']}`);
+      cardTitle.innerText = recipe['title'];
+
+      cardTitle.setAttribute('id', 'ExpRecipe');
+      cardTitle.classList.add('align-items-center');
+      cardTitle.classList.add('card-title');
+
+      // Build the card
+      cardBody.appendChild(cardTitle);
+      divCard.appendChild(cardImg);
+      divCard.appendChild(cardBody);
+      divCol.append(divCard);
+      divRow.append(divCol);
+
+      // Add the row if it is the last element in the row or the last item
+      // in the list
+      if (i % rowNum == rowNum - 1 || i == data.recipes.length - 1) {
+        shadowRoot.getElementById('profile-page-recipeID').appendChild(divRow);
+      }
 
       userRecipes.push(recipe['id']);
       // Add page to router so navigate works
@@ -398,11 +506,7 @@ function getRecipes(username, token, shadowRoot) {
       });
 
       // Add click listener to title element -> navigates to recipe card page
-      title.addEventListener('click', () => {
-        // let recipeView = document.getElementById('#profile-page-recipeID');
-        // while (recipeView.firstChild) {
-        //   recipeView.removeChild(recipeView.firstChild);
-        // }
+      divCard.addEventListener('click', () => {
         router.navigate(`recipe_${recipe['id']}`);
       });
     }

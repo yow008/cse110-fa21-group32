@@ -309,9 +309,7 @@ function fetchRecipe(recipeId, recipePage) {
    * @param {JSON} data
    */
   function afterFetch(data) {
-    setTimeout(() => {
-      recipePage.data = data;
-    }, 200);
+    recipePage.data = data;
   }
 
   GET(fetchReq, afterFetch);

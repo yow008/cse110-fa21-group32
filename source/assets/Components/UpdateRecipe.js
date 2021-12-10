@@ -46,7 +46,7 @@ class UpdateRecipePage extends HTMLElement {
           <!--Update Image-->
           <label for="img"><p><strong>Replace Image</strong></p></label>
           <input type="file" id="img" name="img" accept="image/*"/>
-          <p><img id="recipeImage" width="200"/></p>
+          <p><img id="recipeImage" width="400"/></p>
           <br>
           <br>
   
@@ -465,6 +465,9 @@ class UpdateRecipePage extends HTMLElement {
           document.getElementById('#section--recipe').appendChild(recipePage);
         });
         router.navigate(`recipe_${recipe['id']}`);
+
+        // Tell the profile page to update with the updated recipe list
+        document.querySelector('#section--profile').firstChild.update = '';
       }
 
       //Sends data to database

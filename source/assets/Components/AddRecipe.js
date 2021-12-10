@@ -32,6 +32,10 @@ class AddRecipePage extends HTMLElement {
       text-align: center;
       font-weight: lighter !important;
     }
+    #new-recipe{
+      text-align: center;
+      margin: auto;
+    }
     .openbtn {
       background: #324A54;
     }
@@ -66,15 +70,18 @@ class AddRecipePage extends HTMLElement {
     }
     .part4-button { 
       cursor: pointer;
-       margin-left: 5%;
       background-color: white;
-      border-radius: 18px;
+      border-radius: 16px !important;
       border: 1.5px solid #ca676a;
       text-align: center;
-      width: 42%;
-      height: 22pt;
-      font-size: 14pt;
+      min-width: 15% !important;
+      height: 2.2em; !important;
+      font-size: 16pt;
       color:#ca676a;
+      width: auto !important;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+      margin: 0.3em;
+      padding: 0.2em !important;
      }
     .part4-button:hover {
       background-color: #ca676a;
@@ -104,16 +111,36 @@ class AddRecipePage extends HTMLElement {
       height: 42pt;
       background-color: #EEEEEE;
     }
+
+    .addIng {
+      width: 90%;
+      padding: 10px 15px;
+      margin: 4px;
+      box-sizing: border-box;
+      font-size: 16pt;
+    }
     .css-input {
-      width: 40px;
+      width: 20%;
+      padding: 10px 15px;
+      margin: 4px;
+      box-sizing: border-box;
+      font-size: 16pt;
     }
     .css-margin {
-      margin-left: 5%;
+      
+      margin: auto;
     }
+    
+    #recipeImage{
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+    }
+
     a { text-decoration: none; }
     .add-more-button {
       cursor: pointer;
-      width: 90%;
+      width: 20%;
       height: 22pt;
       background-color: white;
       border: 1.5px solid black;
@@ -123,13 +150,30 @@ class AddRecipePage extends HTMLElement {
       border: none;
       cursor: pointer;
     }
+    .emp {
+      clear: both;
+      height: 50px;
+    }
     table {
+      margin: auto;
+      padding: 10px;
+      height: 42pt
+    }
+    .part5 {
+      text-align: center;
+    }
+    .part6 {
+      text-align: center;
+    }
+    ol {
+      margin: auto;
       padding: 10px;
     }
-    .css-wrap {
-      margin-left: 5%;
-      margin-right: 5%;
+    li {
+      display: list-item;
+      list-style-position: inside;
     }
+    
     }
         `;
     article.innerHTML = `
@@ -155,14 +199,15 @@ class AddRecipePage extends HTMLElement {
           <!--Add Image-->
           <label for="img"><p><strong>Add Image</strong></p></label>
           <input type="file" id="imgfile" name="img" accept="image/*" required/>
-          <p><img id="recipeImage" width="200"/></p>
+          <p><img id="recipeImage"/></p>
           <br>
           <br>
 
           <!--Basic Information-->
-          <label>Cooking Time:</label>
+          <label class="css-margin">Cooking Time:</label>
           <input class="css-input" type="text" name="cookingTimeHour" id="#input--cook-time-hour" placeholder="hours.." required>
           <input class="css-input" type="text" name="cookintTimeMin" id="#input--cook-time-mins" placeholder="mins.." required>
+          <br>
           <label class="css-margin" id="servings" for="servings"> No. of Servings: </label>
           <input class="css-input" type="text" name="numServings" id="#input--no-of-serv" required>
           <br>
@@ -178,8 +223,9 @@ class AddRecipePage extends HTMLElement {
       </div>
     
       <!--Add Recipe Ingredients-->
-      <div class="css-wrap" id="add-recipe-ingredients" style="display: none">
-        <label for="ingredients"><p><strong>Add Ingredients</strong></p></label>
+      <div class="part5" id="add-recipe-ingredients" style="display: none">
+        <!-- empty div for spacing -->
+        <div class="emp"></div>
         <table id="ingredient-table">
           <tr>
             <th>Qty</th>
@@ -187,22 +233,23 @@ class AddRecipePage extends HTMLElement {
             <th>Ingredient</th>
           </tr>
           <tr>
-            <td><input type="text" name="quantity" required/></td>
-            <td><input type="text" name="unit"/></td>
-            <td><input type="text" name="ingredientName" required/></td>
+            <td><input class="addIng" type="text" name="quantity" required/></td>
+            <td><input class="addIng" type="text" name="unit"/></td>
+            <td><input class="addIng" type="text" name="ingredientName" required/></td>
           </tr>
         </table>
         <!--When click add more should create another new 'tr' with three new inputs-->
         <button class="add-more-button" id="addIngredientButton"> 
-        <img src="assets/icons/plus-circle.svg"/> 
+          <img src="assets/icons/plus-circle.svg"/> 
         </button>
         <br>
       </div>
       <!--TO DO delete ingredients button-->
   
       <!--Add Recipe Directions-->
-      <div class="css-wrap" id="add-recipe-direction" style="display: none">
-        <p>Direction</p>
+      <div class="part6" id="add-recipe-direction" style="display: none">
+        <!-- empty div for spacing -->
+        <div class="emp"></div>
         <ol>
           <li>Step:</li>
           <textarea name="directionStep" id="#input--direction-step" required></textarea>
@@ -215,7 +262,7 @@ class AddRecipePage extends HTMLElement {
       </div>
       <br>
 
-      <input class="part4-button" type="submit" value="Publish">
+      <button class="part4-button" type="button">Publish</button>
       <button class="part4-button" id="leaveButton">
       <a href="home.html"  style="color:#CA676A"> Leave </a>
       </button>
@@ -308,11 +355,13 @@ class AddRecipePage extends HTMLElement {
           .querySelector('table');
         let row = ingredientsList.insertRow(-1);
         let quantity = row.insertCell(0);
-        quantity.innerHTML = '<input type="text" name="quantity"/>';
+        quantity.innerHTML =
+          '<input class="addIng" type="text" name="quantity"/>';
         let unit = row.insertCell(1);
-        unit.innerHTML = '<input type="text" name="unit"/>';
+        unit.innerHTML = '<input class="addIng" type="text" name="unit"/>';
         let ingredient = row.insertCell(2);
-        ingredient.innerHTML = '<input type="text" name="ingredientName"/>';
+        ingredient.innerHTML =
+          '<input class="addIng" type="text" name="ingredientName"/>';
         let deleteButton = row.insertCell(3);
         deleteButton.innerHTML =
           '<button class="css-x-circle" onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)"><img src="assets/icons/x-circle.svg"/></button>';
@@ -495,7 +544,10 @@ class AddRecipePage extends HTMLElement {
 
           document.getElementById('#section--profile').classList.add('shown');
         });
-        router.navigate('profile');
+        document.getElementById('#section--profile').router.navigate('profile');
+
+        // Tell the profile page to update with the updated recipe list
+        document.querySelector('#section--profile').firstChild.update = '';
       }
       POST(data, afterAdd);
     }

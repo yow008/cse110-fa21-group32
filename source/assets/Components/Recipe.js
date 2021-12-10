@@ -27,8 +27,25 @@ class RecipePage extends HTMLElement {
       text-align: center;
       font-weight: lighter !important;
     }
+    .openbtn {
+      background: #324A54;
+    }
     
     #recipe-summaryID > p{
+      margin: auto;
+      margin-top: 1%;
+      width: 75%;
+      font-size: 16pt;
+    }
+
+    #recipe-ingredientsID > p{
+      margin: auto;
+      margin-top: 1%;
+      width: 75%;
+      font-size: 16pt;
+    }
+
+    #recipe-directionID > p{
       margin: auto;
       margin-top: 1%;
       width: 75%;
@@ -40,13 +57,6 @@ class RecipePage extends HTMLElement {
       margin-top: 1%;
       width: 60%;
       font-size: 18pt;
-    }
-
-    .part1 {
-      background-color: #CA676A;
-      width: 100%;
-      color: white;
-      text-align: center;
     }
 
     form {
@@ -66,22 +76,6 @@ class RecipePage extends HTMLElement {
       width: 100%;
       max-height: 400px;
       object-fit: cover;
-    }
-    .genInfo{
-      display: flex;
-      justify-content: space-around;
-      background-color: #324A54;
-      padding: 40px;
-      color: white !important;
-      font-family: IBM Plex Sans;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 9px;
-    }
-    .insertInfo{
-      display: flex;
-      justify-content: space-around;
     }
 
     .my-row{
@@ -170,13 +164,18 @@ class RecipePage extends HTMLElement {
     }
 
     .recipe-navbar:after {
-      content: "";
+      /*content: "";*/
       clear: both;
       display: table;
     }
 
     .recipe-navbar button:not(:last-child) {
       border-right: none; /* Prevent double borders */
+    }
+
+    .emp {
+      clear: both;
+      height: 100px;
     }
     `;
 
@@ -195,24 +194,22 @@ class RecipePage extends HTMLElement {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-    <h2>Recipe Name</h2>
-    <div class="part1">
-    <div class="recipe-navbar" style="width: 100%">
-    <button id="ToSum" style="width:33.3%; background-color: #324A54;">Summary
-      <a href="#recipe-summaryID"></a>
-    </button>
-    <button id="ToIng" style="width:33.3%; background-color: #CA676A;">Ingredients
-      <a href="#recipe-ingredientsID"></a>
-    </button>
-    <button id="ToDir" style="width:33.3%; background-color: #CA676A;">Directions
-      <a href="#recipe-directionID"></a>
-    </button>
-  </div>
-  </div>
+    <div class="part1"> <h2>Recipe Name</h2>
+      <div class="recipe-navbar" style="width: 100%">
+        <button id="ToSum" style="width:33.3%; background-color: #324A54;">Summary
+          <a href="#recipe-summaryID"></a>
+        </button>
+        <button id="ToIng" style="width:33.4%; background-color: #CA676A;">Ingredients
+          <a href="#recipe-ingredientsID"></a>
+        </button>
+        <button id="ToDir" style="width:33.3%; background-color: #CA676A;">Directions
+          <a href="#recipe-directionID"></a>
+        </button>
+      </div>
+    </div>
 
     <!--Recipe Summary-->
     <div id="recipe-summaryID" class="recipe-summary" style="display: block">
-      <!--<p>Summary</p>-->
 
       <!--recipe image-->
       <div id="recipe-imageID">
@@ -275,8 +272,10 @@ class RecipePage extends HTMLElement {
 
     <!--Recipe Directions-->
     <div id="recipe-directionID" class="recipe-direction" style="display: none">
-      <br>
+      <!-- empty div for spacing -->
+      <div class="emp"></div>
       <div class="row justify-content-center">
+      <br>
         <button type ="button" id="LinkToCM" class="cook-button regbutton">COOK</button>
       </div>
       <br>
