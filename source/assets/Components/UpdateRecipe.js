@@ -605,38 +605,40 @@ class UpdateRecipePage extends HTMLElement {
 
       //Moves back to home page once POST is called
       function afterFetch() {
-        // router.addPage(`recipe_${recipe['id']}`, function () {
-        //   document
-        //     .getElementById('#section--update-recipe')
-        //     .classList.remove('shown');
-        //   document.getElementById('#section--recipe').classList.add('shown');
-        //   // Fetch and populate recipe page and add to recipe section
-        //   const recipePage = document.createElement('recipe-page');
-        //   recipePage.data = data;
-        //   recipePage.classList.add('shown');
-        //   document.getElementById('#section--recipe').innerHTML = '';
-        //   document.getElementById('#section--recipe').appendChild(recipePage);
-        // });
-        // router.navigate(`recipe_${recipe['id']}`);
-        router.addPage('profile', function () {
-          document.getElementById('#section--home').classList.remove('shown');
-          document
-            .getElementById('#section--search-bar')
-            .classList.remove('shown');
+        router.addPage(`recipe_${recipe['id']}`, function () {
           document
             .getElementById('#section--update-recipe')
             .classList.remove('shown');
 
-          document.getElementById('#section--profile').classList.add('shown');
+          // Fetch and populate recipe page and add to recipe section
+          const recipePage = document.createElement('recipe-page');
+          document.getElementById('#section--recipe').innerHTML = '';
+
+          recipePage.data = newData;
+          document.getElementById('#section--recipe').appendChild(recipePage);
+          document.getElementById('#section--recipe').classList.add('shown');
         });
-        router.navigate('profile');
+        router.navigate(`recipe_${recipe['id']}`);
+        // router.addPage('profile', function () {
+        //   document.getElementById('#section--home').classList.remove('shown');
+        //   document
+        //     .getElementById('#section--search-bar')
+        //     .classList.remove('shown');
+        //   document
+        //     .getElementById('#section--update-recipe')
+        //     .classList.remove('shown');
+
+        //   document.getElementById('#section--profile').classList.add('shown');
+        //   //document.querySelector('#section--profile').firstChild.update = '';
+        // });
+        // router.navigate('profile');
 
         // Tell the profile page to update with the updated recipe list
-        // document.querySelector('#section--profile').firstChild.update = '';
+        // document.getElementById('#section--recipe').firstChild.data = ''
       }
 
       //Sends data to database
-      POST(newData, afterFetch());
+      POST(newData, afterFetch);
     }
   }
 }
