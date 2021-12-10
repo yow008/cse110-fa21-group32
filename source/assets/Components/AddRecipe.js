@@ -22,48 +22,130 @@ class AddRecipePage extends HTMLElement {
 
     // Fill in styles and root element
     styles.innerHTML = `
-        h2{
-          background-color: #CA676A;
-          background-size: cover;
-          padding: 23.5px;
-          color: white;
-        }
-        div {
-          margin-left: 5%;
-        }
-        .publish-button {
-          background-color: white;
-          border-radius: 9px;
-          border: 1.5px solid #ca676a;
-          text-align: center;
-          min-width: 8%;
-          height: 16pt;
-          margin-left: 5%;
-        }
-        button {
-          background-color: white;
-          border-radius: 9px;
-          border: 1.5px solid #ca676a;
-          text-align: center;
-          min-width: 8%;
-          height: 16pt;
-          margin-left: 5%;
-        }
+    .openbtn {
+      background: #324A54;
+    }
+    .part1 {
+      background-color: #CA676A;
+      width: 100%;
+      color: white;
+      text-align: center;
+    }
+    h2 {
+      padding-top: 23.5px;
+      padding-bottom: 10px;
+    }
+    .part2 { 
+      border-top: 3px solid white;
+      background-color: #324A54;
+      color: white;
+      padding-left: 5%;
+      padding-right: 5%;
+      padding-top: 5px;
+      padding-bottom: 13px;}
+    .part3 { 
+      padding-left: 5%;
+      padding-right: 5%;
+     }
+     .part4 {
+       padding-left: 5%;
+     }
+     .part4:after {
+      content: " ";
+      clear: both;
+      display: table;
+    }
+     .part4-button { 
+       margin-left: 5%;
+      background-color: white;
+      border-radius: 18px;
+      border: 1.5px solid #ca676a;
+      text-align: center;
+      width: 42%;
+      height: 22pt;
+      font-size: 14pt;
+      color:#ca676a;
+     }
+    .add-recipe-navbar button {
+  
+      border: transparent;
+      cursor: pointer;
+      float: left;
+      color: white;
+      font-size: large;
+      height: 40pt;
+    }
+    .add-recipe-navbar:after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    .add-recipe-navbar button:not(:last-child) {
+      border-right: none; /* Prevent double borders */
+    }
+    .normal-button {
+      background-color: white;
+      border-radius: 18px;
+      border: 1.5px solid #ca676a;
+      text-align: center;
+      min-width: 8%;
+      height: 22pt;
+      font-size: 14pt;
+      color:#ca676a;
+    }
+    textarea {
+      width: 80%;
+      height: 42pt;
+      background-color: #EEEEEE;
+    }
+    .css-input {
+      width: 10%;
+    }
+    .css-margin {
+      margin-left: 5%;
+    }
+    a { text-decoration: none; }
+    .add-more-button {
+      width: 90%;
+      height: 22pt;
+      background-color: white;
+      border: 1.5px solid black;
+    }
+    .css-x-circle {
+      background-color: white;
+      border: none;
+      
+    }
+    table {
+      padding: 10px;
+    }
+    .css-wrap {
+      margin-left: 5%;
+      margin-right: 5%;
+    }
+    }
         `;
     article.innerHTML = `
-        <h2>Add Recipe</h2>
-        <div class="add-recipe-navbar">
-          <!-- li><a onclick="navTo('homeID')" href="javascript:void(0)">home</a></li> -->
-          <a href="#add-recipe-summaryID" id="ToAddSum">Summary</a>
-          <a href="#add-recipe-ingredientsID" id="ToAddIng">Ingredients</a>
-          <a href="#add-recipe-directionID" id="ToAddDir">Directions</a>
-        </div>
+       
+      <div class="part1"> <h2>Add Your Recipe</h2>
+      <div class="add-recipe-navbar" style="width: 100%">
+        <button id="ToAddSum" style="width:33.3%; background-color: #324A54;">Summary
+          <a href="#add-recipe-summaryID"></a>
+        </button>
+        <button id="ToAddIng" style="width:33.3%; background-color: #CA676A;">Ingredients
+          <a href="#add-recipe-ingredientsID"></a>
+        </button>
+        <button id="ToAddDir" style="width:33.3%; background-color: #CA676A;">Directions
+          <a href="#add-recipe-directionID"></a>
+        </button>
+      </div>
+      </div>
+
 
         <form id="new-recipe">
-        <!--Add Recipe Summary-->
         <div id="add-recipe-summary" style="display: show">
-        <br>
-
+        <div class="part2">
         <!--Add Image-->
         <label for="img"><p><strong>Add Image</strong></p></label>
         <input type="file" id="imgfile" name="img" accept="image/*" required/>
@@ -74,10 +156,13 @@ class AddRecipePage extends HTMLElement {
 
         <!--Basic Information-->
         <label>Cooking Time:</label>
-        <input type="text" name="cookingTimeHour" id="#input--cook-time-hour" placeholder="hours.." required>
-        <input type="text" name="cookintTimeMin" id="#input--cook-time-mins" placeholder="mins.." required>
+        <input class="css-input" type="text" name="cookingTimeHour" id="#input--cook-time-hour" placeholder="hours.." required>
+        <input class="css-input" type="text" name="cookintTimeMin" id="#input--cook-time-mins" placeholder="mins.." required>
+        <label class="css-margin" id="servings" for="servings"> No. of Servings: </label>
+        <input class="css-input" type="text" name="numServings" id="#input--no-of-serv" required>
         <br>
         <br>
+      </div>
 
         <label id="servings" for="servings"> No. of Servings: </label>
         <input type="text" name="numServings" id="#input--no-of-serv" required>
@@ -88,9 +173,10 @@ class AddRecipePage extends HTMLElement {
       <textarea id="addSummary" name="recipeSummary" placeholder="Summary" required></textarea>
       <br>
       </div>
+      </div>
     
       <!--Add Recipe Ingredients-->
-      <div id="add-recipe-ingredients" style="display: none">
+      <div class="css-wrap" id="add-recipe-ingredients" style="display: none">
       <label for="ingredients"><p><strong>Add Ingredients</strong></p></label>
       <table id="ingredient-table">
         <tr>
@@ -105,13 +191,15 @@ class AddRecipePage extends HTMLElement {
         </tr>
       </table>
       <!--When click add more should create another new 'tr' with three new inputs-->
-      <button id="addIngredientButton"> Add More </button>
+      <button class="add-more-button" id="addIngredientButton"> 
+      <img src="assets/icons/plus-circle.svg"/> 
+      </button>
       <br>
       </div>
       <!--TO DO delete ingredients button-->
   
       <!--Add Recipe Directions-->
-      <div id="add-recipe-direction" style="display: none">
+      <div class="css-wrap" id="add-recipe-direction" style="display: none">
         <p>Direction</p>
         <ol>
           <li>Step:</li>
@@ -119,7 +207,9 @@ class AddRecipePage extends HTMLElement {
         </ol>
         <br>
         <!--When click add more should create another new textarea for direction-->
-        <button id="addDirectionButton"> Add More </button>
+        <button class="add-more-button" id="addDirectionButton"> 
+        <img src="assets/icons/plus-circle.svg"/>
+         </button>
       </div>
       <br>
       
@@ -133,12 +223,25 @@ class AddRecipePage extends HTMLElement {
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
 
-    // Add leave button listener
-    this.shadowRoot
-      .getElementById('leave-button')
-      .addEventListener('click', () => {
-        router.navigate('home');
-      });
+    // Functions for the layout of recipe detailed page
+    var goToSummaryButton = this.shadowRoot.getElementById('ToAddSum');
+    var goToIngredientsButton = this.shadowRoot.getElementById('ToAddIng');
+    var goToDirectionsButton = this.shadowRoot.getElementById('ToAddDir');
+    goToSummaryButton.addEventListener('click', () => {
+      goToSummaryButton.style.backgroundColor = '#324A54';
+      goToIngredientsButton.style.backgroundColor = '#CA676A';
+      goToDirectionsButton.style.backgroundColor = '#CA676A';
+    });
+    goToIngredientsButton.addEventListener('click', () => {
+      goToSummaryButton.style.backgroundColor = '#CA676A';
+      goToIngredientsButton.style.backgroundColor = '#324A54';
+      goToDirectionsButton.style.backgroundColor = '#CA676A';
+    });
+    goToDirectionsButton.addEventListener('click', () => {
+      goToSummaryButton.style.backgroundColor = '#CA676A';
+      goToIngredientsButton.style.backgroundColor = '#CA676A';
+      goToDirectionsButton.style.backgroundColor = '#324A54';
+    });
 
     // Add Summary
     this.shadowRoot
@@ -205,7 +308,7 @@ class AddRecipePage extends HTMLElement {
         ingredient.innerHTML = '<input type="text" name="ingredientName"/>';
         let deleteButton = row.insertCell(3);
         deleteButton.innerHTML =
-          '<button onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)">Delete Row</button>';
+          '<button class="css-x-circle" onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)"><img src="assets/icons/x-circle.svg"/></button>';
       });
 
     // When click "Add More" there should be a new input text area for user to input directions
@@ -220,7 +323,8 @@ class AddRecipePage extends HTMLElement {
         let li = document.createElement('li');
         li.innerHTML = 'Step:';
         let button = document.createElement('button');
-        button.innerHTML = 'Delete';
+        button.innerHTML =
+          '<button class="css-x-circle"><img src="assets/icons/x-circle.svg"/></button>';
         let input = document.createElement('textarea');
         input.setAttribute('name', 'directionStep');
 
@@ -386,7 +490,7 @@ class AddRecipePage extends HTMLElement {
         });
         router.navigate('profile');
       }
-      POST(data, afterAdd());
+      POST(data, afterAdd);
     }
   }
 }
