@@ -552,21 +552,6 @@ class AddRecipePage extends HTMLElement {
         });
         router.navigate(`recipe_${recipe['id']}`);
 
-        // router.addPage('profile', function () {
-        //   document
-        //     .getElementById('#section--add-recipe')
-        //     .classList.remove('shown');
-        //   const profilePage = document.createElement('profile-page');
-        //   document.getElementById('#section--profile').innerHTML = '';
-
-        //   profilePage.data = data;
-        //   document.getElementById('#section--profile').appendChild(profilePage);
-
-        //   document.getElementById('#section--profile').classList.add('shown');
-          
-        // });
-        // router.navigate('profile');
-
         // Tell the profile page to update with the updated recipe list
         setTimeout(()=> document.getElementById('#section--profile').firstChild.recipes = '', 100);
         
