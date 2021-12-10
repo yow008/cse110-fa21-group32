@@ -148,22 +148,8 @@ class CookingMode extends HTMLElement {
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
-  }
 
-  /**
-   * Sets all the elements of the update recipe page to the recipes current data
-   * @param data Previous recipe data to set the placeholder values
-   */
-  set data(data) {
-    this.json = data;
- 
-    // Set Title
-    const title = getTitle(data).toUpperCase();
-    this.shadowRoot.querySelector('h2').innerHTML = title;
-
-
-    //convert totalseconds into seconds, minutes and hours format
-    function convertHMS(value) {
+    /*function convertHMS(value) {
       const sec = parseInt(value, 10); // convert value to number if it's string
       let hours   = Math.floor(sec / 3600); // get hours
       let minutes = Math.floor((sec - (hours * 3600)) / 60); // get minutes
@@ -175,6 +161,42 @@ class CookingMode extends HTMLElement {
       return hours+':'+minutes+':'+seconds; // Return is HH : MM : SS
     }
     
+    function setTime() {
+      ++totalSeconds;
+      content.innerHTML = convertHMS(totalSeconds);
+    }*/
+  }
+
+  /**
+   * Sets all the elements of the update recipe page to the recipes current data
+   * @param data Previous recipe data to set the placeholder values
+   */
+  set data(data) {
+    this.json = data;
+
+    // Set Title
+    const title = getTitle(data).toUpperCase();
+    this.shadowRoot.querySelector('h2').innerHTML = title;
+
+    //convert totalseconds into seconds, minutes and hours format
+    function convertHMS(value) {
+      const sec = parseInt(value, 10); // convert value to number if it's string
+      let hours = Math.floor(sec / 3600); // get hours
+      let minutes = Math.floor((sec - hours * 3600) / 60); // get minutes
+      let seconds = sec - hours * 3600 - minutes * 60; //  get seconds
+      // add 0 if value &lt; 10; Example: 2 => 02
+      if (hours &lt; 10) {
+        hours = '0' + hours;
+      }
+      if (minutes &lt; 10) {
+        minutes = '0' + minutes;
+      }
+      if (seconds &lt; 10) {
+        seconds = '0' + seconds;
+      }
+      return hours + ':' + minutes + ':' + seconds; // Return is HH : MM : SS
+    }
+
     let quitBtn = this.shadowRoot.querySelector('button');
     quitBtn.addEventListener('click', () => {
       history.back();
@@ -182,7 +204,7 @@ class CookingMode extends HTMLElement {
 
     //get all directions
     const content = data.recipe.analyzedInstructions[0].steps;
-    
+
     // initialize page
     for (let i = 0; i &lt; content.length; i++) {
       // initialize current step
@@ -205,45 +227,41 @@ class CookingMode extends HTMLElement {
       cookingBtn.appendChild(currBtn);
 
       //initialize timer if needed
-      if(content[i].step.search(/hour/i) != -1 || content[i].step.search(/minute/i) != -1 || content[i].step.search(/second/i) != -1){
-
+      if (
+        content[i].step.search(/hour/i) != -1 ||
+        content[i].step.search(/minute/i) != -1 ||
+        content[i].step.search(/second/i) != -1
+      ) {
         //get maximum time of current recipe
         let time;
-        if (content[i].step.match(/([\d.]+) *-second/)){
+        if (content[i].step.match(/([\d.]+) *-second/)) {
           time = content[i].step.match(/([\d.]+) *-second/)[1];
           time = parseInt(time);
-        }
-        else if (content[i].step.match(/([\d.]+) *minutes/)){
+        } else if (content[i].step.match(/([\d.]+) *minutes/)) {
           time = content[i].step.match(/([\d.]+) *minutes/)[1];
           time = parseInt(time);
           time = time * 60;
-        }
-        else if (content[i].step.match(/([\d.]+) *hours/)){
+        } else if (content[i].step.match(/([\d.]+) *hours/)) {
           time = content[i].setp.match(/([\d.]+) *hours/)[1];
           time = parseInt(time);
           time = time * 3600;
         }
-        
-
 
         let totalSeconds = 0;
         let timer;
         //count up algorithm
         function setTime() {
           ++totalSeconds;
-          if(totalSeconds >= time){
+          if (totalSeconds >= time) {
             currTime.style.color = 'red';
-          }
-          else{
+          } else {
             currTime.style.color = 'green';
           }
           currTime.innerHTML = convertHMS(totalSeconds);
         }
 
-
-
         let timerArea = this.shadowRoot.getElementById('cooking-timer');
-        
+
         //create a div for current page timer
         let currArea = document.createElement('div');
         currArea.setAttribute('id', `area${i + 1}`);
@@ -263,47 +281,46 @@ class CookingMode extends HTMLElement {
         startBtn.setAttribute('id', `startBtn${i + 1}`);
         startBtn.innerHTML = 'Start';
         currArea.appendChild(startBtn);
-        
+
         //create a pasue button
         let pauseBtn = document.createElement('button');
         pauseBtn.setAttribute('id', `pauseBtn${i + 1}`);
         pauseBtn.innerHTML = 'Pause';
         currArea.appendChild(pauseBtn);
-        
+
         //create a reset button
         let resetBtn = document.createElement('button');
         resetBtn.setAttribute('id', `resetBtn${i + 1}`);
         resetBtn.innerHTML = 'Reset';
         currArea.appendChild(resetBtn);
-        
+
         //create functionality for three buttons
         startBtn.addEventListener('click', () => {
-          if(timer){
+          if (timer) {
             clearInterval(timer);
           }
           timer = setInterval(setTime, 1000);
         });
-          
+
         pauseBtn.addEventListener('click', () => {
           clearInterval(timer);
         });
-          
+
         resetBtn.addEventListener('click', () => {
           totalSeconds = 0;
           currTime.innerHTML = '00:00:00';
           currTime.style.color = 'green';
         });
-        
+
         //initialize all timer to be invisible excepte first one
-        if(i != 0){
+        if (i != 0) {
           currArea.setAttribute('style', 'display:none');
         }
-
       }
     }
-    
+
     for (let i = 0; i &lt; content.length; i++) {
-      let curr = this.shadowRoot.querySelectorAll('button')[i+1];
+      let curr = this.shadowRoot.querySelectorAll('button')[i + 1];
       let area = this.shadowRoot.getElementById('cooking-timer');
       let pages = this.shadowRoot.querySelectorAll('p');
       curr.addEventListener('click', () => {
@@ -315,11 +332,10 @@ class CookingMode extends HTMLElement {
           }
         }
 
-        for(let k = 0; k &lt; area.children.length; k++){
-          if(area.children[k].id == `area${i + 1}`){
+        for (let k = 0; k &lt; area.children.length; k++) {
+          if (area.children[k].id == `area${i + 1}`) {
             area.children[k].setAttribute('style', 'display: inline');
-          }
-          else{
+          } else {
             area.children[k].setAttribute('style', 'display: none');
           }
         }
@@ -345,7 +361,7 @@ customElements.define('cooking-mode-page', CookingMode);
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 09 2021 21:34:48 GMT+0000 (Coordinated Universal Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Fri Dec 10 2021 06:47:52 GMT+0000 (Coordinated Universal Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

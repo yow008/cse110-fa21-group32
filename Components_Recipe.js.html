@@ -41,7 +41,6 @@
         <article>
             <pre class="prettyprint source linenums"><code>// Recipe.js
 import { router } from '../scripts/main.js';
-// import { GET /*, POST*/ } from '../scripts/request.js';
 
 /**
  * Class: RecipePage
@@ -60,33 +59,41 @@ class RecipePage extends HTMLElement {
     // Fill in styles and root element
     styles.innerHTML = `
     h2{
-      background-color: #324A54;
+      margin-bottom: 0 !important;
+      background-color: #ca676a;
       background-size: cover;
       padding: 23.5px;
       color: white;
-    }
-    .openbtn {
-      background-color: #324A54 !important;
-    }
-    .recipe-navbar{
-      display: flex;
-      justify-content: space-around;
-      background-color: #324A54;
-      padding: 20px;
-      color: white !important;
+      margin-top: 0;
+      text-align: center;
+      font-weight: lighter !important;
     }
 
-    .recipe-navbar > a{
-      color:white;
-      text-decoration: none;
+    .recipe-navbar button {
+  
+      border: transparent;
+      cursor: pointer;
+      float: left;
+      color: white;
+      font-size: large;
+      height: 31pt;
+    }
+
+    .recipe-navbar:after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    .recipe-navbar button:not(:last-child) {
+      border-right: none; /* Prevent double borders */
     }
 
     img{
       width: 100%;
-      max-height: 350px;
+      max-height: 400px;
       object-fit: cover;
     }
-
     .genInfo{
       display: flex;
       justify-content: space-around;
@@ -104,61 +111,104 @@ class RecipePage extends HTMLElement {
       justify-content: space-around;
     }
 
-    `;
+    .my-row{
+      background: #324A54;
+      color: white;
+    }
 
-    article.innerHTML = `
+    .my-col{
+      height: 12.5rem;
+    }
 
-        &lt;h2>Recipes&lt;/h2>
-        &lt;div class="recipe-navbar">
-        &lt;a href="#recipe-summaryID" id="ToSum">Summary&lt;/a>
-        &lt;a href="#recipe-ingredientsID" id="ToIng">Ingredients&lt;/a>
-        &lt;a href="#recipe-directionID" id="ToDir">Directions&lt;/a>
-        &lt;/div>
+    .circle {
+      background: white;
+      border-radius: 50%;
+      height: 6.5rem;
+      width: 6.5rem;
+      position: relative;
+      margin-left:auto;
+      margin-right:auto;
+      display:block;
+      text-align: center;
+    }
 
-        &lt;br>
-        &lt;!--User recipes ONLY-->
-        &lt;div class="editRecipes" style="display: none">
-        &lt;button type="button" id="editRecipe"> Edit &lt;/button>
-        &lt;/div>
-        &lt;br>
+    .circle > p{
+      color: #609C8B;
+      hyphens: auto;
+      margin: 0.75em;
+      text-align: center;
+      font-size: 2rem;
+    }
 
-        &lt;!--Recipe Summary-->
-        &lt;div id="recipe-summaryID" class="recipe-summary">
-        &lt;!--&lt;p>Summary&lt;/p>-->
-          &lt;!--placeholder for recipe image-->
-          &lt;div class="placeholder">
-            &lt;img src="https://media.istockphoto.com/photos/varied-food-carbohydrates-protein-vegetables-fruits-dairy-legumes-on-picture-id1218254547?b=1&amp;k=20&amp;m=1218254547&amp;s=170667a&amp;w=0&amp;h=mOEC7x7qU5NC78mCULs-jAPeLkxy8opOvIbGSnwmAyw=" img>
-          &lt;/div>
+    .recipe-description{
+      padding: 1.5rem;
+      font-size: .8rem;
+      font-style: italic;
+    }
 
-          &lt;!--general info-->
-          &lt;div class="genInfo">
-            &lt;p>Cook Time&lt;/p>
-            &lt;p>Servings&lt;/p>
-            &lt;p>Cost&lt;/p>
-          &lt;/div>
+    .my-navbar{
+      background: #324A54;
+    }
 
-          &lt;p>Content...&lt;/p>
-          &lt;button type="button" class="recipe-summmaryButton">Add to My Favorites&lt;/button>
+    .navbar-light .navbar-nav .nav-link {
+      color: white;
+    }
 
-        &lt;/div>
+    .regbutton {
+      background-color: white;
+      border-radius: 18px !important;
+      border: 1.5px solid #ca676a;
+      text-align: center;
+      min-width: 8% !important;
+      height: 20pt !important;
+      font-size: 14pt;
+      color:#ca676a;
+      width: auto !important;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
 
-        &lt;!--Recipe Ingredients-->
-        &lt;div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none">
-        &lt;p>Ingredients&lt;/p>
-        &lt;!--Add To List Button--> 
-        &lt;form>&lt;/form>
-        &lt;br>
-        &lt;button type="button" id="addToList">Add to List&lt;/button>
-        &lt;/div>
+    div#recipe-ingredientsID {
+      text-align: center;
+    }
 
-        &lt;!--Recipe Directions-->
-        &lt;div id="recipe-directionID" class="recipe-direction" style="display: none">
-        &lt;p>Direction&lt;/p>
-        &lt;ul>
-        &lt;/ul>
-        &lt;button type ="button" id="LinkToCM"> Cook &lt;/button>
-        &lt;/div>
+    .cook-button{
+      font-size: 35pt !important;
+      height: auto !important;
+      weidth auto !important;
+      border-radius: 162px !important;
+    }
 
+    .editButton, recipe-summmaryButton{
+      display: inline-block;
+    }
+
+    input {
+      margin-bottom: 20px !important;
+    }
+
+    li{
+      margin-bottom: 20px !important;   
+    }
+
+    .recipe-navbar button {
+  
+      border: transparent;
+      cursor: pointer;
+      float: left;
+      color: white;
+      font-size: large;
+      height: 40pt;
+    }
+
+    .recipe-navbar:after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    .recipe-navbar button:not(:last-child) {
+      border-right: none; /* Prevent double borders */
+    }
     `;
 
     // Append elements to the shadow root
@@ -173,48 +223,110 @@ class RecipePage extends HTMLElement {
     console.log(data);
     this.json = data;
     this.id = this.shadowRoot.querySelector('article').innerHTML = `
+    &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">&lt;/script>
 
-      &lt;h2>Recipes&lt;/h2>
-      &lt;div class="recipe-navbar">
-      &lt;a href="#recipe-summaryID" id="ToSum">Summary&lt;/a>
-      &lt;a href="#recipe-ingredientsID" id="ToIng">Ingredients&lt;/a>
-      &lt;a href="#recipe-directionID" id="ToDir">Directions&lt;/a>
+    &lt;h2>Recipe Name&lt;/h2>
+    
+    &lt;!--&lt;nav class="navbar navbar-expand-lg navbar-light my-navbar">
+    &lt;button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      &lt;span class="navbar-toggler-icon">&lt;/span>
+    &lt;/button>
+    &lt;div class="collapse navbar-collapse recipe-navbar" id="navbarNavAltMarkup">
+      &lt;div class="navbar-nav nav-fill w-100">
+        &lt;a id="ToSum" class="nav-item nav-link active" href="#recipe-summaryID" style="color:white;">Summary&lt;span class="sr-only">&lt;/span>&lt;/a>
+        &lt;a id="ToIng" class="nav-item nav-link" href="#recipe-ingredientsID" style="color:white;">Ingredients&lt;/a>
+        &lt;a id="ToDir" class="nav-item nav-link" href="#recipe-directionID" style="color:white;">Directions&lt;/a>
+      &lt;/div>
+    &lt;/div>
+  &lt;/nav>-->
+
+    &lt;div class="recipe-navbar" style="width: 100%">
+    &lt;button id="ToSum" style="width:33.3%; background-color: #324A54;">Summary
+      &lt;a href="#recipe-summaryID">&lt;/a>
+    &lt;/button>
+    &lt;button id="ToIng" style="width:33.3%; background-color: #CA676A;">Ingredients
+      &lt;a href="#recipe-ingredientsID">&lt;/a>
+    &lt;/button>
+    &lt;button id="ToDir" style="width:33.3%; background-color: #CA676A;">Directions
+      &lt;a href="#recipe-directionID">&lt;/a>
+    &lt;/button>
+  &lt;/div>
+
+    &lt;!--Recipe Summary-->
+    &lt;div id="recipe-summaryID" class="recipe-summary" style="display: block">
+      &lt;!--&lt;p>Summary&lt;/p>-->
+
+      &lt;!--recipe image-->
+      &lt;div id="recipe-imageID">
+        &lt;img src="https://media.istockphoto.com/photos/varied-food-carbohydrates-protein-vegetables-fruits-dairy-legumes-on-picture-id1218254547?b=1&amp;k=20&amp;m=1218254547&amp;s=170667a&amp;w=0&amp;h=mOEC7x7qU5NC78mCULs-jAPeLkxy8opOvIbGSnwmAyw=" class="d-block w-100" alt="No Photo Loaded">
       &lt;/div>
 
-      &lt;br>
-      &lt;!--User recipes ONLY-->
-      &lt;div class="editRecipes" style="display: none">
-      &lt;button type="button" id="editRecipe"> Edit &lt;/button>
-      &lt;/div>
-      &lt;br>
-
-      &lt;!--Recipe Summary-->
-      &lt;div id="recipe-summaryID" class="recipe-summary" style="display: block">
-      &lt;button type="button" class="recipe-summmaryButton">Add to My Favorites&lt;/button>
-      &lt;div id="recipe-servingsID" class="recipe-servings">Servings: &lt;/div>
-      &lt;div id="recipe-cooktimeID" class="recipe-cooktime">Cooktime: &lt;/div>
-      Summary:
       
+      &lt;!--general info-->
+      &lt;div class="container-fluid my-container">
+        &lt;div class="row justify-content-center d-flex align-items-center my-row">
+        &lt;!--cook time-->
+          &lt;div class="col my-col text-center align-items-center justify-content-center p-4">
+            &lt;div class="circle d-flex align-items-center my-circle justify-content-center" id="recipe-cooktimeID">
+            
+            &lt;/div>
+            &lt;br>
+            Cook Time
+          &lt;/div>
+          &lt;!--servings-->
+          &lt;div class="col my-col text-center align-items-center justify-content-center p-4">
+            &lt;div class="circle d-flex align-items-center my-circle justify-content-center" id="recipe-servingsID">
+              
+            &lt;/div>
+            &lt;br>
+            Servings
+          &lt;/div>
+          &lt;!--cost-->
+          &lt;div class="col my-col text-center align-items-center justify-content-center p-4">
+            &lt;div class="circle d-flex align-items-center my-circle justify-content-center">
+              &lt;p>X&lt;/p>
+            &lt;/div>
+            &lt;br>
+            Cost
+          &lt;/div>
+        &lt;/div>
       &lt;/div>
-
-      &lt;!--Recipe Ingredients-->
-      &lt;div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none">
-        &lt;p>Ingredients&lt;/p>
-        &lt;!--Add To List Button--> 
-        &lt;form>
-        &lt;/form>
+      &lt;br>
+      &lt;!--description-->
+      &lt;div class="recipe-description" id="recipe-descriptionID">
+        &lt;button type="button" class="recipe-summmaryButton regbutton">Add to My Favorites&lt;/button>
+        &lt;button type="button" class="editButton regbutton"id="editRecipe">Edit Recipe&lt;/button>
         &lt;br>
-        &lt;button type="button" id="addToList">Add to List&lt;/button>
+        &lt;br>
       &lt;/div>
+    &lt;/div>
+    
+    &lt;!--Recipe Ingredients-->
+    
+    &lt;div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none; text-align: center;">
+      &lt;br> 
+      &lt;form style="display: inline-block; text-align: left;">&lt;/form>
+      &lt;br>
+      &lt;br>
+      &lt;div class="row justify-content-center">
+        &lt;button type="button" id="addToList" class="regbutton">Add to List&lt;/button>
+      &lt;/div>
+      &lt;br>
+      &lt;br>
+    &lt;/div>
 
-      &lt;!--Recipe Directions-->
-      &lt;div id="recipe-directionID" class="recipe-direction" style="display: none">
-      &lt;p>Direction&lt;/p>
+    &lt;!--Recipe Directions-->
+    &lt;div id="recipe-directionID" class="recipe-direction" style="display: none">
+      &lt;br>
+      &lt;div class="row justify-content-center">
+        &lt;button type ="button" id="LinkToCM" class="cook-button regbutton">COOK&lt;/button>
+      &lt;/div>
+      &lt;br>
       &lt;ol>
       &lt;/ol>
-      &lt;button type ="button" id="LinkToCM"> Cook &lt;/button>
-      &lt;/div>
-
+      &lt;br>
+    &lt;/div>
     `;
 
     var recipeID = data.recipe.id;
@@ -268,18 +380,15 @@ class RecipePage extends HTMLElement {
     this.shadowRoot.querySelector('h2').innerHTML = title;
 
     // Set Summary
-    // var image = new Image();
-    // image.src =
-    // document.body.appendChild(image);
     const summary = document.createElement('p');
-    const image = document.createElement('img');
     summary.innerHTML = getSummary(data);
-    image.setAttribute('width', '400');
-    image.setAttribute('src', getImage(data));
-    this.shadowRoot.getElementById('recipe-summaryID').appendChild(image);
-    this.shadowRoot.getElementById('recipe-summaryID').appendChild(summary);
+    this.shadowRoot
+      .getElementById('recipe-imageID')
+      .querySelector('img')
+      .setAttribute('src', getImage(data));
+    this.shadowRoot.getElementById('recipe-descriptionID').appendChild(summary);
 
-    //Set Servings
+    // Set Servings
     const servings = document.createElement('p');
     servings.innerHTML = getServings(data);
     this.shadowRoot.getElementById('recipe-servingsID').appendChild(servings);
@@ -289,7 +398,7 @@ class RecipePage extends HTMLElement {
     cooktime.innerHTML = timeConvert(getCookTime(data));
     this.shadowRoot.getElementById('recipe-cooktimeID').appendChild(cooktime);
 
-    //Set Ingredients
+    // Set Ingredients
     const form = this.shadowRoot.querySelector('form');
     for (let i = 0; i &lt; data.recipe.extendedIngredients.length; i++) {
       const ingredient = data.recipe.extendedIngredients[i];
@@ -351,6 +460,10 @@ class RecipePage extends HTMLElement {
       this.shadowRoot
         .getElementById('recipe-directionID')
         .setAttribute('style', 'display: none');
+
+      this.shadowRoot.getElementById('ToSum').style.backgroundColor = '#324A54';
+      this.shadowRoot.getElementById('ToDir').style.backgroundColor = '#CA676A';
+      this.shadowRoot.getElementById('ToIng').style.backgroundColor = '#CA676A';
     });
 
     this.shadowRoot.getElementById('ToDir').addEventListener('click', (e) => {
@@ -364,6 +477,9 @@ class RecipePage extends HTMLElement {
       this.shadowRoot
         .getElementById('recipe-directionID')
         .setAttribute('style', 'display: show');
+      this.shadowRoot.getElementById('ToSum').style.backgroundColor = '#CA676A';
+      this.shadowRoot.getElementById('ToDir').style.backgroundColor = '#324A54';
+      this.shadowRoot.getElementById('ToIng').style.backgroundColor = '#CA676A';
     });
 
     this.shadowRoot.getElementById('ToIng').addEventListener('click', (e) => {
@@ -377,6 +493,9 @@ class RecipePage extends HTMLElement {
       this.shadowRoot
         .getElementById('recipe-directionID')
         .setAttribute('style', 'display: none');
+      this.shadowRoot.getElementById('ToSum').style.backgroundColor = '#CA676A';
+      this.shadowRoot.getElementById('ToDir').style.backgroundColor = '#CA676A';
+      this.shadowRoot.getElementById('ToIng').style.backgroundColor = '#324A54';
     });
 
     const checkedIng = this.shadowRoot.querySelectorAll(
@@ -471,9 +590,13 @@ function timeConvert(n) {
   var rhours = Math.floor(hours);
   var minutes = (hours - rhours) * 60;
   var rminutes = Math.round(minutes);
-  return (
-    num + ' minutes = ' + rhours + ' hour(s) and ' + rminutes + ' minute(s).'
-  );
+  if (rhours == 0) {
+    return rminutes + 'm';
+  } else if (rminutes == 0) {
+    return rhours + 'h';
+  } else {
+    return rhours + 'h ' + rminutes + 'm';
+  }
 }
 
 /**
@@ -561,7 +684,7 @@ customElements.define('recipe-page', RecipePage);
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Thu Dec 09 2021 21:34:48 GMT+0000 (Coordinated Universal Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Fri Dec 10 2021 06:47:52 GMT+0000 (Coordinated Universal Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
