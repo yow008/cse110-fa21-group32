@@ -537,21 +537,37 @@ class AddRecipePage extends HTMLElement {
       //POST request to send recipe data
 
       function afterAdd() {
-        router.addPage('profile', function () {
-          document.getElementById('#section--home').classList.remove('shown');
-          document
-            .getElementById('#section--search-bar')
-            .classList.remove('shown');
+        router.addPage(`recipe_${recipe['id']}`, function () {
           document
             .getElementById('#section--add-recipe')
             .classList.remove('shown');
 
-          document.getElementById('#section--profile').classList.add('shown');
+          // Fetch and populate recipe page and add to recipe section
+          const recipePage = document.createElement('recipe-page');
+          document.getElementById('#section--recipe').innerHTML = '';
+
+          recipePage.data = data;
+          document.getElementById('#section--recipe').appendChild(recipePage);
+          document.getElementById('#section--recipe').classList.add('shown');
         });
-        router.navigate('profile');
+        router.navigate(`recipe_${recipe['id']}`);
+
+        // router.addPage('profile', function () {
+        //   document.getElementById('#section--home').classList.remove('shown');
+        //   document
+        //     .getElementById('#section--search-bar')
+        //     .classList.remove('shown');
+        //   document
+        //     .getElementById('#section--add-recipe')
+        //     .classList.remove('shown');
+
+        //   document.getElementById('#section--profile').classList.add('shown');
+          
+        // });
+        // router.navigate('profile');
 
         // Tell the profile page to update with the updated recipe list
-        // document.querySelector('#section--profile').firstChild.update = '';
+        document.getElementById('#section--profile').firstChild.data = '';
       }
       POST(data, afterAdd);
     }
