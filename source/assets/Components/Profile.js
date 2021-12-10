@@ -28,12 +28,11 @@ class ProfilePage extends HTMLElement {
         background-size: cover;
         padding: 23.5px;
         color: white;
+        text-align: center;
       }
 
-    table {
-      table-layout: fixed;
-      width: 80%;
-      text-align: left;
+    th {
+      height: 20pt;
     }
 
     img {
@@ -43,15 +42,22 @@ class ProfilePage extends HTMLElement {
       object-fit: contain;
     }
 
+    table {
+      width: 100%;
+    }
     th {
-        height: 200px;
+      width: 32%;
+        height: 40pt;
     }
 
     .button-group button {
-      background-color: transparent;
+  
       border: transparent;
-        cursor: pointer;
+      cursor: pointer;
       float: left;
+      color: white;
+      font-size: large;
+      height: 31pt;
     }
 
     .button-group:after {
@@ -68,6 +74,32 @@ class ProfilePage extends HTMLElement {
       color: blue;
     }
 
+    .profile-page-review {
+      display: none;
+    }
+
+    .css-background {
+      background-color: #324A54;
+      width: 100%;
+    }
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .normal-button {
+      background-color: #324A54;
+      color: white;
+      border: none;
+      font-size: 14pt;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+      font-size: 14pt;
+    }
     `;
 
     /* Added article */
@@ -88,8 +120,8 @@ class ProfilePage extends HTMLElement {
 
         <!--Profile Page Recipe-->
         <div class="button-group">
-          <button id="recipe-in-profile-button" style="width:50%; color: blue">Recipes</button>
-          <button id="editProfile-in-profile-button" style="width:50%; color: grey">Edit Profile</button>
+          <button id="recipe-in-profile-button" style="width:50%; background-color: #324A54">Recipes</button>
+          <button id="editProfile-in-profile-button" style="width:50%; background-color: #CA676A">Edit Profile</button>
         </div>
 
         <div id="profile-page-recipeID" class="profile-page-recipe">

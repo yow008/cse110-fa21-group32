@@ -26,6 +26,19 @@ class GroceryPage extends HTMLElement {
             padding: 23.5px;
             color: white;
           }
+        button {
+          background-color: white;
+          border-radius: 18px;
+          border: 1.5px solid #ca676a;
+          text-align: center;
+          min-width: 8%;
+          height: 20pt;
+          font-size: 14pt;
+          color:#ca676a;
+        }
+        .css-wrap {
+          margin-left: 35%;
+        }
         `;
     article.innerHTML = `
         <h2>Grocery List</h2>

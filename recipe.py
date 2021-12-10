@@ -71,7 +71,7 @@ class Recipe_DB:
 
         # Search by keyword. Get recipe IDs from spoonacular, update DB, and return results
 
-        url = 'https://api.spoonacular.com/recipes/complexSearch?query=%s&apiKey=%s&includeNutrition=false' % (
+        url = 'https://api.spoonacular.com/recipes/complexSearch?query=%s&apiKey=%s&includeNutrition=false&number=12&instructionsRequired=true' % (
             keyword, self.API_KEY)
         recipe = requests.request('GET', url, headers=self.headers).json()
         return recipe['results']
@@ -83,7 +83,7 @@ class Recipe_DB:
             JSON Object List: list of recipes with data in JSON-like structure
         '''
 
-        url = 'https://api.spoonacular.com/recipes/random?apiKey=%s&number=10' % (
+        url = 'https://api.spoonacular.com/recipes/random?apiKey=%s&number=9' % (
             self.API_KEY)
         recipe = requests.request('GET', url, headers=self.headers).json()
 
