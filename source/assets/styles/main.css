@@ -154,7 +154,7 @@ section:not(section.shown) {
 }
 
 .footer > button {
-  margin: 0px 2%;
+  margin: 0 2%;
   padding: 15px 2%;
   font-size: 1px;
   border-radius: 10em;
