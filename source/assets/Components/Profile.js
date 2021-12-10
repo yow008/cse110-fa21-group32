@@ -305,7 +305,7 @@ class ProfilePage extends HTMLElement {
       e.preventDefault();
       let newInfo = {
         Username: username.value,
-        Email: email.value,
+        Email: inputEmail.value,
         Password: password.value,
       };
       if (
