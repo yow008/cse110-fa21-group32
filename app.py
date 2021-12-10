@@ -18,7 +18,6 @@ def home_page():
     print(request)
     if request.method == 'POST':
         msg = request.get_json()
-        
 
         # USER
         # Register (create) the user
@@ -80,7 +79,7 @@ def home_page():
                 response = Response(response=recipe_json, status=200, mimetype='application/json')
                 # print(response.response)
                 return response
-            # Get random recipe results to populate home page
+            # Search for random recipes to populate the home page
             if msg['type'] == 'searchRandom':
                 recipes = recipe_db.searchRandomRecipes()
                 recipes = {i: recipes[i] for i in range(len(recipes))}

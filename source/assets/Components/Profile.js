@@ -28,12 +28,11 @@ class ProfilePage extends HTMLElement {
         background-size: cover;
         padding: 23.5px;
         color: white;
+        text-align: center;
       }
 
-    table {
-      table-layout: fixed;
-      width: 80%;
-      text-align: left;
+    th {
+      height: 20pt;
     }
 
     img {
@@ -43,15 +42,22 @@ class ProfilePage extends HTMLElement {
       object-fit: contain;
     }
 
+    table {
+      width: 100%;
+    }
     th {
-        height: 200px;
+      width: 32%;
+        height: 40pt;
     }
 
     .button-group button {
-      background-color: transparent;
+  
       border: transparent;
-        cursor: pointer;
+      cursor: pointer;
       float: left;
+      color: white;
+      font-size: large;
+      height: 31pt;
     }
 
     .button-group:after {
@@ -68,6 +74,32 @@ class ProfilePage extends HTMLElement {
       color: blue;
     }
 
+    .profile-page-review {
+      display: none;
+    }
+
+    .css-background {
+      background-color: #324A54;
+      width: 100%;
+    }
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .normal-button {
+      background-color: #324A54;
+      color: white;
+      border: none;
+      font-size: 14pt;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+      font-size: 14pt;
+    }
     `;
 
     /* Added article */
@@ -88,8 +120,8 @@ class ProfilePage extends HTMLElement {
 
         <!--Profile Page Recipe-->
         <div class="button-group">
-          <button id="recipe-in-profile-button" style="width:50%; color: blue">Recipes</button>
-          <button id="editProfile-in-profile-button" style="width:50%; color: grey">Edit Profile</button>
+          <button id="recipe-in-profile-button" style="width:50%; background-color: #324A54">Recipes</button>
+          <button id="editProfile-in-profile-button" style="width:50%; background-color: #CA676A">Edit Profile</button>
         </div>
 
         <div id="profile-page-recipeID" class="profile-page-recipe">
@@ -158,7 +190,11 @@ class ProfilePage extends HTMLElement {
 
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
-    getRecipes(user, token, this.shadowRoot);
+
+    let shadowRoot = this.shadowRoot;
+    setTimeout(function () {
+      getRecipes(user, token, shadowRoot);
+    }, 2000);
 
     let showUsername = this.shadowRoot.getElementById('showUsername');
     showUsername.innerHTML = 'Username: ' + user;
@@ -170,7 +206,10 @@ class ProfilePage extends HTMLElement {
 
     // Add current email to email textarea element
     let email = this.shadowRoot.getElementById('email');
-    getEmail(user, token, showEmail, email);
+    setTimeout(function () {
+      showEmail.innerHTML = `User Email: ` + localStorage.getItem('userEmail');
+      email.setAttribute('value', localStorage.getItem('userEmail'));
+    }, 2000);
 
     let password = this.shadowRoot.getElementById('password');
     let confirmPassword = this.shadowRoot.getElementById('confirm-password');
@@ -190,7 +229,6 @@ class ProfilePage extends HTMLElement {
         username.value.length > 9
       ) {
         // Sets the users info to the given info
-        console.log('setting new info');
         setNewInfo(newInfo);
       } else if (password.value != confirmPassword.value) {
         // If passwords don't match then send error
@@ -241,6 +279,7 @@ function setNewInfo(newInfo) {
    */
   function afterUpdate() {
     localStorage.setItem('username', newInfo['Username']);
+    localStorage.setItem('userEmail', newInfo['Email']);
   }
 
   POST(newInfoPost, afterUpdate);
@@ -268,32 +307,6 @@ function deleteUser() {
 }
 
 /**
- * Fetch the email from the user and display it
- * @param {String} username The current users username from localStorage
- * @param {String} token The current users token from localStorage
- * @param {Element} userEmail The element in the page thats value will be the
- * email
- */
-function getEmail(username, token, userEmail, userEmailTwo) {
-  const emailReq = `type=request&elem=email&user=${encodeURIComponent(
-    username
-  )}&token=${encodeURIComponent(token)}`;
-
-  /**
-   * Populate the display element with the fetched email
-   * @param {*} data
-   */
-  function getFn(data) {
-    console.log('After email fetch');
-    userEmail.innerHTML = `User Email: ${data.userInfo[0]}`;
-    userEmailTwo.setAttribute('value', data.userInfo[0]);
-    //setFormMessage(loginForm, 'error', 'Invalid username or password!');
-  }
-
-  GET(emailReq, getFn);
-}
-
-/**
  *
  * @param {*} username
  * @param {*} token
@@ -309,75 +322,44 @@ function getRecipes(username, token, shadowRoot) {
    * @param {*} data
    */
   function atFetch(data) {
-    for (let i = 0; i < data.ID.length; i++) {
-      fetchRecipe(data.ID[i], shadowRoot);
+    let userRecipes = [];
+    for (let i = 0; i < data.recipes.length; i++) {
+      // Create title element
+      let recipe = data.recipes[i];
+      const title = document.createElement('h3');
+      title.innerText = recipe['title'];
+      const image = document.createElement('img');
+      image.setAttribute('src', recipe['image']);
+      image.setAttribute('alt', 'No Image');
+      shadowRoot.getElementById('profile-page-recipeID').appendChild(title);
+      shadowRoot.getElementById('profile-page-recipeID').appendChild(image);
+
+      userRecipes.push(recipe['id']);
+      // Add page to router so navigate works
+      router.addPage(`recipe_${recipe['id']}`, function () {
+        document.getElementById('#section--profile').classList.remove('shown');
+
+        document.getElementById('#section--recipe').classList.add('shown');
+
+        // Fetch and populate recipe page and add to recipe section
+        const recipePage = document.createElement('recipe-page');
+        console.log(recipe);
+        recipePage.data = { recipe: recipe };
+        recipePage.classList.add('shown');
+        document.getElementById('#section--recipe').innerHTML = '';
+        document.getElementById('#section--recipe').appendChild(recipePage);
+      });
+
+      // Add click listener to title element -> navigates to recipe card page
+      title.addEventListener('click', () => {
+        // let recipeView = document.getElementById('#profile-page-recipeID');
+        // while (recipeView.firstChild) {
+        //   recipeView.removeChild(recipeView.firstChild);
+        // }
+        router.navigate(`recipe_${recipe['id']}`);
+      });
     }
-
-    /**
-     *
-     * @param {*} recipeId
-     * @param {*} shadowRoot
-     */
-    function fetchRecipe(recipeId, shadowRoot) {
-      const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
-
-      /**
-       * TODO:
-       * @param {JSON} data
-       */
-      function afterFetch(data) {
-        // Create title element
-        const title = document.createElement('h3');
-        title.innerText = data.recipe.title;
-        shadowRoot.getElementById('profile-page-recipeID').appendChild(title);
-
-        // Add page to router so navigate works
-        router.addPage(`recipe_${recipeId}`, function () {
-          document
-            .getElementById('#section--profile')
-            .classList.remove('shown');
-          document.getElementById('#section--home').classList.remove('shown');
-          document
-            .getElementById('#section--search-bar')
-            .classList.remove('shown');
-          document
-            .getElementById('#section--grocery')
-            .classList.remove('shown');
-          document
-            .getElementById('#section--cooking-mode')
-            .classList.remove('shown');
-          document
-            .getElementById('#section--update-recipe')
-            .classList.remove('shown');
-          document
-            .getElementById('#section--grocery')
-            .classList.remove('shown');
-          document
-            .getElementById('#section--search-results')
-            .classList.remove('shown');
-
-          document.getElementById('#section--recipe').classList.add('shown');
-
-          // Fetch and populate recipe page and add to recipe section
-          const recipePage = document.createElement('recipe-page');
-          recipePage.data = data;
-          recipePage.classList.add('shown');
-          document.getElementById('#section--recipe').innerHTML = '';
-          document.getElementById('#section--recipe').appendChild(recipePage);
-        });
-
-        // Add click listener to title element -> navigates to recipe card page
-        title.addEventListener('click', () => {
-          // let recipeView = document.getElementById('#profile-page-recipeID');
-          // while (recipeView.firstChild) {
-          //   recipeView.removeChild(recipeView.firstChild);
-          // }
-          router.navigate(`recipe_${recipeId}`);
-        });
-      }
-
-      GET(fetchReq, afterFetch);
-    }
+    localStorage.setItem('userRecipes', userRecipes);
   }
 
   GET(searchReq, atFetch);
