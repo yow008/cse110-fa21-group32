@@ -1,7 +1,7 @@
 describe("Test title of userLogin", () => {
     beforeAll(async () => {
         await page.goto(
-          'http://127.0.0.1:5500/source/userLogin.html'
+          'https://hopeful-lewin-95a6c7.netlify.app/userLogin.html'
         );
       });
     test("Title of the page", async () => {
@@ -17,7 +17,7 @@ const assert = require('assert');
 describe('Login Page', function () {
     beforeAll(async () => {
         await page.goto(
-          'http://127.0.0.1:5500/source/userLogin.html'
+          'https://hopeful-lewin-95a6c7.netlify.app/userLogin.html'
         );
       });
   it('should let you log in', async () => {
@@ -25,9 +25,10 @@ describe('Login Page', function () {
     page.type(input,"Martin1234");
     let pass = page.$('input[name="log-pass"]');
     page.type(pass,"1234");
-    page.click('button#form_button');
-
-    const pageUrl = await page.goto('http://127.0.0.1:5500/source/home.html');
-    assert.equals(pageUrl,'http://127.0.0.1:5500/source/home.html');
+    await page.waitForSelector('button#continue'); // waits for the continue button to finish loading
+    await page.click('button#continue'); // click it 
+    let navURL =  await page.url(); // wait for new page to load
+    console.log(navURL);
+    expect(navURL).toBe('https://hopeful-lewin-95a6c7.netlify.app/userlogin'); // if the username and password are in the
   });
 });

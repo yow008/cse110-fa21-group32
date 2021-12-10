@@ -1,8 +1,8 @@
-global.window = { location: { pathname: null } };;
+global.window = { location: { pathname: null } };
 describe('Basic user flow for Website', () => {
     beforeAll(async () => {
       await page.goto(
-        'http://127.0.0.1:5500/source/home.html'
+        'https://hopeful-lewin-95a6c7.netlify.app/home.html'
       );
     });
   
@@ -22,32 +22,20 @@ describe('Basic user flow for Website', () => {
       console.log(title);
       expect(title).toBe("CookEZ");
   }, 1000);
-  
-  // test('should change page when button is clicked', async() => {
-  //   var button = await page.$('button#LinkToProfile');
-  //   console.log(button);
-  //   await button.click();
-  //   await page.waitForNavigation();
-  //   const result = await page.evaluate(() => {
-  //     return JSON.stringify(window.location.href);
-  //    });
-  //    console.log(result);
-  //   expect(result).toBe("\"http://127.0.0.1:5500/source/home.html#profile");
-  // },10000);
 });
 
-//   describe("Test title of the homepage", () => {
-//     beforeAll(async () => {
-//         await page.goto(
-//           'http://127.0.0.1:5500/source/home.html'
-//         );
-//       });
-//     test("Title of the page", async () => {
-//         const title = await page.title();
-//         console.log(title);
-//         expect(title).toBe("CookEZ");
-//     }, 1000);
-// });
+  describe("Test title of the homepage", () => {
+    beforeAll(async () => {
+        await page.goto(
+          'https://hopeful-lewin-95a6c7.netlify.app/home.html'
+        );
+      });
+    test("Title of the page", async () => {
+        const title = await page.title();
+        console.log(title);
+        expect(title).toBe("CookEZ");
+    }, 1000);
+});
 
 // describe("Test navigation from home to profile", () => {
 //   beforeAll(async () => {
