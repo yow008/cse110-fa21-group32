@@ -145,13 +145,10 @@ section:not(section.shown) {
 .footer {
   background: #ca676a;
   position: fixed;
-  padding: 0px 5px;
   bottom: 0;
   width: 100%;
-  display: -webkit-flex;
   overflow: hidden;
-  /* display: flex; */
-  -webkit-justify-content: space-between;
+  display: flex;
   justify-content: space-between;
   vertical-align: top;
 }
@@ -161,7 +158,6 @@ section:not(section.shown) {
   padding: 15px 2%;
   font-size: 1px;
   border-radius: 10em;
-  font-size: 16px;
 }
 
 .footerButton:active {
