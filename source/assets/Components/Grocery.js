@@ -188,6 +188,9 @@ class GroceryPage extends HTMLElement {
             //Display recipe information from saved
             const recipePage = document.createElement('recipe-page');
             document
+              .getElementById('#section--cooking-mode')
+              .classList.remove('shown');
+            document
               .getElementById('#section--grocery')
               .classList.remove('shown');
             recipePage.classList.add('shown');
