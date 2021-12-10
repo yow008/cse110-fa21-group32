@@ -84,9 +84,9 @@ class ProfilePage extends HTMLElement {
       width: 100%;
     }
     img {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
+      width:  100px;
+      height: 100px;
+      object-fit: contain;
     }
 
     .normal-button {
@@ -100,12 +100,6 @@ class ProfilePage extends HTMLElement {
       color: white;
       text-decoration: none;
       font-size: 14pt;
-    }
-
-    img{
-      width: 100%;
-      max-height: 400px;
-      object-fit: cover;
     }
 
     .profile-page-editProfile {
@@ -156,6 +150,9 @@ class ProfilePage extends HTMLElement {
       margin-right: 5%;
     }
 
+    .userinfo {
+      margin-top: 50px;
+    }
     .card-body{
       background-color: #324A54;
       color: white;
@@ -193,7 +190,7 @@ class ProfilePage extends HTMLElement {
         <table class=profile-page-navbar style="background-color: #eecbcc" align="center" >
         <th scope="col" style="text-align: center"><img src="assets/icons/logo.png"></th>
         <th scope="col" style="text-align: left">
-            <ul>
+            <ul class="userinfo">
                 <li><p id="showUsername"></p></li><br>
                 <li><p id="showEmail"></p></li><br>
             </ul>

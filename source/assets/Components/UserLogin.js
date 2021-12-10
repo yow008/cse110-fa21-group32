@@ -48,13 +48,11 @@ function clearInputError(inputElement) {
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.querySelector('#login');
   const createForm = document.querySelector('#creation');
-  const emailForm = document.querySelector('#emailPage');
   const confirmationForm = document.querySelector('#confirmationPage');
   const successRegForm = document.querySelector('#successReg');
 
   document.querySelector('#linkCreation').addEventListener('click', (e) => {
     e.preventDefault();
-    emailForm.classList.add('form--hidden');
     loginForm.classList.add('form--hidden');
     confirmationForm.classList.add('form--hidden');
     successRegForm.classList.add('form--hidden');
@@ -65,16 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
   //--------------------------------------------------------
   document.querySelector('#linkLogin0').addEventListener('click', (e) => {
     e.preventDefault();
-    emailForm.classList.add('form--hidden');
-    createForm.classList.add('form--hidden');
-    confirmationForm.classList.add('form--hidden');
-    successRegForm.classList.add('form--hidden');
-    loginForm.classList.remove('form--hidden');
-  });
-
-  document.querySelector('#linkLogin1').addEventListener('click', (e) => {
-    e.preventDefault();
-    emailForm.classList.add('form--hidden');
     createForm.classList.add('form--hidden');
     confirmationForm.classList.add('form--hidden');
     successRegForm.classList.add('form--hidden');
@@ -83,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelector('#linkLogin2').addEventListener('click', (e) => {
     e.preventDefault();
-    emailForm.classList.add('form--hidden');
     createForm.classList.add('form--hidden');
     confirmationForm.classList.add('form--hidden');
     successRegForm.classList.add('form--hidden');
@@ -92,22 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelector('#linkLogin3').addEventListener('click', (e) => {
     e.preventDefault();
-    emailForm.classList.add('form--hidden');
     createForm.classList.add('form--hidden');
     confirmationForm.classList.add('form--hidden');
     successRegForm.classList.add('form--hidden');
     loginForm.classList.remove('form--hidden');
   });
   //---------------------------------------------------------------
-
-  document.querySelector('#linkEmailPage').addEventListener('click', (e) => {
-    e.preventDefault();
-    loginForm.classList.add('form--hidden');
-    createForm.classList.add('form--hidden');
-    confirmationForm.classList.add('form--hidden');
-    successRegForm.classList.add('form--hidden');
-    emailForm.classList.remove('form--hidden');
-  });
 
   //   loginForm.addEventListener('submit', (e) => {
   //     e.preventDefault();
@@ -138,20 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const resetButton = document.querySelector('#reset');
-  resetButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    emailForm.classList.add('form--hidden');
-    loginForm.classList.add('form--hidden');
-    createForm.classList.add('form--hidden');
-    successRegForm.classList.add('form--hidden');
-    confirmationForm.classList.remove('form--hidden');
-  });
 
   // Try to create account when info is submitted
   createForm.addEventListener('submit', (e) => {
     e.preventDefault();
     setFormMessage(createForm, 'error', 'wrong information');
-    emailForm.classList.add('form--hidden');
     loginForm.classList.remove('form--hidden');
     createForm.classList.add('form--hidden');
     confirmationForm.classList.add('form--hidden');

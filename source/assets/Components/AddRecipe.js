@@ -36,9 +36,6 @@ class AddRecipePage extends HTMLElement {
       text-align: center;
       margin: auto;
     }
-    .openbtn {
-      background: #324A54;
-    }
     .part1 {
       background-color: #CA676A;
       width: 100%;
@@ -87,8 +84,6 @@ class AddRecipePage extends HTMLElement {
       background-color: #ca676a;
       color: white;
     }
-    
-    
      .add-recipe-navbar button {
       border: transparent;
       cursor: pointer;
@@ -110,6 +105,7 @@ class AddRecipePage extends HTMLElement {
       width: 80%;
       height: 42pt;
       background-color: #EEEEEE;
+      font-size: 16pt;
     }
 
     .addIng {
@@ -119,6 +115,7 @@ class AddRecipePage extends HTMLElement {
       box-sizing: border-box;
       font-size: 16pt;
     }
+    
     .css-input {
       width: 20%;
       padding: 10px 15px;
@@ -138,6 +135,7 @@ class AddRecipePage extends HTMLElement {
     }
 
     a { text-decoration: none; }
+
     .add-more-button {
       cursor: pointer;
       width: 20%;
@@ -173,12 +171,18 @@ class AddRecipePage extends HTMLElement {
       display: list-item;
       list-style-position: inside;
     }
+    .firstStepTA {
+      position: relative;
+      right: 18px;
+    }
+    
     
     }
         `;
     article.innerHTML = `
        
-      <div class="part1"> <h2>Add Your Recipe</h2>
+      <div class="part1"> 
+        <h2>Add Your Recipe</h2>
         <div class="add-recipe-navbar" style="width: 100%">
           <button id="ToAddSum" style="width:33.3%; background-color: #324A54;">Summary
             <a href="#add-recipe-summaryID"></a>
@@ -251,8 +255,8 @@ class AddRecipePage extends HTMLElement {
         <!-- empty div for spacing -->
         <div class="emp"></div>
         <ol>
-          <li>Step:</li>
-          <textarea name="directionStep" id="#input--direction-step" required></textarea>
+          <li class="firstStepli">Step:</li>
+          <textarea class="firstStepTA" name="directionStep" id="#input--direction-step" required></textarea>
         </ol>
         <br>
         <!--When click add more should create another new textarea for direction-->
@@ -261,8 +265,8 @@ class AddRecipePage extends HTMLElement {
          </button>
       </div>
       <br>
-
-      <button class="part4-button" type="button">Publish</button>
+      
+      <input class="part4-button" id="submitBtn" type="submit" value="Publish"/>
       <button class="part4-button" id="leaveButton">
       <a href="home.html"  style="color:#CA676A"> Leave </a>
       </button>
@@ -433,8 +437,8 @@ class AddRecipePage extends HTMLElement {
     // newRecipe.addEventListener("submit", handleFormSubmit)
 
     // Event handler for a form submit event
-    const newRecipe = this.shadowRoot.getElementById('new-recipe');
-    newRecipe.addEventListener('submit', (e) => {
+    this.shadowRoot
+      .getElementById('new-recipe').addEventListener('submit', (e) => {
       e.preventDefault();
       postCreateRecipeData();
     });

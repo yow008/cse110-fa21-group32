@@ -25,6 +25,7 @@ class HomePage extends HTMLElement {
       font-family: "IBM Plex Sans", sans-serif;
       font-weight: normal;
       font-style: normal;
+      font-size: 10px;
     }
     filling {
       margin-bottom: 0 !important;
@@ -42,9 +43,7 @@ class HomePage extends HTMLElement {
       grid-row-gap: 3%;
       margin-right: 5%;
     }
-    .recipe-picture {
-      max-width: 100%;
-    }
+
     button {
       background-color: white;
       border-radius: 9px;
@@ -74,6 +73,9 @@ class HomePage extends HTMLElement {
 
     .my-card{
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      max-width: 300px;
+      max-height: 300px;
+      display: inline-block;
     }
 
     .my-container{
@@ -93,7 +95,7 @@ class HomePage extends HTMLElement {
         <div class="container-fluid my-container">
           <div class="row justify-content-center d-flex align-items-center my-row ">
             <div class="col my-col text-center align-items-center d-flex justify-content-center p-4">
-              <div class="card my-card" style="width: 75%;">
+              <div class="card my-card" style="width: 75%">
                 <img class="card-img-top" src="" alt="">
                 <div class="card-body">
                   <h5 id="ExpRecipe" class="card-title align-items-center"></h5>

@@ -38,6 +38,15 @@ class RecipePage extends HTMLElement {
       font-size: 16pt;
     }
 
+    .part1 {
+      background-color: #CA676A;
+      width: 100%;
+      color: white;
+      text-align: center;
+    }
+    
+    a { text-decoration: none; }
+
     #recipe-ingredientsID > p{
       margin: auto;
       margin-top: 1%;
@@ -191,22 +200,24 @@ class RecipePage extends HTMLElement {
     console.log(data);
     this.json = data;
     this.id = this.shadowRoot.querySelector('article').innerHTML = `
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="assets/styles/bootstrap-change.css">-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-    <div class="part1"> <h2>Recipe Name</h2>
-      <div class="recipe-navbar" style="width: 100%">
-        <button id="ToSum" style="width:33.3%; background-color: #324A54;">Summary
-          <a href="#recipe-summaryID"></a>
-        </button>
-        <button id="ToIng" style="width:33.4%; background-color: #CA676A;">Ingredients
-          <a href="#recipe-ingredientsID"></a>
-        </button>
-        <button id="ToDir" style="width:33.3%; background-color: #CA676A;">Directions
-          <a href="#recipe-directionID"></a>
-        </button>
-      </div>
+    <div class="part1"> 
+    <h2></h2>
+    <div class="recipe-navbar" style="width: 100%">
+      <button id="ToSum" style="width:33.3%; background-color: #324A54;">Summary
+        <a href="#update-recipe-summaryID"></a>
+      </button>
+      <button id="ToIng" style="width:33.4%; background-color: #CA676A;">Ingredients
+        <a href="#update-recipe-ingredientsID"></a>
+      </button>
+      <button id="ToDir" style="width:33.3%; background-color: #CA676A;">Directions
+        <a href="#update-recipe-directionID"></a>
+      </button>
     </div>
+  </div>
 
     <!--Recipe Summary-->
     <div id="recipe-summaryID" class="recipe-summary" style="display: block">
@@ -258,7 +269,7 @@ class RecipePage extends HTMLElement {
     
     <!--Recipe Ingredients-->
     
-    <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none; text-align: center;">
+    <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none" text-align: center;">
       <br> 
       <form style="display: inline-block; text-align: left;"></form>
       <br>
@@ -320,7 +331,9 @@ class RecipePage extends HTMLElement {
     });
 
     const CMPage = this.shadowRoot.getElementById('LinkToCM');
+    const footer = document.querySelector('.footer');
     CMPage.addEventListener('click', () => {
+      footer.style.display = 'none';
       const cookingPage = document.createElement('cooking-mode-page');
       cookingPage.classList.add('shown');
       document.getElementById('#section--cooking-mode').innerHTML = '';
@@ -330,6 +343,7 @@ class RecipePage extends HTMLElement {
       cookingPage.data = this.json;
       router.navigate('cooking-mode');
     });
+    footer.style.display = 'flex';
 
     // Set Title
     const title = getTitle(data);
@@ -405,6 +419,7 @@ class RecipePage extends HTMLElement {
       list.appendChild(currStep);
     }
 
+    // Functions for the layout of recipe detailed page
     this.shadowRoot.getElementById('ToSum').addEventListener('click', (e) => {
       e.preventDefault();
       this.shadowRoot
@@ -465,6 +480,10 @@ class RecipePage extends HTMLElement {
         if (checkedIng[i].checked == true) {
           ingredientsSelect.push(checkedIng[i].value);
         }
+      }
+
+      if (ingredientsSelect.length == 0){
+        return;
       }
 
       // Construct submessage containing information about the recipe.
