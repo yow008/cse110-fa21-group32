@@ -276,7 +276,7 @@ class ProfilePage extends HTMLElement {
 
     
     setTimeout(function() {
-      var email = localStorage.getItem('userEmail');
+      const email = localStorage.getItem('userEmail');
       showEmail.innerHTML = 'Email: ' + email;
       inputEmail.setAttribute('value', email);
     },1000);
@@ -305,7 +305,7 @@ class ProfilePage extends HTMLElement {
       e.preventDefault();
       let newInfo = {
         Username: username.value,
-        Email: email.value,
+        Email: inputEmail.value,
         Password: password.value,
       };
       if (
