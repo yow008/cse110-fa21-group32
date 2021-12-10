@@ -435,6 +435,7 @@ function getRecipes(username, token, shadowRoot) {
           'align-items-center',
           'my-row',
           'p-0',
+          'w-100',
         ];
         for (let i = 0; i < divRowClasses.length; i++) {
           divRow.classList.add(divRowClasses[i]);
