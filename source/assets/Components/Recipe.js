@@ -186,6 +186,10 @@ class RecipePage extends HTMLElement {
       clear: both;
       height: 100px;
     }
+
+    .my-container{
+      width: 100% !important;
+    }
     `;
 
     // Append elements to the shadow root
@@ -271,10 +275,12 @@ class RecipePage extends HTMLElement {
     
     <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none" text-align: center;">
       <br> 
+      <div class="container my-container">
+      </div>
       <form style="display: inline-block; text-align: left;"></form>
       <br>
       <br>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center w-100">
         <button type="button" id="addToList" class="regbutton">Add to List</button>
       </div>
       <br>
@@ -285,7 +291,7 @@ class RecipePage extends HTMLElement {
     <div id="recipe-directionID" class="recipe-direction" style="display: none">
       <!-- empty div for spacing -->
       <div class="emp"></div>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center w-100">
       <br>
         <button type ="button" id="LinkToCM" class="cook-button regbutton">COOK</button>
       </div>
@@ -482,7 +488,7 @@ class RecipePage extends HTMLElement {
         }
       }
 
-      if (ingredientsSelect.length == 0){
+      if (ingredientsSelect.length == 0) {
         return;
       }
 

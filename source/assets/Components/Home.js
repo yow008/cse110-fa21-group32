@@ -39,8 +39,8 @@ class HomePage extends HTMLElement {
       margin-left: 5%;
       display: grid;
       grid-template-columns: auto auto auto;
-      grid-column-gap: 3%;
-      grid-row-gap: 3%;
+      grid-column-gap: 2%;
+      grid-row-gap: 10%;
       margin-right: 5%;
     }
 
@@ -58,6 +58,9 @@ class HomePage extends HTMLElement {
       margin-right: 5%;
     }
 
+    h5{
+      font-size: .8rem !important;
+    }
     .card-body{
       background-color: #324A54;
       color: white;
@@ -65,6 +68,7 @@ class HomePage extends HTMLElement {
       font-weight: lighter;
       font-style: normal;
     }
+
 
     .card-title{
       font-weight: lighter;
@@ -79,9 +83,25 @@ class HomePage extends HTMLElement {
     }
 
     .my-container{
-      width: 90% !important;
+      width: 100% !important;
+      margin-top: 10px;
     }
 
+    .head{
+      text-align: center;
+      background-color: #ca676a;
+      vertical-align: middle;
+      height: 12rem;
+      margin-bottom: 4rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    h2{
+      font-size: 3.5rem !important;
+      color: white;
+    }
 
     `;
     article.innerHTML = `
@@ -90,28 +110,30 @@ class HomePage extends HTMLElement {
         <!--ADD RECIPES HERE-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <!-- div for filling -->
-        <div class="filling"></div>
-
-        <div class="container-fluid my-container">
-          <div class="row justify-content-center d-flex align-items-center my-row ">
-            <div class="col my-col text-center align-items-center d-flex justify-content-center p-4">
-              <div class="card my-card" style="width: 75%">
+        <!--<div class="filling"></div>-->
+        <div class="head">
+          <h2>EXPLORE RECIPES</h2>
+        </div>
+        <div class="container-fluid my-container mx-auto ">
+          <div class="row justify-content-center d-flex align-items-center my-row h-100 align-items-stretch">
+            <div class="col my-col text-center align-items-center d-flex justify-content-center p-4 align-items-stretch">
+              <div class="card my-card" style="width: 90%">
                 <img class="card-img-top" src="" alt="">
                 <div class="card-body">
                   <h5 id="ExpRecipe" class="card-title align-items-center"></h5>
                 </div>
               </div>
             </div>
-            <div class="col my-col text-center d-flex justify-content-center p-4">
-              <div class="card my-card" style="width: 75%;">
+            <div class="col my-col text-center d-flex justify-content-center p-4 align-items-stretch">
+              <div class="card my-card" style= "width: 90%;">
               <img class="card-img-top" src="" alt="">
                 <div class="card-body">
                   <h5 id="ExpRecipe" class="card-title align-items-center"></h5>
                 </div>
               </div>
             </div>
-            <div class="col my-col text-center d-flex justify-content-center p-4">
-              <div class="card my-card" style="width: 75%;">
+            <div class="col my-col text-center d-flex justify-content-center p-4 align-items-stretch">
+              <div class="card my-card" style="width: 90%;">
               <img class="card-img-top" src="" alt="">
                 <div class="card-body">
                   <h5 id="ExpRecipe" class="card-title align-items-center"></h5>
@@ -119,25 +141,25 @@ class HomePage extends HTMLElement {
               </div>
             </div>
           </div>
-          <div class="row justify-content-center d-flex align-items-center my-row ">
-            <div class="col my-col text-center align-items-center d-flex justify-content-center p-4">
-              <div class="card my-card" style="width: 75%;">
+          <div class="row justify-content-center d-flex align-items-center my-row h-100 align-items-stretch">
+            <div class="col my-col text-center align-items-center d-flex justify-content-center p-4 align-items-stretch">
+              <div class="card my-card" style="width: 90%;">
                 <img class="card-img-top" src="" alt="">
                 <div class="card-body">
                   <h5 id="ExpRecipe" class="card-title align-items-center"></h5>
                 </div>
               </div>
             </div>
-            <div class="col my-col text-center d-flex justify-content-center p-4">
-              <div class="card my-card" style="width: 75%;">
+            <div class="col my-col text-center d-flex justify-content-center p-4 align-items-stretch">
+              <div class="card my-card" style="width: 90%;">
               <img class="card-img-top" src="" alt="">
                 <div class="card-body">
                   <h5 id="ExpRecipe" class="card-title align-items-center"></h5>
                 </div>
               </div>
             </div>
-            <div class="col my-col text-center d-flex justify-content-center p-4">
-              <div class="card my-card" style="width: 75%;">
+            <div class="col my-col text-center d-flex justify-content-center p-4 align-items-stretch">
+              <div class="card my-card" style="width: 90%;">
               <img class="card-img-top" src="" alt="">
                 <div class="card-body">
                   <h5 id="ExpRecipe" class="card-title align-items-center"></h5>
@@ -145,25 +167,25 @@ class HomePage extends HTMLElement {
               </div>
             </div>
           </div>
-          <div class="row justify-content-center d-flex align-items-center my-row ">
+          <div class="row justify-content-center d-flex align-items-center my-row align-items-stretch">
             <div class="col my-col text-center align-items-center d-flex justify-content-center p-4">
-              <div class="card my-card" style="width: 75%;">
+              <div class="card my-card" style="width: 90%;">
                 <img class="card-img-top" src="" alt="">
                 <div class="card-body">
                   <h5 id="ExpRecipe" class="card-title align-items-center"></h5>
                 </div>
               </div>
             </div>
-            <div class="col my-col text-center d-flex justify-content-center p-4">
-              <div class="card my-card" style="width: 75%;">
+            <div class="col my-col text-center d-flex justify-content-center p-4 align-items-stretch">
+              <div class="card my-card" style="width: 90%;">
               <img class="card-img-top" src="" alt="">
                 <div class="card-body">
                   <h5 id="ExpRecipe" class="card-title align-items-center"></h5>
                 </div>
               </div>
             </div>
-            <div class="col my-col text-center d-flex justify-content-center p-4">
-              <div class="card my-card" style="width: 75%;">
+            <div class="col my-col text-center d-flex justify-content-center p-4 align-items-stretch">
+              <div class="card my-card" style="width: 90%;">
               <img class="card-img-top" src="" alt="">
                 <div class="card-body">
                   <h5 id="ExpRecipe" class="card-title align-items-center"></h5>
