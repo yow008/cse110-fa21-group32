@@ -276,7 +276,7 @@ class ProfilePage extends HTMLElement {
 
     
     setTimeout(function() {
-      const email = localStorage.getItem('userEmail');
+      var email = localStorage.getItem('userEmail');
       showEmail.innerHTML = 'Email: ' + email;
       inputEmail.setAttribute('value', email);
     },1000);
