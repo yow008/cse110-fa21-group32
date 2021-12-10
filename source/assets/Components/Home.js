@@ -59,32 +59,65 @@ class HomePage extends HTMLElement {
     }
 
     h5{
-      font-size: .8rem !important;
+      font-size: 1rem !important;
+      
     }
+    
+
+    .my-card{
+      margin:0;
+      padding:0;
+
+      position: static;
+      width: 175px;
+      height: 275px;
+
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+      align-items: center;
+      border: 1px solid rgb(223, 225, 229);
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      user-select: none;
+
+    }
+
+    .card-img-top {
+      display: inline-block;
+      object-fit: cover;
+      width: 175px;
+      height: 200px;
+    }
+
     .card-body{
       background-color: #324A54;
+      width: 100%;
+      height: 75px;
       color: white;
       text-align: center;
       font-weight: lighter;
       font-style: normal;
+      vertical-align: middle;
     }
-
-
-    .card-title{
+    
+    card-title {
       font-weight: lighter;
       font-style: normal;
-    }
-
-    .my-card{
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      max-width: 300px;
-      max-height: 300px;
-      display: inline-block;
-    }
+      text-align: center;
+      position: sticky;
+      bottom: 15px;
+      width: 175px;
+      height: 22px;
+      font-size: 11.5pt;
+      line-height: 22px;
+      color: #FFFFFF;
+      margin: auto;
+  }
 
     .my-container{
       width: 100% !important;
       margin-top: 10px;
+      display: none;
     }
 
     .head{
@@ -92,7 +125,7 @@ class HomePage extends HTMLElement {
       background-color: #ca676a;
       vertical-align: middle;
       height: 12rem;
-      margin-bottom: 4rem;
+      margin-bottom: 2rem;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -101,6 +134,10 @@ class HomePage extends HTMLElement {
     h2{
       font-size: 3.5rem !important;
       color: white;
+    }
+
+    .row {
+      padding-left: 20px;
     }
 
     `;
@@ -115,7 +152,7 @@ class HomePage extends HTMLElement {
           <h2>EXPLORE RECIPES</h2>
         </div>
         <div class="container-fluid my-container mx-auto ">
-          <div class="row justify-content-center d-flex align-items-center my-row h-100 align-items-stretch">
+          <div class=" w-100 row justify-content-center d-flex align-items-center my-row h-100 align-items-stretch">
             <div class="col my-col text-center align-items-center d-flex justify-content-center p-4 align-items-stretch">
               <div class="card my-card" style="width: 90%">
                 <img class="card-img-top" src="" alt="">
@@ -141,7 +178,7 @@ class HomePage extends HTMLElement {
               </div>
             </div>
           </div>
-          <div class="row justify-content-center d-flex align-items-center my-row h-100 align-items-stretch">
+          <div class=" w-100 row justify-content-center d-flex align-items-center my-row h-100 align-items-stretch">
             <div class="col my-col text-center align-items-center d-flex justify-content-center p-4 align-items-stretch">
               <div class="card my-card" style="width: 90%;">
                 <img class="card-img-top" src="" alt="">
@@ -167,7 +204,7 @@ class HomePage extends HTMLElement {
               </div>
             </div>
           </div>
-          <div class="row justify-content-center d-flex align-items-center my-row align-items-stretch">
+          <div class=" w-100 row justify-content-center d-flex align-items-center my-row align-items-stretch">
             <div class="col my-col text-center align-items-center d-flex justify-content-center p-4">
               <div class="card my-card" style="width: 90%;">
                 <img class="card-img-top" src="" alt="">
@@ -208,8 +245,8 @@ class HomePage extends HTMLElement {
     });
 
     // Add random recipes to the card elements
-    let cards = this.shadowRoot.querySelectorAll('.card');
-    searchRandomRecipes(cards);
+
+    searchRandomRecipes(this.shadowRoot);
   }
 }
 
@@ -238,7 +275,8 @@ function searchRandomRecipes(resultsObject) {
  * @param {Objects} results The random recipes retrieved from spoonacular
  * @param {Object} section The array of recipe cards to add data to
  */
-function createRecipeCards(results, section) {
+function createRecipeCards(results, shadowRoot) {
+  let section = shadowRoot.querySelectorAll('.card');
   // Go through every one of the result recipes
   Object.keys(results).forEach(function (key) {
     const data = results[key];
@@ -248,7 +286,7 @@ function createRecipeCards(results, section) {
     // Add recipe picture
     //image.classList.add('css-image');
     section[key].querySelector('img').setAttribute('src', data.image);
-    section[key].querySelector('img').setAttribute('alt', data.title);
+    section[key].querySelector('img').setAttribute('alt', 'No Image Available');
 
     // Add the corresponding expand recipe view to router
     addPage(data);
@@ -262,6 +300,8 @@ function createRecipeCards(results, section) {
       router.navigate(`recipe_${data.id}`);
     });
   });
+  console.log('display');
+  shadowRoot.querySelector('.my-container').style.display = 'initial';
 }
 
 /**

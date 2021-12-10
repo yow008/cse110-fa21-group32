@@ -77,6 +77,10 @@ class SearchResultsPage extends HTMLElement {
       width: 90% !important;
     }
 
+    .w-100 {
+
+    }
+
 
     `;
     article.innerHTML = `
@@ -90,7 +94,7 @@ class SearchResultsPage extends HTMLElement {
         </div>
 
         <div class="container-fluid my-container">
-          <div class="row justify-content-center d-flex align-items-center my-row ">
+          <div class=" w-100 row justify-content-center d-flex align-items-center my-row ">
             <div class="col my-col text-center align-items-center d-flex justify-content-center p-4">
               <div class="card my-card" style="width: 75%;">
                 <img class="card-img-top" src="" alt="">
@@ -116,7 +120,7 @@ class SearchResultsPage extends HTMLElement {
               </div>
             </div>
           </div>
-          <div class="row justify-content-center d-flex align-items-center my-row ">
+          <div class=" w-100 row justify-content-center d-flex align-items-center my-row ">
             <div class="col my-col text-center align-items-center d-flex justify-content-center p-4">
               <div class="card my-card" style="width: 75%;">
                 <img class="card-img-top" src="" alt="">
@@ -142,7 +146,7 @@ class SearchResultsPage extends HTMLElement {
               </div>
             </div>
           </div>
-          <div class="row justify-content-center d-flex align-items-center my-row ">
+          <div class=" w-100 row justify-content-center d-flex align-items-center my-row ">
             <div class="col my-col text-center align-items-center d-flex justify-content-center p-4">
               <div class="card my-card" style="width: 75%;">
                 <img class="card-img-top" src="" alt="">
@@ -168,7 +172,7 @@ class SearchResultsPage extends HTMLElement {
               </div>
             </div>
           </div>
-          <div class="row justify-content-center d-flex align-items-center my-row ">
+          <div class=" w-100 row justify-content-center d-flex align-items-center my-row ">
             <div class="col my-col text-center align-items-center d-flex justify-content-center p-4">
               <div class="card my-card" style="width: 75%;">
                 <img class="card-img-top" src="" alt="">
@@ -247,7 +251,7 @@ function createRecipeCards(results, section) {
     // Add recipe picture
     //image.classList.add('css-image');
     section[key].querySelector('img').setAttribute('src', data.image);
-    section[key].querySelector('img').setAttribute('alt', data.title);
+    section[key].querySelector('img').setAttribute('alt', 'No Image Available');
 
     // Add the corresponding expand recipe view to router
 
@@ -258,6 +262,7 @@ function createRecipeCards(results, section) {
       while (recipeView.firstChild) {
         recipeView.removeChild(recipeView.firstChild);
       }
+
       router.navigate(`recipe_${data.id}`);
     });
   });
@@ -278,7 +283,7 @@ function createRecipeCards(results, section) {
 function addPage(recipeId) {
   router.addPage(`recipe_${recipeId}`, function () {
     document.getElementById('#section--home').classList.remove('shown');
-    document.getElementById('#section--search-bar').classList.add('shown');
+    document.getElementById('#section--search-bar').classList.remove('shown');
     document.getElementById('#section--grocery').classList.remove('shown');
     document.getElementById('#section--cooking-mode').classList.remove('shown');
     document
