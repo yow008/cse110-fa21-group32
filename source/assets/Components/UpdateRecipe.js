@@ -499,6 +499,7 @@ class UpdateRecipePage extends HTMLElement {
         function afterDelete() {
           //Going Back to the Home Pgae
           router.navigate('home');
+          document.getElementById('#section--profile').firstChild.recipes = '';
         }
 
         POST(data, afterDelete);
