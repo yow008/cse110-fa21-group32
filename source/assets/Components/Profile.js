@@ -23,16 +23,25 @@ class ProfilePage extends HTMLElement {
 
     // Added styles
     styles.innerHTML = `
-    h2{
-        background-color: #CA676A;
-        background-size: cover;
-        padding: 23.5px;
-        color: white;
-        text-align: center;
+    * {
+        font-family: "IBM Plex Sans", sans-serif;
+        font-weight: normal;
+        font-style: normal;
       }
+    h2 {
+      margin-bottom: 0 !important;
+      background-color: #ca676a;
+      background-size: cover;
+      padding: 23.5px;
+      color: white;
+      margin-top: 0;
+      text-align: center;
+      font-weight: lighter !important;
+      font-size: calc(1.325rem + .9vw);
+    }
 
-    th {
-      height: 20pt;
+    .profile-page-navbar{
+      width: 100%
     }
 
     img {
@@ -42,22 +51,25 @@ class ProfilePage extends HTMLElement {
       object-fit: contain;
     }
 
-    table {
-      width: 100%;
-    }
     th {
       width: 32%;
-        height: 40pt;
+      height: 40pt;
+      font-size: 16pt;
+    }
+
+    td {
+      width: 32%;
+      height: 40pt;
+      font-size: 16pt;
     }
 
     .button-group button {
-  
       border: transparent;
       cursor: pointer;
       float: left;
       color: white;
       font-size: large;
-      height: 31pt;
+      height: 40pt;
     }
 
     .button-group:after {
@@ -68,10 +80,6 @@ class ProfilePage extends HTMLElement {
 
     .button-group button:not(:last-child) {
       border-right: none; /* Prevent double borders */
-    }
-
-    .button-group button:hover {
-      color: blue;
     }
 
     .profile-page-review {
@@ -100,6 +108,38 @@ class ProfilePage extends HTMLElement {
       text-decoration: none;
       font-size: 14pt;
     }
+
+    .profile-page-editProfile {
+      margin: auto;
+      padding: 10px 15px;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 16pt;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .styleBtn{
+      cursor: pointer;
+      margin: auto;
+      background-color: white;
+      border-radius: 16px !important;
+      border: 1.5px solid #ca676a;
+      text-align: center;
+      min-width: 8% !important;
+      height: 2.2em; !important;
+      font-size: 16pt;
+      color:#ca676a;
+      width: auto;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+      margin: 0.3em;
+      padding: 0.2em !important;
+    }
+
+    .styleBtn:hover {
+      background-color: #ca676a;
+      color: white;
+    }
     `;
 
     /* Added article */
@@ -109,21 +149,21 @@ class ProfilePage extends HTMLElement {
         <!--Profile Page Navbar-->
         <table class=profile-page-navbar style="background-color: #eecbcc" align="center" >
         <th scope="col" style="text-align: center"><img src="assets/icons/logo.png"></th>
-        <th scope="col">
+        <th scope="col" style="text-align: left">
             <ul>
                 <li><p id="showUsername"></p></li><br>
                 <li><p id="showEmail"></p></li><br>
             </ul>
         </th>
         </table>
-        <br>
-
         <!--Profile Page Recipe-->
         <div class="button-group">
           <button id="recipe-in-profile-button" style="width:50%; background-color: #324A54">Recipes</button>
           <button id="editProfile-in-profile-button" style="width:50%; background-color: #CA676A">Edit Profile</button>
         </div>
 
+        <br>
+        <br>
         <div id="profile-page-recipeID" class="profile-page-recipe">
             <p>Recipe Gallery Should Be Displayed Here.</p>
             
@@ -131,24 +171,31 @@ class ProfilePage extends HTMLElement {
         </div>
 
         <div id="profile-page-editProfileID" class="profile-page-editProfile">
-            <div id="edit-username">
-                <label for='username'>Change Username: </label>
-                <input type='textarea' id="username" value="NewUsername">
-            </div>
-            <div id="edit-email">
-                <label for='email'>Change Email: </label>
-                <input type='textarea' id="email" value="NewEmail">
-            </div>
-            <div id="change-password">
-                <label for='password'>Change Password: </label>
-                <input type='textarea' id="password" placeholder="NewPassword">
-            </div>
-            <div id="confirm-password-div">
-                <label for='confirm-password'>Confirm Password: </label>
-                <input type='textarea' id="confirm-password" placeholder="NewPassword">
-            </div>
-            <button id="add-changes"> Add Changes </button>
-            <button id="delete-user"> Delete User </button>
+        <br>
+        <br>
+        <table class="profile-page-editProfile">
+            <tr id="edit-username">
+                <th><label for='username'>Change Username: </label></th>
+                <td><input type='textarea' id="username" value="NewUsername">
+            </tr>
+            <tr id="edit-email">
+                <th><label for='email'>Change Email: </label></th>
+                <td><input type='textarea' id="email" value="NewEmail"></td>
+            </tr>
+            <tr id="change-password">
+                <th><label for='password'>Change Password: </label></th>
+                <td><input type='textarea' id="password" placeholder="NewPassword"></td>
+            </tr>
+            <tr id="confirm-password-div">
+                <th><label for='confirm-password'>Confirm Password: </label></th>
+                <td><input type='textarea' id="confirm-password" placeholder="NewPassword"></td>
+            </tr>
+            <tr>
+                <th><button id="add-changes" class="styleBtn"> Add Changes </button></th>
+                <td><button id="delete-user" class="styleBtn"> Delete User </button></td>
+            </tr>
+        </table>
+
         </div>
         `;
 

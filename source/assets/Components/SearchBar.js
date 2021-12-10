@@ -23,11 +23,13 @@ class SearchBar extends HTMLElement {
     // Fill in styles and root element
     styles.innerHTML = `
     *{
-      background-color: #CA676A;
+      margin-bottom: 0 !important;
+      background-color: #ca676a;
       background-size: cover;
       color: white;
       overflow: hidden;
-      padding: 10px;
+      padding: 11px;
+      margin-top: 0;
     }
     form{
       display:flex;
@@ -45,6 +47,7 @@ class SearchBar extends HTMLElement {
       box-sizing: border-box;
       color: black;
       border-radius: 306px;
+      font-size: 25px;
     }
     button{
       background-color: white;

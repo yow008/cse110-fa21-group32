@@ -248,8 +248,8 @@ function createRecipeCards(results, section) {
     section[key].querySelector('img').setAttribute('alt', data.title);
 
     // Add the corresponding expand recipe view to router
-    addPage(data.id);
 
+    addPage(data.id);
     // Open up recipe when you click on its card
     section[key].addEventListener('click', () => {
       let recipeView = document.getElementById('#section--recipe');
@@ -309,7 +309,9 @@ function fetchRecipe(recipeId, recipePage) {
    * @param {JSON} data
    */
   function afterFetch(data) {
-    recipePage.data = data;
+    setTimeout(() => {
+      recipePage.data = data;
+    }, 200);
   }
 
   GET(fetchReq, afterFetch);

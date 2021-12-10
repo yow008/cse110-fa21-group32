@@ -22,6 +22,17 @@ class HomePage extends HTMLElement {
     styles.innerHTML = `
     *{
       clear: both;
+      font-family: "IBM Plex Sans", sans-serif;
+      font-weight: normal;
+      font-style: normal;
+    }
+    filling {
+      margin-bottom: 0 !important;
+      background-color: #ca676a;
+      background-size: cover;
+      padding: 23.5px;
+      color: white;
+      margin-top: 0;
     }
     .recipe-grid {
       margin-left: 5%;
@@ -73,12 +84,11 @@ class HomePage extends HTMLElement {
     `;
     article.innerHTML = `
         <!--<h1>Home Page</h1>-->
+        
         <!--ADD RECIPES HERE-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <div class="css-wrap">
-        <p id="#user-status"></p>
-        <p id="#user-email"></p>
-        </div>
+        <!-- div for filling -->
+        <div class="filling"></div>
 
         <div class="container-fluid my-container">
           <div class="row justify-content-center d-flex align-items-center my-row ">
@@ -176,43 +186,10 @@ class HomePage extends HTMLElement {
     // Add random recipes to the card elements
     let cards = this.shadowRoot.querySelectorAll('.card');
     searchRandomRecipes(cards);
-
-    // Looks in LocalStorage to get username and token.
-    const user = localStorage.getItem('username');
-    const token = localStorage.getItem('token');
-
-    const userStatus = this.shadowRoot.getElementById('#user-status');
-    userStatus.innerHTML = `Currently logged in as ${user}`;
-
-    const userEmail = this.shadowRoot.getElementById('#user-email');
-    getEmail(user, token, userEmail);
   }
 }
 
 customElements.define('home-page', HomePage);
-
-/**
- * Fetch the email from the user and display it
- * @param {String} username
- * @param {String} token
- */
-function getEmail(username, token, userEmail) {
-  const emailReq = `type=request&elem=email&user=${encodeURIComponent(
-    username
-  )}&token=${encodeURIComponent(token)}`;
-
-  /**
-   * Populate the display element with the fetched email
-   * @param {*} data
-   */
-  function getFn(data) {
-    userEmail.innerHTML = `User email: ${data.userInfo[0]}`;
-    localStorage.setItem('userEmail', data.userInfo[0]);
-    //setFormMessage(loginForm, 'error', 'Invalid username or password!');
-  }
-
-  GET(emailReq, getFn);
-}
 
 /**
  * Searches for random recipes to populate the home page

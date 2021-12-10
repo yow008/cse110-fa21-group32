@@ -22,6 +22,16 @@ class AddRecipePage extends HTMLElement {
 
     // Fill in styles and root element
     styles.innerHTML = `
+    h2{
+      margin-bottom: 0 !important;
+      background-color: #ca676a;
+      background-size: cover;
+      padding: 23.5px;
+      color: white;
+      margin-top: 0;
+      text-align: center;
+      font-weight: lighter !important;
+    }
     .openbtn {
       background: #324A54;
     }
@@ -31,19 +41,18 @@ class AddRecipePage extends HTMLElement {
       color: white;
       text-align: center;
     }
-    h2 {
-      padding-top: 23.5px;
-      padding-bottom: 10px;
-    }
     .part2 { 
+      text-align: center;
       border-top: 3px solid white;
       background-color: #324A54;
       color: white;
       padding-left: 5%;
       padding-right: 5%;
-      padding-top: 5px;
+      padding-top: 50px;
       padding-bottom: 13px;}
     .part3 { 
+      text-align: center;
+      margin: auto;
       padding-left: 5%;
       padding-right: 5%;
      }
@@ -55,7 +64,8 @@ class AddRecipePage extends HTMLElement {
       clear: both;
       display: table;
     }
-     .part4-button { 
+    .part4-button { 
+      cursor: pointer;
        margin-left: 5%;
       background-color: white;
       border-radius: 18px;
@@ -66,8 +76,13 @@ class AddRecipePage extends HTMLElement {
       font-size: 14pt;
       color:#ca676a;
      }
-    .add-recipe-navbar button {
-  
+    .part4-button:hover {
+      background-color: #ca676a;
+      color: white;
+    }
+    
+    
+     .add-recipe-navbar button {
       border: transparent;
       cursor: pointer;
       float: left;
@@ -76,7 +91,6 @@ class AddRecipePage extends HTMLElement {
       height: 40pt;
     }
     .add-recipe-navbar:after {
-      content: "";
       clear: both;
       display: table;
     }
@@ -84,29 +98,21 @@ class AddRecipePage extends HTMLElement {
     .add-recipe-navbar button:not(:last-child) {
       border-right: none; /* Prevent double borders */
     }
-    .normal-button {
-      background-color: white;
-      border-radius: 18px;
-      border: 1.5px solid #ca676a;
-      text-align: center;
-      min-width: 8%;
-      height: 22pt;
-      font-size: 14pt;
-      color:#ca676a;
-    }
+
     textarea {
       width: 80%;
       height: 42pt;
       background-color: #EEEEEE;
     }
     .css-input {
-      width: 10%;
+      width: 40px;
     }
     .css-margin {
       margin-left: 5%;
     }
     a { text-decoration: none; }
     .add-more-button {
+      cursor: pointer;
       width: 90%;
       height: 22pt;
       background-color: white;
@@ -115,7 +121,7 @@ class AddRecipePage extends HTMLElement {
     .css-x-circle {
       background-color: white;
       border: none;
-      
+      cursor: pointer;
     }
     table {
       padding: 10px;
@@ -129,106 +135,68 @@ class AddRecipePage extends HTMLElement {
     article.innerHTML = `
        
       <div class="part1"> <h2>Add Your Recipe</h2>
-      <div class="add-recipe-navbar" style="width: 100%">
-        <button id="ToAddSum" style="width:33.3%; background-color: #324A54;">Summary
-          <a href="#add-recipe-summaryID"></a>
-        </button>
-        <button id="ToAddIng" style="width:33.3%; background-color: #CA676A;">Ingredients
-          <a href="#add-recipe-ingredientsID"></a>
-        </button>
-        <button id="ToAddDir" style="width:33.3%; background-color: #CA676A;">Directions
-          <a href="#add-recipe-directionID"></a>
-        </button>
-      </div>
+        <div class="add-recipe-navbar" style="width: 100%">
+          <button id="ToAddSum" style="width:33.3%; background-color: #324A54;">Summary
+            <a href="#add-recipe-summaryID"></a>
+          </button>
+          <button id="ToAddIng" style="width:33.4%; background-color: #CA676A;">Ingredients
+            <a href="#add-recipe-ingredientsID"></a>
+          </button>
+          <button id="ToAddDir" style="width:33.3%; background-color: #CA676A;">Directions
+            <a href="#add-recipe-directionID"></a>
+          </button>
+        </div>
       </div>
 
 
-        <form id="new-recipe">
-        <div id="add-recipe-summary" style="display: show">
+      <form id="new-recipe">
+      <div id="add-recipe-summary" style="display: show">
         <div class="part2">
-        <!--Add Image-->
-        <label for="img"><p><strong>Add Image</strong></p></label>
-        <input type="file" id="imgfile" name="img" accept="image/*" required/>
-        <p><img id="recipeImage" width="200"/></p>
-        <br>
-        <br>
-        <!--<button id="addImage">Add Another Image</button>-->
+          <!--Add Image-->
+          <label for="img"><p><strong>Add Image</strong></p></label>
+          <input type="file" id="imgfile" name="img" accept="image/*" required/>
+          <p><img id="recipeImage" width="200"/></p>
+          <br>
+          <br>
 
-        <!--Basic Information-->
-        <label>Cooking Time:</label>
-        <input class="css-input" type="text" name="cookingTimeHour" id="#input--cook-time-hour" placeholder="hours.." required>
-        <input class="css-input" type="text" name="cookintTimeMin" id="#input--cook-time-mins" placeholder="mins.." required>
-        <label class="css-margin" id="servings" for="servings"> No. of Servings: </label>
-        <input class="css-input" type="text" name="numServings" id="#input--no-of-serv" required>
-        <br>
-        <br>
-      </div>
+          <!--Basic Information-->
+          <label>Cooking Time:</label>
+          <input class="css-input" type="text" name="cookingTimeHour" id="#input--cook-time-hour" placeholder="hours.." required>
+          <input class="css-input" type="text" name="cookintTimeMin" id="#input--cook-time-mins" placeholder="mins.." required>
+          <label class="css-margin" id="servings" for="servings"> No. of Servings: </label>
+          <input class="css-input" type="text" name="numServings" id="#input--no-of-serv" required>
+          <br>
+          <br>
+        </div>
 
-      <div class="part3">
-      <!--Basic Information (Tags/Summary)-->
-      <label for="sum"><p><strong>Add Tags from the list: </strong></p></label>
-      <ul>
-        <li>
-        <label for="tags">Tag 1 (Country): </label><br>
-        <select id="tag1-list">
-          <option value="Italian">Italian</option>
-          <option value="French">French</option>
-          <option value="Mexican">Mexican</option>
-          <option value="American">American</option>
-          <option value="Chinese">Chinese</option>
-          <option value="Japanese">Japanese</option>
-          <option value="Korean">Korean</option>
-          <option value="Vietnamese">Korean</option>
-          <option value="Others">Others</option>
-        </select>
-        </li>
-        
-        <li>
-        <label for="tags">Tag 2(Type of Food): </label><br>
-        <select id="tag2-list">
-          <option value="Pizza">Pizza</option>
-          <option value="Seafood">Seafood</option>
-          <option value="Burgers">Burgers</option>
-          <option value="Vegetarian">Vegetarian</option>
-          <option value="Sandwiches">Sandwiches</option>
-          <option value="Steakhouses">Steakhouses</option>
-          <option value="Desserts">Desserts</option>
-          <option value="Drinks">Drinks</option>
-          <option value="Breakfast">Breakfast</option>
-          <option value="Lunch">Lunch</option>
-          <option value="Dinner">Dinner</option>
-          <option value="Others">Others</option>
-        </select>
-        </li>
-      </ul>
-
-      <label for="sum"><p><strong>Add Summary: </strong></p></label>
-      <textarea id="addTitle" name="recipeTitle" placeholder="Title:" required></textarea><br>
-      <textarea id="addSummary" name="recipeSummary" placeholder="Summary" required></textarea>
-      <br>
-      </div>
+        <div class="part3">
+          <label for="sum"><p><strong>Add Summary: </strong></p></label>
+          <textarea id="addTitle" name="recipeTitle" placeholder="Title:" required></textarea><br>
+          <textarea id="addSummary" name="recipeSummary" placeholder="Summary" required></textarea>
+          <br>
+        </div>
       </div>
     
       <!--Add Recipe Ingredients-->
       <div class="css-wrap" id="add-recipe-ingredients" style="display: none">
-      <label for="ingredients"><p><strong>Add Ingredients</strong></p></label>
-      <table id="ingredient-table">
-        <tr>
-          <th>Qty</th>
-          <th>Unit</th>
-          <th>Ingredient</th>
-        </tr>
-        <tr>
-          <td><input type="text" name="quantity" required/></td>
-          <td><input type="text" name="unit"/></td>
-          <td><input type="text" name="ingredientName" required/></td>
-        </tr>
-      </table>
-      <!--When click add more should create another new 'tr' with three new inputs-->
-      <button class="add-more-button" id="addIngredientButton"> 
-      <img src="assets/icons/plus-circle.svg"/> 
-      </button>
-      <br>
+        <label for="ingredients"><p><strong>Add Ingredients</strong></p></label>
+        <table id="ingredient-table">
+          <tr>
+            <th>Qty</th>
+            <th>Unit</th>
+            <th>Ingredient</th>
+          </tr>
+          <tr>
+            <td><input type="text" name="quantity" required/></td>
+            <td><input type="text" name="unit"/></td>
+            <td><input type="text" name="ingredientName" required/></td>
+          </tr>
+        </table>
+        <!--When click add more should create another new 'tr' with three new inputs-->
+        <button class="add-more-button" id="addIngredientButton"> 
+        <img src="assets/icons/plus-circle.svg"/> 
+        </button>
+        <br>
       </div>
       <!--TO DO delete ingredients button-->
   
@@ -362,8 +330,8 @@ class AddRecipePage extends HTMLElement {
         let li = document.createElement('li');
         li.innerHTML = 'Step:';
         let button = document.createElement('button');
-        button.innerHTML =
-          '<button class="css-x-circle"><img src="assets/icons/x-circle.svg"/></button>';
+        button.setAttribute('class', 'css-x-circle');
+        button.innerHTML = '<img src="assets/icons/x-circle.svg"/>';
         let input = document.createElement('textarea');
         input.setAttribute('name', 'directionStep');
 
