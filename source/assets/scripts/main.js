@@ -1,4 +1,5 @@
 import { Router } from './Router.js';
+import { POST } from './request.js';
 
 // If modified, also modify list of page names under addMainPages
 const pageNames = [
@@ -8,10 +9,8 @@ const pageNames = [
   'recipe',
   'search-results',
   'cooking-mode',
-  'fav-recipes',
   'add-recipe',
   'update-recipe',
-  'write-review',
 ];
 //,'prevCooked','user-login','calendar',
 const router = new Router();
@@ -77,6 +76,12 @@ function addMainPages() {
     document
       .getElementById('#section--' + pageNames[i])
       .appendChild(pageContent);
+    if (pageNames[i] === 'grocery') {
+      // Add small delay for grocery to load info from backend
+      setTimeout(() => {
+        pageContent.update = '';
+      }, 1000);
+    }
   }
 
   // Create and add search bar
@@ -118,40 +123,26 @@ function bindNavIcons() {
 }
 
 /**
- * Bind the recipe views
- */
-
-/**
- * Bind the user profile page
- */
-
-/**
- * Bind the Cooking Mode page when "Cook" is been click through the recipe page
- */
-
-/**
  * Bind the Collapased Sidepanel at the side for the appropriate pages
  * (Favorite Recipes, Previously Cooked, Add a Recipe, Write a Review)
  */
 function bindSidePanel() {
   // Retrieve buttons corresponding to icons
-  const favoriteRecipes = document.getElementById('LinkToFav');
   //const userLogin = document.getElementById('LinkLogin');
   const addRecipe = document.getElementById('LinkToAdd');
-  const writeReview = document.getElementById('LinkToWrite');
+  const logoutElem = document.getElementById('LinkToLogout');
 
-  // Add click event listeners and proper navigatiorite'n
-  favoriteRecipes.addEventListener('click', () => {
-    router.navigate('fav-recipes');
-  });
+  // Add click event listeners and proper navigation
   // userLogin.addEventListener('click', () => {
   //   router.navigate('user-login');
   // });
   addRecipe.addEventListener('click', () => {
     router.navigate('add-recipe');
   });
-  writeReview.addEventListener('click', () => {
-    router.navigate('write-review');
+  logoutElem.addEventListener('click', () => {
+    let username = localStorage.getItem('username');
+    let token = localStorage.getItem('token');
+    logout(username, token);
   });
 }
 
@@ -169,6 +160,47 @@ function bindPopstate() {
       router.navigate(state.statePage, true);
     }
   });
+}
+
+/**
+ * Logs the user out by clearing local storage and redirecting to
+ * the login page. Sends local storage info to backend before clearing.
+ * @param {String} username username from local storage
+ * @param {String} token token from local storage (generated with login)
+ */
+function logout(username, token) {
+  // Send grocery.js to the backend
+  let groceryCustom = JSON.parse(localStorage.getItem('mylist'));
+  let groceryRecipes = JSON.parse(localStorage.getItem('grocery'));
+
+  // Combines the My List and other grocery list into one list
+  let combinedGrocery = [groceryCustom];
+  if (groceryRecipes != null) {
+    for (let i = 0; i < groceryRecipes.length; i++) {
+      combinedGrocery.push(groceryRecipes[i]);
+    }
+  }
+
+  let groceryInfo = {
+    timestamp: Date.now(), // Timestamp used by grocery for logging in
+    list: combinedGrocery,
+  };
+
+  let msg = {
+    type: 'logout',
+    username: username,
+    token: token,
+    grocery: groceryInfo,
+  };
+
+  /**
+   * Redirects to the user login page after logging out
+   */
+  function afterLogout() {
+    window.location.href = 'userLogin.html';
+    localStorage.clear(); // Clear local storage
+  }
+  POST(msg, afterLogout);
 }
 
 export { router };

@@ -23,11 +23,8 @@ class User_DB:
                 Email STR,
                 fName STR,
                 lName STR,
-                Calendar BLOB,
                 Shopping_list BLOB,
-                Recipes BLOB,
-                Reviews BLOB,
-                Favorites BLOB
+                Recipes BLOB
             )''')
 
     def __del__(self):
@@ -53,7 +50,7 @@ class User_DB:
             toHash = username+password+salt #Stick everything together.
             token = hashlib.sha256(toHash.encode()).hexdigest()
             empty = pickle.dumps([])
-            self.cur.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (username, password, token, email, fname, lname, empty, empty, empty, empty, empty))
+            self.cur.execute("INSERT INTO Users VALUES(?, ?, ?, ?, ?, ?, ?, ?)", (username, password, token, email, fname, lname, empty, empty))
             self.conn.commit()
             return True
         except sqlite3.IntegrityError as er: # username is primary key so no duplicates allowed
@@ -159,4 +156,9 @@ class User_DB:
             finally:
                 recipes = pickle.dumps(recipes)
         self.updateUser(username, token, {'Recipes': recipes})
+        self.conn.commit()
+    
+    def addToList(self, username, token, shoppingData):
+        shopping = pickle.dumps(shoppingData)
+        self.updateUser(username,token,{'Shopping_list':shopping})
         self.conn.commit()

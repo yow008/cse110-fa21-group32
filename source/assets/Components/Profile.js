@@ -2,7 +2,10 @@
 
 // IMPORTS
 import { router } from '../scripts/main.js';
-import { GET /*, POST*/ } from '../scripts/request.js';
+import { GET, POST } from '../scripts/request.js';
+
+// Page to change to when user is deleted
+const loginPage = 'userLogin.html';
 
 /**
  * Class: ProfilePage
@@ -65,9 +68,6 @@ class ProfilePage extends HTMLElement {
       color: blue;
     }
 
-    .profile-page-review {
-      display: none;
-    }
     `;
 
     /* Added article */
@@ -79,9 +79,8 @@ class ProfilePage extends HTMLElement {
         <th scope="col" style="text-align: center"><img src="assets/icons/logo.png"></th>
         <th scope="col">
             <ul>
-                <li><a href="#profile-page-recipeID" id="UserRec">Recipes</a></li><br>
-                <li><a href="#profile-page-reviewsID" id="UserRev">Reviews</a></li><br>
-                <li id="#section-edit-profile"><button id="#button-edit-profile" type="button">Edit Profile</button></li>
+                <li><p id="showUsername"></p></li><br>
+                <li><p id="showEmail"></p></li><br>
             </ul>
         </th>
         </table>
@@ -90,19 +89,34 @@ class ProfilePage extends HTMLElement {
         <!--Profile Page Recipe-->
         <div class="button-group">
           <button id="recipe-in-profile-button" style="width:50%; color: blue">Recipes</button>
-          <button id="review-in-profile-button" style="width:50%; color: grey">Reviews</button>
+          <button id="editProfile-in-profile-button" style="width:50%; color: grey">Edit Profile</button>
         </div>
+
         <div id="profile-page-recipeID" class="profile-page-recipe">
             <p>Recipe Gallery Should Be Displayed Here.</p>
             
             <br>
         </div>
 
-        <!--Profile Page Reviews-->
-        <div id="profile-page-reviewID" class="profile-page-review">
-            <p>NOT AVAILABLE</p>
-            <button>REMOVE ME 2</button>
-            <br>
+        <div id="profile-page-editProfileID" class="profile-page-editProfile">
+            <div id="edit-username">
+                <label for='username'>Change Username: </label>
+                <input type='textarea' id="username" value="NewUsername">
+            </div>
+            <div id="edit-email">
+                <label for='email'>Change Email: </label>
+                <input type='textarea' id="email" value="NewEmail">
+            </div>
+            <div id="change-password">
+                <label for='password'>Change Password: </label>
+                <input type='textarea' id="password" placeholder="NewPassword">
+            </div>
+            <div id="confirm-password-div">
+                <label for='confirm-password'>Confirm Password: </label>
+                <input type='textarea' id="confirm-password" placeholder="NewPassword">
+            </div>
+            <button id="add-changes"> Add Changes </button>
+            <button id="delete-user"> Delete User </button>
         </div>
         `;
 
@@ -110,120 +124,154 @@ class ProfilePage extends HTMLElement {
     this.shadowRoot.append(styles, article);
 
     // Functions for the layout of profile page
-    var recipesInProfileButton = this.shadowRoot.getElementById(
+    let recipesInProfileButton = this.shadowRoot.getElementById(
       'recipe-in-profile-button'
     );
-    var recipesInProfile = this.shadowRoot.getElementById(
+    let recipesInProfile = this.shadowRoot.getElementById(
       'profile-page-recipeID'
     );
-    var reviewsInProfileButton = this.shadowRoot.getElementById(
-      'review-in-profile-button'
+    let editProfileInProfileButton = this.shadowRoot.getElementById(
+      'editProfile-in-profile-button'
     );
-    var reviewsInProfile = this.shadowRoot.getElementById(
-      'profile-page-reviewID'
+    let editProfileInProfile = this.shadowRoot.getElementById(
+      'profile-page-editProfileID'
     );
+
+    // Set default view when first loading page
+    recipesInProfileButton.style.backgroundColor = '#324A54';
+    editProfileInProfileButton.style.backgroundColor = '#CA676A';
+    editProfileInProfile.style.display = 'none';
+    recipesInProfile.style.display = 'contents';
+
     recipesInProfileButton.addEventListener('click', () => {
-      recipesInProfileButton.style.color = 'blue';
-      reviewsInProfileButton.style.color = 'grey';
-      reviewsInProfile.style.display = 'none';
+      recipesInProfileButton.style.backgroundColor = '#324A54';
+      editProfileInProfileButton.style.backgroundColor = '#CA676A';
+      editProfileInProfile.style.display = 'none';
       recipesInProfile.style.display = 'contents';
     });
-    reviewsInProfileButton.addEventListener('click', () => {
-      reviewsInProfileButton.style.color = 'blue';
-      recipesInProfileButton.style.color = 'grey';
+    editProfileInProfileButton.addEventListener('click', () => {
+      editProfileInProfileButton.style.backgroundColor = '#324A54';
+      recipesInProfileButton.style.backgroundColor = '#CA676A';
       recipesInProfile.style.display = 'none';
-      reviewsInProfile.style.display = 'contents';
-    });
-
-    const editProfileSection = this.shadowRoot.getElementById(
-      '#section-edit-profile'
-    );
-    const editProfileBtn = this.shadowRoot.getElementById(
-      '#button-edit-profile'
-    );
-    editProfileBtn.addEventListener('click', () => {
-      // Create Edit Username Label and text area
-      let editUsername = document.createElement('div');
-      let editUsernameLabel = document.createElement('label');
-      editUsernameLabel.innerHTML = 'Change Username: ';
-      editUsernameLabel.setAttribute('for', '#edit-username');
-
-      let editUsernameTextArea = document.createElement('input');
-      editUsernameTextArea.setAttribute('type', 'text');
-      editUsernameTextArea.setAttribute(
-        'value',
-        localStorage.getItem('username')
-      );
-      editUsernameTextArea.setAttribute('id', '#edit-username');
-
-      editUsername.appendChild(editUsernameLabel);
-      editUsername.appendChild(editUsernameTextArea);
-      editProfileSection.appendChild(editUsername);
-
-      // Create Edit Email Label and text area
-      let editEmail = document.createElement('div');
-      let editEmailLabel = document.createElement('label');
-      editEmailLabel.innerHTML = 'Change Email: ';
-      editEmailLabel.setAttribute('for', '#edit-email');
-
-      let editEmailTextArea = document.createElement('input');
-      editEmailTextArea.setAttribute('type', 'text');
-      editEmailTextArea.setAttribute('value', '"current Email"');
-      editEmailTextArea.setAttribute('id', '#edit-email');
-
-      editEmail.appendChild(editEmailLabel);
-      editEmail.appendChild(editEmailTextArea);
-      editProfileSection.appendChild(editEmail);
-
-      // Create Edit Password Label and text area
-      let editPassword = document.createElement('div');
-      let editPasswordLabel = document.createElement('label');
-      editPasswordLabel.innerHTML = 'New Password: ';
-      editPasswordLabel.setAttribute('for', '#edit-password');
-
-      let editPasswordTextArea = document.createElement('input');
-      editPasswordTextArea.setAttribute('type', 'text');
-      editPasswordTextArea.setAttribute('placeholder', 'New Password');
-      editPasswordTextArea.setAttribute('id', '#edit-password');
-
-      editPassword.appendChild(editPasswordLabel);
-      editPassword.appendChild(editPasswordTextArea);
-      editProfileSection.appendChild(editPassword);
-
-      // Create Edit Password confirm Label and text area
-      let editConfirmPassword = document.createElement('div');
-      let editConfirmPasswordLabel = document.createElement('label');
-      editConfirmPasswordLabel.innerHTML = 'Confirm New Password: ';
-      editConfirmPasswordLabel.setAttribute('for', '#edit-confirm-password');
-
-      let editConfirmPasswordTextArea = document.createElement('input');
-      editConfirmPasswordTextArea.setAttribute('type', 'text');
-      editConfirmPasswordTextArea.setAttribute(
-        'placeholder',
-        'Confirm Password'
-      );
-      editConfirmPasswordTextArea.setAttribute('id', '#edit-confirm-password');
-
-      editConfirmPassword.appendChild(editConfirmPasswordLabel);
-      editConfirmPassword.appendChild(editConfirmPasswordTextArea);
-      editProfileSection.appendChild(editConfirmPassword);
-
-      let addChangesBtn = document.createElement('button');
-      addChangesBtn.innerHTML = 'Add Changes';
-
-      editProfileSection.appendChild(addChangesBtn);
-
-      addChangesBtn.addEventListener('click', () => {});
+      editProfileInProfile.style.display = 'contents';
     });
 
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
-    getRecipes(user, token, this.shadowRoot);
+
+    let shadowRoot = this.shadowRoot;
+    setTimeout(function () {
+      getRecipes(user, token, shadowRoot);
+    }, 2000);
+
+    let showUsername = this.shadowRoot.getElementById('showUsername');
+    showUsername.innerHTML = 'Username: ' + user;
+    let showEmail = this.shadowRoot.getElementById('showEmail');
+
+    // Create Edit Username Label and text area
+    let username = this.shadowRoot.getElementById('username');
+    username.setAttribute('value', user);
+
+    // Add current email to email textarea element
+    let email = this.shadowRoot.getElementById('email');
+    setTimeout(function () {
+      showEmail.innerHTML = `User Email: ` + localStorage.getItem('userEmail');
+      email.setAttribute('value', localStorage.getItem('userEmail'));
+    }, 2000);
+
+    let password = this.shadowRoot.getElementById('password');
+    let confirmPassword = this.shadowRoot.getElementById('confirm-password');
+
+    // Update user info when Update user button is clicked
+    let addChangesBtn = this.shadowRoot.getElementById('add-changes');
+    addChangesBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      let newInfo = {
+        Username: username.value,
+        Email: email.value,
+        Password: password.value,
+      };
+      if (
+        password.value == confirmPassword.value &&
+        password.value != '' &&
+        username.value.length > 9
+      ) {
+        // Sets the users info to the given info
+        setNewInfo(newInfo);
+      } else if (password.value != confirmPassword.value) {
+        // If passwords don't match then send error
+        let nonmatchingPasswords = document.createElement('p');
+        nonmatchingPasswords.innerHTML = 'Passwords do not match!';
+        let divConfirmPassword = this.shadowRoot.getElementById(
+          'confirm-password-div'
+        );
+        divConfirmPassword.appendChild(nonmatchingPasswords);
+      } else if (username.value.length < 10) {
+        // Send error if the user tries to change username to something less than 10 characters
+        let divUsername = this.shadowRoot.getElementById('edit-username');
+        let usernameError = document.createElement('p');
+        usernameError.innerHTML = 'Username must be at least 10 characters';
+        divUsername.appendChild(usernameError);
+      } else if (password.value == '') {
+        //If there is no given password value then do not update the password
+        delete newInfo['Password'];
+        setNewInfo(newInfo);
+      }
+    });
+
+    //Deletes user when Delete user button is clicked
+    this.shadowRoot
+      .getElementById('delete-user')
+      .addEventListener('click', function () {
+        deleteUser();
+      });
   }
 
   set recipes(recipes) {}
+}
 
-  set reviews(reviews) {}
+/**
+ * Replaces the users details (Username, Email and Password) with the given information
+ * @param {Object} newInfo The user information to replace the old information
+ */
+function setNewInfo(newInfo) {
+  let newInfoPost = {
+    type: 'updateUser',
+    username: localStorage.getItem('username'), // TODO: Need to update with curr user
+    token: localStorage.getItem('token'), // TODO: Need to update with curr password
+    newInfo: newInfo,
+  };
+
+  /**
+   * After the information is replaced in the database the local storage needs to be updated
+   */
+  function afterUpdate() {
+    localStorage.setItem('username', newInfo['Username']);
+    localStorage.setItem('userEmail', newInfo['Email']);
+  }
+
+  POST(newInfoPost, afterUpdate);
+}
+
+/**
+ * Deletes the user from the database and logs the user out
+ */
+function deleteUser() {
+  let deleteUserPost = {
+    type: 'deleteUser',
+    username: localStorage.getItem('username'), // TODO: Need to update with curr user
+    token: localStorage.getItem('token'), // TODO: Need to update with curr password
+  };
+
+  /**
+   * Logs the user out and returns to log in page
+   */
+  function afterDelete() {
+    localStorage.clear();
+    window.location = loginPage;
+  }
+
+  POST(deleteUserPost, afterDelete);
 }
 
 /**
@@ -242,56 +290,44 @@ function getRecipes(username, token, shadowRoot) {
    * @param {*} data
    */
   function atFetch(data) {
-    for (let i = 0; i < data.ID.length; i++) {
-      fetchRecipe(data.ID[i], shadowRoot);
+    let userRecipes = [];
+    for (let i = 0; i < data.recipes.length; i++) {
+      // Create title element
+      let recipe = data.recipes[i];
+      const title = document.createElement('h3');
+      title.innerText = recipe['title'];
+      const image = document.createElement('img');
+      image.setAttribute('src', recipe['image']);
+      image.setAttribute('alt', 'No Image');
+      shadowRoot.getElementById('profile-page-recipeID').appendChild(title);
+      shadowRoot.getElementById('profile-page-recipeID').appendChild(image);
+
+      userRecipes.push(recipe['id']);
+      // Add page to router so navigate works
+      router.addPage(`recipe_${recipe['id']}`, function () {
+        document.getElementById('#section--profile').classList.remove('shown');
+
+        document.getElementById('#section--recipe').classList.add('shown');
+
+        // Fetch and populate recipe page and add to recipe section
+        const recipePage = document.createElement('recipe-page');
+        console.log(recipe);
+        recipePage.data = { recipe: recipe };
+        recipePage.classList.add('shown');
+        document.getElementById('#section--recipe').innerHTML = '';
+        document.getElementById('#section--recipe').appendChild(recipePage);
+      });
+
+      // Add click listener to title element -> navigates to recipe card page
+      title.addEventListener('click', () => {
+        // let recipeView = document.getElementById('#profile-page-recipeID');
+        // while (recipeView.firstChild) {
+        //   recipeView.removeChild(recipeView.firstChild);
+        // }
+        router.navigate(`recipe_${recipe['id']}`);
+      });
     }
-
-    /**
-     *
-     * @param {*} recipeId
-     * @param {*} shadowRoot
-     */
-    function fetchRecipe(recipeId, shadowRoot) {
-      const fetchReq = `type=fetchRecipe&id=${encodeURIComponent(recipeId)}`;
-
-      /**
-       * TODO:
-       * @param {JSON} data
-       */
-      function afterFetch(data) {
-        // Create title element
-        const title = document.createElement('h3');
-        title.innerText = data.recipe.title;
-        shadowRoot.getElementById('profile-page-recipeID').appendChild(title);
-
-        // Add page to router so navigate works
-        router.addPage(`recipe_${recipeId}`, function () {
-          document
-            .getElementById('#section--profile')
-            .classList.remove('shown');
-
-          document.getElementById('#section--recipe').classList.add('shown');
-
-          // Fetch and populate recipe page and add to recipe section
-          const recipePage = document.createElement('recipe-page');
-          recipePage.data = data;
-          recipePage.classList.add('shown');
-          document.getElementById('#section--recipe').innerHTML = '';
-          document.getElementById('#section--recipe').appendChild(recipePage);
-        });
-
-        // Add click listener to title element -> navigates to recipe card page
-        title.addEventListener('click', () => {
-          // let recipeView = document.getElementById('#profile-page-recipeID');
-          // while (recipeView.firstChild) {
-          //   recipeView.removeChild(recipeView.firstChild);
-          // }
-          router.navigate(`recipe_${recipeId}`);
-        });
-      }
-
-      GET(fetchReq, afterFetch);
-    }
+    localStorage.setItem('userRecipes', userRecipes);
   }
 
   GET(searchReq, atFetch);

@@ -163,11 +163,18 @@ class AddRecipePage extends HTMLElement {
       </form>
       <!--TO DO delete Directions button-->
 
-      <button><a href="home.html"> LEAVE </a></button>
+      <button type="button" id="leave-button">LEAVE</button>
       `;
 
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
+
+    // Add leave button listener
+    this.shadowRoot
+      .getElementById('leave-button')
+      .addEventListener('click', () => {
+        router.navigate('home');
+      });
 
     // Add Summary
     this.shadowRoot
@@ -268,7 +275,7 @@ class AddRecipePage extends HTMLElement {
     var img = this.shadowRoot.getElementById('recipeImage');
     var imgFile = this.shadowRoot.querySelector('input[type="file"]');
     var base64Image = '';
-    
+
     imgFile.addEventListener('change', function () {
       imageDisplay(this);
       //console.log(imgFile.files[0]);
@@ -402,9 +409,20 @@ class AddRecipePage extends HTMLElement {
       //POST request to send recipe data
 
       function afterAdd() {
+        router.addPage('profile', function () {
+          document.getElementById('#section--home').classList.remove('shown');
+          document
+            .getElementById('#section--search-bar')
+            .classList.remove('shown');
+          document
+            .getElementById('#section--add-recipe')
+            .classList.remove('shown');
+
+          document.getElementById('#section--profile').classList.add('shown');
+        });
         router.navigate('profile');
       }
-      POST(data, afterAdd);
+      POST(data, afterAdd());
     }
   }
 }

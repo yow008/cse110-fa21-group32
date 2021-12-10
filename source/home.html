@@ -11,13 +11,13 @@
   <!-- <script src="assets/components/Calendar.js" type="module"></script> -->
   <script src="assets/Components/Grocery.js" type="module"></script>
   <script src="assets/Components/Profile.js" type="module"></script>
+  <!-- <script src="assets/Components/UpdateUser.js" type="module"></script> -->
   <script src="assets/Components/SearchBar.js" type="module"></script>
   <script src="assets/Components/SearchResults.js" type="module"></script>
 
   <script src="assets/Components/FavoriteRecipes.js" type="module"></script>
   <script src="assets/Components/AddRecipe.js" type="module"></script>
   <script src="assets/Components/UpdateRecipe.js" type="module"></script>
-  <script src="assets/Components/WriteReviews.js" type="module"></script>
   <!-- <script src="assets/components/UserLogin.js" type="module"></script> -->
 
   <!--Router-->
@@ -45,10 +45,10 @@
           &times;
         </button>
 
-        <a id="LinkToFav" class="fav" href="javascript:void(0)">Favorite Recipes</a>
+        <a id="LinkToFav" class="fav" href="javascript:void(0)" onclick="closeNav()">Favorite Recipes</a>
         <!-- <a id="LinkLogin" href="userLogin.html">User Login</a> -->
-        <a id="LinkToAdd" class="add" href="javascript:void(0)">Add a Recipe</a>
-        <a id="LinkToWrite"  class="write" href="javascript:void(0)">Write a Review</a>
+        <a id="LinkToAdd" class="add" href="javascript:void(0)" onclick="closeNav()">Add a Recipe</a>
+        <a id="LinkToLogout" class="write" href="javascript:void(0)" onclick="closeNav()">Log Out</a>
       </div>
     </section>
 
@@ -80,6 +80,9 @@
   <!--Profile Page-->
   <section id="#section--profile"></section>
 
+  <!--Update User Info Page-->
+  <section id="#section--update-user"></section>
+
   <!--Favorites-->
   <section id="#section--fav-recipes"></section>
 
@@ -88,9 +91,6 @@
 
   <!--Update-Recipes-->
   <section id="#section--update-recipe"></section>
-
-  <!--Write-Reviews-->
-  <section id="#section--write-review"></section>
 
   <!--Functions-->
   <script>
@@ -116,14 +116,14 @@
     </ul> -->
     <div class="footer">
       <button id="LinkToHome" type="button" fill="var(--svgcolor)"
-        style="background-color: transparent; border-color: transparent" onclick="window.location.href='home.html'">
+        style="background-color: transparent; border-color: transparent">
         <img class="footerImage" src="assets/icons/home.svg" alt="home-icon" height="35" />
       </button>
-      <button id="LinkToCalendar" type="button" fill="var(--svgcolor)"
+      <!-- <button id="LinkToCalendar" type="button" fill="var(--svgcolor)"
         style="background-color: transparent; border-color: transparent"
         onclick="window.location.href='../source/full_calendar/calendar.html'">
         <img class="footerImage" src="assets/icons/calendar.svg" alt="calendar-icon" height="35" />
-      </button>
+      </button> -->
       <button id="LinkToList" type="button" fill="var(--svgcolor)"
         style="background-color: transparent; border-color: transparent">
         <img class="footerImage" src="assets/icons/shopping-cart.svg" alt="grocery-icon" height="35" />
