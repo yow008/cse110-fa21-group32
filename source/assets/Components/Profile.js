@@ -273,6 +273,7 @@ class ProfilePage extends HTMLElement {
 
     const user = localStorage.getItem('username');
     const token = localStorage.getItem('token');
+    const email = localStorage.getItem('userEmail');
     // Set timeout to allow for main page to load first
     let shadowRoot = this.shadowRoot;
     setTimeout(function () {
@@ -282,17 +283,12 @@ class ProfilePage extends HTMLElement {
     let showUsername = this.shadowRoot.getElementById('showUsername');
     showUsername.innerHTML = 'Username: ' + user;
     let showEmail = this.shadowRoot.getElementById('showEmail');
+    showEmail.innerHTML = 'Email: ' + email;
+    this.shadowRoot.getElementById('email').setAttribute('value', email);
 
     // Create Edit Username Label and text area
     let username = this.shadowRoot.getElementById('username');
     username.setAttribute('value', user);
-
-    // Add current email to email textarea element
-    let email = this.shadowRoot.getElementById('email');
-    setTimeout(function () {
-      showEmail.innerHTML = `User Email: ` + localStorage.getItem('userEmail');
-      email.setAttribute('value', localStorage.getItem('userEmail'));
-    }, 2000);
 
     let password = this.shadowRoot.getElementById('password');
     let confirmPassword = this.shadowRoot.getElementById('confirm-password');
