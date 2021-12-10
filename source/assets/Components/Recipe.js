@@ -156,7 +156,7 @@ class RecipePage extends HTMLElement {
     }
 
     .editButton, recipe-summmaryButton{
-      display: inline-block;
+      display: inline-block; 
     }
 
     li{
@@ -190,6 +190,10 @@ class RecipePage extends HTMLElement {
     .my-container{
       width: 100% !important;
     }
+    .editButton{
+      margin-left:120px;
+    }
+
     `;
 
     // Append elements to the shadow root
@@ -264,7 +268,7 @@ class RecipePage extends HTMLElement {
       <br>
       <!--description-->
       <div class="recipe-description" id="recipe-descriptionID">
-        <button type="button" class="recipe-summmaryButton regbutton">Add to My Favorites</button>
+        <!--<button type="button" class="recipe-summmaryButton regbutton">Add to My Favorites</button>-->
         <button type="button" class="editButton regbutton"id="editRecipe">Edit Recipe</button>
         <br>
         <br>
