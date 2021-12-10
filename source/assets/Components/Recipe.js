@@ -156,7 +156,7 @@ class RecipePage extends HTMLElement {
     }
 
     .editButton, recipe-summmaryButton{
-      display: inline-block;
+      display: inline-block; 
     }
 
     li{
@@ -186,6 +186,14 @@ class RecipePage extends HTMLElement {
       clear: both;
       height: 100px;
     }
+
+    .my-container{
+      width: 100% !important;
+    }
+    .editButton{
+      margin-left:120px;
+    }
+
     `;
 
     // Append elements to the shadow root
@@ -260,7 +268,7 @@ class RecipePage extends HTMLElement {
       <br>
       <!--description-->
       <div class="recipe-description" id="recipe-descriptionID">
-        <button type="button" class="recipe-summmaryButton regbutton">Add to My Favorites</button>
+        <!--<button type="button" class="recipe-summmaryButton regbutton">Add to My Favorites</button>-->
         <button type="button" class="editButton regbutton"id="editRecipe">Edit Recipe</button>
         <br>
         <br>
@@ -271,10 +279,12 @@ class RecipePage extends HTMLElement {
     
     <div id="recipe-ingredientsID" class="recipe-ingredients" style="display: none" text-align: center;">
       <br> 
+      <div class="container my-container">
+      </div>
       <form style="display: inline-block; text-align: left;"></form>
       <br>
       <br>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center w-100">
         <button type="button" id="addToList" class="regbutton">Add to List</button>
       </div>
       <br>
@@ -285,7 +295,7 @@ class RecipePage extends HTMLElement {
     <div id="recipe-directionID" class="recipe-direction" style="display: none">
       <!-- empty div for spacing -->
       <div class="emp"></div>
-      <div class="row justify-content-center">
+      <div class="row justify-content-center w-100">
       <br>
         <button type ="button" id="LinkToCM" class="cook-button regbutton">COOK</button>
       </div>
@@ -332,8 +342,11 @@ class RecipePage extends HTMLElement {
 
     const CMPage = this.shadowRoot.getElementById('LinkToCM');
     const footer = document.querySelector('.footer');
+    const sideBtn = document.getElementById('openbtnID');
     CMPage.addEventListener('click', () => {
       footer.style.display = 'none';
+      sideBtn.style.backgroundColor = 'transparent';
+      sideBtn.style.color = 'transparent';
       const cookingPage = document.createElement('cooking-mode-page');
       cookingPage.classList.add('shown');
       document.getElementById('#section--cooking-mode').innerHTML = '';
@@ -344,6 +357,8 @@ class RecipePage extends HTMLElement {
       router.navigate('cooking-mode');
     });
     footer.style.display = 'flex';
+    sideBtn.style.color = 'white';
+    sideBtn.style.backgroundColor = '#ca676a';
 
     // Set Title
     const title = getTitle(data);
@@ -370,19 +385,26 @@ class RecipePage extends HTMLElement {
 
     // Set Ingredients
     const form = this.shadowRoot.querySelector('form');
-    for (let i = 0; i < data.recipe.extendedIngredients.length; i++) {
-      const ingredient = data.recipe.extendedIngredients[i];
-      const div = document.createElement('div');
-      const currElement = document.createElement('input');
-      currElement.setAttribute('type', 'checkbox');
-      currElement.setAttribute('name', ingredient.name);
-      currElement.setAttribute('value', ingredient.original);
-      div.append(currElement);
-      const content = document.createElement('label');
-      content.setAttribute('for', 'ingredient');
-      content.innerHTML = ingredient.original;
-      div.append(content);
-      form.append(div);
+    if (
+      !data.recipe.extendedIngredients ||
+      data.recipe.extendedIngredients.length == 0
+    ) {
+      form.innerHTML = 'There are no ingredients';
+    } else {
+      for (let i = 0; i < data.recipe.extendedIngredients.length; i++) {
+        const ingredient = data.recipe.extendedIngredients[i];
+        const div = document.createElement('div');
+        const currElement = document.createElement('input');
+        currElement.setAttribute('type', 'checkbox');
+        currElement.setAttribute('name', ingredient.name);
+        currElement.setAttribute('value', ingredient.original);
+        div.append(currElement);
+        const content = document.createElement('label');
+        content.setAttribute('for', 'ingredient');
+        content.innerHTML = ingredient.original;
+        div.append(content);
+        form.append(div);
+      }
     }
 
     //Set User Checked Ingredidents
@@ -412,11 +434,22 @@ class RecipePage extends HTMLElement {
 
     // Set Directions
     const list = this.shadowRoot.querySelector('ol');
-    for (let i = 0; i < data.recipe.analyzedInstructions[0].steps.length; i++) {
-      const step = data.recipe.analyzedInstructions[0].steps[i];
-      const currStep = document.createElement('li');
-      currStep.innerHTML = step.step;
-      list.appendChild(currStep);
+    if (
+      !data.recipe.analyzedInstructions ||
+      data.recipe.analyzedInstructions.length == 0
+    ) {
+      list.innerHTML = 'there are no directions';
+    } else {
+      for (
+        let i = 0;
+        i < data.recipe.analyzedInstructions[0].steps.length;
+        i++
+      ) {
+        const step = data.recipe.analyzedInstructions[0].steps[i];
+        const currStep = document.createElement('li');
+        currStep.innerHTML = step.step;
+        list.appendChild(currStep);
+      }
     }
 
     // Functions for the layout of recipe detailed page
@@ -482,7 +515,7 @@ class RecipePage extends HTMLElement {
         }
       }
 
-      if (ingredientsSelect.length == 0){
+      if (ingredientsSelect.length == 0) {
         return;
       }
 
