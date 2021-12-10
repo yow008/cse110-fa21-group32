@@ -3,7 +3,7 @@
 ## About Us
 [Team Page](admin/team.md)
 
-Our app can be found [here](https://www.home.cookez.click/userlogin)
+Our app can be found [here.](https://www.home.cookez.click/userlogin)
 
 ## Repo Structure (Highlights)
 - `/admin` - Meeting notes and team branding
