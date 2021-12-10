@@ -22,8 +22,19 @@ class AddRecipePage extends HTMLElement {
 
     // Fill in styles and root element
     styles.innerHTML = `
-    .openbtn {
-      background: #324A54;
+    h2{
+      margin-bottom: 0 !important;
+      background-color: #ca676a;
+      background-size: cover;
+      padding: 23.5px;
+      color: white;
+      margin-top: 0;
+      text-align: center;
+      font-weight: lighter !important;
+    }
+    #new-recipe{
+      text-align: center;
+      margin: auto;
     }
     .part1 {
       background-color: #CA676A;
@@ -31,19 +42,18 @@ class AddRecipePage extends HTMLElement {
       color: white;
       text-align: center;
     }
-    h2 {
-      padding-top: 23.5px;
-      padding-bottom: 10px;
-    }
     .part2 { 
+      text-align: center;
       border-top: 3px solid white;
       background-color: #324A54;
       color: white;
       padding-left: 5%;
       padding-right: 5%;
-      padding-top: 5px;
+      padding-top: 50px;
       padding-bottom: 13px;}
     .part3 { 
+      text-align: center;
+      margin: auto;
       padding-left: 5%;
       padding-right: 5%;
      }
@@ -55,19 +65,26 @@ class AddRecipePage extends HTMLElement {
       clear: both;
       display: table;
     }
-     .part4-button { 
-       margin-left: 5%;
+    .part4-button { 
+      cursor: pointer;
       background-color: white;
-      border-radius: 18px;
+      border-radius: 16px !important;
       border: 1.5px solid #ca676a;
       text-align: center;
-      width: 42%;
-      height: 22pt;
-      font-size: 14pt;
+      min-width: 15% !important;
+      height: 2.2em; !important;
+      font-size: 16pt;
       color:#ca676a;
+      width: auto !important;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+      margin: 0.3em;
+      padding: 0.2em !important;
      }
-    .add-recipe-navbar button {
-  
+    .part4-button:hover {
+      background-color: #ca676a;
+      color: white;
+    }
+     .add-recipe-navbar button {
       border: transparent;
       cursor: pointer;
       float: left;
@@ -76,7 +93,6 @@ class AddRecipePage extends HTMLElement {
       height: 40pt;
     }
     .add-recipe-navbar:after {
-      content: "";
       clear: both;
       display: table;
     }
@@ -84,30 +100,45 @@ class AddRecipePage extends HTMLElement {
     .add-recipe-navbar button:not(:last-child) {
       border-right: none; /* Prevent double borders */
     }
-    .normal-button {
-      background-color: white;
-      border-radius: 18px;
-      border: 1.5px solid #ca676a;
-      text-align: center;
-      min-width: 8%;
-      height: 22pt;
-      font-size: 14pt;
-      color:#ca676a;
-    }
+
     textarea {
       width: 80%;
       height: 42pt;
       background-color: #EEEEEE;
+      font-size: 16pt;
     }
+
+    .addIng {
+      width: 90%;
+      padding: 10px 15px;
+      margin: 4px;
+      box-sizing: border-box;
+      font-size: 16pt;
+    }
+    
     .css-input {
-      width: 10%;
+      width: 20%;
+      padding: 10px 15px;
+      margin: 4px;
+      box-sizing: border-box;
+      font-size: 16pt;
     }
     .css-margin {
-      margin-left: 5%;
+      
+      margin: auto;
     }
+    
+    #recipeImage{
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+    }
+
     a { text-decoration: none; }
+
     .add-more-button {
-      width: 90%;
+      cursor: pointer;
+      width: 20%;
       height: 22pt;
       background-color: white;
       border: 1.5px solid black;
@@ -115,129 +146,117 @@ class AddRecipePage extends HTMLElement {
     .css-x-circle {
       background-color: white;
       border: none;
-      
+      cursor: pointer;
+    }
+    .emp {
+      clear: both;
+      height: 50px;
     }
     table {
+      margin: auto;
+      padding: 10px;
+      height: 42pt
+    }
+    .part5 {
+      text-align: center;
+    }
+    .part6 {
+      text-align: center;
+    }
+    ol {
+      margin: auto;
       padding: 10px;
     }
-    .css-wrap {
-      margin-left: 5%;
-      margin-right: 5%;
+    li {
+      display: list-item;
+      list-style-position: inside;
     }
+    .firstStepTA {
+      position: relative;
+      right: 18px;
+    }
+    
+    
     }
         `;
     article.innerHTML = `
        
-      <div class="part1"> <h2>Add Your Recipe</h2>
-      <div class="add-recipe-navbar" style="width: 100%">
-        <button id="ToAddSum" style="width:33.3%; background-color: #324A54;">Summary
-          <a href="#add-recipe-summaryID"></a>
-        </button>
-        <button id="ToAddIng" style="width:33.3%; background-color: #CA676A;">Ingredients
-          <a href="#add-recipe-ingredientsID"></a>
-        </button>
-        <button id="ToAddDir" style="width:33.3%; background-color: #CA676A;">Directions
-          <a href="#add-recipe-directionID"></a>
-        </button>
-      </div>
+      <div class="part1"> 
+        <h2>Add Your Recipe</h2>
+        <div class="add-recipe-navbar" style="width: 100%">
+          <button id="ToAddSum" style="width:33.3%; background-color: #324A54;">Summary
+            <a href="#add-recipe-summaryID"></a>
+          </button>
+          <button id="ToAddIng" style="width:33.4%; background-color: #CA676A;">Ingredients
+            <a href="#add-recipe-ingredientsID"></a>
+          </button>
+          <button id="ToAddDir" style="width:33.3%; background-color: #CA676A;">Directions
+            <a href="#add-recipe-directionID"></a>
+          </button>
+        </div>
       </div>
 
 
-        <form id="new-recipe">
-        <div id="add-recipe-summary" style="display: show">
+      <form id="new-recipe">
+      <div id="add-recipe-summary" style="display: show">
         <div class="part2">
-        <!--Add Image-->
-        <label for="img"><p><strong>Add Image</strong></p></label>
-        <input type="file" id="imgfile" name="img" accept="image/*" required/>
-        <p><img id="recipeImage" width="200"/></p>
-        <br>
-        <br>
-        <!--<button id="addImage">Add Another Image</button>-->
+          <!--Add Image-->
+          <label for="img"><p><strong>Add Image</strong></p></label>
+          <input type="file" id="imgfile" name="img" accept="image/*" required/>
+          <p><img id="recipeImage"/></p>
+          <br>
+          <br>
 
-        <!--Basic Information-->
-        <label>Cooking Time:</label>
-        <input class="css-input" type="text" name="cookingTimeHour" id="#input--cook-time-hour" placeholder="hours.." required>
-        <input class="css-input" type="text" name="cookintTimeMin" id="#input--cook-time-mins" placeholder="mins.." required>
-        <label class="css-margin" id="servings" for="servings"> No. of Servings: </label>
-        <input class="css-input" type="text" name="numServings" id="#input--no-of-serv" required>
-        <br>
-        <br>
-      </div>
+          <!--Basic Information-->
+          <label class="css-margin">Cooking Time:</label>
+          <input class="css-input" type="text" name="cookingTimeHour" id="#input--cook-time-hour" placeholder="hours.." required>
+          <input class="css-input" type="text" name="cookintTimeMin" id="#input--cook-time-mins" placeholder="mins.." required>
+          <br>
+          <label class="css-margin" id="servings" for="servings"> No. of Servings: </label>
+          <input class="css-input" type="text" name="numServings" id="#input--no-of-serv" required>
+          <br>
+          <br>
+        </div>
 
-      <div class="part3">
-      <!--Basic Information (Tags/Summary)-->
-      <label for="sum"><p><strong>Add Tags from the list: </strong></p></label>
-      <ul>
-        <li>
-        <label for="tags">Tag 1 (Country): </label><br>
-        <select id="tag1-list">
-          <option value="Italian">Italian</option>
-          <option value="French">French</option>
-          <option value="Mexican">Mexican</option>
-          <option value="American">American</option>
-          <option value="Chinese">Chinese</option>
-          <option value="Japanese">Japanese</option>
-          <option value="Korean">Korean</option>
-          <option value="Vietnamese">Korean</option>
-          <option value="Others">Others</option>
-        </select>
-        </li>
-        
-        <li>
-        <label for="tags">Tag 2(Type of Food): </label><br>
-        <select id="tag2-list">
-          <option value="Pizza">Pizza</option>
-          <option value="Seafood">Seafood</option>
-          <option value="Burgers">Burgers</option>
-          <option value="Vegetarian">Vegetarian</option>
-          <option value="Sandwiches">Sandwiches</option>
-          <option value="Steakhouses">Steakhouses</option>
-          <option value="Desserts">Desserts</option>
-          <option value="Drinks">Drinks</option>
-          <option value="Breakfast">Breakfast</option>
-          <option value="Lunch">Lunch</option>
-          <option value="Dinner">Dinner</option>
-          <option value="Others">Others</option>
-        </select>
-        </li>
-      </ul>
-
-      <label for="sum"><p><strong>Add Summary: </strong></p></label>
-      <textarea id="addTitle" name="recipeTitle" placeholder="Title:" required></textarea><br>
-      <textarea id="addSummary" name="recipeSummary" placeholder="Summary" required></textarea>
-      <br>
-      </div>
+        <div class="part3">
+          <label for="sum"><p><strong>Add Summary: </strong></p></label>
+          <textarea id="addTitle" name="recipeTitle" placeholder="Title:" required></textarea><br>
+          <textarea id="addSummary" name="recipeSummary" placeholder="Summary" required></textarea>
+          <br>
+        </div>
       </div>
     
       <!--Add Recipe Ingredients-->
-      <div class="css-wrap" id="add-recipe-ingredients" style="display: none">
-      <label for="ingredients"><p><strong>Add Ingredients</strong></p></label>
-      <table id="ingredient-table">
-        <tr>
-          <th>Qty</th>
-          <th>Unit</th>
-          <th>Ingredient</th>
-        </tr>
-        <tr>
-          <td><input type="text" name="quantity" required/></td>
-          <td><input type="text" name="unit"/></td>
-          <td><input type="text" name="ingredientName" required/></td>
-        </tr>
-      </table>
-      <!--When click add more should create another new 'tr' with three new inputs-->
-      <button class="add-more-button" id="addIngredientButton"> 
-      <img src="assets/icons/plus-circle.svg"/> 
-      </button>
-      <br>
+      <div class="part5" id="add-recipe-ingredients" style="display: none">
+        <!-- empty div for spacing -->
+        <div class="emp"></div>
+        <table id="ingredient-table">
+          <tr>
+            <th>Qty</th>
+            <th>Unit</th>
+            <th>Ingredient</th>
+          </tr>
+          <tr>
+            <td><input class="addIng" type="text" name="quantity" required/></td>
+            <td><input class="addIng" type="text" name="unit"/></td>
+            <td><input class="addIng" type="text" name="ingredientName" required/></td>
+          </tr>
+        </table>
+        <!--When click add more should create another new 'tr' with three new inputs-->
+        <button class="add-more-button" id="addIngredientButton"> 
+          <img src="assets/icons/plus-circle.svg"/> 
+        </button>
+        <br>
       </div>
       <!--TO DO delete ingredients button-->
   
       <!--Add Recipe Directions-->
-      <div class="css-wrap" id="add-recipe-direction" style="display: none">
-        <p>Direction</p>
+      <div class="part6" id="add-recipe-direction" style="display: none">
+        <!-- empty div for spacing -->
+        <div class="emp"></div>
         <ol>
-          <li>Step:</li>
-          <textarea name="directionStep" id="#input--direction-step" required></textarea>
+          <li class="firstStepli">Step:</li>
+          <textarea class="firstStepTA" name="directionStep" id="#input--direction-step" required></textarea>
         </ol>
         <br>
         <!--When click add more should create another new textarea for direction-->
@@ -246,8 +265,8 @@ class AddRecipePage extends HTMLElement {
          </button>
       </div>
       <br>
-
-      <input class="part4-button" type="submit" value="Publish">
+      
+      <input class="part4-button" id="submitBtn" type="submit" value="Publish"/>
       <button class="part4-button" id="leaveButton">
       <a href="home.html"  style="color:#CA676A"> Leave </a>
       </button>
@@ -340,11 +359,13 @@ class AddRecipePage extends HTMLElement {
           .querySelector('table');
         let row = ingredientsList.insertRow(-1);
         let quantity = row.insertCell(0);
-        quantity.innerHTML = '<input type="text" name="quantity"/>';
+        quantity.innerHTML =
+          '<input class="addIng" type="text" name="quantity"/>';
         let unit = row.insertCell(1);
-        unit.innerHTML = '<input type="text" name="unit"/>';
+        unit.innerHTML = '<input class="addIng" type="text" name="unit"/>';
         let ingredient = row.insertCell(2);
-        ingredient.innerHTML = '<input type="text" name="ingredientName"/>';
+        ingredient.innerHTML =
+          '<input class="addIng" type="text" name="ingredientName"/>';
         let deleteButton = row.insertCell(3);
         deleteButton.innerHTML =
           '<button class="css-x-circle" onclick="event.preventDefault();this.parentNode.parentNode.parentNode.deleteRow(this.parentNode.parentNode.rowIndex)"><img src="assets/icons/x-circle.svg"/></button>';
@@ -362,8 +383,8 @@ class AddRecipePage extends HTMLElement {
         let li = document.createElement('li');
         li.innerHTML = 'Step:';
         let button = document.createElement('button');
-        button.innerHTML =
-          '<button class="css-x-circle"><img src="assets/icons/x-circle.svg"/></button>';
+        button.setAttribute('class', 'css-x-circle');
+        button.innerHTML = '<img src="assets/icons/x-circle.svg"/>';
         let input = document.createElement('textarea');
         input.setAttribute('name', 'directionStep');
 
@@ -416,8 +437,8 @@ class AddRecipePage extends HTMLElement {
     // newRecipe.addEventListener("submit", handleFormSubmit)
 
     // Event handler for a form submit event
-    const newRecipe = this.shadowRoot.getElementById('new-recipe');
-    newRecipe.addEventListener('submit', (e) => {
+    this.shadowRoot
+      .getElementById('new-recipe').addEventListener('submit', (e) => {
       e.preventDefault();
       postCreateRecipeData();
     });
@@ -527,7 +548,10 @@ class AddRecipePage extends HTMLElement {
 
           document.getElementById('#section--profile').classList.add('shown');
         });
-        router.navigate('profile');
+        document.getElementById('#section--profile').router.navigate('profile');
+
+        // Tell the profile page to update with the updated recipe list
+        document.querySelector('#section--profile').firstChild.update = '';
       }
       POST(data, afterAdd);
     }

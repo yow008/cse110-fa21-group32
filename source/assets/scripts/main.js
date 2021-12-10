@@ -121,8 +121,12 @@ function bindNavIcons() {
     router.navigate('profile');
   });
 }
+// Looks in LocalStorage to get username and token.
+const user = localStorage.getItem('username');
 
-/**
+const userStatus = document.getElementById('#user-status');
+userStatus.innerHTML = `Username: ${user}`;
+/*
  * Bind the Collapased Sidepanel at the side for the appropriate pages
  * (Favorite Recipes, Previously Cooked, Add a Recipe, Write a Review)
  */
@@ -203,4 +207,4 @@ function logout(username, token) {
   POST(msg, afterLogout);
 }
 
-export { router };
+export { router, logout };

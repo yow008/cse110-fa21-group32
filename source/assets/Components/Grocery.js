@@ -20,47 +20,88 @@ class GroceryPage extends HTMLElement {
 
     // Fill in styles and root element
     styles.innerHTML = `
-        h2{
-            background-color: #CA676A;
-            background-size: cover;
-            padding: 23.5px;
-            color: white;
-          }
+        * {
+          font-family: "IBM Plex Sans", sans-serif;
+          font-weight: normal;
+          font-style: normal;
+        }
+        h2 {
+          margin-bottom: 0 !important;
+          background-color: #ca676a;
+          background-size: cover;
+          padding: 23.5px;
+          color: white;
+          margin-top: 0;
+          text-align: center;
+          font-weight: lighter !important;
+          font-size: calc(1.325rem + .9vw);
+        }
+        h3 {
+          font-weight: bold;
+          font-size: 16pt;
+          font-family: "IBM Plex Sans", sans-serif;
+        }
         button {
           background-color: white;
-          border-radius: 18px;
+          border-radius: 16px !important;
           border: 1.5px solid #ca676a;
           text-align: center;
-          min-width: 8%;
-          height: 20pt;
-          font-size: 14pt;
+          min-width: 8% !important;
+          height: 2.2em; !important;
+          font-size: 16pt;
           color:#ca676a;
+          width: 4em !important;
+          box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+          margin: 0.3em;
+          padding: 0.2em !important;
         }
         .css-wrap {
           margin-left: 35%;
         }
+
+        input[type=text] {
+          width: 60%;
+          padding: 10px 15px;
+          margin: 4px 0;
+          border-radius: 10px;
+          box-sizing: border-box;
+          font-size: 16pt;
+        }
+        input[type=checkbox] {
+          transform: scale(1.5);
+          width: 2em;
+        }
+
+        label {
+          font-size: 18pt;
+        }
+
+        #delete{
+          margin-left: 1em;
+        } 
+        #grocery-list {
+          margin: auto;
+          margin-top: 1%;
+          width: 60%;
+          padding: 5% 5% 3% 5%;
+        }
         `;
-    article.innerHTML = `
+    article.innerHTML = ` 
         <h2>Grocery List</h2>
-        <div id="grocery-list">
+        <div id="grocery-list" class="center">
         <!--Add Recipe Ingredients-->
-        <p> Grocery List </p>
         <form id="#my-input">
           <input type="text" id="add-input" placeholder="Add ingredient..."/>
-          <button type="submit" id="add-icon">Add to the list</button>
+          <button type="submit" id="add-icon">Add</button>
         </form>
-        <br>
-        <p>My List</p>
+        <h3>My List</h3>
         <form id="#my-list">
         </form>
+        <button type="delete" id="delete">Delete</button>
         </div>
-        <br>
-        <br>
-        <br>
-        <button type="delete" id="delete">Delete &#10006;</button>\
-        <br>
         `;
-
+    // // Show title
+    // const title = document.querySelector('title').innerHTML;
     // Append elements to the shadow root
     this.shadowRoot.append(styles, article);
 
@@ -78,24 +119,16 @@ class GroceryPage extends HTMLElement {
     // Reset the contents of the grocery page
     this.id = this.shadowRoot.querySelector('article').innerHTML = `
           <h2>Grocery List</h2>
-          <div id="grocery-list">
-            <!--Add Recipe Ingredients-->
-            <p> Grocery List </p>
-            <form id="#my-input">
-              <input type="text" placeholder="Add ingredient..."/>
-              <button type="submit" id="add-icon">Add to the list</button>
-            </form>
-            <br>
-
-            <p>My List</p>
-            <form id="#my-list">
-            </form>
-          </div>
-          <br>
-          <br>
-          <br>
-          <button type="delete" id="delete">Delete &#10006;</button>
-          <br>
+          <div id="grocery-list" class="center">
+          <!--Add Recipe Ingredients-->
+          <form id="#my-input">
+            <input type="text" id="add-input" placeholder="Add ingredient..."/>
+            <button type="submit" id="add-icon">Add</button>
+            <button type="delete" id="delete">Delete</button>
+          </form>
+          <h3>My List</h3>
+          <form id="#my-list">
+          </form>
           `;
 
     const groceryList = this.shadowRoot.getElementById('grocery-list');
@@ -146,7 +179,7 @@ class GroceryPage extends HTMLElement {
       form.setAttribute('class', 'recipe-list');
 
       // Populates recipe name as title of section
-      let p = document.createElement('p');
+      let p = document.createElement('h3');
       p.innerHTML = currList[i]['name'];
       p.addEventListener('click', () => {
         // Add the recipe page if it doesn't exist
@@ -158,6 +191,7 @@ class GroceryPage extends HTMLElement {
               .getElementById('#section--grocery')
               .classList.remove('shown');
             recipePage.classList.add('shown');
+
             document.getElementById('#section--recipe').innerHTML = '';
 
             recipePage.data = currList[i].recipe;

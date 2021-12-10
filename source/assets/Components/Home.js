@@ -22,6 +22,18 @@ class HomePage extends HTMLElement {
     styles.innerHTML = `
     *{
       clear: both;
+      font-family: "IBM Plex Sans", sans-serif;
+      font-weight: normal;
+      font-style: normal;
+      font-size: 10px;
+    }
+    filling {
+      margin-bottom: 0 !important;
+      background-color: #ca676a;
+      background-size: cover;
+      padding: 23.5px;
+      color: white;
+      margin-top: 0;
     }
     .recipe-grid {
       margin-left: 5%;
@@ -31,9 +43,7 @@ class HomePage extends HTMLElement {
       grid-row-gap: 3%;
       margin-right: 5%;
     }
-    .recipe-picture {
-      max-width: 100%;
-    }
+
     button {
       background-color: white;
       border-radius: 9px;
@@ -63,6 +73,9 @@ class HomePage extends HTMLElement {
 
     .my-card{
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      max-width: 300px;
+      max-height: 300px;
+      display: inline-block;
     }
 
     .my-container{
@@ -73,17 +86,16 @@ class HomePage extends HTMLElement {
     `;
     article.innerHTML = `
         <!--<h1>Home Page</h1>-->
+        
         <!--ADD RECIPES HERE-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <div class="css-wrap">
-        <p id="#user-status"></p>
-        <p id="#user-email"></p>
-        </div>
+        <!-- div for filling -->
+        <div class="filling"></div>
 
         <div class="container-fluid my-container">
           <div class="row justify-content-center d-flex align-items-center my-row ">
             <div class="col my-col text-center align-items-center d-flex justify-content-center p-4">
-              <div class="card my-card" style="width: 75%;">
+              <div class="card my-card" style="width: 75%">
                 <img class="card-img-top" src="" alt="">
                 <div class="card-body">
                   <h5 id="ExpRecipe" class="card-title align-items-center"></h5>
@@ -176,43 +188,10 @@ class HomePage extends HTMLElement {
     // Add random recipes to the card elements
     let cards = this.shadowRoot.querySelectorAll('.card');
     searchRandomRecipes(cards);
-
-    // Looks in LocalStorage to get username and token.
-    const user = localStorage.getItem('username');
-    const token = localStorage.getItem('token');
-
-    const userStatus = this.shadowRoot.getElementById('#user-status');
-    userStatus.innerHTML = `Currently logged in as ${user}`;
-
-    const userEmail = this.shadowRoot.getElementById('#user-email');
-    getEmail(user, token, userEmail);
   }
 }
 
 customElements.define('home-page', HomePage);
-
-/**
- * Fetch the email from the user and display it
- * @param {String} username
- * @param {String} token
- */
-function getEmail(username, token, userEmail) {
-  const emailReq = `type=request&elem=email&user=${encodeURIComponent(
-    username
-  )}&token=${encodeURIComponent(token)}`;
-
-  /**
-   * Populate the display element with the fetched email
-   * @param {*} data
-   */
-  function getFn(data) {
-    userEmail.innerHTML = `User email: ${data.userInfo[0]}`;
-    localStorage.setItem('userEmail', data.userInfo[0]);
-    //setFormMessage(loginForm, 'error', 'Invalid username or password!');
-  }
-
-  GET(emailReq, getFn);
-}
 
 /**
  * Searches for random recipes to populate the home page
