@@ -25,7 +25,7 @@ class Recipe_DB:
 
         # Spoonacular
         self.url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/'
-        self.API_KEY = 'edc8d2ae440a4326b6721c6c4fc7299c'
+        self.API_KEY = 'xxxxx'
         self.headers = {
             'x-rapidapi-host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
             'x-rapidapi-key': self.API_KEY
