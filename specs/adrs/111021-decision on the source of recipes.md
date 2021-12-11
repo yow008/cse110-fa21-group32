@@ -21,15 +21,18 @@ We were discussing ways to get recipes between, JSON-LD and spoonacular API
 
 Chosen option: spoonacular api
 
+### Positive Consequences
+
+* easier to load recipes
+* easier to use the functionality
+* make backend set up easier
+
+
 ### Negative Consequences <!-- optional -->
 
 * Got limited calls everyday, else need to be paid
 
 ## Pros and Cons of the Options <!-- optional -->
-
-* easier to load recipes
-* easier to use the functionality
-* make backend set up easier
 
 ### {API}
 
