@@ -1,6 +1,6 @@
 # Team Aces (Group 32) - CSE 110 Fall 2021 Project
 
-Welcome to our CSE 110 Project: CookEZ! Our web application is currently designed for a tablet view in interest of an audience that is using a mobile device for easy viewing while cooking. Desktop and mobile are also supported but the styling may be a bit off. Discover and search for recipes, plan your grocery trip ahead with our in-built grocery list, and manage your own private collection of recipes to help enhance your journey to cooking quick yet delicious meals!
+Welcome to our CSE 110 Project: CookEZ! Our web application is currently designed for a tablet view in interest of an audience that is using a mobile device for easy viewing while cooking. Desktop and mobile are also supported but the styling may be a bit off. Discover and search for recipes, plan your grocery trip ahead with our in-built grocery list, and manage your own private collection of recipes to help enhance your journey to cooking quick yet delicious meals! 
 
 ## About Us
 [Team Page](admin/team.md)
