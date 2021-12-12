@@ -22,14 +22,16 @@ We were discussing whether if we should include the auto-calculate servings as o
 
 Chosen option: Include auto-calculate servings as one of our main features
 
+### Positive Consequences <!-- optional -->
+* User friendly, reduces the time for the user to do the calculation when cooking for multiple people
+* One of the main functions that can continue to attract new users
+* 
 ### Negative Consequences <!-- optional -->
 
 * Hard to do the calculation in the backend when it comes to decimals and fractions.
 
 ## Pros and Cons of the Options <!-- optional -->
 
-* User friendly, reduces the time for the user to do the calculation when cooking for multiple people
-* One of the main functions that can continue to attract new users
 ### {Include auto-calculate servings as one of our main feature}
 
 * Good, because easy to use and user friendly

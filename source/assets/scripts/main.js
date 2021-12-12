@@ -1,19 +1,16 @@
 import { Router } from './Router.js';
-import { POST } from './request.js';
+import { POST,GET } from './request.js';
 
 // If modified, also modify list of page names under addMainPages
 const pageNames = [
   'home',
   'grocery',
   'profile',
-  'update-user',
   'recipe',
   'search-results',
   'cooking-mode',
-  'fav-recipes',
   'add-recipe',
   'update-recipe',
-  'write-review',
 ];
 //,'prevCooked','user-login','calendar',
 const router = new Router();
@@ -124,22 +121,47 @@ function bindNavIcons() {
     router.navigate('profile');
   });
 }
+// Looks in LocalStorage to get username and token.
+const user = localStorage.getItem('username');
+const token = localStorage.getItem('token');
+
+getEmail(user, token);
 
 /**
+ * Fetch the email from the user and display it
+ * @param {String} username
+ * @param {String} token
+ */
+ function getEmail(username, token) {
+  const emailReq = `type=request&elem=email&user=${encodeURIComponent(
+    username
+  )}&token=${encodeURIComponent(token)}`;
+
+  /**
+   * Populate the display element with the fetched email
+   * @param {*} data
+   */
+  function getFn(data) {
+    localStorage.setItem('userEmail', data.userInfo[0]);
+    //setFormMessage(loginForm, 'error', 'Invalid username or password!');
+  }
+
+  GET(emailReq, getFn);
+}
+
+const userStatus = document.getElementById('#user-status');
+userStatus.innerHTML = `Username: ${user}`;
+/*
  * Bind the Collapased Sidepanel at the side for the appropriate pages
  * (Favorite Recipes, Previously Cooked, Add a Recipe, Write a Review)
  */
 function bindSidePanel() {
   // Retrieve buttons corresponding to icons
-  const favoriteRecipes = document.getElementById('LinkToFav');
   //const userLogin = document.getElementById('LinkLogin');
   const addRecipe = document.getElementById('LinkToAdd');
   const logoutElem = document.getElementById('LinkToLogout');
 
   // Add click event listeners and proper navigation
-  favoriteRecipes.addEventListener('click', () => {
-    router.navigate('fav-recipes');
-  });
   // userLogin.addEventListener('click', () => {
   //   router.navigate('user-login');
   // });
@@ -210,4 +232,4 @@ function logout(username, token) {
   POST(msg, afterLogout);
 }
 
-export { router };
+export { router, logout };
