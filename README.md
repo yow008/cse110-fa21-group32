@@ -5,7 +5,6 @@ Welcome to our CSE 110 Project: CookEZ! Our web application is currently designe
 ## About Us
 [Team Page](admin/team.md)
 
-Our app can be found [here.](https://www.home.cookez.click/userlogin)
 
 ## Repo Structure (Highlights)
 - `/admin` - Meeting notes and team branding
